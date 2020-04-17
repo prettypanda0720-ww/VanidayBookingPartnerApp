@@ -9,7 +9,7 @@ import {
   Button,
   ProfileDescription,
   PhoneInput,
-  MyDatePicker,
+  DatePicker,
 } from '@components';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import styles from "./styles";
@@ -57,7 +57,7 @@ class CreateClient extends Component {
         </View>
         <PhoneInput />
         <View style={{flex:7, flexDirection:'column'}}>
-          <MyDatePicker />  
+          <DatePicker />  
           <View style={{paddingLeft: 20, paddingRight: 20}}>
             <SignupTextInput
               title = {'Address'}

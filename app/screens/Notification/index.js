@@ -1,40 +1,88 @@
-import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Text} from '@components';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
 
-const Notification = props => {
+import React from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  Alert
+} from 'react-native';
+
+import {
+  Header,
+} from 'react-native/Libraries/NewAppScreen';
+
+import WeekView from 'react-native-week-view';
+
+const Notification: () => React$Node = () => {
+  const selectedDate = new Date();
+  const generateDates = (hours, minutes) => {
+    const date = new Date();
+    date.setHours(date.getHours() + hours);
+    if (minutes != null) {
+      date.setMinutes(minutes);
+    }
+    return date;
+  };
+  const events = [
+    {
+      id: 1,
+      description: 'Event 1',
+      startDate: generateDates(0),
+      endDate:generateDates(2),
+      color: 'blue',
+    },
+    {
+      id: 2,
+      description: 'Event 2',
+      startDate: generateDates(1),
+      endDate: generateDates(4),
+      color: 'red',
+    },
+    {
+      id: 3,
+      description: 'Event 3',
+      startDate: generateDates(-5),
+      endDate: generateDates(-3),
+      color: 'green',
+    },
+  ];
   return (
-    <View style={styles.container}>
-      <View style={styles.container}>
-        <Text style={{fontSize: 40, fontWeight: 'bold'}}>Notification</Text>
-      </View>
-    </View>
+    <>
+      <StatusBar barStyle="dark-content" />
+      <SafeAreaView style={styles.container}>
+        <WeekView
+          events={events}
+          selectedDate={this.selectedDate}
+          numberOfDays={7}
+          onEventPress={(event) => Alert.alert('eventId:' + event.id)}
+          headerStyle={styles.headerStyle}
+          headerTextColor="#fff"
+          formatDateHeader="MMM D"
+        />
+      </SafeAreaView>
+    </>
   );
 };
 
-export default Notification;
-
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    height: 600,
+    flex: 1,
+    backgroundColor: '#FFF',
+    paddingTop: 22,
   },
-  redbox: {
-    width: 100,
-    height: 100,
-    backgroundColor: 'red',
-  },
-  bluebox: {
-    width: 100,
-    height: 100,
-    backgroundColor: 'blue',
-  },
-  blackbox: {
-    width: 100,
-    height: 100,
-    backgroundColor: 'black',
+  headerStyle: {
+    backgroundColor: '#4286f4',
   },
 });
+
+export default Notification;

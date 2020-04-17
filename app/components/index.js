@@ -10,8 +10,11 @@ import ProfileDescription from './ProfileDescription';
 import ProfilePerformance from './ProfilePerformance';
 import SignupTextInput from './SignupTextInput';
 import PhoneInput from './PhoneInput';
-import MyDatePicker from './DatePicker';
+import DatePicker from './DatePicker';
 import ProfileDetail from './ProfileDetail';
+import Timeline from './Timeline';
+import ExpandableCalendar from './expandableCalendar';
+import CalendarProvider from './expandableCalendar/calendarProvider.js';
 
 export {
   Header,
@@ -26,6 +29,9 @@ export {
   ProfilePerformance,
   SignupTextInput,
   PhoneInput,
-  MyDatePicker,
+  DatePicker,
   ProfileDetail,
+  Timeline,
+  ExpandableCalendar,
+  CalendarProvider,
 };

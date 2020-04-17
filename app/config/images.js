@@ -84,4 +84,7 @@ export const Images = {
   event6: require("@assets/images/event-6.jpg"),
   event7: require("@assets/images/event-7.jpg"),
   findbycovo: require("@assets/images/findbycovo.png"),
+  back: require("@assets/images/back.png"),
+  forward: require("@assets/images/forward.png"),
+  menu: require("@assets/images/menu.png"),
 };

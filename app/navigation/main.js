@@ -54,7 +54,7 @@ const bottomTabNavigatorConfig = {
 // Tab bar navigation
 const routeConfigs = {
   Home: {
-    screen: Notification,
+    screen: Home,
     navigationOptions: ({navigation}) => ({
       // title: 'Home',
       tabBarIcon: ({focused, tintColor}) => {
@@ -144,6 +144,9 @@ const StackNavigator = createStackNavigator(
     },
     Currency: {
       screen: Currency,
+    },
+    Home: {
+      screen: Home,
     },
   },
   {
