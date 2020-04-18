@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { AuthActions } from "@actions";
-import { View, TouchableOpacity, TextInput, ScrollView } from "react-native";
-import { bindActionCreators } from "redux";
-import { SafeAreaView, Text, Button, Image } from "@components";
-import styles from "./styles";
-import Swiper from "react-native-swiper";
-import { BaseColor, BaseStyle, Images } from "@config";
-import * as Utils from "@utils";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {AuthActions} from '@actions';
+import {View, TouchableOpacity, TextInput, ScrollView} from 'react-native';
+import {bindActionCreators} from 'redux';
+import {SafeAreaView, Text, Button, Image} from '@components';
+import styles from './styles';
+import Swiper from 'react-native-swiper';
+import {BaseColor, BaseStyle, Images} from '@config';
+import * as Utils from '@utils';
 
 class Walkthrough extends Component {
   constructor(props) {
@@ -46,49 +46,51 @@ class Walkthrough extends Component {
       });
       this.authentication();
     }
-  };
+  }
 
   authentication() {
     this.setState(
       {
-        loading: true
+        loading: true,
       },
       () => {
-        this.props.actions.authentication(true, response => {
-          if (response.success) {
-            this.props.navigation.navigate("Loading");
-          } else {
-            this.setState({
-              loading: false
-            });
-          }
-        });
-      }
+        this.props.actions.authentication('123', '123');
+      },
     );
   }
 
+  async componentWillReceiveProps(nextProps, nextContext) {
+    await this.handleRedirect(nextProps.auth);
+  }
+
+  handleRedirect = (auth) => {
+    if (auth.login.success) {
+      this.props.navigation.navigate('Loading');
+    } else {
+      this.props.navigation.navigate('Walkthrough');
+    }
+  };
+
   render() {
-    const { navigation } = this.props;
+    const {navigation} = this.props;
     return (
-      <SafeAreaView
-        style={BaseStyle.safeAreaView}
-        forceInset={{ top: "always" }}
-      >
-        <View
-          style={styles.contain}
-        >
-          <View style={{ width: "100%", alignItems: 'center' }}>
+      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
+        <View style={styles.contain}>
+          <View style={{width: '100%', alignItems: 'center'}}>
             <Image
               source={Images.splashlogo}
               style={styles.logo}
               resizeMode="contain"
             />
-            <Text subhead grayColor style={{marginTop: 10, color: BaseColor.secondBlackColor}}>
+            <Text
+              subhead
+              grayColor
+              style={{marginTop: 10, color: BaseColor.secondBlackColor}}>
               Partner Management
             </Text>
             <TextInput
               style={[BaseStyle.textInput, {marginTop: 30}]}
-              onChangeText={text => this.setState({id: text})}
+              onChangeText={(text) => this.setState({id: text})}
               onFocus={() => {
                 this.setState({
                   success: {
@@ -109,7 +111,7 @@ class Walkthrough extends Component {
             />
             <TextInput
               style={[BaseStyle.textInput, {marginTop: 10}]}
-              onChangeText={text => this.setState({password: text})}
+              onChangeText={(text) => this.setState({password: text})}
               onFocus={() => {
                 this.setState({
                   success: {
@@ -131,7 +133,10 @@ class Walkthrough extends Component {
             />
             <Button
               full
-              style={{ marginTop: 20, backgroundColor: BaseColor.secondBlackColor }}
+              style={{
+                marginTop: 20,
+                backgroundColor: BaseColor.secondBlackColor,
+              }}
               loading={this.state.loading}
               onPress={() => {
                 this.onLogin();
@@ -139,14 +144,15 @@ class Walkthrough extends Component {
               Sign In
             </Button>
             <View style={styles.contentActionBottom}>
-              <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-                <Text body1 style={{color: BaseColor.secondBlackColor}}>
+              <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                <Text subhead style={{color: BaseColor.secondBlackColor}}>
                   Be a Partner
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
-                <Text body1 style={{color: BaseColor.secondBlackColor}}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ResetPassword')}>
+                <Text subhead style={{color: BaseColor.secondBlackColor}}>
                   Forgot Password
                 </Text>
               </TouchableOpacity>
@@ -158,13 +164,15 @@ class Walkthrough extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {};
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(AuthActions, dispatch)
+    actions: bindActionCreators(AuthActions, dispatch),
   };
 };
 

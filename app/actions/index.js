@@ -1,3 +1,5 @@
-import * as AuthActions from "./auth";
+import * as AuthActions from './auth';
+import * as CalendarActions from './calendar';
 
-export { AuthActions };
+export {AuthActions};
+export {CalendarActions};

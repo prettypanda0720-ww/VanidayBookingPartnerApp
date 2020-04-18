@@ -62,7 +62,7 @@ class ClientProfile extends Component {
             width: Utils.getWidthDevice() / 3,
             alignItems: 'center',
           }}>
-          <Text headline bold={focused} style={{color}}>
+          <Text subhead bold={focused} style={{color}}>
             {route.title}
           </Text>
         </View>
@@ -106,7 +106,7 @@ class ClientProfile extends Component {
               <Icon
                 name="angle-left"
                 size={20}
-                color={BaseColor.primaryColor}
+                color={BaseColor.blackColor}
               />
             );
           }}
@@ -146,18 +146,6 @@ class ClientProfile extends Component {
             textThird={userData.id}
             onPress={() => navigation.navigate('ProfileExanple')}
           />
-          <View style={{flex: 0.6, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <View style={{width: '25%'}}>
-              <Button
-                full
-                style={{height: 25, padding: 10, backgroundColor: BaseColor.MainPrimaryColor}}
-                onPress={() => {
-                  navigation.goBack();
-                }}>
-                Follow
-              </Button>
-            </View>
-          </View>
           <ProfilePerformance
             data={userData.performance}
             style={{marginTop: 20, marginBottom: 10}}
@@ -287,7 +275,7 @@ class AppointmentsTab extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.primaryColor}
+                  color={BaseColor.blackColor}
                   style={{position: 'absolute', right: 0}}
                 />
               </View>

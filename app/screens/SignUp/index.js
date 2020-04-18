@@ -1,16 +1,23 @@
-import React, { Component } from "react";
-import { View, ScrollView, TextInput } from "react-native";
-import { BaseStyle, BaseColor, Images } from "@config";
-import { Header, SafeAreaView, Icon, Button, Image, RadioGroup } from "@components";
-import styles from "./styles";
+import React, {Component} from 'react';
+import {View, ScrollView, TextInput} from 'react-native';
+import {BaseStyle, BaseColor, Images} from '@config';
+import {
+  Header,
+  SafeAreaView,
+  Icon,
+  Button,
+  Image,
+  RadioGroup,
+} from '@components';
+import styles from './styles';
 
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      email: "",
-      address: "",
+      name: '',
+      email: '',
+      address: '',
       loading: false,
       success: {
         name: true,
@@ -21,16 +28,16 @@ export default class SignUp extends Component {
   }
 
   onSignUp() {
-    const { navigation } = this.props;
-    let { name, email, address, success } = this.state;
+    const {navigation} = this.props;
+    let {name, email, address, success} = this.state;
 
-    if (name == "" || email == "" || address == "") {
+    if (name == '' || email == '' || address == '') {
       this.setState({
         success: {
           ...success,
-          name: name != "" ? true : false,
-          email: email != "" ? true : false,
-          address: address != "" ? true : false
+          name: name != '' ? true : false,
+          email: email != '' ? true : false,
+          address: address != '' ? true : false
         }
       });
     } else {
@@ -43,21 +50,18 @@ export default class SignUp extends Component {
             this.setState({
               loading: false
             });
-            navigation.navigate("SignIn");
+            navigation.navigate('SignIn');
           }, 500);
-        }
+        },
       );
     }
   }
 
   render() {
-    const { navigation } = this.props;
-    let { loading, name, email, address, success } = this.state;
+    const {navigation} = this.props;
+    let {loading, name, email, address, success} = this.state;
     return (
-      <SafeAreaView
-        style={BaseStyle.safeAreaView}
-        forceInset={{ top: "always" }}
-      >
+      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Sign Up"
           renderLeft={() => {
@@ -81,28 +85,32 @@ export default class SignUp extends Component {
               resizeMode="contain"
             />
             <TextInput
-              style={[BaseStyle.textInput, { marginTop: 40 }]}
-              onChangeText={text => this.setState({ name: text })}
+              style={[BaseStyle.textInput, {marginTop: 40}]}
+              onChangeText={(text) => this.setState({name: text})}
               autoCorrect={false}
               placeholder="First Name"
               placeholderTextColor={
-                success.name ? BaseColor.MainPrimaryColor : BaseColor.primaryColor
+                success.name
+                  ? BaseColor.MainPrimaryColor
+                  : BaseColor.primaryColor
               }
               value={name}
             />
             <TextInput
-              style={[BaseStyle.textInput, { marginTop: 10}]}
-              onChangeText={text => this.setState({ name: text })}
+              style={[BaseStyle.textInput, {marginTop: 10}]}
+              onChangeText={(text) => this.setState({name: text})}
               autoCorrect={false}
               placeholder="Last Name"
               placeholderTextColor={
-                success.name ? BaseColor.MainPrimaryColor : BaseColor.primaryColor
+                success.name
+                  ? BaseColor.MainPrimaryColor
+                  : BaseColor.primaryColor
               }
               value={name}
             />
             <TextInput
-              style={[BaseStyle.textInput, { marginTop: 10 }]}
-              onChangeText={text => this.setState({ email: text })}
+              style={[BaseStyle.textInput, {marginTop: 10}]}
+              onChangeText={(text) => this.setState({email: text})}
               autoCorrect={false}
               placeholder="Email"
               keyboardType="email-address"
@@ -113,8 +121,8 @@ export default class SignUp extends Component {
             />
             <RadioGroup />
             <TextInput
-              style={[BaseStyle.textInput, { marginTop: 10 }]}
-              onChangeText={text => this.setState({ address: text })}
+              style={[BaseStyle.textInput, {marginTop: 10}]}
+              onChangeText={(text) => this.setState({address: text})}
               autoCorrect={false}
               placeholder="Mobile Number"
               placeholderTextColor={
@@ -123,8 +131,8 @@ export default class SignUp extends Component {
               value={address}
             />
             <TextInput
-              style={[BaseStyle.textInput, { marginTop: 10 }]}
-              onChangeText={text => this.setState({ address: text })}
+              style={[BaseStyle.textInput, {marginTop: 10}]}
+              onChangeText={(text) => this.setState({address: text})}
               autoCorrect={false}
               placeholder="Shop Name"
               placeholderTextColor={
@@ -133,8 +141,8 @@ export default class SignUp extends Component {
               value={address}
             />
             <TextInput
-              style={[BaseStyle.textInput, { marginTop: 10 }]}
-              onChangeText={text => this.setState({ address: text })}
+              style={[BaseStyle.textInput, {marginTop: 10}]}
+              onChangeText={(text) => this.setState({address: text})}
               autoCorrect={false}
               placeholder="Shop Tel"
               placeholderTextColor={
@@ -143,8 +151,8 @@ export default class SignUp extends Component {
               value={address}
             />
             <TextInput
-              style={[BaseStyle.textInput, { marginTop: 10 }]}
-              onChangeText={text => this.setState({ address: text })}
+              style={[BaseStyle.textInput, {marginTop: 10}]}
+              onChangeText={(text) => this.setState({address: text})}
               autoCorrect={false}
               placeholder="Shop Email"
               placeholderTextColor={
@@ -153,8 +161,8 @@ export default class SignUp extends Component {
               value={address}
             />
             <TextInput
-              style={[BaseStyle.textInput, { marginTop: 10 }]}
-              onChangeText={text => this.setState({ address: text })}
+              style={[BaseStyle.textInput, {marginTop: 10}]}
+              onChangeText={(text) => this.setState({address: text})}
               autoCorrect={false}
               placeholder="Shop Address"
               placeholderTextColor={
@@ -163,8 +171,8 @@ export default class SignUp extends Component {
               value={address}
             />
             <TextInput
-              style={[BaseStyle.textInput, { marginTop: 10 }]}
-              onChangeText={text => this.setState({ address: text })}
+              style={[BaseStyle.textInput, {marginTop: 10}]}
+              onChangeText={(text) => this.setState({address: text})}
               autoCorrect={false}
               placeholder="Neigherhood"
               placeholderTextColor={
@@ -172,13 +180,15 @@ export default class SignUp extends Component {
               }
               value={address}
             />
-            <View style={{ width: "100%" }}>
+            <View style={{width: '100%'}}>
               <Button
                 full
-                style={{ marginTop: 20, backgroundColor: BaseColor.secondBlackColor}}
+                style={{
+                  marginTop: 20,
+                  backgroundColor: BaseColor.secondBlackColor,
+                }}
                 loading={loading}
-                onPress={() => this.onSignUp()}
-              >
+                onPress={() => this.onSignUp()}>
                 Sign Up
               </Button>
             </View>

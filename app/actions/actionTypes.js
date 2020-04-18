@@ -1,5 +1,9 @@
 // - LOGIN
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_ERROR = "LOGIN_ERROR";
-export const LOGIN = "LOGIN";
-export const LOGIN_START = "LOGIN_START";
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGIN = 'LOGIN';
+export const LOGIN_START = 'LOGIN_START';
+export const AUTH_LOGIN_LOADING = 'AUTH_LOGIN_LOADING';
+
+export const CALENDAR_VIEW_MODE = 'CALENDAR_VIEW_MODE';
+export const CALENDAR_MODE_SUCCESS = 'CALENDAR_MODE_SUCCESS';

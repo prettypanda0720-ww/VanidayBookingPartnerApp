@@ -20,13 +20,9 @@ export default StyleSheet.create({
     marginBottom: 5,
   },
   sideMenuContentItem: {
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20,
-    borderWidth: 1,
-    borderColor: '#fff',
-    padding: 10,
-    backgroundColor: '#557f90',
+    paddingLeft: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   calendar: {
     paddingLeft: 20,
@@ -99,4 +95,45 @@ export default StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  headerStyle: {
+    backgroundColor: '#F5F5F5',
+  },
+  thumb: {
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    width: 40, 
+    height: 40, 
+    borderRadius: 20,
+    borderColor: '#fff',
+    borderWidth: 1,
+  },
+  sideMenuStyle: {
+    height: '100%',
+    flexDirection: 'column',
+    paddingTop: 20,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  calendarTitle: {
+    fontSize: 22, 
+    color: 'white',
+  },
+  staffsTitle: {
+    fontSize: 22, 
+    color: 'white',
+    marginTop: 30,
+  },
+  calendarWrapper: {
+    flexDirection: 'row',
+    marginTop: 20,
+    justifyContent: 'space-between',
+  },
+  staffWrapper: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  staffName: {
+    color: '#fff',
+    fontSize: 15,
+  }
 });

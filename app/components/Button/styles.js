@@ -4,7 +4,7 @@ import { BaseColor, Typography, FontWeight } from "@config";
 
 export default StyleSheet.create({
   default: {
-    height: 40,
+    height: 56,
     borderRadius: 8,
     backgroundColor: BaseColor.secondBlackColor,
     flexDirection: "row",

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {store, persistor} from 'app/store';
+import store, {persistor} from 'app/store';
 import {StatusBar} from 'react-native';
 import {BaseColor} from '@config';
 import {Provider} from 'react-redux';

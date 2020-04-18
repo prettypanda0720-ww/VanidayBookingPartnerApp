@@ -23,6 +23,16 @@ import {WeekCalendar} from 'react-native-calendars';
 import moment from 'moment';
 import {BaseColor, Images} from '@config';
 
+import {Header} from 'react-native/Libraries/NewAppScreen';
+
+import WeekView from './WeekView/WeekView.js';
+
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {CalendarActions} from '@actions';
+import PropTypes from 'prop-types';
+import store from 'app/store';
+
 const today = new Date().toISOString().split('T')[0];
 const fastDate = getPastDate(3);
 const futureDates = getFutureDates(9);
@@ -192,11 +202,54 @@ const EVENTS = [
   },
 ];
 
-export default class App extends Component<{}> {
+const selectedDate = new Date();
+const generateDates = (hours, minutes) => {
+  const date = new Date();
+  date.setHours(date.getHours() + hours);
+  if (minutes != null) {
+    date.setMinutes(minutes);
+  }
+  return date;
+};
+const events = [
+  {
+    id: 1,
+    description: 'Event 1',
+    startDate: generateDates(0),
+    endDate: generateDates(2),
+    color: '#f0f3ff',
+  },
+  {
+    id: 2,
+    description: 'Event 2',
+    startDate: generateDates(1),
+    endDate: generateDates(4),
+    color: '#f0f3ff',
+  },
+  {
+    id: 3,
+    description: 'Event 3',
+    startDate: generateDates(-5),
+    endDate: generateDates(-3),
+    color: '#f0f3ff',
+  },
+];
+
+class App extends Component<{}> {
   constructor(props) {
     super(props);
     this.state = {drawerOpen: null, weekView: true};
-  };
+
+    let unsubscribe = store.subscribe(() => {
+      console.log('=========first state of viewmode============');
+      // console.log(this.state.viewmode);
+      console.log('=========second state of viewmode============');
+      console.log(store.getState().calendar);
+      // this.setState({viewmode: store.getState().calendar});
+      // console.log('========state==========');
+      // console.log(this.state.viewmode);
+    });
+  }
 
   onDateChanged = (/* date, updateSource */) => {
     // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
@@ -208,11 +261,11 @@ export default class App extends Component<{}> {
   };
 
   buttonPressed() {
-    Alert.alert('show more');
+    // Alert.alert('show more');
   }
 
   itemPressed(id) {
-    Alert.alert(id);
+    // Alert.alert(id);
   }
 
   renderEmptyItem() {
@@ -298,153 +351,127 @@ export default class App extends Component<{}> {
     };
   };
 
+  setCalendarViewMode(mode) {
+    this.props.actions.setCalendarViewMode(mode);
+  }
+
   renderSideMenuContent = () => {
     return (
-      <View style={{height: '100%', zIndex: 10000}}>
-        <Text
-          style={styles.sideMenuContentItem}
-          onPress={() => {
-            this.setState({drawerOpen: false});
-          }}>
-          Staff1
-        </Text>
-        <Text
-          style={styles.sideMenuContentItem}
-          onPress={() => {
-            this.setState({drawerOpen: false});
-          }}>
-          Staff2
-        </Text>
-        <Text
-          style={styles.sideMenuContentItem}
-          onPress={() => {
-            this.setState({drawerOpen: false});
-          }}>
-          Staff3
-        </Text>
+      <View style={styles.sideMenuStyle}>
+        <Text style={styles.calendarTitle}>CalendarView</Text>
+        <View style={styles.calendarWrapper}>
+          <TouchableOpacity
+            style={{flexDirection: 'column', alignItems: 'center'}}
+            onPress={() => {
+              this.setCalendarViewMode(1);
+              this.setState({drawerOpen: false});
+            }}>
+            <Icon name="list" size={20} color={BaseColor.whiteColor} />
+            <Text style={{fontSize: 15, color: 'white'}}>Day</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{flexDirection: 'column', alignItems: 'center'}}
+            onPress={() => {
+              this.setCalendarViewMode(3);
+              this.setState({drawerOpen: false});
+            }}>
+            <Icon name="list" size={20} color={BaseColor.whiteColor} />
+            <Text style={{fontSize: 15, color: 'white'}}>3Day</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{flexDirection: 'column', alignItems: 'center'}}
+            onPress={() => {
+              this.setCalendarViewMode(7);
+              this.setState({drawerOpen: false});
+            }}>
+            <Icon name="list" size={20} color={BaseColor.whiteColor} />
+            <Text style={{fontSize: 15, color: 'white'}}>Week</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.staffsTitle}>Staffs</Text>
+        <View style={styles.staffWrapper}>
+          <Image style={styles.thumb} source={Images.profile1} />
+          <TouchableOpacity
+            style={styles.sideMenuContentItem}
+            onPress={() => {
+              this.setState({drawerOpen: false});
+            }}>
+            <Text style={styles.staffName}>Wendy Smith</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.staffWrapper}>
+          <Image style={styles.thumb} source={Images.profile2} />
+          <TouchableOpacity
+            style={styles.sideMenuContentItem}
+            onPress={() => {
+              this.setState({drawerOpen: false});
+            }}>
+            <Text style={styles.staffName}>Max Lee</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.staffWrapper}>
+          <Image style={styles.thumb} source={Images.profile3} />
+          <TouchableOpacity
+            style={styles.sideMenuContentItem}
+            onPress={() => {
+              this.setState({drawerOpen: false});
+            }}>
+            <Text style={styles.staffName}>William Lay</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
 
   renderMainContent = () => {
-    if (!this.state.drawerOpen) {
-      return (
-        <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              backgroundColor: 'white',
-              padding: 5,
-              borderTopColor: 'BaseColor.blackColor',
-              borderTopWidth: 1,
-            }}>
-            <TouchableOpacity
-              onPress={this.toggle}
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
-            </TouchableOpacity>
-            <View style={{flex: 10, backgroundColor: 'white'}}>
-              <DatePicker
-                time="16 Apr 2020"
-                style={{
-                  backgroundColor: 'white',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              />
-            </View>
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({drawerOpen: true});
+    return (
+      <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: 'white',
+            padding: 5,
+            borderTopColor: 'BaseColor.blackColor',
+            borderTopWidth: 1,
+          }}>
+          <TouchableOpacity
+            onPress={this.toggle}
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
+          </TouchableOpacity>
+          <View style={{flex: 10, backgroundColor: 'white'}}>
+            <DatePicker
+              time="16 Apr 2020"
+              style={{
+                backgroundColor: 'white',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Image source={Images.menu} style={{width: 32, height: 20}} />
-            </TouchableOpacity>
-          </View>
-          <CalendarProvider
-            date={ITEMS[0].title}
-            onDateChanged={this.onDateChanged}
-            onMonthChange={this.onMonthChange}
-            theme={{todayButtonTextColor: '#0059ff'}}
-            showTodayButton
-            disabledOpacity={0.6}
-            // todayBottomMargin={16}
-          >
-            {this.state.weekView ? (
-              <WeekCalendar
-                testID={'weekCalendar'}
-                firstDay={1}
-                markedDates={this.getMarkedDates()}
-              />
-            ) : (
-              <ExpandableCalendar
-                horizontal={true}
-                // hideArrows
-                // disablePan
-                hideKnob
-                // initialPosition={ExpandableCalendar.positions.OPEN}
-                firstDay={1}
-                markedDates={this.getMarkedDates()} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
-                theme={this.getTheme()}
-                //   leftArrowImageSource={require('../img/previous.png')}
-                //   rightArrowImageSource={require('../img/next.png')}
-                calendarStyle={styles.calendar}
-                headerStyle={styles.calendar} // for horizontal only
-                // disableWeekScroll
-              />
-            )}
-            <Timeline
-              format24h={true}
-              renderEvent={false}
-              eventTapped={() => {}}
-              events={EVENTS}
-              scrollToFirst={true}
-              // start={0}
-              // end={24}
             />
-          </CalendarProvider>
-        </SafeAreaView>
-      );
-    } else {
-      return (
-        <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              backgroundColor: 'white',
-              padding: 5,
-              borderTopColor: 'BaseColor.blackColor',
-              borderTopWidth: 1,
-            }}>
-            <TouchableOpacity
-              onPress={this.toggle}
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
-            </TouchableOpacity>
-            <View style={{flex: 10, backgroundColor: 'white'}}>
-              <DatePicker
-                time="16 Apr 2020"
-                style={{
-                  backgroundColor: 'white',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              />
-            </View>
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({drawerOpen: true});
-              }}
-              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Image source={Images.menu} style={{width: 32, height: 20}} />
-            </TouchableOpacity>
           </View>
-        </SafeAreaView>
-      );
-    }
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({drawerOpen: true});
+            }}
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Icon name="sliders-h" size={20} color={BaseColor.blackColor} />
+          </TouchableOpacity>
+        </View>
+        <WeekView
+          events={events}
+          selectedDate={this.selectedDate}
+          numberOfDays={store.getState().calendar.calendarViewMode == undefined ? 7 : store.getState().calendar.calendarViewMode}
+          // onEventPress={(event) => Alert.alert('eventId:' + event.id)}
+          headerStyle={styles.headerStyle}
+          headerTextColor="#000"
+          formatDateHeader="MMM D"
+        />
+      </SafeAreaView>
+    );
   };
 
   render() {
+
     return (
       <Drawer
         open={this.state.drawerOpen}
@@ -452,7 +479,7 @@ export default class App extends Component<{}> {
         type="overlay"
         tapToClose={true}
         styles={drawerStyles}
-        openDrawerOffset={0.1}
+        openDrawerOffset={0.4}
         panCloseMask={0.2}
         closedDrawerOffset={-3}
         onClose={() => {
@@ -466,3 +493,21 @@ export default class App extends Component<{}> {
     );
   }
 }
+
+App.defaultProps = {};
+
+App.propTypes = {};
+
+const mapStateToProps = (state) => {
+  return {
+    calendar: state.calendar,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(CalendarActions, dispatch),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
