@@ -113,6 +113,7 @@ export default StyleSheet.create({
     paddingTop: 20,
     paddingLeft: 15,
     paddingRight: 15,
+    backgroundColor: 'rgba(0,0,0,0.7)',
   },
   calendarTitle: {
     fontSize: 22, 
@@ -135,5 +136,12 @@ export default StyleSheet.create({
   staffName: {
     color: '#fff',
     fontSize: 15,
-  }
+  },
+  drawer: {
+    shadowColor: '#000000',
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    zIndex: 1000,
+  },
 });

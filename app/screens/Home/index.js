@@ -8,24 +8,15 @@ import {
   TouchableHighlight,
   Text,
   View,
+  Alert,
+  FlatList,
 } from 'react-native';
 import styles from './styles';
-import drawerStyles from './drawerStyles';
 import Drawer from 'react-native-drawer';
-import {
-  Icon,
-  DatePicker,
-  ExpandableCalendar,
-  Timeline,
-  CalendarProvider,
-} from '@components';
-import {WeekCalendar} from 'react-native-calendars';
+import {Icon} from '@components';
+import {Agenda} from 'react-native-calendars';
 import moment from 'moment';
 import {BaseColor, Images} from '@config';
-
-import {Header} from 'react-native/Libraries/NewAppScreen';
-
-import WeekView from './WeekView/WeekView.js';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -33,212 +24,16 @@ import {CalendarActions} from '@actions';
 import PropTypes from 'prop-types';
 import store from 'app/store';
 
-const today = new Date().toISOString().split('T')[0];
-const fastDate = getPastDate(3);
-const futureDates = getFutureDates(9);
-const dates = [fastDate, today].concat(futureDates);
-
-function getFutureDates(days) {
-  const array = [];
-  for (let index = 1; index <= days; index++) {
-    const date = new Date(Date.now() + 864e5 * index); // 864e5 == 86400000 == 24*60*60*1000
-    const dateString = date.toISOString().split('T')[0];
-    array.push(dateString);
-  }
-  return array;
-}
-
-function getPastDate(days) {
-  return new Date(Date.now() - 864e5 * days).toISOString().split('T')[0];
-}
-
-const ITEMS = [
-  {
-    title: dates[0],
-    data: [{hour: '12am', duration: '1h', title: 'HairCut'}],
-  },
-  {
-    title: dates[1],
-    data: [
-      {hour: '4pm', duration: '1h', title: 'HairCut'},
-      {hour: '5pm', duration: '1h', title: 'HairCut'},
-    ],
-  },
-  {
-    title: dates[2],
-    data: [
-      {hour: '1pm', duration: '1h', title: 'Hair Removal'},
-      {hour: '2pm', duration: '1h', title: 'Brazil Massage'},
-      {hour: '3pm', duration: '1h', title: 'Massage'},
-    ],
-  },
-  {
-    title: dates[3],
-    data: [{hour: '12am', duration: '1h', title: 'Hair Removal'}],
-  },
-  {title: dates[4], data: [{}]},
-  {
-    title: dates[5],
-    data: [
-      {hour: '9pm', duration: '1h', title: 'Pilates Reformer'},
-      {hour: '10pm', duration: '1h', title: 'Ashtanga'},
-      {hour: '11pm', duration: '1h', title: 'TRX'},
-      {hour: '12pm', duration: '1h', title: 'Running Group'},
-    ],
-  },
-  {
-    title: dates[6],
-    data: [{hour: '12am', duration: '1h', title: 'Hair Removal'}],
-  },
-  {title: dates[7], data: [{}]},
-  {
-    title: dates[8],
-    data: [
-      {hour: '9pm', duration: '1h', title: 'Pilates Reformer'},
-      {hour: '10pm', duration: '1h', title: 'Ashtanga'},
-      {hour: '11pm', duration: '1h', title: 'TRX'},
-      {hour: '12pm', duration: '1h', title: 'Running Group'},
-    ],
-  },
-  {
-    title: dates[9],
-    data: [
-      {hour: '1pm', duration: '1h', title: 'Hair Removal'},
-      {hour: '2pm', duration: '1h', title: 'Brazil Massage'},
-      {hour: '3pm', duration: '1h', title: 'Massage'},
-    ],
-  },
-  {
-    title: dates[10],
-    data: [{hour: '12am', duration: '1h', title: 'Hair Removal'}],
-  },
-];
-
-const EVENTS = [
-  {
-    start: '2017-09-06 22:30:00',
-    end: '2017-09-06 23:30:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-    color: 'green',
-  },
-  {
-    start: '2017-09-07 00:30:00',
-    end: '2017-09-07 01:30:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-07 01:30:00',
-    end: '2017-09-07 02:20:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-07 04:10:00',
-    end: '2017-09-07 04:40:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-07 01:05:00',
-    end: '2017-09-07 01:45:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-07 14:30:00',
-    end: '2017-09-07 16:30:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-08 01:20:00',
-    end: '2017-09-08 02:20:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-08 04:10:00',
-    end: '2017-09-08 04:40:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-08 00:45:00',
-    end: '2017-09-08 01:45:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-08 11:30:00',
-    end: '2017-09-08 12:30:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-09 01:30:00',
-    end: '2017-09-09 02:00:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-09 03:10:00',
-    end: '2017-09-09 03:40:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-09 00:10:00',
-    end: '2017-09-09 01:45:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-  {
-    start: '2017-09-10 12:10:00',
-    end: '2017-09-10 13:45:00',
-    title: 'Dr. Mariana Joseph',
-    summary: '3412 Piedmont Rd NE, GA 3032',
-  },
-];
-
-const selectedDate = new Date();
-const generateDates = (hours, minutes) => {
-  const date = new Date();
-  date.setHours(date.getHours() + hours);
-  if (minutes != null) {
-    date.setMinutes(minutes);
-  }
-  return date;
-};
-const events = [
-  {
-    id: 1,
-    description: 'Event 1',
-    startDate: generateDates(0),
-    endDate: generateDates(2),
-    color: '#f0f3ff',
-  },
-  {
-    id: 2,
-    description: 'Event 2',
-    startDate: generateDates(1),
-    endDate: generateDates(4),
-    color: '#f0f3ff',
-  },
-  {
-    id: 3,
-    description: 'Event 3',
-    startDate: generateDates(-5),
-    endDate: generateDates(-3),
-    color: '#f0f3ff',
-  },
-];
-
 class App extends Component<{}> {
   constructor(props) {
     super(props);
-    this.state = {drawerOpen: null, weekView: true};
+    this.state = {
+      drawerOpen: null,
+      items: {},
+      numStaffs: 2,
+      showMode: -1, /* if showMode = -1, show all staffs's appointment list, if showMode = nth, show nth-staffs's appointment list, */
+      currentDay: '',
+    };
 
     let unsubscribe = store.subscribe(() => {
       console.log('=========first state of viewmode============');
@@ -251,106 +46,6 @@ class App extends Component<{}> {
     });
   }
 
-  onDateChanged = (/* date, updateSource */) => {
-    // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
-    // fetch and set data for date + week ahead
-  };
-
-  onMonthChange = (/* month, updateSource */) => {
-    // console.warn('ExpandableCalendarScreen onMonthChange: ', month, updateSource);
-  };
-
-  buttonPressed() {
-    // Alert.alert('show more');
-  }
-
-  itemPressed(id) {
-    // Alert.alert(id);
-  }
-
-  renderEmptyItem() {
-    return (
-      <View style={styles.emptyItem}>
-        <Text style={styles.emptyItemText}>No Events Planned</Text>
-      </View>
-    );
-  }
-
-  renderItem = ({item}) => {
-    if (_.isEmpty(item)) {
-      return this.renderEmptyItem();
-    }
-
-    return (
-      <TouchableOpacity
-        onPress={() => this.itemPressed(item.title)}
-        style={styles.item}>
-        <View>
-          <Text style={styles.itemHourText}>{item.hour}</Text>
-          <Text style={styles.itemDurationText}>{item.duration}</Text>
-        </View>
-        <Text style={styles.itemTitleText}>{item.title}</Text>
-        <View style={styles.itemButtonContainer}>
-          <Button title={'Info'} onPress={this.buttonPressed} />
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  getMarkedDates = () => {
-    const marked = {};
-    ITEMS.forEach((item) => {
-      // only mark dates with data
-      if (item.data && item.data.length > 0 && !_.isEmpty(item.data[0])) {
-        marked[item.title] = {marked: true};
-      }
-    });
-    return marked;
-  };
-
-  getTheme = () => {
-    const themeColor = '#0059ff';
-    const lightThemeColor = '#e6efff';
-    const disabledColor = '#a6acb1';
-    const black = '#20303c';
-    const white = '#ffffff';
-
-    return {
-      // arrows
-      arrowColor: black,
-      arrowStyle: {padding: 0},
-      // month
-      monthTextColor: black,
-      textMonthFontSize: 16,
-      textMonthFontFamily: 'HelveticaNeue',
-      textMonthFontWeight: 'bold',
-      // day names
-      textSectionTitleColor: black,
-      textDayHeaderFontSize: 12,
-      textDayHeaderFontFamily: 'HelveticaNeue',
-      textDayHeaderFontWeight: 'normal',
-      // today
-      todayBackgroundColor: lightThemeColor,
-      todayTextColor: themeColor,
-      // dates
-      dayTextColor: themeColor,
-      textDayFontSize: 18,
-      textDayFontFamily: 'HelveticaNeue',
-      textDayFontWeight: '500',
-      textDayStyle: {marginTop: Platform.OS === 'android' ? 2 : 4},
-      // selected date
-      selectedDayBackgroundColor: themeColor,
-      selectedDayTextColor: white,
-      // disabled date
-      textDisabledColor: disabledColor,
-      // dot (marked date)
-      dotColor: themeColor,
-      selectedDotColor: white,
-      disabledDotColor: disabledColor,
-      dotStyle: {marginTop: -2},
-    };
-  };
-
   setCalendarViewMode(mode) {
     this.props.actions.setCalendarViewMode(mode);
   }
@@ -358,55 +53,30 @@ class App extends Component<{}> {
   renderSideMenuContent = () => {
     return (
       <View style={styles.sideMenuStyle}>
-        <Text style={styles.calendarTitle}>CalendarView</Text>
-        <View style={styles.calendarWrapper}>
-          <TouchableOpacity
-            style={{flexDirection: 'column', alignItems: 'center'}}
-            onPress={() => {
-              this.setCalendarViewMode(1);
-              this.setState({drawerOpen: false});
-            }}>
-            <Icon name="list" size={20} color={BaseColor.whiteColor} />
-            <Text style={{fontSize: 15, color: 'white'}}>Day</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{flexDirection: 'column', alignItems: 'center'}}
-            onPress={() => {
-              this.setCalendarViewMode(3);
-              this.setState({drawerOpen: false});
-            }}>
-            <Icon name="list" size={20} color={BaseColor.whiteColor} />
-            <Text style={{fontSize: 15, color: 'white'}}>3Day</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{flexDirection: 'column', alignItems: 'center'}}
-            onPress={() => {
-              this.setCalendarViewMode(7);
-              this.setState({drawerOpen: false});
-            }}>
-            <Icon name="list" size={20} color={BaseColor.whiteColor} />
-            <Text style={{fontSize: 15, color: 'white'}}>Week</Text>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.staffsTitle}>Staffs</Text>
+        <Text style={styles.staffsTitle}>Staff Members</Text>
+        <TouchableOpacity
+          style={styles.sideMenuContentItem}
+          onPress={() => {
+            this.setState({showMode: -1});
+            setTimeout(() => {
+              this.loadItems(this.state.currentDay);
+            }, 1000);
+            this.setState({drawerOpen: false});
+          }}>
+          <Text style={styles.staffName}>All staffs</Text>
+        </TouchableOpacity>
         <View style={styles.staffWrapper}>
           <Image style={styles.thumb} source={Images.profile1} />
           <TouchableOpacity
             style={styles.sideMenuContentItem}
             onPress={() => {
+              this.setState({showMode: 0});
+              setTimeout(() => {
+                this.loadItems(this.state.currentDay);
+              }, 1000);
               this.setState({drawerOpen: false});
             }}>
-            <Text style={styles.staffName}>Wendy Smith</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.staffWrapper}>
-          <Image style={styles.thumb} source={Images.profile2} />
-          <TouchableOpacity
-            style={styles.sideMenuContentItem}
-            onPress={() => {
-              this.setState({drawerOpen: false});
-            }}>
-            <Text style={styles.staffName}>Max Lee</Text>
+            <Text style={styles.staffName}>Judy T</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.staffWrapper}>
@@ -414,6 +84,10 @@ class App extends Component<{}> {
           <TouchableOpacity
             style={styles.sideMenuContentItem}
             onPress={() => {
+              this.setState({showMode: 1});
+              setTimeout(() => {
+                this.loadItems(this.state.currentDay);
+              }, 1000);
               this.setState({drawerOpen: false});
             }}>
             <Text style={styles.staffName}>William Lay</Text>
@@ -430,7 +104,7 @@ class App extends Component<{}> {
           style={{
             flexDirection: 'row',
             backgroundColor: 'white',
-            padding: 5,
+            padding: 10,
             borderTopColor: 'BaseColor.blackColor',
             borderTopWidth: 1,
           }}>
@@ -439,15 +113,11 @@ class App extends Component<{}> {
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
           </TouchableOpacity>
-          <View style={{flex: 10, backgroundColor: 'white'}}>
-            <DatePicker
-              time="16 Apr 2020"
-              style={{
-                backgroundColor: 'white',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            />
+          <View
+            style={{justifyContent: 'center', alignItems: 'center', flex: 10}}>
+            <Text headline bold>
+              Appointments
+            </Text>
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -457,28 +127,191 @@ class App extends Component<{}> {
             <Icon name="sliders-h" size={20} color={BaseColor.blackColor} />
           </TouchableOpacity>
         </View>
-        <WeekView
-          events={events}
-          selectedDate={this.selectedDate}
-          numberOfDays={store.getState().calendar.calendarViewMode == undefined ? 7 : store.getState().calendar.calendarViewMode}
-          // onEventPress={(event) => Alert.alert('eventId:' + event.id)}
-          headerStyle={styles.headerStyle}
-          headerTextColor="#000"
-          formatDateHeader="MMM D"
+        <Agenda
+          // testID={testIDs.agenda.CONTAINER}
+          items={this.state.items}
+          loadItemsForMonth={this.loadItems.bind(this)}
+          selected={'2017-05-16'}
+          renderItem={this.renderItem.bind(this)}
+          renderEmptyDate={this.renderEmptyDate.bind(this)}
+          rowHasChanged={this.rowHasChanged.bind(this)}
+          // markingType={'period'}
+          // markedDates={{
+          //    '2017-05-08': {textColor: '#43515c'},
+          //    '2017-05-09': {textColor: '#43515c'},
+          //    '2017-05-14': {startingDay: true, endingDay: true, color: 'blue'},
+          //    '2017-05-21': {startingDay: true, color: 'blue'},
+          //    '2017-05-22': {endingDay: true, color: 'gray'},
+          //    '2017-05-24': {startingDay: true, color: 'gray'},
+          //    '2017-05-25': {color: 'gray'},
+          //    '2017-05-26': {endingDay: true, color: 'gray'}}}
+          // monthFormat={'yyyy'}
+          // theme={{calendarBackground: 'red', agendaKnobColor: 'green'}}
+          //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
+          // hideExtraDays={false}
         />
       </SafeAreaView>
     );
   };
 
-  render() {
+  loadItems(day) {
+    console.log(this.state.showMode);
+    console.log('agenda loaditemsformonth is called!');
+    this.state.items = {};
+    this.state.currentDay = day;
+    setTimeout(() => {
+      for (let i = -15; i < 85; i++) {
+        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+        const strTime = this.timeToString(time);
+        if (!this.state.items[strTime]) {
+          this.state.items[strTime] = [];
 
+          for (let j = 0; j < this.state.numStaffs; j++) {
+            let appointmentbystaff = {};
+            appointmentbystaff[j] = [];
+
+            let tpStaffName = j % 2 == 0 ? 'Judy T' : 'William Lay';
+            for (let k = 0; k < 2; k++) {
+              let tpState =
+                k % 2 == 0 ? 'Accepted Appointment' : 'Upcoming Appointment';
+
+              appointmentbystaff[j].push({
+                acceptedState: tpState,
+                name: 'HairCut' + k,
+                staffName: tpStaffName,
+                appointmentDate: strTime,
+                startTime: '2:30 PM',
+                endTime: '3:30 PM',
+                height: Math.max(50, Math.floor(Math.random() * 150)),
+              });
+            }
+            this.state.items[strTime].push(appointmentbystaff);
+          }
+        }
+      }
+
+      const newItems = {};
+      Object.keys(this.state.items).forEach((key1) => {
+        Object.keys(this.state.items[key1]).forEach((key2) => {
+          if (this.state.showMode == -1) {
+            newItems[key1] = this.state.items[key1];
+          } else if (this.state.showMode == key2) {
+            newItems[key1] = [];
+            newItems[key1].push(this.state.items[key1][key2]);
+          }
+        });
+      });
+      // console.log(newItems);
+      this.setState({
+        items: newItems,
+      });
+    }, 1000);
+  }
+
+  renderItem(item) {
+    const newItems = [];
+    Object.keys(item).forEach((key) => {
+      // newItems.push(item[key]);
+      // console.log('--------------------' + key);
+      // console.log(item[key]);
+      if (this.state.showMode == -1) {
+        Object(item[key]).forEach((element) => {
+          newItems.push(element);
+        });
+      } else if (this.state.showMode == key) {
+        Object(item[key]).forEach((element) => {
+          newItems.push(element);
+        });
+      }
+    });
+
+    return (
+      <FlatList
+        data={newItems}
+        keyExtractor={(item, index) => item.id}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            // testID={testIDs.agenda.ITEM}
+            onPress={() => Alert.alert(item.name)}
+            style={{
+              borderColor: 'green',
+              marginTop: 10,
+              marginBottom: 10,
+              marginRight: 10,
+              padding: 15,
+              backgroundColor: 'white',
+              borderLeftWidth: 2,
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+            }}>
+            <View style={{flexDirection: 'column'}}>
+              <Text style={{fontSize: 17, color: 'black', fontWeight: 'bold'}}>
+                {item.acceptedState}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'gray',
+                  marginTop: 5,
+                  fontWeight: 'semi-bold',
+                }}>
+                Service Name: {item.name}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'gray',
+                  marginTop: 5,
+                  fontWeight: 'semi-bold',
+                }}>
+                Staff Name: {item.staffName}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'gray',
+                  marginTop: 5,
+                  fontWeight: 'regular',
+                }}>
+                {item.appointmentDate}
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text style={{fontSize: 25, color: 'green', fontWeight: 'bold'}}>
+                {item.startTime}
+              </Text>
+              <Text style={{fontSize: 18, color: 'green', fontWeight: 'bold'}}>
+                {item.endTime}
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          // <TouchableOpacity
+          //   testID={testIDs.agenda.ITEM}
+          //   style={[styles.item, {height: item.height}]}
+          //   onPress={() => Alert.alert(item.name)}
+          // >
+          //   <Text>{item.name}</Text>
+          // </TouchableOpacity>
+        )}
+      />
+    );
+  }
+
+  render() {
+    // console.log(this.state.showMode);
     return (
       <Drawer
         open={this.state.drawerOpen}
         content={this.renderSideMenuContent()}
         type="overlay"
         tapToClose={true}
-        styles={drawerStyles}
+        styles={styles.drawer}
         openDrawerOffset={0.4}
         panCloseMask={0.2}
         closedDrawerOffset={-3}
@@ -491,6 +324,24 @@ class App extends Component<{}> {
         {this.renderMainContent()}
       </Drawer>
     );
+  }
+
+  renderEmptyDate() {
+    return (
+      <View style={styles.emptyDate}>
+        <Text>This is empty date!</Text>
+      </View>
+    );
+  }
+
+  rowHasChanged(r1, r2) {
+    // return r1.name !== r2.name;
+    return true;
+  }
+
+  timeToString(time) {
+    const date = new Date(time);
+    return date.toISOString().split('T')[0];
   }
 }
 
