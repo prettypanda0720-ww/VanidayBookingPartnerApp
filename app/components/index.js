@@ -15,6 +15,11 @@ import ProfileDetail from './ProfileDetail';
 import Timeline from './Timeline';
 import ExpandableCalendar from './expandableCalendar';
 import CalendarProvider from './expandableCalendar/calendarProvider.js';
+import StaffProfileListItem from './StaffProfileListItem';
+import StarRating from './StarRating';
+import VanidayTimePicker from './TimePicker';
+import RateDetail from './RateDetail';
+import CommentItem from './CommentItem';
 
 export {
   Header,
@@ -34,4 +39,9 @@ export {
   Timeline,
   ExpandableCalendar,
   CalendarProvider,
+  StaffProfileListItem,
+  StarRating,
+  VanidayTimePicker,
+  RateDetail,
+  CommentItem,
 };

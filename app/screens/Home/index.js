@@ -111,7 +111,7 @@ class App extends Component<{}> {
           <TouchableOpacity
             onPress={this.toggle}
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
+            <Icon name="chevron-left" size={20} color={BaseColor.blackColor} />
           </TouchableOpacity>
           <View
             style={{justifyContent: 'center', alignItems: 'center', flex: 10}}>
@@ -135,6 +135,7 @@ class App extends Component<{}> {
           renderItem={this.renderItem.bind(this)}
           renderEmptyDate={this.renderEmptyDate.bind(this)}
           rowHasChanged={this.rowHasChanged.bind(this)}
+          // renderKnob={() => {return (<View style={{marginTop: 15, width: 60, height: 10, backgroundColor: BaseColor.fieldColor}}></View>);}}
           // markingType={'period'}
           // markedDates={{
           //    '2017-05-08': {textColor: '#43515c'},
@@ -146,7 +147,7 @@ class App extends Component<{}> {
           //    '2017-05-25': {color: 'gray'},
           //    '2017-05-26': {endingDay: true, color: 'gray'}}}
           // monthFormat={'yyyy'}
-          // theme={{calendarBackground: 'red', agendaKnobColor: 'green'}}
+          theme={{calendarBackground: 'white', agendaKnobColor: '#00bbf2'}}
           //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
           // hideExtraDays={false}
         />

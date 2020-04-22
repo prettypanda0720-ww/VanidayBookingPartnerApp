@@ -1,11 +1,19 @@
-import React, { Component } from "react";
-import { View, ScrollView, TextInput, TouchableOpacity } from "react-native";
-import { BaseStyle, BaseColor, Images } from "@config";
-import { Image, Header, SafeAreaView, Icon, Text, Button, RadioGroup } from "@components";
-import styles from "./styles";
+import React, {Component} from 'react';
+import {View, ScrollView, TextInput, TouchableOpacity} from 'react-native';
+import {BaseStyle, BaseColor, Images} from '@config';
+import {
+  Image,
+  Header,
+  SafeAreaView,
+  Icon,
+  Text,
+  Button,
+  RadioGroup,
+} from '@components';
+import styles from './styles';
 
 // Load sample data
-import { ShopsData } from "@data";
+import {ShopsData} from '@data';
 
 export default class ProfileEdit extends Component {
   constructor(props) {
@@ -22,20 +30,17 @@ export default class ProfileEdit extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const {navigation} = this.props;
     return (
-      <SafeAreaView
-        style={BaseStyle.safeAreaView}
-        forceInset={{ top: "always" }}
-      >
+      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Edit Profile"
           renderLeft={() => {
             return (
               <Icon
-                name="arrow-left"
+                name="chevron-left"
                 size={20}
-                color={BaseColor.primaryColor}
+                color={BaseColor.blackColor}
               />
             );
           }}
@@ -47,11 +52,11 @@ export default class ProfileEdit extends Component {
         <ScrollView>
           <View style={styles.contain}>
             <View>
-              <Image source={this.state.image} style={[styles.thumb, {width: 140, height: 70, resizeMode:'contain'}]} />
+              <Image source={this.state.image} style={[styles.thumb]} />
             </View>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="First Name"
               placeholderTextColor={BaseColor.MainPrimaryColor}
@@ -59,7 +64,7 @@ export default class ProfileEdit extends Component {
             />
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Last Name"
               placeholderTextColor={BaseColor.MainPrimaryColor}
@@ -67,7 +72,7 @@ export default class ProfileEdit extends Component {
             />
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Email"
               placeholderTextColor={BaseColor.grayColor}
@@ -75,7 +80,7 @@ export default class ProfileEdit extends Component {
             />
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Address"
               placeholderTextColor={BaseColor.grayColor}
@@ -83,7 +88,7 @@ export default class ProfileEdit extends Component {
             />
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Mobile Number"
               placeholderTextColor={BaseColor.grayColor}
@@ -92,7 +97,7 @@ export default class ProfileEdit extends Component {
             <RadioGroup />
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Business Name"
               placeholderTextColor={BaseColor.grayColor}
@@ -100,7 +105,7 @@ export default class ProfileEdit extends Component {
             />
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Business Name"
               placeholderTextColor={BaseColor.grayColor}
@@ -108,7 +113,7 @@ export default class ProfileEdit extends Component {
             />
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Business Tel"
               placeholderTextColor={BaseColor.grayColor}
@@ -116,7 +121,7 @@ export default class ProfileEdit extends Component {
             />
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Business Email"
               placeholderTextColor={BaseColor.grayColor}
@@ -124,7 +129,7 @@ export default class ProfileEdit extends Component {
             />
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Business Address"
               placeholderTextColor={BaseColor.grayColor}
@@ -132,7 +137,7 @@ export default class ProfileEdit extends Component {
             />
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={text => this.setState({ id: text })}
+              onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Neighborhood"
               placeholderTextColor={BaseColor.grayColor}
@@ -140,23 +145,22 @@ export default class ProfileEdit extends Component {
             />
           </View>
         </ScrollView>
-        <View style={{ padding: 20 }}>
+        <View style={{padding: 20}}>
           <Button
             loading={this.state.loading}
             full
             onPress={() => {
               this.setState(
                 {
-                  loading: true
+                  loading: true,
                 },
                 () => {
                   setTimeout(() => {
                     navigation.goBack();
                   }, 500);
-                }
+                },
               );
-            }}
-          >
+            }}>
             Confirm
           </Button>
         </View>

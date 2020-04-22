@@ -23,6 +23,11 @@ import ResetPassword from '@screens/ResetPassword';
 import ChangePassword from '@screens/ChangePassword';
 import ProfileEdit from '@screens/ProfileEdit';
 import Currency from '@screens/Currency';
+import Staffs from '@screens/Staffs';
+import StaffMembers from '@screens/StaffMembers';
+import StaffProfileDetail from '@screens/StaffProfileDetail';
+import OpeningHours from '@screens/OpeningHours';
+import CreateStaff from '@screens/CreateStaff';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -42,7 +47,7 @@ const bottomTabNavigatorConfig = {
   tabBarOptions: {
     showIcon: true,
     showLabel: true,
-    activeTintColor: BaseColor.primaryColor,
+    activeTintColor: BaseColor.MainPrimaryColor,
     inactiveTintColor: BaseColor.grayColor,
     style: BaseStyle.tabBar,
     labelStyle: {
@@ -58,7 +63,14 @@ const routeConfigs = {
     navigationOptions: ({navigation}) => ({
       // title: 'Home',
       tabBarIcon: ({focused, tintColor}) => {
-        return <Icon color={tintColor} name="calendar" size={20} solid />;
+        return (
+          <Icon
+            color={tintColor}
+            name="calendar"
+            size={20}
+            solid
+          />
+        );
       },
     }),
   },
@@ -67,7 +79,14 @@ const routeConfigs = {
     navigationOptions: ({navigation}) => ({
       title: 'Sales',
       tabBarIcon: ({focused, tintColor}) => {
-        return <Icon color={tintColor} name="bookmark" size={20} solid />;
+        return (
+          <Icon
+            color={tintColor}
+            name="bookmark"
+            size={20}
+            solid
+          />
+        );
       },
     }),
   },
@@ -76,7 +95,14 @@ const routeConfigs = {
     navigationOptions: ({navigation}) => ({
       title: 'Clients',
       tabBarIcon: ({focused, tintColor}) => {
-        return <Icon color={tintColor} name="user-circle" size={20} solid />;
+        return (
+          <Icon
+            color={tintColor}
+            name="user-circle"
+            size={20}
+            solid
+          />
+        );
       },
     }),
   },
@@ -85,7 +111,14 @@ const routeConfigs = {
     navigationOptions: ({navigation}) => ({
       title: 'Notification',
       tabBarIcon: ({focused, tintColor}) => {
-        return <Icon color={tintColor} name="envelope" size={20} solid />;
+        return (
+          <Icon
+            color={tintColor}
+            name="envelope"
+            size={20}
+            solid
+          />
+        );
       },
     }),
   },
@@ -94,7 +127,14 @@ const routeConfigs = {
     navigationOptions: ({navigation}) => ({
       title: 'Setting',
       tabBarIcon: ({focused, tintColor}) => {
-        return <Icon color={tintColor} name="bars" size={20} solid />;
+        return (
+          <Icon
+            color={tintColor}
+            name="bars"
+            size={20}
+            solid
+          />
+        );
       },
     }),
   },
@@ -148,6 +188,21 @@ const StackNavigator = createStackNavigator(
     Home: {
       screen: Home,
     },
+    Staffs: {
+      screen: Staffs,
+    },
+    StaffMembers: {
+      screen: StaffMembers,
+    },
+    StaffProfileDetail: {
+      screen: StaffProfileDetail,
+    },
+    OpeningHours: {
+      screen: OpeningHours,
+    },
+    CreateStaff: {
+      screen: CreateStaff,
+    },
   },
   {
     headerMode: 'none',
@@ -169,7 +224,7 @@ const RootStack = createStackNavigator(
     mode: 'modal',
     headerMode: 'none',
     initialRouteName: 'StackNavigator',
-    transitionConfig: screen => {
+    transitionConfig: (screen) => {
       return handleCustomTransition(screen);
     },
   },

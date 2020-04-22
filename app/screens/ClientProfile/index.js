@@ -104,7 +104,7 @@ class ClientProfile extends Component {
           renderLeft={() => {
             return (
               <Icon
-                name="angle-left"
+                name="chevron-left"
                 size={20}
                 color={BaseColor.blackColor}
               />
@@ -144,6 +144,7 @@ class ClientProfile extends Component {
             point={userData.point}
             textSecond={userData.address}
             textThird={userData.id}
+            styleThumb = {{width: 60, height: 60, borderRadius: 30}}
             onPress={() => navigation.navigate('ProfileExanple')}
           />
           <ProfilePerformance

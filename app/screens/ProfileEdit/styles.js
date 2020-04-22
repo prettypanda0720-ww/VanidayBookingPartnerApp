@@ -18,9 +18,8 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
   thumb: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 130,
+    height: 60,
     marginBottom: 20
   }
 });

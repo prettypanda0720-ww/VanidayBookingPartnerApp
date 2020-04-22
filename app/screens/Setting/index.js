@@ -60,6 +60,8 @@ class Setting extends Component {
   render() {
     const {navigation} = this.props;
     const {shopData, loading} = this.state;
+    console.log('-----------');
+    console.log(shopData);
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
@@ -67,15 +69,15 @@ class Setting extends Component {
           renderLeft={() => {
             return (
               <Icon
-                name="arrow-left"
+                name="chevron-left"
                 size={20}
-                color={BaseColor.primaryColor}
+                color={BaseColor.blackColor}
               />
             );
           }}
           renderRight={() => {
             return (
-              <Icon name="bell" size={24} color={BaseColor.primaryColor} />
+              <Icon name="bell" size={24} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {
@@ -93,7 +95,7 @@ class Setting extends Component {
               point={shopData.point}
               textSecond={shopData.address}
               textThird={shopData.id}
-              styleThumb = {{width: 120, height: 60, resizeMode: 'contain'}}
+              styleThumb = {{width: 120, height: 55}}
               onPress={() => navigation.navigate('ProfileExanple')}
             />
             <ProfilePerformance
@@ -110,7 +112,7 @@ class Setting extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.primaryColor}
+                  color={BaseColor.blackColor}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -123,7 +125,7 @@ class Setting extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.primaryColor}
+                  color={BaseColor.blackColor}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -136,7 +138,7 @@ class Setting extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.primaryColor}
+                  color={BaseColor.blackColor}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -149,7 +151,7 @@ class Setting extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.primaryColor}
+                  color={BaseColor.blackColor}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -178,7 +180,7 @@ class Setting extends Component {
                   <Icon
                     name="angle-right"
                     size={18}
-                    color={BaseColor.primaryColor}
+                    color={BaseColor.blackColor}
                     style={{marginLeft: 5}}
                   />
                 </View>
@@ -192,7 +194,7 @@ class Setting extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.primaryColor}
+                  color={BaseColor.blackColor}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -205,7 +207,7 @@ class Setting extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.primaryColor}
+                  color={BaseColor.blackColor}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -218,7 +220,7 @@ class Setting extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.primaryColor}
+                  color={BaseColor.blackColor}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -231,7 +233,7 @@ class Setting extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.primaryColor}
+                  color={BaseColor.blackColor}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>

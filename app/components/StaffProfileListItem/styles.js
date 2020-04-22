@@ -32,4 +32,9 @@ export default StyleSheet.create({
     right: 9,
     bottom: 0,
   },
+  listContentRate: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 5
+  },
 });

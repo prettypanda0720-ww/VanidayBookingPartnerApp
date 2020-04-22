@@ -77,9 +77,9 @@ class Clients extends Component {
           renderLeft={() => {
             return (
               <Icon
-                name="angle-left"
+                name="chevron-left"
                 size={20}
-                color={BaseColor.primaryColor}
+                color={BaseColor.blackColor}
               />
             );
           }}

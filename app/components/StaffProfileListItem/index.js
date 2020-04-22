@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {View, TouchableOpacity} from 'react-native';
-import {Image, Icon, Text} from '@components';
+import {Image, Icon, Text, StarRating} from '@components';
 import styles from './styles';
 import PropTypes from 'prop-types';
 import {BaseColor} from '@config';
 
-export default class ProfileDetail extends Component {
+export default class StaffProfileListItem extends Component {
   render() {
     const {
       style,
@@ -19,6 +19,8 @@ export default class ProfileDetail extends Component {
       textSecond,
       textThird,
       icon,
+      rate,
+      rateCount,
     } = this.props;
     
     return (
@@ -29,16 +31,19 @@ export default class ProfileDetail extends Component {
         <View style={[styles.contentLeft, styleLeft]}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image source={image} style={[styles.thumb, styleThumb]} />
-            <View>
-              {this.displayProfileView()}
+            <View style={styles.point}>
+                <Text overline whiteColor semibold>
+                {this.props.point}
+                </Text>
             </View>
           </View>
           <View>
-            <Text headline semibold numberOfLines={1}>
+            <Text headline bold numberOfLines={1}>
               {textFirst}
             </Text>
             <Text
               body2
+              semibold
               style={{
                 marginTop: 3,
                 paddingRight: 10,
@@ -46,9 +51,30 @@ export default class ProfileDetail extends Component {
               numberOfLines={1}>
               {textSecond}
             </Text>
-            <Text footnote grayColor numberOfLines={1}>
-              {textThird}
-            </Text>
+            <View style={styles.listContentRate}>
+                <StarRating
+                    disabled={true}
+                    starSize={10}
+                    maxStars={6}
+                    rating={rate}
+                    selectedStar={rating => {}}
+                    fullStarColor={BaseColor.yellowColor}
+                />
+                <Text
+                    caption1
+                    grayColor
+                    semibold
+                    style={{
+                        marginLeft: 10,
+                        marginRight: 3
+                    }}
+                >
+                    Rating
+                </Text>
+                <Text caption1 primaryColor semibold>
+                    {rateCount}
+                </Text>
+            </View>
           </View>
         </View>
         {icon && (
@@ -59,22 +85,9 @@ export default class ProfileDetail extends Component {
       </TouchableOpacity>
     );
   }
-
-  displayProfileView() {
-    
-    if (this.props.point != '') {
-        return (
-          <View style={styles.point}>
-            <Text overline whiteColor semibold>
-              {this.props.point}
-            </Text>
-          </View>
-        );
-    } 
-  }
 }
 
-ProfileDetail.propTypes = {
+StaffProfileListItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   image: PropTypes.node.isRequired,
   textFirst: PropTypes.string,
@@ -86,14 +99,18 @@ ProfileDetail.propTypes = {
   styleRight: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   icon: PropTypes.bool,
   onPress: PropTypes.func,
+  rate: PropTypes.string,
+  rateCount: PropTypes.string,
 };
 
-ProfileDetail.defaultProps = {
+StaffProfileListItem.defaultProps = {
   image: '',
   textFirst: '',
   textSecond: '',
   icon: true,
   point: '',
+  rate: '',
+  rateCount: '',
   style: {},
   styleLeft: {},
   styleThumb: {},
