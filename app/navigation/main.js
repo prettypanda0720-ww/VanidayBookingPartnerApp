@@ -28,6 +28,12 @@ import StaffMembers from '@screens/StaffMembers';
 import StaffProfileDetail from '@screens/StaffProfileDetail';
 import OpeningHours from '@screens/OpeningHours';
 import CreateStaff from '@screens/CreateStaff';
+import Services from '@screens/Services';
+import EditService from '@screens/EditService';
+import NewPricingOption from '@screens/NewPricingOption';
+import PickStaff from '@screens/PickStaff';
+import CreateService from '@screens/CreateService';
+import OnlineBooking from '@screens/OnlineBooking';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -203,6 +209,24 @@ const StackNavigator = createStackNavigator(
     CreateStaff: {
       screen: CreateStaff,
     },
+    Services: {
+      screen: Services,
+    },
+    EditService: {
+      screen: EditService,
+    },
+    NewPricingOption: {
+      screen: NewPricingOption,
+    },
+    PickStaff: {
+      screen: PickStaff,
+    },
+    CreateService: {
+      screen: CreateService,
+    },
+    OnlineBooking: {
+      screen: OnlineBooking,
+    }
   },
   {
     headerMode: 'none',

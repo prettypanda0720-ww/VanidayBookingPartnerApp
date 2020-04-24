@@ -20,6 +20,8 @@ import StarRating from './StarRating';
 import VanidayTimePicker from './TimePicker';
 import RateDetail from './RateDetail';
 import CommentItem from './CommentItem';
+import ServiceInput from './ServiceInput';
+import DurationPicker from './DurationPicker';
 
 export {
   Header,
@@ -44,4 +46,6 @@ export {
   VanidayTimePicker,
   RateDetail,
   CommentItem,
+  ServiceInput,
+  DurationPicker,
 };
