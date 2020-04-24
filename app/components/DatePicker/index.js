@@ -119,7 +119,7 @@ DatePicker.propTypes = {
 
 DatePicker.defaultProps = {
   style: {},
-  time: 'Sun, Nov 01',
+  time: '2020-04-25',
   label: 'Label',
   onCancel: () => {},
   onChange: () => {}

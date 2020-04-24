@@ -34,6 +34,9 @@ import NewPricingOption from '@screens/NewPricingOption';
 import PickStaff from '@screens/PickStaff';
 import CreateService from '@screens/CreateService';
 import OnlineBooking from '@screens/OnlineBooking';
+import ClosedDates from '@screens/ClosedDates';
+import CreateClosedDate from '@screens/CreateClosedDate';
+import EditClosedDate from '@screens/EditClosedDate';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -226,6 +229,15 @@ const StackNavigator = createStackNavigator(
     },
     OnlineBooking: {
       screen: OnlineBooking,
+    },
+    ClosedDates: {
+      screen: ClosedDates,
+    },
+    CreateClosedDate: {
+      screen: CreateClosedDate,
+    },
+    EditClosedDate: {
+      screen: EditClosedDate,
     }
   },
   {

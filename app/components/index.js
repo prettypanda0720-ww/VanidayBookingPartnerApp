@@ -22,6 +22,7 @@ import RateDetail from './RateDetail';
 import CommentItem from './CommentItem';
 import ServiceInput from './ServiceInput';
 import DurationPicker from './DurationPicker';
+import ClosedDateListItem from './ClosedDateListItem';
 
 export {
   Header,
@@ -48,4 +49,5 @@ export {
   CommentItem,
   ServiceInput,
   DurationPicker,
+  ClosedDateListItem,
 };

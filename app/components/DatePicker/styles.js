@@ -7,7 +7,9 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     borderRadius: 8,
     backgroundColor: BaseColor.fieldColor,
-    padding: 10
+    padding: 10,
+    borderColor: BaseColor.grayColor,
+    borderWidth: 1,
   },
   itemPick: {
     flex: 1,

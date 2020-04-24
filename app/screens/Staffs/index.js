@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
 import {View, ScrollView, TouchableOpacity, Switch} from 'react-native';
 import {BaseStyle, BaseColor, BaseSetting} from '@config';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-} from '@components';
+import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 import styles from './styles';
 
 // Load sample data
@@ -70,6 +64,19 @@ export default class Staffs extends Component {
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.profileItem}
+                onPress={() => {
+                  navigation.navigate('ClosedDates');
+                }}>
+                <Text body1>Closed Dates</Text>
+                <Icon
+                  name="angle-right"
+                  size={18}
+                  color={BaseColor.blackColor}
+                  style={{marginLeft: 5}}
+                />
+              </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
@@ -77,4 +84,3 @@ export default class Staffs extends Component {
     );
   }
 }
-
