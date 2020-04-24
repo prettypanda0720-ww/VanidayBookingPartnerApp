@@ -37,6 +37,7 @@ import OnlineBooking from '@screens/OnlineBooking';
 import ClosedDates from '@screens/ClosedDates';
 import CreateClosedDate from '@screens/CreateClosedDate';
 import EditClosedDate from '@screens/EditClosedDate';
+import NewTreatmentType from '@screens/NewTreatmentType';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -238,6 +239,9 @@ const StackNavigator = createStackNavigator(
     },
     EditClosedDate: {
       screen: EditClosedDate,
+    },
+    NewTreatmentType: {
+      screen: NewTreatmentType,
     }
   },
   {
