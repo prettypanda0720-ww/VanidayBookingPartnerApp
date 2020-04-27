@@ -11,7 +11,7 @@ import {
   Text,
   Button,
   ProfileDetail,
-  ProfilePerformance
+  ProfilePerformance,
 } from '@components';
 import styles from './styles';
 
@@ -24,7 +24,7 @@ class Setting extends Component {
     this.state = {
       reminders: false,
       loading: false,
-      shopData: ShopsData[0]
+      shopData: ShopsData[0],
     };
   }
 
@@ -36,7 +36,7 @@ class Setting extends Component {
   onLogOut() {
     this.setState(
       {
-        loading: true
+        loading: true,
       },
       () => {
         this.props.actions.authentication(false, (response) => {
@@ -60,8 +60,7 @@ class Setting extends Component {
   render() {
     const {navigation} = this.props;
     const {shopData, loading} = this.state;
-    console.log('-----------');
-    console.log(shopData);
+
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
@@ -76,9 +75,7 @@ class Setting extends Component {
             );
           }}
           renderRight={() => {
-            return (
-              <Icon name="bell" size={24} color={BaseColor.blackColor} />
-            );
+            return <Icon name="bell" size={24} color={BaseColor.blackColor} />;
           }}
           onPressLeft={() => {
             navigation.goBack();
@@ -95,8 +92,8 @@ class Setting extends Component {
               point={shopData.point}
               textSecond={shopData.address}
               textThird={shopData.id}
-              styleThumb = {{width: 120, height: 55}}
-              onPress={() => navigation.navigate('ProfileExanple')}
+              styleThumb={{width: 120, height: 55}}
+              onPress={() => navigation.navigate('Aboutus', {data: shopData})}
             />
             <ProfilePerformance
               data={shopData.performance}
@@ -122,6 +119,19 @@ class Setting extends Component {
                   navigation.navigate('OpeningHours');
                 }}>
                 <Text body1>Opening Hours</Text>
+                <Icon
+                  name="angle-right"
+                  size={18}
+                  color={BaseColor.blackColor}
+                  style={{marginLeft: 5}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.profileItem}
+                onPress={() => {
+                  navigation.navigate('MerchantClosedDates');
+                }}>
+                <Text body1>Closed Dates</Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -172,7 +182,7 @@ class Setting extends Component {
                 <View
                   style={{
                     flexDirection: 'row',
-                    alignItems: 'center'
+                    alignItems: 'center',
                   }}>
                   <Text body1 grayColor>
                     USD
@@ -271,7 +281,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(AuthActions, dispatch)
+    actions: bindActionCreators(AuthActions, dispatch),
   };
 };
 

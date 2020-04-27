@@ -6,6 +6,7 @@ import styles from './styles';
 import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
 import {BaseColor, FontFamily} from '@config';
+import {Icon} from '@components';
 
 export default class DatePicker extends Component {
   constructor(props) {
@@ -103,6 +104,12 @@ export default class DatePicker extends Component {
           <Text body1 bold>
             {time}
           </Text>
+          <Icon
+            name="angle-down"
+            size={18}
+            color={BaseColor.blackColor}
+            style={{marginLeft: 5}}
+          />
         </TouchableOpacity>
       </View>
     );

@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import { BaseColor } from "@config";
+import {StyleSheet} from 'react-native';
+import {BaseColor} from '@config';
 
 const SIZE = 40;
 
@@ -12,25 +12,25 @@ export default StyleSheet.create({
     height: 600,
   },
   btnClearSearch: {
-    position: "absolute",
+    position: 'absolute',
     right: 0,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 30,
-    height: "100%"
+    height: '100%',
   },
   btnSearch: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 30,
-    height: "100%",
+    height: '100%',
     zIndex: 1000,
   },
   floatingBtn: {
     position: 'absolute',
-    bottom : 20,
+    bottom: 20,
     right: 20,
     // flex: 1,
     // margin: 20,
@@ -56,5 +56,12 @@ export default StyleSheet.create({
   image: {
     width: 40,
     height: 40,
+  },
+  searchWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: 'black',
+    borderRadius: 5,
+    borderWidth: 1,
   },
 });

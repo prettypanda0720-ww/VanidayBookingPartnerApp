@@ -8,7 +8,7 @@ import {
   FlatList,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  TextInput, 
+  TextInput,
 } from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -56,11 +56,7 @@ class ServiceInput extends Component {
   render() {
     const serviceData = this.state.data;
     const search = this.state.search;
-    const {
-      style,
-      data,
-      ...rest
-    } = this.props;
+    const {style, data, ...rest} = this.props;
 
     return (
       <View style={{flex: 1}}>
@@ -104,7 +100,11 @@ class ServiceInput extends Component {
                         });
                       }}
                       style={styles.btnSearch}>
-                      <Icon name="search" size={18} color={BaseColor.grayColor} />
+                      <Icon
+                        name="search"
+                        size={18}
+                        color={BaseColor.grayColor}
+                      />
                     </TouchableOpacity>
 
                     <TextInput
@@ -126,7 +126,11 @@ class ServiceInput extends Component {
                         });
                       }}
                       style={styles.btnClearSearch}>
-                      <Icon name="times" size={18} color={BaseColor.grayColor} />
+                      <Icon
+                        name="times"
+                        size={18}
+                        color={BaseColor.grayColor}
+                      />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -156,7 +160,9 @@ class ServiceInput extends Component {
                                 borderBottomColor: BaseColor.grayColor,
                                 borderBottomWidth: 1,
                               }}>
-                              <Text headline style={{color: '#b0b0b0'}}>{item.serviceTitle}</Text>
+                              <Text headline style={{color: '#b0b0b0'}}>
+                                {item.serviceTitle}
+                              </Text>
                               <Icon
                                 name="chevron-right"
                                 style={[styles.iconStyle, {marginLeft: 5}]}
@@ -177,14 +183,14 @@ class ServiceInput extends Component {
             </TouchableOpacity>
           </View>
         </Modal>
-        <View style={{marginTop: 10,}}>
+        <View style={{marginTop: 10}}>
           <Text
             style={[BaseStyle.textInput, styles.textInput]}
             autoCorrect={false}
             placeholder="Service Name"
             placeholderTextColor={BaseColor.MainPrimaryColor}
             selectionColor={BaseColor.blackColor}
-            numberOfLines = {1}>
+            numberOfLines={1}>
             {this.state.title}
           </Text>
           <TouchableOpacity style={{position: 'absolute', right: 15, top: 10}}>
@@ -196,12 +202,9 @@ class ServiceInput extends Component {
             />
           </TouchableOpacity>
         </View>
-
       </View>
     );
   }
 }
 
 export default ServiceInput;
-
-

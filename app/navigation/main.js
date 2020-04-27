@@ -38,6 +38,10 @@ import ClosedDates from '@screens/ClosedDates';
 import CreateClosedDate from '@screens/CreateClosedDate';
 import EditClosedDate from '@screens/EditClosedDate';
 import NewTreatmentType from '@screens/NewTreatmentType';
+import MerchantClosedDates from '@screens/MerchantClosedDates';
+import Aboutus from '@screens/Aboutus';
+import CreateAppointment from '@screens/CreateAppointment';
+import AppointmentDate from '@screens/AppointmentDate';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -242,7 +246,19 @@ const StackNavigator = createStackNavigator(
     },
     NewTreatmentType: {
       screen: NewTreatmentType,
-    }
+    },
+    MerchantClosedDates: {
+      screen: MerchantClosedDates,
+    },
+    Aboutus: {
+      screen: Aboutus,
+    },
+    CreateAppointment: {
+      screen: CreateAppointment,
+    },
+    AppointmentDate: {
+      screen: AppointmentDate,
+    },
   },
   {
     headerMode: 'none',

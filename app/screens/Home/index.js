@@ -6,14 +6,14 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TouchableHighlight,
-  Text,
+  Modal,
   View,
   Alert,
   FlatList,
 } from 'react-native';
 import styles from './styles';
 import Drawer from 'react-native-drawer';
-import {Icon} from '@components';
+import {Icon, Header, Text} from '@components';
 import {Agenda} from 'react-native-calendars';
 import moment from 'moment';
 import {BaseColor, Images} from '@config';
@@ -31,19 +31,12 @@ class App extends Component<{}> {
       drawerOpen: null,
       items: {},
       numStaffs: 2,
-      showMode: -1, /* if showMode = -1, show all staffs's appointment list, if showMode = nth, show nth-staffs's appointment list, */
+      showMode: -1 /* if showMode = -1, show all staffs's appointment list, if showMode = nth, show nth-staffs's appointment list, */,
       currentDay: '',
+      modalVisible: false,
     };
 
-    let unsubscribe = store.subscribe(() => {
-      console.log('=========first state of viewmode============');
-      // console.log(this.state.viewmode);
-      console.log('=========second state of viewmode============');
-      console.log(store.getState().calendar);
-      // this.setState({viewmode: store.getState().calendar});
-      // console.log('========state==========');
-      // console.log(this.state.viewmode);
-    });
+    let unsubscribe = store.subscribe(() => {});
   }
 
   setCalendarViewMode(mode) {
@@ -100,14 +93,51 @@ class App extends Component<{}> {
   renderMainContent = () => {
     return (
       <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: 'white',
-            padding: 10,
-            borderTopColor: 'BaseColor.blackColor',
-            borderTopWidth: 1,
-          }}>
+        <Modal
+          animationType="slide" // fade
+          transparent={true}
+          visible={this.state.modalVisible}>
+          <TouchableOpacity
+            onPress={() => this.hideModal()}
+            activeOpacity={0.8}
+            style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.4)'}}>
+            <View style={styles.saleWrapper}>
+              <View style={{flexDirection: 'column'}}>
+                <TouchableOpacity
+                  onPress={() => Alert.alert('asdf')}
+                  style={[styles.actionBtnWrapper,{marginBottom: 10}]}>
+                  <Text title3 bold style={{color: '#fff'}}>
+                    New Sale
+                  </Text>
+                  <View style={styles.button}>
+                    <Icon name="bookmark" size={35} color={'#fff'} />
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.goBybtn('CreateClosedDate')}
+                  style={[styles.actionBtnWrapper,{marginBottom: 10}]}>
+                  <Text title3 bold style={{color: '#fff'}}>
+                    New Blocked Time
+                  </Text>
+                  <View style={styles.button}>
+                    <Icon name="clock" size={30} color={'#fff'} />
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.goBybtn('CreateAppointment')}
+                  style={styles.actionBtnWrapper}>
+                  <Text title3 bold style={{color: '#fff'}}>
+                    New Appointment
+                  </Text>
+                  <View style={styles.button}>
+                    <Icon name="calendar" size={30} color={'#fff'}/>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+        <View style={styles.mainContainer}>
           <TouchableOpacity
             onPress={this.toggle}
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -151,9 +181,23 @@ class App extends Component<{}> {
           //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
           // hideExtraDays={false}
         />
+        <View style={styles.floatingBtn}>
+          <TouchableOpacity
+            onPress={() => this.showModal()}
+            style={styles.button}
+            activeOpacity={0.8}>
+            <Image style={styles.image} source={Images.icons_create} />
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
   };
+
+  goBybtn(route) {
+    const {navigation} = this.props;
+    navigation.navigate(route);
+    this.hideModal();
+  }
 
   loadItems(day) {
     console.log(this.state.showMode);
@@ -302,6 +346,17 @@ class App extends Component<{}> {
         )}
       />
     );
+  }
+
+  showModal() {
+    console.log('modal is clicked');
+    this.setState({modalVisible: true});
+  }
+
+  hideModal() {
+    this.setState({modalVisible: false});
+    // Refocus on the Input field after selecting the country code
+    // this.refs.PhoneInput._root.focus();
   }
 
   render() {

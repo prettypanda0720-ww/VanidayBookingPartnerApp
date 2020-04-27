@@ -83,6 +83,7 @@ export const Images = {
   event5: require("@assets/images/event-5.jpg"),
   event6: require("@assets/images/event-6.jpg"),
   event7: require("@assets/images/event-7.jpg"),
+  salon: require("@assets/images/salon-01.jpg"),
   findbycovo: require("@assets/images/findbycovo.png"),
   back: require("@assets/images/back.png"),
   forward: require("@assets/images/forward.png"),

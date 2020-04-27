@@ -96,14 +96,7 @@ class Clients extends Component {
           }}
         />
         <View style={{padding: 20}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              borderColor: 'black',
-              borderRadius: 5,
-              borderWidth: 1,
-            }}>
+          <View style={styles.searchWrapper}>
             <TouchableOpacity
               onPress={() => {
                 this.setState({

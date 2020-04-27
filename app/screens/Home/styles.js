@@ -1,4 +1,6 @@
 import {StyleSheet} from 'react-native';
+import * as Utils from '@utils';
+import {BaseColor} from '@config';
 
 export default StyleSheet.create({
   container: {
@@ -99,10 +101,10 @@ export default StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   thumb: {
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    width: 40, 
-    height: 40, 
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 40,
+    height: 40,
     borderRadius: 20,
     borderColor: '#fff',
     borderWidth: 1,
@@ -116,11 +118,11 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.7)',
   },
   calendarTitle: {
-    fontSize: 22, 
+    fontSize: 22,
     color: 'white',
   },
   staffsTitle: {
-    fontSize: 22, 
+    fontSize: 22,
     color: 'white',
     marginTop: 30,
   },
@@ -143,5 +145,57 @@ export default StyleSheet.create({
     shadowRadius: 3,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
     zIndex: 1000,
+  },
+  floatingBtn: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#FFF',
+    zIndex: 100,
+  },
+  appointmentWrapper: {
+    position: 'absolute',
+    bottom: 69,
+    right: 20,
+    zIndex: 100,
+  },
+  blocktimeWrapper: {
+    position: 'absolute',
+    bottom: 99,
+    right: 20,
+    zIndex: 100,
+  },
+  saleWrapper: {
+    position: 'absolute',
+    bottom: 69,
+    right: 20,
+    width: Utils.getWidthDevice() / 2,
+    zIndex: 100,
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    zIndex: 99,
+    backgroundColor: BaseColor.grayColor,
+  },
+  image: {
+    width: 40,
+    height: 40,
+  },
+  actionBtnWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  mainContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    padding: 10,
+    borderTopColor: BaseColor.blackColor,
+    borderTopWidth: 1,
   },
 });

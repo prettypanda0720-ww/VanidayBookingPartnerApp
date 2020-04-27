@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { View, TouchableOpacity } from "react-native";
-import { Image, Text, Icon } from "@components";
-import styles from "./styles";
-import PropTypes from "prop-types";
+import React, {Component} from 'react';
+import {View, TouchableOpacity} from 'react-native';
+import {Image, Text, Icon} from '@components';
+import styles from './styles';
+import PropTypes from 'prop-types';
 import {BaseStyle, BaseColor, BaseSetting} from '@config';
 
 export default class ProfileDescription extends Component {
@@ -14,33 +14,31 @@ export default class ProfileDescription extends Component {
       onPress,
       name,
       subName,
-      description
+      description,
     } = this.props;
     return (
       <TouchableOpacity
         style={[styles.contain, style]}
         onPress={onPress}
-        activeOpacity={0.9}
-      >
+        activeOpacity={0.9}>
         <View style={{flexDirection: 'row'}}>
-            <Image source={image} style={[styles.thumb, styleThumb]} />
-            <View>
-                <Text headline semibold numberOfLines={1}>
-                    {name}
-                </Text>
-                <Text
-                    footnote
-                    grayColor
-                    numberOfLines={2}
-                    style={{ paddingRight: 20 }}
-                >
-                    {description}
-                </Text>
-            </View>
+          <Image source={image} style={[styles.thumb, styleThumb]} />
+          <View>
+            <Text headline semibold numberOfLines={1}>
+              {name}
+            </Text>
+            <Text
+              footnote
+              grayColor
+              numberOfLines={2}
+              style={{paddingRight: 20}}>
+              {description}
+            </Text>
+          </View>
         </View>
-        
+
         <View>
-            <Icon name="angle-right" size={20} color={BaseColor.grayColor} />
+          <Icon name="angle-right" size={20} color={BaseColor.grayColor} />
         </View>
       </TouchableOpacity>
     );
@@ -54,15 +52,15 @@ ProfileDescription.propTypes = {
   subName: PropTypes.string,
   description: PropTypes.string,
   styleThumb: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  onPress: PropTypes.func
+  onPress: PropTypes.func,
 };
 
 ProfileDescription.defaultProps = {
-  image: "",
-  name: "",
-  subName: "",
-  description: "",
+  image: '',
+  name: '',
+  subName: '',
+  description: '',
   styleThumb: {},
   onPress: () => {},
-  style: {}
+  style: {},
 };

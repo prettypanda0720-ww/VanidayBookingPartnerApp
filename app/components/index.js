@@ -49,5 +49,5 @@ export {
   CommentItem,
   ServiceInput,
   DurationPicker,
-  ClosedDateListItem,
+  ClosedDateListItem,  
 };

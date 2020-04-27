@@ -13,7 +13,8 @@ export default StyleSheet.create({
   },
   itemPick: {
     flex: 1,
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: "space-between",
     alignItems: 'center',
   },
   contentModal: {

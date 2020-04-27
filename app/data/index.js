@@ -6,6 +6,7 @@ import {ReviewData} from './review';
 
 import {ShopsData} from './shops';
 import {ServiceData} from './services';
+import {StartTimes} from './starttimes';
 // Sample data for display on template
 export {
   CurrencyData,
@@ -14,4 +15,5 @@ export {
   ReviewData,
   ShopsData,
   ServiceData,
+  StartTimes,
 };
