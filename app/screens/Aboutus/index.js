@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Switch,
   FlatList,
+  TextInput,
 } from 'react-native';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import {
@@ -18,6 +19,9 @@ import {
   StarRating,
 } from '@components';
 import styles from './styles';
+
+// Load sample data
+import {ShopsData} from '@data';
 
 export default class Aboutus extends Component {
   constructor(props) {
@@ -34,7 +38,7 @@ export default class Aboutus extends Component {
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
-          title="About US"
+          title="Edit Salon Detail"
           renderLeft={() => {
             return (
               <Icon
@@ -48,82 +52,72 @@ export default class Aboutus extends Component {
             navigation.goBack();
           }}
         />
-        <View>
-            <Image source={Images.salon} style={styles.blockImage} />
-            <View style={styles.priceContent}>
-                <Text title3 textPrimaryColor semibold>
-                58%
-                </Text>
-            </View>
-            <View style={styles.iconContent}>
-                <Icon
-                name="heart"
-                size={30}
-                color={BaseColor.MainPrimaryColor}
-                solid
-                />
-            </View>
-        </View>
-        <View style={{paddingHorizontal: 20}}>
-        <View
-            style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            }}>
-            <View style={{width: '50%'}}>
-            <Text headline bold numberOfLines={1} style={{marginTop: 5}}>
-                {data.name}
-            </Text>
-            </View>
-        </View>
-        <View style={styles.blockContentAddress}>
-            <View style={{width: '50%'}}>
-            <Text caption1 grayColor numberOfLines={2}>
-                {data.address}
-            </Text>
-            </View>
-            <View
-            style={{
-                width: '50%',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-            }}>
-            <StarRating
-                disabled={true}
-                starSize={20}
-                maxStars={5}
-                rating={5}
-                selectedStar={(rating) => {}}
-                fullStarColor={BaseColor.yellowColor}
-            />
-            <Text
-                caption2
-                style={{
-                color: BaseColor.textPrimaryColor,
-                }}>
-                ({4})
-            </Text>
-            </View>
-        </View>
-        </View>
-        <View style={styles.contentService}>
-            <Text caption1>
-              In Italian, "Covo" means a hiding place. When you come to our
-              salon, you will experience a private and relaxing space and time.
-              All the stylists are experienced Japanese stylists with Japanese
-              quality service. Our location is on the happening Keong Saik road,
-              on the ground floor in a shop house. We try out best to cater
-              damage-free hair using in-house developed chemicals(developed in
-              Tokyo by our owner stylist) for colouring, pem, rebonding and
-              treatment. We also have Keratin treatment for damaged hair as
-              well. For the best result for both hair and scalp, we use
-              carbonated water in the salon. Please come to experience quality
-              technique and service to Covo.
-            </Text>
+        <ScrollView>
+          <Text headline style={{color: BaseColor.secondBlackColor, paddingHorizontal: 20, paddingVertical: 10}}>Salon Logo</Text>
+          <Image source={data.image} style={styles.blockImage} />
+          <View style={{marginTop: 20, paddingHorizontal: 20, flexDirection: 'row'}}>
+            <Button style={{flex: 1}} loading={loading} onPress={() => navigation.goBack()}>
+              Change image of Salon Logo 
+            </Button>
           </View>
+          <View style={{paddingHorizontal: 20}}>
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>Salon name</Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({id: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.MainPrimaryColor}
+                selectionColor={BaseColor.primaryColor}>
+                {data.name}
+              </TextInput>
+            </View>
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>Salon address</Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({id: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.MainPrimaryColor}
+                selectionColor={BaseColor.primaryColor}>
+                {data.address}
+              </TextInput>
+            </View>
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>Salon address</Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.multilineTextInput]}
+                onChangeText={(text) => this.setState({id: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.MainPrimaryColor}
+                selectionColor={BaseColor.primaryColor}
+                multiline={true}>
+                In Italian, "Covo" means a hiding place. When you come to our
+                salon, you will experience a private and relaxing space and time.
+                All the stylists are experienced Japanese stylists with Japanese
+                quality service. Our location is on the happening Keong Saik road,
+                on the ground floor in a shop house. We try out best to cater
+                damage-free hair using in-house developed chemicals(developed in
+                Tokyo by our owner stylist) for colouring, pem, rebonding and
+                treatment. We also have Keratin treatment for damaged hair as
+                well. For the best result for both hair and scalp, we use
+                carbonated water in the salon. Please come to experience quality
+                technique and service to Covo.
+              </TextInput>
+            </View>
+          </View>
+        </ScrollView>
+        <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
+          <Button style={{flex: 1, marginLeft: 10,}} loading={loading} onPress={() => navigation.goBack()}>
+            CANCEL
+          </Button>
+          <Button style={{flex: 1, marginLeft: 10,}} loading={loading} onPress={() => navigation.goBack()}>
+            SAVE
+          </Button>
+        </View>
       </SafeAreaView>
     );
   }

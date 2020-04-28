@@ -109,8 +109,8 @@ class App extends Component<{}> {
                   <Text title3 bold style={{color: '#fff'}}>
                     New Sale
                   </Text>
-                  <View style={styles.button}>
-                    <Icon name="bookmark" size={35} color={'#fff'} />
+                  <View style={[styles.button,{backgroundColor: BaseColor.secondBlackColor}]}>
+                    <Icon name="bookmark" size={30} color={'#fff'} />
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -119,7 +119,7 @@ class App extends Component<{}> {
                   <Text title3 bold style={{color: '#fff'}}>
                     New Blocked Time
                   </Text>
-                  <View style={styles.button}>
+                  <View style={[styles.button,{backgroundColor: BaseColor.secondBlackColor}]}>
                     <Icon name="clock" size={30} color={'#fff'} />
                   </View>
                 </TouchableOpacity>
@@ -129,7 +129,7 @@ class App extends Component<{}> {
                   <Text title3 bold style={{color: '#fff'}}>
                     New Appointment
                   </Text>
-                  <View style={styles.button}>
+                  <View style={[styles.button,{backgroundColor: BaseColor.secondBlackColor}]}>
                     <Icon name="calendar" size={30} color={'#fff'}/>
                   </View>
                 </TouchableOpacity>
@@ -184,7 +184,7 @@ class App extends Component<{}> {
         <View style={styles.floatingBtn}>
           <TouchableOpacity
             onPress={() => this.showModal()}
-            style={styles.button}
+            style={[styles.button, {backgroundColor: BaseColor.whiteColor}]}
             activeOpacity={0.8}>
             <Image style={styles.image} source={Images.icons_create} />
           </TouchableOpacity>
@@ -278,46 +278,18 @@ class App extends Component<{}> {
           <TouchableOpacity
             // testID={testIDs.agenda.ITEM}
             onPress={() => Alert.alert(item.name)}
-            style={{
-              borderColor: 'green',
-              marginTop: 10,
-              marginBottom: 10,
-              marginRight: 10,
-              padding: 15,
-              backgroundColor: 'white',
-              borderLeftWidth: 2,
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-            }}>
+            style={styles.serviceItemWrapper}>
             <View style={{flexDirection: 'column'}}>
               <Text style={{fontSize: 17, color: 'black', fontWeight: 'bold'}}>
                 {item.acceptedState}
               </Text>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: 'gray',
-                  marginTop: 5,
-                  fontWeight: 'semi-bold',
-                }}>
+              <Text style={styles.serviceItemNameStyle}>
                 Service Name: {item.name}
               </Text>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: 'gray',
-                  marginTop: 5,
-                  fontWeight: 'semi-bold',
-                }}>
+              <Text style={styles.serviceItemNameStyle}>
                 Staff Name: {item.staffName}
               </Text>
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: 'gray',
-                  marginTop: 5,
-                  fontWeight: 'regular',
-                }}>
+              <Text style={styles.serviceItemDateStyle}>
                 {item.appointmentDate}
               </Text>
             </View>
@@ -355,8 +327,6 @@ class App extends Component<{}> {
 
   hideModal() {
     this.setState({modalVisible: false});
-    // Refocus on the Input field after selecting the country code
-    // this.refs.PhoneInput._root.focus();
   }
 
   render() {

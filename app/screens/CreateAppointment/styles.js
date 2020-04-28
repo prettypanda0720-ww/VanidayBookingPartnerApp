@@ -86,5 +86,16 @@ export default StyleSheet.create({
     paddingBottom: 10,
     borderBottomColor: BaseColor.grayColor,
     borderBottomWidth: 1,
-  }
+  }, 
+  floatingBtn: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#FFF',
+    zIndex: 100,
+  },
+  image: {
+    width: 40,
+    height: 40,
+  },
 });

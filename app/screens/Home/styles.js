@@ -150,7 +150,6 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
-    backgroundColor: '#FFF',
     zIndex: 100,
   },
   appointmentWrapper: {
@@ -175,11 +174,10 @@ export default StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     zIndex: 99,
-    backgroundColor: BaseColor.grayColor,
   },
   image: {
     width: 40,
@@ -198,4 +196,27 @@ export default StyleSheet.create({
     borderTopColor: BaseColor.blackColor,
     borderTopWidth: 1,
   },
+  serviceItemWrapper: {
+    borderColor: 'green',
+    marginTop: 10,
+    marginBottom: 10,
+    marginRight: 10,
+    padding: 15,
+    backgroundColor: 'white',
+    borderLeftWidth: 2,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  serviceItemNameStyle: {
+    fontSize: 14,
+    color: 'gray',
+    marginTop: 5,
+  },
+  serviceItemDateStyle: {
+    fontSize: 14,
+    color: 'gray',
+    marginTop: 5,
+    fontWeight: 'normal',
+  }
+  
 });

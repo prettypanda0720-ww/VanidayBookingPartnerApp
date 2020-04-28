@@ -106,7 +106,7 @@ class EditService extends Component {
           </View>
           <View style={styles.inputGroup}>
             <Text body2 style={{color: '#b0b0b0'}}>
-              Treatment type
+              Category
             </Text>
             <ServiceInput data={data} />
             <TouchableOpacity
@@ -119,7 +119,7 @@ class EditService extends Component {
                 },
               ]}
               onPress={() => navigation.navigate('NewTreatmentType')}>
-              <Text body2>Add another treatment type</Text>
+              <Text body2>Add another Category</Text>
               <View style={{alignItems: 'center', justifyContent: 'center'}}>
                 <Icon name="plus" size={15} color={BaseColor.blackColor} />
               </View>

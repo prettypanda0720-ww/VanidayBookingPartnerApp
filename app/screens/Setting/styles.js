@@ -28,5 +28,14 @@ export default StyleSheet.create({
     borderBottomColor: BaseColor.textSecondaryColor,
     borderBottomWidth: 1,
     paddingVertical: 20
-  }
+  },
+  contentService: {
+    display: 'flex',
+    flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // paddingHorizontal: 20,
+    marginTop: 10,
+    borderColor: BaseColor.fieldColor,
+    borderBottomWidth: 1,
+  },
 });

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, TouchableOpacity} from 'react-native';
-import {Image, Icon, Text} from '@components';
+import {Image, Icon, Text, StarRating} from '@components';
 import styles from './styles';
 import PropTypes from 'prop-types';
 import {BaseColor} from '@config';
@@ -49,6 +49,31 @@ export default class ProfileDetail extends Component {
             <Text footnote grayColor numberOfLines={1}>
               {textThird}
             </Text>
+            <View
+              style={{
+                  width: '50%',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                  marginTop: 3,
+              }}>
+              <StarRating
+                  disabled={true}
+                  starSize={15}
+                  maxStars={5}
+                  rating={5}
+                  selectedStar={(rating) => {}}
+                  fullStarColor={BaseColor.yellowColor}
+              />
+              <Text
+                caption2
+                style={{
+                color: BaseColor.textPrimaryColor,
+                }}>
+                ({4})
+              </Text>
+            </View>
+
           </View>
         </View>
         {icon && (

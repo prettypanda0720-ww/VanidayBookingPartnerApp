@@ -104,7 +104,7 @@ class CreateService extends Component {
           </View>
           <View style={styles.inputGroup}>
             <Text body2 style={{color: '#b0b0b0'}}>
-              Treatment type
+              Category
             </Text>
             <ServiceInput />
           </View>

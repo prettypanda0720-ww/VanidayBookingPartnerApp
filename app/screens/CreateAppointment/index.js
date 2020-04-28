@@ -218,6 +218,14 @@ class CreateAppointment extends Component {
                   );
                 })}
               </ScrollView>
+              <View style={styles.floatingBtn}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('CreateClient')}
+                  style={styles.button}
+                  activeOpacity={0.8}>
+                  <Image style={styles.image} source={Images.icons_create} />
+                </TouchableOpacity>
+              </View>  
             </View>
           </View>
         </Modal>

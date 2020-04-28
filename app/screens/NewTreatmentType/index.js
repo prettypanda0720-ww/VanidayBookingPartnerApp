@@ -81,11 +81,11 @@ class NewTreatmentType extends Component {
           style={{flexDirection: 'column', padding: 20, paddingBottom: 40}}>
           <View style={{marginTop: 0}}>
             <Text title2 bold>
-              New treatment type
+              New Category
             </Text>
             <View style={styles.inputGroup}>
               <Text caption3 style={{color: '#b0b0b0'}}>
-                Treatment type name
+                Category name
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
@@ -98,7 +98,7 @@ class NewTreatmentType extends Component {
             </View>
             <View style={styles.inputGroup}>
               <Text caption3 style={{color: '#b0b0b0'}}>
-                Treatment type description
+                Category description
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}

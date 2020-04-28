@@ -14,7 +14,7 @@ import {
   ProfilePerformance,
 } from '@components';
 import styles from './styles';
-
+import * as Utils from '@utils';
 // Load sample data
 import {ShopsData} from '@data';
 
@@ -92,9 +92,24 @@ class Setting extends Component {
               point={shopData.point}
               textSecond={shopData.address}
               textThird={shopData.id}
-              styleThumb={{width: 120, height: 55}}
+              styleThumb={{width: Utils.scaleWithPixel(135), height: Utils.scaleWithPixel(65)}}
               onPress={() => navigation.navigate('Aboutus', {data: shopData})}
             />
+            <View style={styles.contentService}>
+              <Text body2>
+                In Italian, "Covo" means a hiding place. When you come to our
+                salon, you will experience a private and relaxing space and time.
+                All the stylists are experienced Japanese stylists with Japanese
+                quality service. Our location is on the happening Keong Saik road,
+                on the ground floor in a shop house. We try out best to cater
+                damage-free hair using in-house developed chemicals(developed in
+                Tokyo by our owner stylist) for colouring, pem, rebonding and
+                treatment. We also have Keratin treatment for damaged hair as
+                well. For the best result for both hair and scalp, we use
+                carbonated water in the salon. Please come to experience quality
+                technique and service to Covo.
+              </Text>
+            </View>
             <ProfilePerformance
               data={shopData.performance}
               style={{marginTop: 20, marginBottom: 20}}
@@ -200,7 +215,7 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Policy');
                 }}>
-                <Text body1>Policy</Text>
+                <Text body1>Cancellation and Policy</Text>
                 <Icon
                   name="angle-right"
                   size={18}
