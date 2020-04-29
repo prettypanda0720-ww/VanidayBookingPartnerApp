@@ -106,7 +106,7 @@ class App extends Component<{}> {
                 <TouchableOpacity
                   onPress={() => Alert.alert('asdf')}
                   style={[styles.actionBtnWrapper,{marginBottom: 10}]}>
-                  <Text title3 bold style={{color: '#fff'}}>
+                  <Text headline bold style={{color: '#fff'}}>
                     New Sale
                   </Text>
                   <View style={[styles.button,{backgroundColor: BaseColor.secondBlackColor}]}>
@@ -116,7 +116,7 @@ class App extends Component<{}> {
                 <TouchableOpacity
                   onPress={() => this.goBybtn('CreateClosedDate')}
                   style={[styles.actionBtnWrapper,{marginBottom: 10}]}>
-                  <Text title3 bold style={{color: '#fff'}}>
+                  <Text headline bold style={{color: '#fff'}}>
                     New Blocked Time
                   </Text>
                   <View style={[styles.button,{backgroundColor: BaseColor.secondBlackColor}]}>
@@ -126,7 +126,7 @@ class App extends Component<{}> {
                 <TouchableOpacity
                   onPress={() => this.goBybtn('CreateAppointment')}
                   style={styles.actionBtnWrapper}>
-                  <Text title3 bold style={{color: '#fff'}}>
+                  <Text headline bold style={{color: '#fff'}}>
                     New Appointment
                   </Text>
                   <View style={[styles.button,{backgroundColor: BaseColor.secondBlackColor}]}>

@@ -55,17 +55,35 @@ class EditClosedDate extends Component {
     const {navigation} = this.props;
     const {loading} = this.state;
     const item = this.props.navigation.state.params.data;
-
     let duration = [
-      {value: '1h'},
-      {value: '2h'},
-      {value: '3h'},
-      {value: '4h'},
-      {value: '5h'},
-      {value: '6h'},
-      {value: '7h'},
-      {value: '8h'},
-      {value: '9h'},
+      {value: "Doesn't repeat"},
+      {value: 'Daily'},
+      {value: 'Every 2 days'},
+      {value: 'Every 3 days'},
+      {value: 'Every 4 days'},
+      {value: 'Every 5 days'},
+      {value: 'Every 6 days'},
+      {value: 'Every 7 days'},
+      {value: 'Weekly'},
+      {value: 'Every 2 weeks'},
+      {value: 'Every 3 weeks'},
+      {value: 'Every 4 weeks'},
+      {value: 'Every 5 weeks'},
+      {value: 'Every 6 weeks'},
+      {value: 'Every 7 weeks'},
+      {value: 'Every 8 weeks'},
+      {value: 'Every 9 weeks'},
+      {value: 'Every 10 weeks'},
+      {value: 'Monthly'},
+      {value: 'Every 2 Months'},
+      {value: 'Every 3 Months'},
+      {value: 'Every 4 Months'},
+      {value: 'Every 5 Months'},
+      {value: 'Every 6 Months'},
+      {value: 'Every 7 Months'},
+      {value: 'Every 8 Months'},
+      {value: 'Every 9 Months'},
+      {value: 'Every 10 Months'},
     ];
 
     return (
@@ -118,6 +136,12 @@ class EditClosedDate extends Component {
                 selectionColor={BaseColor.primaryColor}>
                 {item.reason}
               </TextInput>
+            </View>
+            <View style={[styles.inputGroup, {marginTop: 50}]}>
+              <Text title2 bold>
+                Repeating Options
+              </Text>
+              <Dropdown label="Frequency" data={duration} rippleOpacity={0.7} />
             </View>
           </View>
         </ScrollView>

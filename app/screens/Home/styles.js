@@ -168,7 +168,7 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 69,
     right: 20,
-    width: Utils.getWidthDevice() / 2,
+    width: '55%',
     zIndex: 100,
   },
   button: {

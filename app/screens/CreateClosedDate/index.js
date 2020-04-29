@@ -33,6 +33,7 @@ import CheckBox from 'react-native-checkbox';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import PropTypes from 'prop-types';
 import * as Utils from '@utils';
+import {StartTimes, DateTimes} from '@data';
 import styles from './styles';
 
 class CreateClosedDate extends Component {
@@ -48,24 +49,16 @@ class CreateClosedDate extends Component {
         {key: 'services', title: 'Services'},
         {key: 'workinghours', title: 'Working hours'},
       ],
+      timeInterval: StartTimes,
+      dateInterval: DateTimes,
     };
   }
 
   render() {
     const {navigation} = this.props;
-    const {loading} = this.state;
-    let duration = [
-      {value: '1h'},
-      {value: '2h'},
-      {value: '3h'},
-      {value: '4h'},
-      {value: '5h'},
-      {value: '6h'},
-      {value: '7h'},
-      {value: '8h'},
-      {value: '9h'},
-    ];
-
+    const {loading, timeInterval, dateInterval} = this.state;
+    console.log('-----date interval-----');
+    console.log(dateInterval);
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
@@ -103,6 +96,26 @@ class CreateClosedDate extends Component {
                 <DatePicker time="2020-04-20" style={{marginTop: 10}} />
               </View>
             </View>
+            <View
+              style={[
+                styles.inputGroup,
+                {flexDirection: 'row', justifyContent: 'space-between'},
+              ]}>
+              <View style={{flex: 1, marginRight: 10}}>
+                <Dropdown
+                  label="Start Time"
+                  data={timeInterval}
+                  rippleOpacity={0.7}
+                />
+              </View>
+              <View style={{flex: 1, marginLeft: 10}}>
+                <Dropdown
+                  label="End Time"
+                  data={timeInterval}
+                  rippleOpacity={0.7}
+                />
+              </View>
+            </View>
             <View style={styles.inputGroup}>
               <Text caption3 style={{color: '#b0b0b0'}}>
                 Description
@@ -114,6 +127,16 @@ class CreateClosedDate extends Component {
                 placeholder="e.g. public holiday"
                 placeholderTextColor={BaseColor.MainPrimaryColor}
                 selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={[styles.inputGroup, {marginTop: 50}]}>
+              <Text title2 bold>
+                Repeating Options
+              </Text>
+              <Dropdown
+                label="Frequency"
+                data={dateInterval}
+                rippleOpacity={0.7}
               />
             </View>
           </View>

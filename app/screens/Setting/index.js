@@ -213,9 +213,22 @@ class Setting extends Component {
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
-                  navigation.navigate('Policy');
+                  navigation.navigate('Cancellation');
                 }}>
                 <Text body1>Cancellation and Policy</Text>
+                <Icon
+                  name="angle-right"
+                  size={18}
+                  color={BaseColor.blackColor}
+                  style={{marginLeft: 5}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.profileItem}
+                onPress={() => {
+                  navigation.navigate('TermsAndConditions');
+                }}>
+                <Text body1>Terms And Conditions</Text>
                 <Icon
                   name="angle-right"
                   size={18}

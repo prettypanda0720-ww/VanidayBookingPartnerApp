@@ -42,6 +42,8 @@ import MerchantClosedDates from '@screens/MerchantClosedDates';
 import Aboutus from '@screens/Aboutus';
 import CreateAppointment from '@screens/CreateAppointment';
 import AppointmentDate from '@screens/AppointmentDate';
+import Cancellation from '@screens/Cancellation';
+import TermsAndConditions from '@screens/TermsAndConditions';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -258,6 +260,12 @@ const StackNavigator = createStackNavigator(
     },
     AppointmentDate: {
       screen: AppointmentDate,
+    },
+    Cancellation: {
+      screen: Cancellation,
+    },
+    TermsAndConditions: {
+      screen: TermsAndConditions,
     },
   },
   {
