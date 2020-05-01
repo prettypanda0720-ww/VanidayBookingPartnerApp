@@ -23,6 +23,8 @@ import CommentItem from './CommentItem';
 import ServiceInput from './ServiceInput';
 import DurationPicker from './DurationPicker';
 import ClosedDateListItem from './ClosedDateListItem';
+import FilterSort from './FilterSort';
+import ECardListItem from './ECardListItem';
 
 export {
   Header,
@@ -50,4 +52,6 @@ export {
   ServiceInput,
   DurationPicker,
   ClosedDateListItem,  
+  FilterSort,
+  ECardListItem,
 };

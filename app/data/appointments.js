@@ -1,0 +1,53 @@
+const appointments = 
+[
+  {
+    "refId": "#63734C58", 
+    "clientName": "Willam Lay", 
+    "serviceName": "HairCut",
+    "staffName": "Judy T",
+    "appointmentDate": "2017-05-25", 
+    "price": "SGD 200", 
+    "startTime": "2:30 PM", 
+    "endTime": "3:30 PM", 
+    "status":"started", 
+    "height": 50, 
+  },
+  {
+    "refId": "#23734C58", 
+    "clientName": "Willam Lay", 
+    "serviceName": "HairCut",
+    "staffName": "Judy T",
+    "appointmentDate": "2017-05-25", 
+    "price": "SGD 200", 
+    "startTime": "2:30 PM", 
+    "endTime": "3:30 PM", 
+    "status":"started", 
+    "height": 50, 
+  },
+  {
+    "refId": "#53734C58", 
+    "clientName": "Willam Lay", 
+    "serviceName": "HairCut",
+    "staffName": "Judy T",
+    "appointmentDate": "2017-05-25", 
+    "price": "SGD 200", 
+    "startTime": "2:30 PM", 
+    "endTime": "3:30 PM", 
+    "status":"new", 
+    "height": 50, 
+  },
+  {
+    "refId": "#83734C58", 
+    "clientName": "Willam Lay", 
+    "serviceName": "HairCut",
+    "staffName": "Judy T",
+    "appointmentDate": "2017-05-25", 
+    "price": "SGD 200", 
+    "startTime": "2:30 PM", 
+    "endTime": "3:30 PM", 
+    "status":"new", 
+    "height": 50, 
+  },  
+  
+];
+export {appointments};

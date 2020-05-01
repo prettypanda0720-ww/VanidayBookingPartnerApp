@@ -8,6 +8,8 @@ import {ShopsData} from './shops';
 import {ServiceData} from './services';
 import {StartTimes} from './starttimes';
 import {DateTimes} from './datetimes';
+import {appointments} from './appointments';
+import {ECardData} from './eCard';
 // Sample data for display on template
 export {
   CurrencyData,
@@ -18,4 +20,6 @@ export {
   ServiceData,
   StartTimes,
   DateTimes,
+  appointments,
+  ECardData,
 };

@@ -44,6 +44,9 @@ import CreateAppointment from '@screens/CreateAppointment';
 import AppointmentDate from '@screens/AppointmentDate';
 import Cancellation from '@screens/Cancellation';
 import TermsAndConditions from '@screens/TermsAndConditions';
+import Appointments from '@screens/Appointments';
+import SelectPeriod from '@screens/SelectPeriod';
+import EcardList from '@screens/EcardList';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -266,6 +269,15 @@ const StackNavigator = createStackNavigator(
     },
     TermsAndConditions: {
       screen: TermsAndConditions,
+    },
+    Appointments: {
+      screen: Appointments,
+    },
+    SelectPeriod: {
+      screen: SelectPeriod,
+    },
+    EcardList: {
+      screen: EcardList,
     },
   },
   {

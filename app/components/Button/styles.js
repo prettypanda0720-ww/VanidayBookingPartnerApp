@@ -20,7 +20,7 @@ export default StyleSheet.create({
   outline: {
     backgroundColor: BaseColor.whiteColor,
     borderWidth: 1,
-    borderColor: BaseColor.primaryColor
+    borderColor: BaseColor.primaryColor,
   },
   textOuline: {
     color: BaseColor.primaryColor

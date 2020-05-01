@@ -94,7 +94,10 @@ class App extends Component<{}> {
     return (
       <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
         <Modal
-          animationType="slide" // fade
+          // animationType="slide" // fade
+          animationIn="slideInRight"
+          animationOut="slideOutRight"
+          animationTiming={1000}
           transparent={true}
           visible={this.state.modalVisible}>
           <TouchableOpacity
@@ -105,21 +108,29 @@ class App extends Component<{}> {
               <View style={{flexDirection: 'column'}}>
                 <TouchableOpacity
                   onPress={() => Alert.alert('asdf')}
-                  style={[styles.actionBtnWrapper,{marginBottom: 10}]}>
+                  style={[styles.actionBtnWrapper, {marginBottom: 10}]}>
                   <Text headline bold style={{color: '#fff'}}>
                     New Sale
                   </Text>
-                  <View style={[styles.button,{backgroundColor: BaseColor.secondBlackColor}]}>
+                  <View
+                    style={[
+                      styles.button,
+                      {backgroundColor: BaseColor.secondBlackColor},
+                    ]}>
                     <Icon name="bookmark" size={30} color={'#fff'} />
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => this.goBybtn('CreateClosedDate')}
-                  style={[styles.actionBtnWrapper,{marginBottom: 10}]}>
+                  style={[styles.actionBtnWrapper, {marginBottom: 10}]}>
                   <Text headline bold style={{color: '#fff'}}>
                     New Blocked Time
                   </Text>
-                  <View style={[styles.button,{backgroundColor: BaseColor.secondBlackColor}]}>
+                  <View
+                    style={[
+                      styles.button,
+                      {backgroundColor: BaseColor.secondBlackColor},
+                    ]}>
                     <Icon name="clock" size={30} color={'#fff'} />
                   </View>
                 </TouchableOpacity>
@@ -129,8 +140,12 @@ class App extends Component<{}> {
                   <Text headline bold style={{color: '#fff'}}>
                     New Appointment
                   </Text>
-                  <View style={[styles.button,{backgroundColor: BaseColor.secondBlackColor}]}>
-                    <Icon name="calendar" size={30} color={'#fff'}/>
+                  <View
+                    style={[
+                      styles.button,
+                      {backgroundColor: BaseColor.secondBlackColor},
+                    ]}>
+                    <Icon name="calendar" size={30} color={'#fff'} />
                   </View>
                 </TouchableOpacity>
               </View>
@@ -200,8 +215,6 @@ class App extends Component<{}> {
   }
 
   loadItems(day) {
-    console.log(this.state.showMode);
-    console.log('agenda loaditemsformonth is called!');
     this.state.items = {};
     this.state.currentDay = day;
     setTimeout(() => {
@@ -246,7 +259,6 @@ class App extends Component<{}> {
           }
         });
       });
-      // console.log(newItems);
       this.setState({
         items: newItems,
       });
@@ -256,9 +268,6 @@ class App extends Component<{}> {
   renderItem(item) {
     const newItems = [];
     Object.keys(item).forEach((key) => {
-      // newItems.push(item[key]);
-      // console.log('--------------------' + key);
-      // console.log(item[key]);
       if (this.state.showMode == -1) {
         Object(item[key]).forEach((element) => {
           newItems.push(element);
@@ -328,9 +337,7 @@ class App extends Component<{}> {
   hideModal() {
     this.setState({modalVisible: false});
   }
-
   render() {
-    // console.log(this.state.showMode);
     return (
       <Drawer
         open={this.state.drawerOpen}
