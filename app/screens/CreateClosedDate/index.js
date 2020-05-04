@@ -1,38 +1,17 @@
 import React, {Component} from 'react';
-import {
-  FlatList,
-  View,
-  TextInput,
-  Animated,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  RefreshControl,
-  ScrollView,
-  Switch,
-} from 'react-native';
+import {View, TextInput, ScrollView} from 'react-native';
 import {
   Header,
   SafeAreaView,
   Icon,
   Text,
-  SignupTextInput,
   Button,
-  ProfileDescription,
-  PhoneInput,
   DatePicker,
-  VanidayTimePicker,
-  ServiceInput,
-  DurationPicker,
 } from '@components';
 
 import {Dropdown} from 'react-native-material-dropdown';
 
-import {TabView, TabBar} from 'react-native-tab-view';
-import CheckBox from 'react-native-checkbox';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
-import PropTypes from 'prop-types';
-import * as Utils from '@utils';
 import {StartTimes, DateTimes} from '@data';
 import styles from './styles';
 
@@ -57,8 +36,6 @@ class CreateClosedDate extends Component {
   render() {
     const {navigation} = this.props;
     const {loading, timeInterval, dateInterval} = this.state;
-    console.log('-----date interval-----');
-    console.log(dateInterval);
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
@@ -70,23 +47,12 @@ class CreateClosedDate extends Component {
             navigation.goBack();
           }}
         />
-        <ScrollView
-          style={{flexDirection: 'column', padding: 20, paddingBottom: 40}}>
+        <ScrollView style={styles.container}>
           <View style={{marginTop: 0}}>
-            <Text
-              caption3
-              style={{
-                color: '#4079a0',
-                backgroundColor: '#daeffd',
-                padding: 10,
-              }}>
+            <Text caption3 style={styles.summary}>
               Online bookings can not be placed during closed dates.
             </Text>
-            <View
-              style={[
-                styles.inputGroup,
-                {flexDirection: 'row', justifyContent: 'space-between'},
-              ]}>
+            <View style={[styles.inputGroup, styles.rowBetweenAlign]}>
               <View style={{flex: 1, flexDirection: 'column', marginRight: 10}}>
                 <Text>START DATE</Text>
                 <DatePicker time="2020-04-10" style={{marginTop: 10}} />
@@ -96,11 +62,7 @@ class CreateClosedDate extends Component {
                 <DatePicker time="2020-04-20" style={{marginTop: 10}} />
               </View>
             </View>
-            <View
-              style={[
-                styles.inputGroup,
-                {flexDirection: 'row', justifyContent: 'space-between'},
-              ]}>
+            <View style={[styles.inputGroup, styles.rowBetweenAlign]}>
               <View style={{flex: 1, marginRight: 10}}>
                 <Dropdown
                   label="Start Time"

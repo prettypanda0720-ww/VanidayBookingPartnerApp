@@ -1,18 +1,8 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TouchableOpacity, Image, Switch} from 'react-native';
-import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-  StaffProfileListItem,
-} from '@components';
+import {View, TouchableOpacity, Image, Switch} from 'react-native';
+import {BaseStyle, BaseColor, Images} from '@config';
+import {Header, SafeAreaView, Icon, StaffProfileListItem} from '@components';
 import styles from './styles';
-
-// Load sample data
-import {ShopsData} from '@data';
 
 export default class StaffMembers extends Component {
   constructor(props) {
@@ -50,42 +40,37 @@ export default class StaffMembers extends Component {
 
   render() {
     const {navigation} = this.props;
-    const {shopData, loading} = this.state;
+    const {loading} = this.state;
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Staff Members"
           renderLeft={() => {
             return (
-              <Icon
-                name="chevron-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {
             navigation.goBack();
           }}
         />
-        <View style={{flex:1 ,paddingLeft: 20, paddingRight: 20, flexDirection: 'column'}}>
-            {this.state.ourTeam.map((item, index) => {
-                return (
-                    <StaffProfileListItem
-                        image={item.image}
-                        textFirst={item.name}
-                        point={item.point}
-                        textSecond={item.address}
-                        textThird={item.id}
-                        rate = {item.rate}
-                        rateCount = {item.rateCount}
-                        style={{paddingTop: 15, paddingBottom: 15, borderBottomWidth: 1, borderBottomColor: BaseColor.grayColor}}
-                        styleThumb = {{width: 75, height: 75, borderRadius: 15}}
-                        onPress={() => navigation.navigate(item.screen)}
-                    />
-                );
-            })}
-  
+        <View style={styles.membersWrapper}>
+          {this.state.ourTeam.map((item, index) => {
+            return (
+              <StaffProfileListItem
+                image={item.image}
+                textFirst={item.name}
+                point={item.point}
+                textSecond={item.address}
+                textThird={item.id}
+                rate={item.rate}
+                rateCount={item.rateCount}
+                style={styles.memberItemWrapper}
+                styleThumb={styles.staffThumb}
+                onPress={() => navigation.navigate(item.screen)}
+              />
+            );
+          })}
         </View>
         <View style={styles.floatingBtn}>
           <TouchableOpacity
@@ -99,4 +84,3 @@ export default class StaffMembers extends Component {
     );
   }
 }
-

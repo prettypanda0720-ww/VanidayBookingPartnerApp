@@ -3,23 +3,16 @@ import {
   FlatList,
   View,
   Modal,
-  Animated,
   Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  RefreshControl,
   TextInput,
   ScrollView,
 } from 'react-native';
 import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 
 import {Dropdown} from 'react-native-material-dropdown';
-
-import {TabView, TabBar} from 'react-native-tab-view';
-import CheckBox from 'react-native-checkbox';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
-import PropTypes from 'prop-types';
-import * as Utils from '@utils';
 import styles from './styles';
 import {StartTimes, ServiceData} from '@data';
 
@@ -109,8 +102,6 @@ class CreateAppointment extends Component {
     } catch (err) {
       console.log(err);
     }
-    console.log('--------');
-    console.log(this.state.clientTitle);
   }
   render() {
     const {navigation} = this.props;
@@ -345,7 +336,7 @@ class CreateAppointment extends Component {
               <Text headline semibold>
                 {this.state.clientTitle}
               </Text>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <View style={styles.contentCenter}>
                 <Icon name="plus" size={15} color={BaseColor.blackColor} />
               </View>
             </TouchableOpacity>
@@ -358,7 +349,7 @@ class CreateAppointment extends Component {
                 </Text>
                 <Text caption1>Doesn't repeat</Text>
               </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <View style={styles.contentCenter}>
                 <Icon
                   name="chevron-right"
                   size={15}
@@ -380,7 +371,7 @@ class CreateAppointment extends Component {
                   {this.state.title}
                 </Text>
               </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <View style={styles.contentCenter}>
                 <Icon
                   name="chevron-right"
                   size={15}

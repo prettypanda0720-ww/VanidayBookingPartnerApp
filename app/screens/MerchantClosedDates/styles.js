@@ -30,4 +30,21 @@ export default StyleSheet.create({
     width: 40,
     height: 40,
   },
+  itemStyle: {
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.grayColor,
+  },
+  thumbStyle: {
+    width: 130, 
+    height: 60, 
+    resizeMode: 'contain',
+  },
+  merchantWrapper: {
+    flex: 1,
+    paddingLeft: 20,
+    paddingRight: 20,
+    flexDirection: 'column',
+  }
 });

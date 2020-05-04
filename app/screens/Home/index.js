@@ -1,11 +1,9 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {
-  Platform,
   Image,
   SafeAreaView,
   TouchableOpacity,
-  TouchableHighlight,
   Modal,
   View,
   Alert,
@@ -13,7 +11,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import Drawer from 'react-native-drawer';
-import {Icon, Header, Text} from '@components';
+import {Icon, AppointmentListItem, Text} from '@components';
 import {Agenda} from 'react-native-calendars';
 import moment from 'moment';
 import {BaseColor, Images} from '@config';
@@ -153,13 +151,8 @@ class App extends Component<{}> {
           </TouchableOpacity>
         </Modal>
         <View style={styles.mainContainer}>
-          <TouchableOpacity
-            onPress={this.toggle}
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Icon name="chevron-left" size={20} color={BaseColor.blackColor} />
-          </TouchableOpacity>
-          <View
-            style={{justifyContent: 'center', alignItems: 'center', flex: 10}}>
+          <View style={{flex: 1}} />
+          <View style={[styles.contentCenter, {flex: 10}]}>
             <Text headline bold>
               Appointments
             </Text>
@@ -168,7 +161,7 @@ class App extends Component<{}> {
             onPress={() => {
               this.setState({drawerOpen: true});
             }}
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            style={[styles.contentCenter, {flex: 1}]}>
             <Icon name="sliders-h" size={20} color={BaseColor.blackColor} />
           </TouchableOpacity>
         </View>
@@ -284,46 +277,15 @@ class App extends Component<{}> {
         data={newItems}
         keyExtractor={(item, index) => item.id}
         renderItem={({item}) => (
-          <TouchableOpacity
-            // testID={testIDs.agenda.ITEM}
+          <AppointmentListItem
+            acceptedState={item.acceptedState}
+            name={item.name}
+            staffName={item.staffName}
+            appointmentDate={item.appointmentDate}
+            startTime={item.startTime}
+            endTime={item.endTime}
             onPress={() => Alert.alert(item.name)}
-            style={styles.serviceItemWrapper}>
-            <View style={{flexDirection: 'column'}}>
-              <Text style={{fontSize: 17, color: 'black', fontWeight: 'bold'}}>
-                {item.acceptedState}
-              </Text>
-              <Text style={styles.serviceItemNameStyle}>
-                Service Name: {item.name}
-              </Text>
-              <Text style={styles.serviceItemNameStyle}>
-                Staff Name: {item.staffName}
-              </Text>
-              <Text style={styles.serviceItemDateStyle}>
-                {item.appointmentDate}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 25, color: 'green', fontWeight: 'bold'}}>
-                {item.startTime}
-              </Text>
-              <Text style={{fontSize: 18, color: 'green', fontWeight: 'bold'}}>
-                {item.endTime}
-              </Text>
-            </View>
-          </TouchableOpacity>
-
-          // <TouchableOpacity
-          //   testID={testIDs.agenda.ITEM}
-          //   style={[styles.item, {height: item.height}]}
-          //   onPress={() => Alert.alert(item.name)}
-          // >
-          //   <Text>{item.name}</Text>
-          // </TouchableOpacity>
+          />
         )}
       />
     );

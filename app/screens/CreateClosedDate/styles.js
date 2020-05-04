@@ -1,19 +1,19 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { BaseColor } from "@config";
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {BaseColor} from '@config';
 
 export default StyleSheet.create({
-  contain: {
-    alignItems: "center",
-    padding: 20,
-    width: "100%"
+  container: {
+    flexDirection: 'column',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   textInput: {
     height: 46,
     backgroundColor: BaseColor.fieldColor,
     borderRadius: 5,
     padding: 10,
-    width: "100%",
+    width: '100%',
     color: 'black',
     marginTop: 5,
     borderColor: BaseColor.grayColor,
@@ -21,5 +21,14 @@ export default StyleSheet.create({
   },
   inputGroup: {
     marginTop: 20,
+  },
+  summary: {
+    color: '#4079a0',
+    backgroundColor: '#daeffd',
+    padding: 10,
+  },
+  rowBetweenAlign: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
   }
 });

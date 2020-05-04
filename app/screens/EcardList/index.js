@@ -116,7 +116,7 @@ export default class EcardList extends Component {
               style={{
                 marginBottom: 10,
               }}
-              onPress={() => navigation.navigate('EcardDetail')}
+              onPress={() => navigation.navigate('EditEcard', {data: item})}
             />
           )}
         />

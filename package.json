@@ -10,6 +10,8 @@
     "lint": "eslint .",
     "postinstall": "npx jetify",
     "adb-reverse": "adb reverse tcp:8081 tcp:8081",
+    "nox-connect": "adb connect 127.0.0.1:62025",
+    "nox-reverse": "adb -s 127.0.0.1:62025 reverse tcp:8081 tcp:8081",
     "ios-dev": "react-native run-ios --simulator='iPhone 5'",
     "ios-codepush-staging": "code-push release-react drumkit ios",
     "ios-codepush-production": "code-push release-react drumkit ios -d Production",

@@ -68,7 +68,7 @@ class Setting extends Component {
           renderLeft={() => {
             return (
               <Icon
-                name="chevron-left"
+                name="angle-left"
                 size={20}
                 color={BaseColor.blackColor}
               />
@@ -92,22 +92,25 @@ class Setting extends Component {
               point={shopData.point}
               textSecond={shopData.address}
               textThird={shopData.id}
-              styleThumb={{width: Utils.scaleWithPixel(135), height: Utils.scaleWithPixel(65)}}
+              styleThumb={{
+                width: Utils.scaleWithPixel(135),
+                height: Utils.scaleWithPixel(65),
+              }}
               onPress={() => navigation.navigate('Aboutus', {data: shopData})}
             />
             <View style={styles.contentService}>
               <Text body2>
                 In Italian, "Covo" means a hiding place. When you come to our
-                salon, you will experience a private and relaxing space and time.
-                All the stylists are experienced Japanese stylists with Japanese
-                quality service. Our location is on the happening Keong Saik road,
-                on the ground floor in a shop house. We try out best to cater
-                damage-free hair using in-house developed chemicals(developed in
-                Tokyo by our owner stylist) for colouring, pem, rebonding and
-                treatment. We also have Keratin treatment for damaged hair as
-                well. For the best result for both hair and scalp, we use
-                carbonated water in the salon. Please come to experience quality
-                technique and service to Covo.
+                salon, you will experience a private and relaxing space and
+                time. All the stylists are experienced Japanese stylists with
+                Japanese quality service. Our location is on the happening Keong
+                Saik road, on the ground floor in a shop house. We try out best
+                to cater damage-free hair using in-house developed
+                chemicals(developed in Tokyo by our owner stylist) for
+                colouring, pem, rebonding and treatment. We also have Keratin
+                treatment for damaged hair as well. For the best result for both
+                hair and scalp, we use carbonated water in the salon. Please
+                come to experience quality technique and service to Covo.
               </Text>
             </View>
             <ProfilePerformance
@@ -173,6 +176,19 @@ class Setting extends Component {
                   navigation.navigate('Services');
                 }}>
                 <Text body1>Services</Text>
+                <Icon
+                  name="angle-right"
+                  size={18}
+                  color={BaseColor.blackColor}
+                  style={{marginLeft: 5}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.profileItem}
+                onPress={() => {
+                  navigation.navigate('Inventory');
+                }}>
+                <Text body1>Inventory</Text>
                 <Icon
                   name="angle-right"
                   size={18}

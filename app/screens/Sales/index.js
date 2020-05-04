@@ -82,7 +82,7 @@ export default class Sales extends Component {
             <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
-                navigation.navigate('Appointments');
+                navigation.navigate('Invoices');
               }}>
               <View style={styles.saleItemWrapper}>
                 <View style={{flexDirection: 'row', flex: 20}}>

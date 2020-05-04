@@ -25,6 +25,8 @@ import DurationPicker from './DurationPicker';
 import ClosedDateListItem from './ClosedDateListItem';
 import FilterSort from './FilterSort';
 import ECardListItem from './ECardListItem';
+import InvoiceListItem from './InvoiceListItem';
+import AppointmentListItem from './AppointmentListItem';
 
 export {
   Header,
@@ -54,4 +56,6 @@ export {
   ClosedDateListItem,  
   FilterSort,
   ECardListItem,
+  InvoiceListItem,
+  AppointmentListItem,
 };

@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {View, ScrollView, TouchableOpacity, Switch} from 'react-native';
-import {BaseStyle, BaseColor, BaseSetting} from '@config';
-import {Header, SafeAreaView, Icon, Text, Button} from '@components';
+import {BaseStyle, BaseColor} from '@config';
+import {Header, SafeAreaView, Icon, Text} from '@components';
 import styles from './styles';
-
-// Load sample data
-import {ShopsData} from '@data';
 
 export default class Staffs extends Component {
   constructor(props) {
@@ -17,18 +14,14 @@ export default class Staffs extends Component {
 
   render() {
     const {navigation} = this.props;
-    const {shopData, loading} = this.state;
+    const {loading} = this.state;
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Staffs"
           renderLeft={() => {
             return (
-              <Icon
-                name="chevron-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {

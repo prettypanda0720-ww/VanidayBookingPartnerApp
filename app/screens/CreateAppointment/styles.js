@@ -98,4 +98,8 @@ export default StyleSheet.create({
     width: 40,
     height: 40,
   },
+  contentCenter: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

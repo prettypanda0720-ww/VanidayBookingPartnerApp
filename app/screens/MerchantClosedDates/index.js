@@ -1,18 +1,8 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TouchableOpacity, Image, Switch} from 'react-native';
-import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-  ClosedDateListItem,
-} from '@components';
+import {View, TouchableOpacity, Image, Switch} from 'react-native';
+import {BaseStyle, BaseColor, Images} from '@config';
+import {Header, SafeAreaView, Icon, ClosedDateListItem} from '@components';
 import styles from './styles';
-
-// Load sample data
-import {ShopsData} from '@data';
 
 export default class MerchantClosedDates extends Component {
   constructor(props) {
@@ -54,31 +44,21 @@ export default class MerchantClosedDates extends Component {
 
   render() {
     const {navigation} = this.props;
-    const {shopData, loading} = this.state;
+    const {loading} = this.state;
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Closed Dates"
           renderLeft={() => {
             return (
-              <Icon
-                name="chevron-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {
             navigation.goBack();
           }}
         />
-        <View
-          style={{
-            flex: 1,
-            paddingLeft: 20,
-            paddingRight: 20,
-            flexDirection: 'column',
-          }}>
+        <View style={styles.merchantWrapper}>
           {this.state.ourTeam.map((item, index) => {
             return (
               <ClosedDateListItem
@@ -89,13 +69,8 @@ export default class MerchantClosedDates extends Component {
                 textThird={item.id}
                 reason={item.reason}
                 long={item.long}
-                style={{
-                  paddingTop: 15,
-                  paddingBottom: 15,
-                  borderBottomWidth: 1,
-                  borderBottomColor: BaseColor.grayColor,
-                }}
-                styleThumb={{width: 130, height: 60, resizeMode: 'contain'}}
+                style={styles.itemStyle}
+                styleThumb={styles.thumbStyle}
                 onPress={() => navigation.navigate(item.screen, {data: item})}
               />
             );

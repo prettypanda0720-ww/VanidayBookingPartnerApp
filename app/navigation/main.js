@@ -47,6 +47,11 @@ import TermsAndConditions from '@screens/TermsAndConditions';
 import Appointments from '@screens/Appointments';
 import SelectPeriod from '@screens/SelectPeriod';
 import EcardList from '@screens/EcardList';
+import EditEcard from '@screens/EditEcard';
+import Invoices from '@screens/Invoices';
+import Inventory from '@screens/Inventory';
+import PhysicalProducts from '@screens/PhysicalProducts';
+import EditProduct from '@screens/EditProduct';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -279,6 +284,21 @@ const StackNavigator = createStackNavigator(
     EcardList: {
       screen: EcardList,
     },
+    EditEcard: {
+      screen: EditEcard,
+    },
+    Invoices: {
+      screen: Invoices,
+    },
+    Inventory: {
+      screen: Inventory,
+    },
+    PhysicalProducts: {
+      screen: PhysicalProducts,
+    },
+    EditProduct: {
+      screen: EditProduct,
+    }
   },
   {
     headerMode: 'none',
