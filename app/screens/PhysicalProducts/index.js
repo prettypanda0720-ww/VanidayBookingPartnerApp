@@ -1,7 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {FlatList, RefreshControl, View, Animated} from 'react-native';
-import {BaseStyle, BaseColor} from '@config';
+import {
+  FlatList,
+  RefreshControl,
+  View,
+  Animated,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import {BaseStyle, BaseColor, Images} from '@config';
 import {
   Header,
   SafeAreaView,
@@ -127,6 +134,14 @@ export default class PhysicalProducts extends Component {
             onFilter={this.onFilter}
           />
         </Animated.View>
+        <View style={styles.floatingBtn}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CreateProduct')}
+            style={styles.button}
+            activeOpacity={0.8}>
+            <Image style={styles.image} source={Images.icons_create} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

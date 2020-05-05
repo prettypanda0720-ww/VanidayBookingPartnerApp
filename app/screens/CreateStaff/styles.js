@@ -36,4 +36,11 @@ export default StyleSheet.create({
     color: BaseColor.grayColor,
     marginBottom: 10,
   },
+  checkboxItemWrapper: {
+    paddingTop: 7,
+    paddingBottom: 7,
+    paddingLeft: 20,
+    paddingRight: 20,
+    flexDirection: 'row',
+  }
 });

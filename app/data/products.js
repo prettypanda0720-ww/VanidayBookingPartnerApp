@@ -21,7 +21,7 @@ const ProductsData = [
   },
   {
     id: '3',
-    image: Images.product1,
+    image: Images.product3,
     title: '$150',
     comment: 'VANIDAY',
     rate: 9.4,
@@ -30,7 +30,7 @@ const ProductsData = [
   },
   {
     id: '4',
-    image: Images.product2,
+    image: Images.product4,
     title: '$120',
     comment: 'FINDERBYCOVO',
     rate: 9.4,
@@ -39,18 +39,9 @@ const ProductsData = [
   },
   {
     id: '5',
-    image: Images.product1,
+    image: Images.product5,
     title: '$160',
     comment: 'VANIDAY',
-    rate: 9.4,
-    price: '$200',
-    orgPrice: '$240',
-  },
-  {
-    id: '6',
-    image: Images.product2,
-    title: '$220',
-    comment: 'FINDERBYCOVO',
     rate: 9.4,
     price: '$200',
     orgPrice: '$240',

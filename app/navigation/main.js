@@ -52,6 +52,7 @@ import Invoices from '@screens/Invoices';
 import Inventory from '@screens/Inventory';
 import PhysicalProducts from '@screens/PhysicalProducts';
 import EditProduct from '@screens/EditProduct';
+import CreateProduct from '@screens/CreateProduct';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -298,6 +299,9 @@ const StackNavigator = createStackNavigator(
     },
     EditProduct: {
       screen: EditProduct,
+    },
+    CreateProduct: {
+      screen: CreateProduct,
     }
   },
   {
