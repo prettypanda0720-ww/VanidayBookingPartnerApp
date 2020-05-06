@@ -27,6 +27,7 @@ import FilterSort from './FilterSort';
 import ECardListItem from './ECardListItem';
 import InvoiceListItem from './InvoiceListItem';
 import AppointmentListItem from './AppointmentListItem';
+import ProductListItem from './ProductListItem';
 
 export {
   Header,
@@ -58,4 +59,5 @@ export {
   ECardListItem,
   InvoiceListItem,
   AppointmentListItem,
+  ProductListItem,
 };

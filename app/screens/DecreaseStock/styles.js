@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import * as Utils from '@utils';
 import {BaseColor} from '@config';
 
 export default StyleSheet.create({
@@ -27,6 +26,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     paddingLeft: 20,
     paddingRight: 20,
+    paddingTop: 20,
     paddingBottom: 60,
   },
   multilineTextInput: {
@@ -52,12 +52,5 @@ export default StyleSheet.create({
   },
   retailWrapper: {
     paddingVertical: 30,
-  },
-  blockImage: {
-    height: Utils.scaleWithPixel(200),
-    width: '100%',
-    borderWidth: 1,
-    borderColor: BaseColor.grayColor,
-    borderRadius: 0,
-  },
+  }
 });

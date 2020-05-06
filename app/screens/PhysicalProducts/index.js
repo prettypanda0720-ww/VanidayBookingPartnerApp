@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
-  FlatList,
   RefreshControl,
   View,
   Animated,
@@ -13,7 +12,7 @@ import {
   Header,
   SafeAreaView,
   Icon,
-  ECardListItem,
+  ProductListItem,
   FilterSort,
 } from '@components';
 import styles from './styles';
@@ -110,20 +109,34 @@ export default class PhysicalProducts extends Component {
           data={productsData}
           keyExtractor={(item, index) => item.id}
           renderItem={({item, index}) => (
-            <ECardListItem
+            <ProductListItem
               block
               image={item.image}
               title={item.title}
-              comment={item.comment}
-              price={item.price}
-              orgPrice={item.orgPrice}
+              barcode={item.barcode}
+              sku={item.sku}
+              brand={item.brand}
+              category={item.category}
+              description={item.description}
+              enableretail={item.enableretail}
+              retailprice={item.retailprice}
+              specialprice={item.specialprice}
+              istax={item.istax}
+              enablecommision={item.enablecommision}
+              enablestock={item.enablestock}
+              supplyprice={item.supplyprice}
+              initialstock={item.initialstock}
+              supplier={item.supplier}
+              reorderpoint={item.reorderpoint}
+              reorderqty={item.reorderqty}
               rate={item.rate}
               numReviews={item.numReviews}
-              services={item.services}
               style={{
                 marginBottom: 10,
               }}
-              onPress={() => navigation.navigate('EditProduct', {data: item})}
+              onPress={() =>
+                navigation.navigate('PhysicalProductProfile', {data: item})
+              }
             />
           )}
         />

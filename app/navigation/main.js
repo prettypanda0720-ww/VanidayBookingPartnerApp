@@ -53,6 +53,9 @@ import Inventory from '@screens/Inventory';
 import PhysicalProducts from '@screens/PhysicalProducts';
 import EditProduct from '@screens/EditProduct';
 import CreateProduct from '@screens/CreateProduct';
+import PhysicalProductProfile from '@screens/PhysicalProductProfile';
+import IncreaseStock from '@screens/IncreaseStock';
+import DecreaseStock from '@screens/DecreaseStock';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -302,7 +305,16 @@ const StackNavigator = createStackNavigator(
     },
     CreateProduct: {
       screen: CreateProduct,
-    }
+    },
+    PhysicalProductProfile: {
+      screen: PhysicalProductProfile,
+    },
+    IncreaseStock: {
+      screen: IncreaseStock,
+    },
+    DecreaseStock: {
+      screen: DecreaseStock,
+    },
   },
   {
     headerMode: 'none',

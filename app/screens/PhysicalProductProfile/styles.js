@@ -16,7 +16,9 @@ export default StyleSheet.create({
     borderWidth: 1,
   },
   inputGroup: {
-    marginTop: 15,
+    paddingVertical: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.grayColor,
   },
   btnWrapper: {
     marginBottom: 0,
@@ -59,5 +61,9 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: BaseColor.grayColor,
     borderRadius: 0,
+    marginTop: 10,
+  },
+  stockHisWrapper: {
+    marginTop: 60,
   },
 });
