@@ -56,6 +56,15 @@ import CreateProduct from '@screens/CreateProduct';
 import PhysicalProductProfile from '@screens/PhysicalProductProfile';
 import IncreaseStock from '@screens/IncreaseStock';
 import DecreaseStock from '@screens/DecreaseStock';
+import Suppliers from '@screens/Suppliers';
+import CreateSupplier from '@screens/CreateSupplier';
+import EditSupplier from '@screens/EditSupplier';
+import Categories from '@screens/Categories';
+import CreateCategory from '@screens/CreateCategory';
+import EditCategory from '@screens/EditCategory';
+import Brands from '@screens/Brands';
+import CreateBrand from '@screens/CreateBrand';
+import EditBrand from '@screens/EditBrand';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -314,6 +323,33 @@ const StackNavigator = createStackNavigator(
     },
     DecreaseStock: {
       screen: DecreaseStock,
+    },
+    Suppliers: {
+      screen: Suppliers,
+    },
+    CreateSupplier: {
+      screen: CreateSupplier,
+    },
+    EditSupplier: {
+      screen: EditSupplier,
+    },
+    Categories: {
+      screen: Categories,
+    },
+    CreateCategory: {
+      screen: CreateCategory,
+    },
+    EditCategory: {
+      screen: EditCategory,
+    },
+    Brands: {
+      screen: Brands,
+    },
+    CreateBrand: {
+      screen: CreateBrand,
+    },
+    EditBrand: {
+      screen: EditBrand,
     },
   },
   {

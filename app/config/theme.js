@@ -20,7 +20,7 @@ export const BaseStyle = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     width: "100%",
-    justifyContent: "center"
+    justifyContent: "flex-start"
   },
   safeAreaView: {
     flex: 1,

@@ -66,7 +66,7 @@ export default class Inventory extends Component {
             <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
-                navigation.navigate('');
+                navigation.navigate('Suppliers');
               }}>
               <View style={styles.saleItemWrapper}>
                 <View style={{flexDirection: 'row', flex: 20}}>
@@ -95,7 +95,7 @@ export default class Inventory extends Component {
             <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
-                navigation.navigate('');
+                navigation.navigate('Brands');
               }}>
               <View style={styles.saleItemWrapper}>
                 <View style={{flexDirection: 'row', flex: 20}}>
@@ -123,7 +123,7 @@ export default class Inventory extends Component {
             <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
-                navigation.navigate('');
+                navigation.navigate('Categories');
               }}>
               <View style={styles.saleItemWrapper}>
                 <View style={{flexDirection: 'row', flex: 20}}>
@@ -151,7 +151,7 @@ export default class Inventory extends Component {
             <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
-                navigation.navigate('');
+                navigation.navigate('Suppliers');
               }}>
               <View style={styles.saleItemWrapper}>
                 <View style={{flexDirection: 'row', flex: 20}}>

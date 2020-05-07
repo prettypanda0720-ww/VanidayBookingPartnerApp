@@ -11,6 +11,7 @@ import {DateTimes} from './datetimes';
 import {appointments} from './appointments';
 import {ECardData} from './eCard';
 import {ProductsData} from './products';
+import {Values} from './Values';
 // Sample data for display on template
 export {
   CurrencyData,
@@ -24,4 +25,5 @@ export {
   appointments,
   ECardData,
   ProductsData,
+  Values,
 };

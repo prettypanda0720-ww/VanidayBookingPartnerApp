@@ -14,5 +14,9 @@ export default StyleSheet.create({
     height: 50,
     borderRadius: 25,
     marginRight: 10
+  },
+  contentCenter: {
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });

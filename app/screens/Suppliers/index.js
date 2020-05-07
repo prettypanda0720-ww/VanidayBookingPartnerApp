@@ -20,7 +20,7 @@ import {
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import styles from './styles';
 
-class Clients extends Component {
+class Suppliers extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,30 +29,16 @@ class Clients extends Component {
       ourTeam: [
         {
           image: Images.profile2,
-          subName: '',
+          subName: 'Products assigned 0',
           name: 'Kondo Ieyasu',
-          screen: 'ClientProfile',
+          screen: 'EditSupplier',
           description: 'riverstar1992@gmail.com',
         },
         {
           image: Images.profile3,
-          subName: '',
+          subName: 'Products assigned 0',
           name: 'Yeray Rosales',
-          screen: 'ClientProfile',
-          description: 'riverstar1992@gmail.com',
-        },
-        {
-          image: Images.profile5,
-          subName: '',
-          name: 'Alf Huncoot',
-          screen: 'ClientProfile',
-          description: 'riverstar1992@gmail.com',
-        },
-        {
-          image: Images.profile4,
-          subName: '',
-          name: 'Chioke Okonkwo',
-          screen: 'ClientProfile',
+          screen: 'EditSupplier',
           description: 'riverstar1992@gmail.com',
         },
       ],
@@ -73,26 +59,14 @@ class Clients extends Component {
         style={[BaseStyle.safeAreaView, {flexDirection: 'column'}]}
         forceInset={{top: 'always'}}>
         <Header
-          title="Clients"
+          title="Suppliers"
           renderLeft={() => {
             return (
-              <Icon
-                name="chevron-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
-            );
-          }}
-          renderRight={() => {
-            return (
-              <Icon name="ellipsis-h" size={24} color={BaseColor.grayColor} />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {
             navigation.goBack();
-          }}
-          onPressRight={() => {
-            navigation.navigate('Notification');
           }}
         />
         <View style={{padding: 20}}>
@@ -145,7 +119,7 @@ class Clients extends Component {
         })}
         <View style={styles.floatingBtn}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('CreateClient')}
+            onPress={() => navigation.navigate('CreateSupplier')}
             style={styles.button}
             activeOpacity={0.8}>
             <Image style={styles.image} source={Images.icons_create} />
@@ -156,4 +130,4 @@ class Clients extends Component {
   }
 }
 
-export default Clients;
+export default Suppliers;

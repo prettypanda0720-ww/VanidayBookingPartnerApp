@@ -9,7 +9,6 @@ import RadioGroup from './RadioGroup';
 import ProfileDescription from './ProfileDescription';
 import ProfilePerformance from './ProfilePerformance';
 import SignupTextInput from './SignupTextInput';
-import PhoneInput from './PhoneInput';
 import DatePicker from './DatePicker';
 import ProfileDetail from './ProfileDetail';
 import Timeline from './Timeline';
@@ -41,7 +40,6 @@ export {
   ProfileDescription,
   ProfilePerformance,
   SignupTextInput,
-  PhoneInput,
   DatePicker,
   ProfileDetail,
   Timeline,
