@@ -17,6 +17,6 @@ export default StyleSheet.create({
   },
   contentCenter: {
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
   }
 });

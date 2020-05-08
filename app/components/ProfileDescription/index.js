@@ -29,6 +29,15 @@ export default class ProfileDescription extends Component {
       return <Image source={image} style={[styles.thumb, styleThumb]} />;
     }
   }
+  displayRightContentView(rightContent) {
+    if (rightContent != '') {
+      return (
+        <Text headline semibold numberOfLines={1} style={{marginRight: 20}}>
+          {rightContent}
+        </Text>
+      );
+    }
+  }
   render() {
     const {
       style,
@@ -38,6 +47,7 @@ export default class ProfileDescription extends Component {
       name,
       subName,
       description,
+      rightContent,
     } = this.props;
     return (
       <TouchableOpacity
@@ -48,7 +58,7 @@ export default class ProfileDescription extends Component {
           <View style={styles.contentCenter}>
             {this.displayImageView(image, styleThumb)}
           </View>
-          <View>
+          <View style={styles.contentCenter}>
             <Text headline semibold numberOfLines={1}>
               {name}
             </Text>
@@ -56,8 +66,8 @@ export default class ProfileDescription extends Component {
             <View>{this.displaySubNameView(subName)}</View>
           </View>
         </View>
-
-        <View>
+        <View style={[styles.contentCenter, {flexDirection: 'row'}]}>
+          {this.displayRightContentView(rightContent)}
           <Icon name="angle-right" size={20} color={BaseColor.grayColor} />
         </View>
       </TouchableOpacity>
@@ -71,6 +81,7 @@ ProfileDescription.propTypes = {
   name: PropTypes.string,
   subName: PropTypes.string,
   description: PropTypes.string,
+  rightContent: PropTypes.string,
   styleThumb: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onPress: PropTypes.func,
 };
@@ -80,6 +91,7 @@ ProfileDescription.defaultProps = {
   name: '',
   subName: '',
   description: '',
+  rightContent: '',
   styleThumb: {},
   onPress: () => {},
   style: {},

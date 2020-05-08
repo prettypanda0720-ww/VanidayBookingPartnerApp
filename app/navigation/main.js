@@ -65,6 +65,12 @@ import EditCategory from '@screens/EditCategory';
 import Brands from '@screens/Brands';
 import CreateBrand from '@screens/CreateBrand';
 import EditBrand from '@screens/EditBrand';
+import Orders from '@screens/Orders';
+import SelectSupplier from '@screens/SelectSupplier';
+import CreateOrder from '@screens/CreateOrder';
+import CategoryProductList from '@screens/CategoryProductList';
+import CategoryProducts from '@screens/CategoryProducts';
+import OrderDetail from '@screens/OrderDetail';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -350,6 +356,24 @@ const StackNavigator = createStackNavigator(
     },
     EditBrand: {
       screen: EditBrand,
+    },
+    Orders: {
+      screen: Orders,
+    },
+    SelectSupplier: {
+      screen: SelectSupplier,
+    },
+    CreateOrder: {
+      screen: CreateOrder,
+    },
+    OrderDetail: {
+      screen: OrderDetail,
+    },
+    CategoryProductList: {
+      screen: CategoryProductList,
+    },
+    CategoryProducts: {
+      screen: CategoryProducts,
     },
   },
   {

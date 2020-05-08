@@ -66,7 +66,7 @@ export default class Inventory extends Component {
             <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
-                navigation.navigate('Suppliers');
+                navigation.navigate('Orders');
               }}>
               <View style={styles.saleItemWrapper}>
                 <View style={{flexDirection: 'row', flex: 20}}>
@@ -128,7 +128,7 @@ export default class Inventory extends Component {
               <View style={styles.saleItemWrapper}>
                 <View style={{flexDirection: 'row', flex: 20}}>
                   <Icon
-                    name="grip-horizontal"
+                    name="th-large"
                     size={25}
                     color={BaseColor.blackColor}
                     style={{marginLeft: 5}}
