@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  FlatList,
   View,
   TextInput,
   Animated,
@@ -11,27 +10,10 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-  CustomPhoneInput,
-  ProfileDescription,
-} from '@components';
-import CheckBox from 'react-native-checkbox';
+import {Header, SafeAreaView, Icon, Text} from '@components';
 import {Values} from '@data';
 import * as Utils from '@utils';
-import CountryPicker, {
-  DARK_THEME,
-  FlagButton,
-  withFlagButton,
-  withCallingCode,
-  isPickerVisible,
-} from 'react-native-country-picker-modal';
-
-import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
+import {BaseStyle, BaseColor} from '@config';
 import styles from './styles';
 
 class OrderDetail extends Component {
@@ -82,29 +64,14 @@ class OrderDetail extends Component {
               borderBottomColor: BaseColor.blackColor,
             }}
           />
-          <ScrollView
-            onScroll={Animated.event([
-              {
-                nativeEvent: {
-                  contentOffset: {y: this._deltaY},
-                },
-              },
-            ])}
-            onContentSizeChange={() =>
-              this.setState({
-                heightHeader: Utils.heightHeader(),
-              })
-            }
-            scrollEventThrottle={8}
-            style={{
-              flexDirection: 'column',
-              paddingLeft: 20,
-              paddingRight: 20,
-              paddingBottom: 60,
-            }}>
+          <ScrollView style={styles.container}>
             <View style={{flexDirection: 'column', paddingVertical: 10}}>
               <View style={{flexDirection:'row'}}>
-                <Icon name="strikethrough" size={30} color={BaseColor.blackColor} />
+                <Icon
+                  name="creative-commons-nc"
+                  size={30}
+                  color={BaseColor.blackColor}
+                />
                 <Text title2 blackColor style={{marginLeft: 10}}>
                   Order Canceled
                 </Text>
@@ -117,16 +84,16 @@ class OrderDetail extends Component {
               <Text title3 blackColor>
                 Judy T
               </Text>
-              <Text caption3 style={{color: '#b0b0b0', marginTop: 10}}>
+              <Text footnote style={{color: '#b0b0b0', marginTop: 10}}>
                 MosCow
               </Text>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text footnote style={{color: '#b0b0b0'}}>
                 12 Street
               </Text>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text footnote style={{color: '#b0b0b0'}}>
                 Maskva
               </Text>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text footnote style={{color: '#b0b0b0'}}>
                 MosCow, 108811
               </Text>
             </View>
@@ -134,13 +101,13 @@ class OrderDetail extends Component {
               <Text title3 blackColor>
                 DELIVERY TO
               </Text>
-              <Text caption3 style={{color: '#b0b0b0', marginTop: 10}}>
+              <Text footnote style={{color: '#b0b0b0', marginTop: 10}}>
                 Makeup Artist
               </Text>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text footnote style={{color: '#b0b0b0'}}>
                 Default Address
               </Text>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text footnote style={{color: '#b0b0b0'}}>
                 Default City
               </Text>
             </View>

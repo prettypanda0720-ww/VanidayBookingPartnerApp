@@ -1,33 +1,9 @@
 import React, {Component} from 'react';
-import {
-  FlatList,
-  View,
-  TextInput,
-  Animated,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  RefreshControl,
-  ScrollView,
-  Alert,
-} from 'react-native';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-  CustomPhoneInput,
-} from '@components';
+import {FlatList, View, TextInput, ScrollView, Alert} from 'react-native';
+import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 import CheckBox from 'react-native-checkbox';
 import {Values} from '@data';
-import CountryPicker, {
-  DARK_THEME,
-  FlagButton,
-  withFlagButton,
-  withCallingCode,
-  isPickerVisible,
-} from 'react-native-country-picker-modal';
+import PhoneInput from 'react-native-phone-input';
 
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import styles from './styles';
@@ -39,12 +15,20 @@ class CreateSupplier extends Component {
       search: '',
       refreshing: false,
       loading: false,
-      countryCode: 65,
-      cca2: 'SG',
-      country: 'SG',
-      phoneNumber: '',
+      valid: '',
+      type: '',
+      value: '',
       Values: Values,
     };
+    this.updateInfo = this.updateInfo.bind(this);
+  }
+
+  updateInfo() {
+    this.setState({
+      valid: this.phone.isValidNumber(),
+      type: this.phone.getNumberType(),
+      value: this.phone.getValue(),
+    });
   }
 
   phoneNumberValidation = (number) => {
@@ -137,49 +121,14 @@ class CreateSupplier extends Component {
               selectionColor={BaseColor.primaryColor}
             />
           </View>
-          <View style={styles.inputContainer}>
-            <View style={styles.countryCodeContainer}>
-              <FlagButton
-                withEmoji={true}
-                countryCode={this.state.cca2}
-                onPress={() => Alert.alert('asdf')}
-              />
-              <View style={{marginRight: 20}}>
-                <CountryPicker
-                  ref={(countryPicker) => (this.countryPicker = countryPicker)}
-                  cca2={this.state.cca2}
-                  withFlag={true}
-                  withFilter={true}
-                  withCallingCode={true}
-                  withAlphaFilter={true}
-                  withModal={true}
-                  withFlagButton={true}
-                  placeholder='Select'
-                  onSelect={(value) =>
-                    this.setState({
-                      country: value,
-                      cca2: value.cca2,
-                      countryCode: value.callingCode,
-                    })
-                  }
-                />
-              </View>
-            </View>
-            <View style={styles.phoneNumberContainer}>
-              <Text style={styles.countryCodeText}>
-                (+{this.state.countryCode}){' '}
-              </Text>
-              <TextInput
-                underlineColorAndroid="transparent"
-                style={styles.phoneInput}
-                returnKeyType="done"
-                onChangeText={(value) => this.phoneNumberValidation(value)}
-                value={this.state.phoneNumber}
-                keyboardType="phone-pad"
-              />
-            </View>
+          <View style={styles.inputGroup}>
+            <PhoneInput
+              ref={(ref) => {
+                this.phone = ref;
+              }}
+              style={styles.phoneInputStyle}
+            />
           </View>
-
           <View style={styles.inputGroup}>
             <Text body2 style={{color: '#b0b0b0'}}>
               EMAIL

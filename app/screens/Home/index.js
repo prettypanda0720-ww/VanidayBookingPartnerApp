@@ -150,7 +150,7 @@ class App extends Component<{}> {
             </View>
           </TouchableOpacity>
         </Modal>
-        <View style={styles.mainContainer}>
+        <View style={[styles.mainContainer, styles.headerStyle]}>
           <View style={{flex: 1}} />
           <View style={[styles.contentCenter, {flex: 10}]}>
             <Text headline bold>

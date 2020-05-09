@@ -27,6 +27,7 @@ import ECardListItem from './ECardListItem';
 import InvoiceListItem from './InvoiceListItem';
 import AppointmentListItem from './AppointmentListItem';
 import ProductListItem from './ProductListItem';
+import VanidayServiceItem from './VanidayServiceItem';
 
 export {
   Header,
@@ -58,4 +59,5 @@ export {
   InvoiceListItem,
   AppointmentListItem,
   ProductListItem,
+  VanidayServiceItem,
 };

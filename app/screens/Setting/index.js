@@ -65,24 +65,13 @@ class Setting extends Component {
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Profile"
-          renderLeft={() => {
-            return (
-              <Icon
-                name="angle-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
-            );
-          }}
           renderRight={() => {
             return <Icon name="bell" size={24} color={BaseColor.blackColor} />;
-          }}
-          onPressLeft={() => {
-            navigation.goBack();
           }}
           onPressRight={() => {
             navigation.navigate('Notification');
           }}
+          style={styles.headerStyle}
         />
         <ScrollView>
           <View style={styles.contain}>
@@ -117,6 +106,21 @@ class Setting extends Component {
               data={shopData.performance}
               style={{marginTop: 20, marginBottom: 20}}
             />
+            <View style={{width: '100%'}}>
+              <TouchableOpacity
+                style={styles.profileItem}
+                onPress={() => {
+                  navigation.navigate('VanidayServices');
+                }}>
+                <Text body1>Vaniday Services</Text>
+                <Icon
+                  name="angle-right"
+                  size={18}
+                  color={BaseColor.blackColor}
+                  style={{marginLeft: 5}}
+                />
+              </TouchableOpacity>
+            </View>
             <View style={{width: '100%'}}>
               <TouchableOpacity
                 style={styles.profileItem}

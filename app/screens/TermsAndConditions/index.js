@@ -26,7 +26,7 @@ import {
   DurationPicker,
 } from '@components';
 
-import { Dropdown } from 'react-native-material-dropdown';
+import {Dropdown} from 'react-native-material-dropdown';
 
 import {TabView, TabBar} from 'react-native-tab-view';
 import CheckBox from 'react-native-checkbox';
@@ -54,9 +54,17 @@ class TermsAndConditions extends Component {
   render() {
     const {navigation} = this.props;
     const {loading} = this.state;
-    let duration = [{value: '1h'},{value: '2h'}, {value: '3h'},
-                {value: '4h'},{value: '5h'}, {value: '6h'},
-                {value: '7h'},{value: '8h'}, {value: '9h'},];
+    let duration = [
+      {value: '1h'},
+      {value: '2h'},
+      {value: '3h'},
+      {value: '4h'},
+      {value: '5h'},
+      {value: '6h'},
+      {value: '7h'},
+      {value: '8h'},
+      {value: '9h'},
+    ];
 
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
@@ -69,15 +77,22 @@ class TermsAndConditions extends Component {
             navigation.goBack();
           }}
         />
-        <ScrollView style={{flexDirection: 'column', padding: 20, paddingBottom: 40}}>
+        <ScrollView
+          style={{flexDirection: 'column', padding: 20, paddingBottom: 40}}>
           <View style={{marginTop: 0}}>
             <Text title2 bold>
               Edit Terms and Conditions
             </Text>
             <View style={styles.inputGroup}>
-              <Text headline style={{color: BaseColor.secondBlackColor}}>Terms and Conditions</Text>
+              <Text headline style={{color: BaseColor.secondBlackColor}}>
+                Terms and Conditions
+              </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.multilineTextInput, {marginTop: 10}]}
+                style={[
+                  BaseStyle.textInput,
+                  styles.multilineTextInput,
+                  {marginTop: 10},
+                ]}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""
@@ -85,22 +100,25 @@ class TermsAndConditions extends Component {
                 selectionColor={BaseColor.primaryColor}
                 multiline={true}>
                 In Italian, "Covo" means a hiding place. When you come to our
-                salon, you will experience a private and relaxing space and time.
-                All the stylists are experienced Japanese stylists with Japanese
-                quality service. Our location is on the happening Keong Saik road,
-                on the ground floor in a shop house. We try out best to cater
-                damage-free hair using in-house developed chemicals(developed in
-                Tokyo by our owner stylist) for colouring, pem, rebonding and
-                treatment. We also have Keratin treatment for damaged hair as
-                well. For the best result for both hair and scalp, we use
-                carbonated water in the salon. Please come to experience quality
-                technique and service to Covo.
+                salon, you will experience a private and relaxing space and
+                time. All the stylists are experienced Japanese stylists with
+                Japanese quality service. Our location is on the happening Keong
+                Saik road, on the ground floor in a shop house. We try out best
+                to cater damage-free hair using in-house developed
+                chemicals(developed in Tokyo by our owner stylist) for
+                colouring, pem, rebonding and treatment. We also have Keratin
+                treatment for damaged hair as well. For the best result for both
+                hair and scalp, we use carbonated water in the salon. Please
+                come to experience quality technique and service to Covo.
               </TextInput>
             </View>
           </View>
         </ScrollView>
         <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
-          <Button style={{flex: 1, marginLeft: 10,}} loading={loading} onPress={() => navigation.goBack()}>
+          <Button
+            style={{flex: 1, marginLeft: 10}}
+            loading={loading}
+            onPress={() => navigation.goBack()}>
             Save
           </Button>
         </View>
@@ -110,4 +128,3 @@ class TermsAndConditions extends Component {
 }
 
 export default TermsAndConditions;
-

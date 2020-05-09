@@ -38,4 +38,10 @@ export default StyleSheet.create({
     borderColor: BaseColor.fieldColor,
     borderBottomWidth: 1,
   },
+  headerStyle: {
+    borderTopColor: BaseColor.secondBlackColor,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.secondBlackColor,
+  }
 });

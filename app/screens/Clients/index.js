@@ -74,26 +74,19 @@ class Clients extends Component {
         forceInset={{top: 'always'}}>
         <Header
           title="Clients"
-          renderLeft={() => {
-            return (
-              <Icon
-                name="chevron-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
-            );
-          }}
           renderRight={() => {
             return (
-              <Icon name="ellipsis-h" size={24} color={BaseColor.grayColor} />
+              <Icon
+                name="ellipsis-h"
+                size={20}
+                color={BaseColor.secondBlackColor}
+              />
             );
-          }}
-          onPressLeft={() => {
-            navigation.goBack();
           }}
           onPressRight={() => {
             navigation.navigate('Notification');
           }}
+          style={styles.headerStyle}
         />
         <View style={{padding: 20}}>
           <View style={styles.searchWrapper}>

@@ -4,20 +4,9 @@ import {BaseColor} from '@config';
 
 export default StyleSheet.create({
   //block css
-  container: {
-    flex: 1,
-  },
   blockImage: {
     height: Utils.scaleWithPixel(200),
-    width: Utils.getWidthDevice(),
-    borderWidth: 1,
-    borderColor: BaseColor.grayColor,
-    borderRadius: 0,
-  },
-  paymentImage: {
-    height: Utils.scaleWithPixel(35),
     width: '100%',
-    paddingTop: 10,
   },
   blockContentAddress: {
     flexDirection: 'row',
@@ -39,9 +28,8 @@ export default StyleSheet.create({
     marginTop: 4,
   },
   contentService: {
-    display: 'flex',
     flexDirection: 'row',
-    // justifyContent: 'space-between',
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
     marginTop: 10,
     borderColor: BaseColor.fieldColor,
@@ -77,9 +65,20 @@ export default StyleSheet.create({
     borderRadius: 8,
     height: Utils.scaleWithPixel(120),
     width: '100%',
+    flexDirection: 'column'
+  },
+  image: {
+    color: BaseColor.MainPrimaryColor,
   },
   girdContent: {
     flex: 1,
+    // backgroundColor: '#F00',
+    borderRadius: 10,
+    shadowColor: 'black',
+    shadowOffset: {width: 1.5, height: 1.5},
+    shadowOpacity: 0.3,
+    shadowRadius: 1,
+    elevation: 1
   },
   girdContentLocation: {
     flexDirection: 'row',
@@ -91,66 +90,8 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 10,
   },
-  contentCartPromotion: {
-    marginTop: 10,
-    flexDirection: 'row',
+  contentCenter: {
     justifyContent: 'center',
-  },
-  btnPromotion: {
-    height: 30,
-    borderRadius: 3,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  priceContent: {
-    position: 'absolute',
-    top: 10,
-    left: 20,
-    backgroundColor: BaseColor.MainColor,
-    borderRadius: 8,
-    padding: 5,
-  },
-  iconContent: {
-    position: 'absolute',
-    top: 10,
-    right: 20,
-    padding: 5,
-  },
-  inputGroup: {
-    marginTop: 20,
-  },
-  textInput: {
-    height: 46,
-    backgroundColor: BaseColor.fieldColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: 'black',
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
-  multilineTextInput: {
-    height: 200,
-    backgroundColor: BaseColor.fieldColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: 'black',
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
-  contentPage: {
-    bottom: 0,
-  },
-  slide: {
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    flex: 1,
-  },
-  wrapper: {
-    width: '100%',
-    height: Utils.scaleWithPixel(230),
+    alignItems: 'center',
   },
 });

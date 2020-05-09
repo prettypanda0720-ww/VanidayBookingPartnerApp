@@ -3,7 +3,20 @@ import {Images} from '@config';
 const ShopsData = [
   {
     id: '1',
-    image: Images.salon,
+    images: [
+      {
+        id: '1',
+        image: Images.salon,
+      },
+      {
+        id: '2',
+        image: Images.salon,
+      },
+      {
+        id: '3',
+        image: Images.salon,
+      }
+    ],
     name: 'FINDER by COVO',
     major: 'Travel Agency',
     email: 'lewis.victor@milford.tv',

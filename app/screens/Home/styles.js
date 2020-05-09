@@ -106,5 +106,9 @@ export default StyleSheet.create({
   contentCenter: {
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  headerStyle: {
+    borderBottomColor: BaseColor.secondBlackColor,
+    borderBottomWidth: 1,
+  },
 });

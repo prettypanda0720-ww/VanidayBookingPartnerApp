@@ -39,10 +39,10 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
   },
   container: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 20,
-    paddingTop: 60,
+    flexDirection: 'column',
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 60,
   },
   info: {
     // width: 200,
@@ -70,7 +70,7 @@ export default StyleSheet.create({
   orderItemWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 10,
+    paddingVertical: 7,
   },
   orderWrapper: {
     flexDirection: 'column',

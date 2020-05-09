@@ -71,6 +71,8 @@ import CreateOrder from '@screens/CreateOrder';
 import CategoryProductList from '@screens/CategoryProductList';
 import CategoryProducts from '@screens/CategoryProducts';
 import OrderDetail from '@screens/OrderDetail';
+import VanidayServices from '@screens/VanidayServices';
+import Financing from '@screens/Financing';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -106,14 +108,7 @@ const routeConfigs = {
     navigationOptions: ({navigation}) => ({
       // title: 'Home',
       tabBarIcon: ({focused, tintColor}) => {
-        return (
-          <Icon
-            color={tintColor}
-            name="calendar"
-            size={20}
-            solid
-          />
-        );
+        return <Icon color={tintColor} name="calendar" size={20} solid />;
       },
     }),
   },
@@ -122,14 +117,7 @@ const routeConfigs = {
     navigationOptions: ({navigation}) => ({
       title: 'Sales',
       tabBarIcon: ({focused, tintColor}) => {
-        return (
-          <Icon
-            color={tintColor}
-            name="bookmark"
-            size={20}
-            solid
-          />
-        );
+        return <Icon color={tintColor} name="bookmark" size={20} solid />;
       },
     }),
   },
@@ -138,14 +126,7 @@ const routeConfigs = {
     navigationOptions: ({navigation}) => ({
       title: 'Clients',
       tabBarIcon: ({focused, tintColor}) => {
-        return (
-          <Icon
-            color={tintColor}
-            name="user-circle"
-            size={20}
-            solid
-          />
-        );
+        return <Icon color={tintColor} name="user-circle" size={20} solid />;
       },
     }),
   },
@@ -154,14 +135,7 @@ const routeConfigs = {
     navigationOptions: ({navigation}) => ({
       title: 'Notification',
       tabBarIcon: ({focused, tintColor}) => {
-        return (
-          <Icon
-            color={tintColor}
-            name="envelope"
-            size={20}
-            solid
-          />
-        );
+        return <Icon color={tintColor} name="envelope" size={20} solid />;
       },
     }),
   },
@@ -170,14 +144,7 @@ const routeConfigs = {
     navigationOptions: ({navigation}) => ({
       title: 'Setting',
       tabBarIcon: ({focused, tintColor}) => {
-        return (
-          <Icon
-            color={tintColor}
-            name="bars"
-            size={20}
-            solid
-          />
-        );
+        return <Icon color={tintColor} name="bars" size={20} solid />;
       },
     }),
   },
@@ -374,6 +341,12 @@ const StackNavigator = createStackNavigator(
     },
     CategoryProducts: {
       screen: CategoryProducts,
+    },
+    VanidayServices: {
+      screen: VanidayServices,
+    },
+    Financing: {
+      screen: Financing,
     },
   },
   {
