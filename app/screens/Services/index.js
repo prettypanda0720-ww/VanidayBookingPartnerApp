@@ -39,11 +39,7 @@ export default class Services extends Component {
           title="Services"
           renderLeft={() => {
             return (
-              <Icon
-                name="chevron-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {

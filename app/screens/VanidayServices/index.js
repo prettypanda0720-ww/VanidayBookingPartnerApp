@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {View, ScrollView, FlatList} from 'react-native';
-import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
+import {BaseStyle, BaseColor} from '@config';
 import {
   SafeAreaView,
   Icon,
   Text,
-  Button,
   Header,
   VanidayServiceItem,
 } from '@components';

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {View, ScrollView, FlatList, TextInput} from 'react-native';
-import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
+import {View, ScrollView, TextInput} from 'react-native';
+import {BaseStyle, BaseColor} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import Swiper from 'react-native-swiper';
 import styles from './styles';
@@ -35,13 +35,7 @@ export default class Aboutus extends Component {
           }}
         />
         <ScrollView>
-          <Text
-            headline
-            style={{
-              color: BaseColor.secondBlackColor,
-              paddingHorizontal: 20,
-              paddingVertical: 10,
-            }}>
+          <Text headline style={styles.headerTitle}>
             Salon Logo
           </Text>
           <View style={styles.wrapper}>
@@ -61,12 +55,7 @@ export default class Aboutus extends Component {
               })}
             </Swiper>
           </View>
-          <View
-            style={{
-              marginTop: 20,
-              paddingHorizontal: 20,
-              flexDirection: 'row',
-            }}>
+          <View style={styles.changeButton}>
             <Button
               style={{flex: 1}}
               loading={loading}

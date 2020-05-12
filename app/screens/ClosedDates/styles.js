@@ -30,4 +30,8 @@ export default StyleSheet.create({
     width: 40,
     height: 40,
   },
+  headerStyle: {
+    borderBottomColor: BaseColor.secondBlackColor,
+    borderBottomWidth: 1,
+  },
 });

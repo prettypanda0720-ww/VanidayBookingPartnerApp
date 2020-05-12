@@ -21,5 +21,9 @@ export default StyleSheet.create({
   },
   inputGroup: {
     marginTop: 20,
-  }
+  },
+  headerStyle: {
+    borderBottomColor: BaseColor.secondBlackColor,
+    borderBottomWidth: 1,
+  },
 });

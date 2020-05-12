@@ -28,6 +28,8 @@ import InvoiceListItem from './InvoiceListItem';
 import AppointmentListItem from './AppointmentListItem';
 import ProductListItem from './ProductListItem';
 import VanidayServiceItem from './VanidayServiceItem';
+import BookingHistory from './BookingHistory';
+import Agenda from './agenda';
 
 export {
   Header,
@@ -60,4 +62,6 @@ export {
   AppointmentListItem,
   ProductListItem,
   VanidayServiceItem,
+  BookingHistory,
+  Agenda,
 };

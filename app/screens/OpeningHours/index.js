@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
-import {
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Switch,
-  FlatList,
-} from 'react-native';
-import {BaseStyle, BaseColor, BaseSetting} from '@config';
-import {Header, SafeAreaView, Icon, Text, Button} from '@components';
+import {View, ScrollView, FlatList} from 'react-native';
+import {BaseStyle, BaseColor} from '@config';
+import {Header, SafeAreaView, Icon, Text} from '@components';
 import styles from './styles';
 
 export default class OpeningHours extends Component {
@@ -65,30 +59,20 @@ export default class OpeningHours extends Component {
           title="Opening Hours"
           renderLeft={() => {
             return (
-              <Icon
-                name="chevron-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView>
           <FlatList
             data={this.state.data}
             keyExtractor={(item, index) => item.id}
             renderItem={({item}) => (
-              <View
-                style={{
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  paddingLeft: 20,
-                  paddingRight: 20,
-                  flexDirection: 'column',
-                }}>
+              <View style={styles.itemWrapper}>
                 <Text title3 bold>
                   {item.title}
                 </Text>

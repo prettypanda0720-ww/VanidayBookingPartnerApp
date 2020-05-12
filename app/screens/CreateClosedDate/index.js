@@ -46,6 +46,7 @@ class CreateClosedDate extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView style={styles.container}>
           <View style={{marginTop: 0}}>

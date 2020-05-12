@@ -66,4 +66,8 @@ export default StyleSheet.create({
     alignSelf: 'center',
     bottom: 50,
   },
+  headerStyle: {
+    borderBottomColor: BaseColor.secondBlackColor,
+    borderBottomWidth: 1,
+  }
 });

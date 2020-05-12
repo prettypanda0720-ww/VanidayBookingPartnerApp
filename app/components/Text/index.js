@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Text, StyleSheet } from "react-native";
-import PropTypes from "prop-types";
-import { Typography, FontWeight, BaseColor } from "@config";
+import React, {Component} from 'react';
+import {Text, StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
+import {Typography, FontWeight, BaseColor} from '@config';
 
 export default class Index extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ export default class Index extends Component {
       title2,
       title3,
       headline,
+      headline2,
       body1,
       body2,
       callout,
@@ -47,7 +48,7 @@ export default class Index extends Component {
       //numberOfLines
       numberOfLines,
       //custom
-      style
+      style,
     } = this.props;
     return (
       <Text
@@ -57,6 +58,7 @@ export default class Index extends Component {
           title2 && Typography.title2,
           title3 && Typography.title3,
           headline && Typography.headline,
+          headline2 && Typography.headline,
           body1 && Typography.body1,
           body2 && Typography.body2,
           callout && Typography.callout,
@@ -66,47 +68,45 @@ export default class Index extends Component {
           caption2 && Typography.caption2,
           overline && Typography.overline,
           //custom for font
-          thin && StyleSheet.flatten({ fontWeight: FontWeight.thin }),
+          thin && StyleSheet.flatten({fontWeight: FontWeight.thin}),
           ultraLight &&
             StyleSheet.flatten({
-              fontWeight: FontWeight.ultraLight
+              fontWeight: FontWeight.ultraLight,
             }),
-          light && StyleSheet.flatten({ fontWeight: FontWeight.light }),
-          regular && StyleSheet.flatten({ fontWeight: FontWeight.regular }),
-          medium && StyleSheet.flatten({ fontWeight: FontWeight.medium }),
-          semibold && StyleSheet.flatten({ fontWeight: FontWeight.semibold }),
-          bold && StyleSheet.flatten({ fontWeight: FontWeight.bold }),
-          heavy && StyleSheet.flatten({ fontWeight: FontWeight.heavy }),
-          black && StyleSheet.flatten({ fontWeight: FontWeight.black }),
+          light && StyleSheet.flatten({fontWeight: FontWeight.light}),
+          regular && StyleSheet.flatten({fontWeight: FontWeight.regular}),
+          medium && StyleSheet.flatten({fontWeight: FontWeight.medium}),
+          semibold && StyleSheet.flatten({fontWeight: FontWeight.semibold}),
+          bold && StyleSheet.flatten({fontWeight: FontWeight.bold}),
+          heavy && StyleSheet.flatten({fontWeight: FontWeight.heavy}),
+          black && StyleSheet.flatten({fontWeight: FontWeight.black}),
           // default color
           StyleSheet.flatten({
-            color: BaseColor.textPrimaryColor
+            color: BaseColor.textPrimaryColor,
           }),
           //custom for color
-          primaryColor && StyleSheet.flatten({ color: BaseColor.primaryColor }),
+          primaryColor && StyleSheet.flatten({color: BaseColor.primaryColor}),
           darkPrimaryColor &&
             StyleSheet.flatten({
-              color: BaseColor.darkPrimaryColor
+              color: BaseColor.darkPrimaryColor,
             }),
           lightPrimaryColor &&
             StyleSheet.flatten({
-              color: BaseColor.lightPrimaryColor
+              color: BaseColor.lightPrimaryColor,
             }),
-          accentColor && StyleSheet.flatten({ color: BaseColor.accentColor }),
+          accentColor && StyleSheet.flatten({color: BaseColor.accentColor}),
           textSecondaryColor &&
             StyleSheet.flatten({
-              color: BaseColor.textSecondaryColor
+              color: BaseColor.textSecondaryColor,
             }),
-          grayColor && StyleSheet.flatten({ color: BaseColor.grayColor }),
-          darkBlueColor &&
-            StyleSheet.flatten({ color: BaseColor.darkBlueColor }),
-          dividerColor && StyleSheet.flatten({ color: BaseColor.dividerColor }),
-          whiteColor && StyleSheet.flatten({ color: BaseColor.whiteColor }),
-          fieldColor && StyleSheet.flatten({ color: BaseColor.fieldColor }),
-          style && style
+          grayColor && StyleSheet.flatten({color: BaseColor.grayColor}),
+          darkBlueColor && StyleSheet.flatten({color: BaseColor.darkBlueColor}),
+          dividerColor && StyleSheet.flatten({color: BaseColor.dividerColor}),
+          whiteColor && StyleSheet.flatten({color: BaseColor.whiteColor}),
+          fieldColor && StyleSheet.flatten({color: BaseColor.fieldColor}),
+          style && style,
         ])}
-        numberOfLines={numberOfLines}
-      >
+        numberOfLines={numberOfLines}>
         {this.props.children}
       </Text>
     );
@@ -121,6 +121,7 @@ Index.propTypes = {
   title2: PropTypes.bool,
   title3: PropTypes.bool,
   headline: PropTypes.bool,
+  headline2: PropTypes.bool,
   body1: PropTypes.bool,
   body2: PropTypes.bool,
   callout: PropTypes.bool,
@@ -154,7 +155,7 @@ Index.propTypes = {
   numberOfLines: PropTypes.number,
   //custom style
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  children: PropTypes.node // plain text
+  children: PropTypes.node, // plain text
 };
 
 Index.defaultProps = {
@@ -164,6 +165,7 @@ Index.defaultProps = {
   title2: false,
   title3: false,
   headline: false,
+  headline2: false,
   body1: false,
   body2: false,
   callout: false,
@@ -197,5 +199,5 @@ Index.defaultProps = {
   numberOfLines: 10,
   //custom style
   style: {},
-  children: ""
+  children: '',
 };

@@ -51,6 +51,7 @@ class EditProduct extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView style={styles.mainWrapper}>
           <Text title2 bold>

@@ -33,4 +33,8 @@ export default StyleSheet.create({
     width: 40,
     height: 40,
   },
+  headerStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.secondBlackColor,
+  },
 });

@@ -73,6 +73,8 @@ import CategoryProducts from '@screens/CategoryProducts';
 import OrderDetail from '@screens/OrderDetail';
 import VanidayServices from '@screens/VanidayServices';
 import Financing from '@screens/Financing';
+import DailySales from '@screens/DailySales';
+import Marketing from '@screens/Marketing';
 
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
@@ -130,12 +132,12 @@ const routeConfigs = {
       },
     }),
   },
-  Notification: {
-    screen: Notification,
+  Services: {
+    screen: VanidayServices,
     navigationOptions: ({navigation}) => ({
-      title: 'Notification',
+      title: 'Services',
       tabBarIcon: ({focused, tintColor}) => {
-        return <Icon color={tintColor} name="envelope" size={20} solid />;
+        return <Icon color={tintColor} name="plus-circle" size={20} solid />;
       },
     }),
   },
@@ -347,6 +349,15 @@ const StackNavigator = createStackNavigator(
     },
     Financing: {
       screen: Financing,
+    },
+    DailySales: {
+      screen: DailySales,
+    },
+    Marketing: {
+      screen: Marketing,
+    },
+    Notification: {
+      screen: Notification,
     },
   },
   {

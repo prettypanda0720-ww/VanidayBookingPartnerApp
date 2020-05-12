@@ -1,22 +1,6 @@
 import React, {Component} from 'react';
-import {
-  FlatList,
-  View,
-  Animated,
-  TextInput,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  RefreshControl,
-} from 'react-native';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-  ProfileDescription,
-} from '@components';
+import {View, Animated, TextInput, Image, TouchableOpacity} from 'react-native';
+import {Header, SafeAreaView, Icon, ProfileDescription} from '@components';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import styles from './styles';
 
@@ -63,10 +47,6 @@ class Clients extends Component {
   render() {
     const {navigation} = this.props;
     const {search, screen} = this.state;
-    const changeScale = this.growAnimated.interpolate({
-      inputRange: [0, 1],
-      outputRange: [1, 40],
-    });
 
     return (
       <SafeAreaView

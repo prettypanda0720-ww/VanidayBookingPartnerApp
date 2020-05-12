@@ -19,8 +19,6 @@ export default StyleSheet.create({
   headerStyle: {
     borderBottomColor: BaseColor.secondBlackColor,
     borderBottomWidth: 1,
-    borderTopColor: BaseColor.secondBlackColor,
-    borderTopWidth: 1,
   },
   saleItemWrapper: {
     flex: 1,

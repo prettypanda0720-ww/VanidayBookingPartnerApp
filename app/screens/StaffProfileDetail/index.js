@@ -101,6 +101,7 @@ export default class StaffProfileDetail extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView
           scrollEventThrottle={8}

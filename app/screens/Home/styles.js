@@ -12,17 +12,6 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  section: {
-    backgroundColor: '#f0f4f7',
-    color: '#79838a',
-  },
-  item: {
-    padding: 20,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e8ecf0',
-    flexDirection: 'row',
-  },
   caption: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -100,8 +89,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     padding: 10,
-    borderTopColor: BaseColor.blackColor,
-    borderTopWidth: 1,
   },
   contentCenter: {
     justifyContent: 'center',

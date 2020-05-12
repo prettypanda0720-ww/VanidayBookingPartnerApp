@@ -14,7 +14,7 @@ import {
   ProfileDetail,
   ProfilePerformance,
   Text,
-  Button
+  Button,
 } from '@components';
 import {TabView, TabBar} from 'react-native-tab-view';
 import * as Utils from '@utils';
@@ -36,7 +36,7 @@ class ClientProfile extends Component {
         {key: 'products', title: 'Products'},
         {key: 'invoices', title: 'Invoices'},
       ],
-      userData: UserData[0]
+      userData: UserData[0],
     };
     this.growAnimated = new Animated.Value(0);
   }
@@ -103,11 +103,7 @@ class ClientProfile extends Component {
           title="Customer"
           renderLeft={() => {
             return (
-              <Icon
-                name="chevron-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           renderRight={() => {
@@ -136,6 +132,7 @@ class ClientProfile extends Component {
           onPressRight={() => {
             navigation.navigate('Notification');
           }}
+          style={styles.headerStyle}
         />
         <ScrollView style={{paddingLeft: 20, paddingRight: 20}}>
           <ProfileDetail
@@ -144,7 +141,7 @@ class ClientProfile extends Component {
             point={userData.point}
             textSecond={userData.address}
             textThird={userData.id}
-            styleThumb = {{width: 60, height: 60, borderRadius: 30}}
+            styleThumb={{width: 60, height: 60, borderRadius: 30}}
             onPress={() => navigation.navigate('ProfileExanple')}
           />
           <ProfilePerformance
@@ -152,24 +149,16 @@ class ClientProfile extends Component {
             style={{marginTop: 20, marginBottom: 10}}
           />
           <View style={styles.profileItem}>
-            <Text subhead>
-              Email: river@hotmail.com
-            </Text>
+            <Text subhead>Email: river@hotmail.com</Text>
           </View>
           <View style={styles.profileItem}>
-            <Text subhead>
-              Handphone: 91234567
-            </Text>
+            <Text subhead>Handphone: 91234567</Text>
           </View>
           <View style={styles.profileItem}>
-            <Text subhead>
-              Gender: Male
-            </Text>
+            <Text subhead>Gender: Male</Text>
           </View>
           <View style={styles.profileItem}>
-            <Text subhead>
-              Subscribed to Marketing: YES
-            </Text>
+            <Text subhead>Subscribed to Marketing: YES</Text>
           </View>
           <View style={{width: '100%', marginTop: 15}}>
             <Button
@@ -302,7 +291,7 @@ class ProductsTab extends Component {
 
   render() {
     const {navigation} = this.props;
-    return <View style={{padding: 20}}></View>;
+    return <View style={{padding: 20}} />;
   }
 }
 class InvoicesTab extends Component {

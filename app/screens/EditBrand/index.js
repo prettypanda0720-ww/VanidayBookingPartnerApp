@@ -62,6 +62,7 @@ class EditBrand extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView
           style={{

@@ -98,7 +98,7 @@ export default StyleSheet.create({
     borderRadius: 3,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: BaseColor.blackColor,
+    backgroundColor: BaseColor.MainPrimaryColor,
   },
   priceContent: {
     position: 'absolute',

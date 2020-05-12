@@ -53,11 +53,7 @@ export default class EditEcard extends Component {
           title="Edit Ecard"
           renderLeft={() => {
             return (
-              <Icon
-                name="chevron-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {

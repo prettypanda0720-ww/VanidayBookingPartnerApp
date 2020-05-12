@@ -57,6 +57,7 @@ export default class MerchantClosedDates extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <View style={styles.merchantWrapper}>
           {this.state.ourTeam.map((item, index) => {

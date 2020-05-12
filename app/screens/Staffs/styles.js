@@ -15,5 +15,9 @@ export default StyleSheet.create({
     borderBottomColor: BaseColor.grayColor,
     borderBottomWidth: 1,
     paddingVertical: 20
+  },
+  headerStyle: {
+    borderBottomColor: BaseColor.secondBlackColor,
+    borderBottomWidth: 1,
   }
 });

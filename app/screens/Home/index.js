@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 import styles from './styles';
 import Drawer from 'react-native-drawer';
-import {Icon, AppointmentListItem, Text} from '@components';
-import {Agenda} from 'react-native-calendars';
-import moment from 'moment';
+import {Icon, AppointmentListItem, Text, Agenda} from '@components';
+// import {Agenda} from 'react-native-calendars';
+import Moment from 'moment';
 import {BaseColor, Images} from '@config';
 
 import {connect} from 'react-redux';
@@ -21,6 +21,7 @@ import {bindActionCreators} from 'redux';
 import {CalendarActions} from '@actions';
 import PropTypes from 'prop-types';
 import store from 'app/store';
+import XDate from 'xdate';
 
 class App extends Component<{}> {
   constructor(props) {
@@ -30,7 +31,7 @@ class App extends Component<{}> {
       items: {},
       numStaffs: 2,
       showMode: -1 /* if showMode = -1, show all staffs's appointment list, if showMode = nth, show nth-staffs's appointment list, */,
-      currentDay: '',
+      currentDay: this.getCurrentDate(),
       modalVisible: false,
     };
 
@@ -89,6 +90,7 @@ class App extends Component<{}> {
   };
 
   renderMainContent = () => {
+    var date = new Date(this.state.currentDay);
     return (
       <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
         <Modal
@@ -152,9 +154,13 @@ class App extends Component<{}> {
         </Modal>
         <View style={[styles.mainContainer, styles.headerStyle]}>
           <View style={{flex: 1}} />
-          <View style={[styles.contentCenter, {flex: 10}]}>
+          <View
+            style={[styles.contentCenter, {flex: 10, flexDirection: 'column'}]}>
             <Text headline bold>
               Appointments
+            </Text>
+            <Text subhead semibold>
+              May
             </Text>
           </View>
           <TouchableOpacity
@@ -169,7 +175,7 @@ class App extends Component<{}> {
           // testID={testIDs.agenda.CONTAINER}
           items={this.state.items}
           loadItemsForMonth={this.loadItems.bind(this)}
-          selected={'2017-05-16'}
+          selected={this.state.currentDay}
           renderItem={this.renderItem.bind(this)}
           renderEmptyDate={this.renderEmptyDate.bind(this)}
           rowHasChanged={this.rowHasChanged.bind(this)}
@@ -185,7 +191,7 @@ class App extends Component<{}> {
           //    '2017-05-25': {color: 'gray'},
           //    '2017-05-26': {endingDay: true, color: 'gray'}}}
           // monthFormat={'yyyy'}
-          theme={{calendarBackground: 'white', agendaKnobColor: '#00bbf2'}}
+          theme={{calendarBackground: 'white', agendaKnobColor: '#BDBDBD'}}
           //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
           // hideExtraDays={false}
         />
@@ -221,18 +227,19 @@ class App extends Component<{}> {
             let appointmentbystaff = {};
             appointmentbystaff[j] = [];
 
-            let tpStaffName = j % 2 == 0 ? 'Judy T' : 'William Lay';
+            let tpStaffName = j % 2 == 0 ? 'YUKI' : 'William Lay';
             for (let k = 0; k < 2; k++) {
               let tpState =
                 k % 2 == 0 ? 'Accepted Appointment' : 'Upcoming Appointment';
 
               appointmentbystaff[j].push({
                 acceptedState: tpState,
-                name: 'HairCut' + k,
+                name: 'Classic Manicure + Pedicure + Organic SPA + Soak Off',
                 staffName: tpStaffName,
-                appointmentDate: strTime,
+                appointmentDate: this.timeToAsianString(time),
                 startTime: '2:30 PM',
-                endTime: '3:30 PM',
+                endTime: '4:00 PM',
+                duration: '1.5 HR',
                 height: Math.max(50, Math.floor(Math.random() * 150)),
               });
             }
@@ -284,6 +291,7 @@ class App extends Component<{}> {
             appointmentDate={item.appointmentDate}
             startTime={item.startTime}
             endTime={item.endTime}
+            duration={item.duration}
             onPress={() => Alert.alert(item.name)}
           />
         )}
@@ -337,6 +345,28 @@ class App extends Component<{}> {
   timeToString(time) {
     const date = new Date(time);
     return date.toISOString().split('T')[0];
+  }
+
+  timeToAsianString(time) {
+    const date = new Date(time);
+    Moment.locale('en');
+    return Moment(date).format('d MMM Y');
+  }
+
+  getCurrentMonth(time) {
+    var today = new Date(time);
+    return today.toISOString().split('T')[1];
+  }
+
+  getCurrentDate() {
+    var today = new Date();
+    var date =
+      today.getDate() +
+      '/' +
+      parseInt(today.getMonth() + 1) +
+      '/' +
+      today.getFullYear();
+    return date;
   }
 }
 

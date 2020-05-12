@@ -110,8 +110,8 @@ class CreateStaff extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
-
         <TabView
           lazy
           navigationState={this.state}

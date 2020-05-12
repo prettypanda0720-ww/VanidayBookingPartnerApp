@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TouchableOpacity, Switch} from 'react-native';
-import {BaseStyle, BaseColor, BaseSetting} from '@config';
-import {Header, SafeAreaView, Icon, Text, Button} from '@components';
+import {View, TouchableOpacity} from 'react-native';
+import {BaseStyle, BaseColor} from '@config';
+import {Header, SafeAreaView, Icon, Text} from '@components';
 import styles from './styles';
-
-// Load sample data
-import {ShopsData} from '@data';
 
 export default class Sales extends Component {
   constructor(props) {
@@ -17,7 +14,6 @@ export default class Sales extends Component {
 
   render() {
     const {navigation} = this.props;
-    const {shopData, loading} = this.state;
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header title="Sales" style={styles.headerStyle} />
@@ -26,7 +22,7 @@ export default class Sales extends Component {
             <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
-                navigation.navigate('');
+                navigation.navigate('DailySales');
               }}>
               <View style={styles.saleItemWrapper}>
                 <View style={{flexDirection: 'row', flex: 20}}>

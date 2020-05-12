@@ -53,6 +53,7 @@ export default class StaffMembers extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <View style={styles.membersWrapper}>
           {this.state.ourTeam.map((item, index) => {

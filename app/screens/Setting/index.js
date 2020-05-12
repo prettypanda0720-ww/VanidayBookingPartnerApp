@@ -110,21 +110,6 @@ class Setting extends Component {
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
-                  navigation.navigate('VanidayServices');
-                }}>
-                <Text body1>Vaniday Services</Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={BaseColor.blackColor}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={{width: '100%'}}>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
                   navigation.navigate('ProfileEdit');
                 }}>
                 <Text body1>Edit Profile</Text>
@@ -259,19 +244,6 @@ class Setting extends Component {
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
-                  navigation.navigate('Invoices');
-                }}>
-                <Text body1>Invoices</Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={BaseColor.blackColor}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
                   navigation.navigate('Report');
                 }}>
                 <Text body1>Report</Text>
@@ -309,6 +281,21 @@ class Setting extends Component {
                 <Text body1 grayColor>
                   {BaseSetting.appVersion}
                 </Text>
+              </View>
+              <View style={{width: '100%'}}>
+                <TouchableOpacity
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('Notification');
+                  }}>
+                  <Text body1>Notification</Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={BaseColor.blackColor}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </View>

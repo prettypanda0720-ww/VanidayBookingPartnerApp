@@ -56,6 +56,7 @@ class DecreaseStock extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView style={styles.mainWrapper}>
           <Text body2 bold>

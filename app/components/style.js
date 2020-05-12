@@ -9,7 +9,7 @@ export const textSecondaryColor = '#7a92a5'; // not in use
 
 export const textDefaultColor = '#2d4150';
 export const textColor = '#43515c';
-export const textLinkColor = '#00BBF2';
+export const textLinkColor = '#BDBDBD';
 
 export const textDayFontFamily = 'System';
 export const textMonthFontFamily = 'System';

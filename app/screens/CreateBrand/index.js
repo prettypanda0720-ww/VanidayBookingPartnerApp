@@ -62,6 +62,7 @@ class CreateBrand extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView
           style={{

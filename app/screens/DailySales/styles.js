@@ -1,8 +1,36 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {BaseColor, BaseStyle} from '@config';
+import {BaseColor} from '@config';
+import * as Utils from '@utils';
 
 export default StyleSheet.create({
+  contain: {
+    alignItems: 'center',
+    padding: 20,
+    width: '100%',
+  },
+  headerStyle: {
+    borderBottomColor: BaseColor.secondBlackColor,
+    borderBottomWidth: 1,
+  },
+  tableContainer: {
+    flex: 1,
+    padding: 16,
+    paddingTop: 30,
+    backgroundColor: '#fff',
+    flexDirection: 'column',
+  },
+  row: {
+    height: 40,
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.grayColor,
+  },
+  rowBottom: {
+    height: 40,
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.grayColor,
+  },
+  text: {textAlign: 'center'},
   contain: {
     height: 45,
     flexDirection: 'row',

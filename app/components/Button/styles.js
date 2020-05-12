@@ -6,7 +6,7 @@ export default StyleSheet.create({
   default: {
     height: 56,
     borderRadius: 8,
-    backgroundColor: BaseColor.secondBlackColor,
+    backgroundColor: BaseColor.MainPrimaryColor,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

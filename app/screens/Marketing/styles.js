@@ -66,4 +66,8 @@ export default StyleSheet.create({
     borderBottomColor: BaseColor.secondBlackColor,
     borderBottomWidth: 1,
   },
+  salonImage: {
+    width: Utils.getWidthDevice(10),
+    height: 100,
+  }
 });

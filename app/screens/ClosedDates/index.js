@@ -62,7 +62,7 @@ export default class ClosedDates extends Component {
           renderLeft={() => {
             return (
               <Icon
-                name="chevron-left"
+                name="angle-left"
                 size={20}
                 color={BaseColor.blackColor}
               />
@@ -71,6 +71,7 @@ export default class ClosedDates extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <View
           style={{

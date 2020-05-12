@@ -61,6 +61,7 @@ class PhysicalProductProfile extends Component {
           onPressRight={() => {
             this.showActionSheet();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView style={styles.mainWrapper}>
           <Text title1 bold>

@@ -4,10 +4,10 @@ import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 import CheckBox from 'react-native-checkbox';
 import {Values} from '@data';
 
-import {BaseStyle, BaseColor, GreenColor, Images} from '@config';
+import {BaseStyle, BaseColor, Images} from '@config';
 import styles from './styles';
 
-class Financing extends Component {
+class Marketing extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +39,7 @@ class Financing extends Component {
         style={[BaseStyle.safeAreaView]}
         forceInset={{top: 'always'}}>
         <Header
-          title="Financing"
+          title="Marketing"
           renderRight={() => {
             return <Icon name="times" size={20} color={BaseColor.blackColor} />;
           }}
@@ -49,9 +49,10 @@ class Financing extends Component {
           style={styles.headerStyle}
         />
         <ScrollView style={styles.container}>
+          <Image style={styles.salonImage} source={Images.splashlogo} />
           <View style={styles.logoWrapper}>
             <View style={[styles.contentCenter, {flexDirection: 'row'}]}>
-              <Image style={styles.image} source={Images.vaniday} />
+              <Image style={styles.image} source={Images.logo} />
               <View style={styles.logoContentWrapper}>
                 <Text subhead bold>
                   The Vaniday Promise
@@ -141,4 +142,4 @@ class Financing extends Component {
   }
 }
 
-export default Financing;
+export default Marketing;

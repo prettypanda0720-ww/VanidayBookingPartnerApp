@@ -27,6 +27,7 @@ export default class Staffs extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView>
           <View style={styles.contain}>

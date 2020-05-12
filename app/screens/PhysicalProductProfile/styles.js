@@ -66,4 +66,8 @@ export default StyleSheet.create({
   stockHisWrapper: {
     marginTop: 60,
   },
+  headerStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.secondBlackColor,
+  },
 });

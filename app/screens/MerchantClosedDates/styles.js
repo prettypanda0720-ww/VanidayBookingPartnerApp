@@ -46,5 +46,9 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     flexDirection: 'column',
-  }
+  },
+  headerStyle: {
+    borderBottomColor: BaseColor.secondBlackColor,
+    borderBottomWidth: 1,
+  },
 });

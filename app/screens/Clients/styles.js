@@ -32,10 +32,6 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
-    // flex: 1,
-    // margin: 20,
-    // alignItems: 'flex-end',
-    // justifyContent: 'flex-end',
   },
   button: {
     alignItems: 'center',
@@ -44,7 +40,6 @@ export default StyleSheet.create({
     height: SIZE,
     borderRadius: 100,
     zIndex: 99,
-    // backgroundColor: '#F035E0',
   },
   circle: {
     height: SIZE,
@@ -67,7 +62,5 @@ export default StyleSheet.create({
   headerStyle: {
     borderBottomColor: BaseColor.secondBlackColor,
     borderBottomWidth: 1,
-    borderTopColor: BaseColor.secondBlackColor,
-    borderTopWidth: 1,
   },
 });

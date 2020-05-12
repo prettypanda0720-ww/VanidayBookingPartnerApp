@@ -8,6 +8,13 @@ import {
   FlatList,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import {
+  Table,
+  Row,
+  TableWrapper,
+  Col,
+  Rows,
+} from 'react-native-table-component';
 import {BaseStyle, BaseColor, BaseSetting} from '@config';
 import {
   Header,
@@ -29,7 +36,20 @@ export default class Appointments extends Component {
       loading: false,
       drawerOpen: null,
       modalVisible: false,
-      appointments: appointments,
+      tableHead: ['Item type', 'Sales qty', 'Refund qty', 'Gross total'],
+      tableData: [
+        ['Services', '0', '0', 'SGD 0.00'],
+        ['Products', '0', '0', 'SGD 0.00'],
+        ['Vouchers', '0', '0', 'SGD 0.00'],
+        ['Total Sales', '0', '0', 'SGD 0.00'],
+      ],
+      cashtableHead: ['Payment type', 'Payment collected', 'Refunds paid'],
+      cashtableData: [
+        ['Credit Card', 'SGD 0.00', 'SGD 0.00'],
+        ['Pay at Salon', 'SGD 0.00', 'SGD 0.00'],
+        ['Voucher Redemptions', 'SGD 0.00', 'SGD 0.00'],
+        ['Payment Collected', 'SGD 0.00', 'SGD 0.00'],
+      ],
     };
   }
 
@@ -85,23 +105,12 @@ export default class Appointments extends Component {
   }
 
   renderSideMenuContent = () => {
-    let channels = [
-      {value: 'All channels'},
-      {value: 'All online channels'},
-      {value: 'Fresha'},
-      {value: 'Book now link'},
-      {value: 'Facebook'},
-      {value: 'Instagram'},
-      {value: 'Marketing'},
-      {value: 'offline'},
-    ];
     let location = [{value: 'All locations'}, {value: 'Singapore'}];
-    let staffs = [
-      {value: 'All staffs'},
-      {value: 'asdf asdf'},
-      {value: 'Wendy Smith'},
+    let payments = [
+      {value: 'All'},
+      {value: 'Pay Online'},
+      {value: 'Pay at Salon'},
     ];
-
     const {loading} = this.state;
     const {navigation} = this.props;
     return (
@@ -119,16 +128,8 @@ export default class Appointments extends Component {
             style={{color: BaseColor.blackColor}}
           />
           <Dropdown
-            label="Staff"
-            data={staffs}
-            rippleOpacity={0.7}
-            baseColor={BaseColor.secondBlackColor}
-            tintColor={BaseColor.blackColor}
-            style={{color: BaseColor.blackColor}}
-          />
-          <Dropdown
-            label="Channel"
-            data={channels}
+            label="Payments"
+            data={payments}
             rippleOpacity={0.7}
             baseColor={BaseColor.secondBlackColor}
             tintColor={BaseColor.blackColor}
@@ -142,8 +143,7 @@ export default class Appointments extends Component {
               marginLeft: 10,
               backgroundColor: '#FFF',
             }}
-            styleText={{color: '#000'}}
-            outline={{borderColor: BaseColor.fieldColor}}
+            styleText={{color: '#000', borderRadius: 0}}
             loading={loading}
             onPress={() => this.setState({drawerOpen: false})}>
             CLEAR
@@ -161,8 +161,12 @@ export default class Appointments extends Component {
 
   renderMainContent = () => {
     const {appointments} = this.state;
+    const {navigation} = this.props;
+    const {tableHead, tableData, cashtableHead, cashtableData} = this.state;
     return (
-      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
+      <SafeAreaView
+        style={[BaseStyle.safeAreaView]}
+        forceInset={{top: 'always'}}>
         <View style={[styles.contain, styles.borderBottom]}>
           <TouchableOpacity
             style={{
@@ -180,7 +184,7 @@ export default class Appointments extends Component {
           </TouchableOpacity>
           <View style={styles.contentCenter}>
             <Text headline2 style={{margin: 0, padding: 0}}>
-              Appointments
+              Daily Sales
             </Text>
             <TouchableOpacity
               style={styles.dateRange}
@@ -206,13 +210,48 @@ export default class Appointments extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView>
-          <FlatList
-            data={appointments}
-            keyExtractor={(item, index) => item.id}
-            style={{marginTop: 20}}
-            renderItem={({item}) => this.renderItem(item)}
-          />
+        <ScrollView style={styles.tableContainer}>
+          <Text title2 bold style={{color: BaseColor.SecondColor}}>
+            Transaction Summary
+          </Text>
+          <View style={{marginTop: 10}}>
+            <Table style={styles.tableHead}>
+              <Row
+                style={styles.row}
+                textStyle={styles.text}
+                flexArr={[1, 1, 1, 1]}
+                data={tableHead}
+              />
+              <Rows
+                style={styles.rowBottom}
+                textStyle={styles.text}
+                data={tableData}
+                flexArr={[1, 1, 1, 1]}
+              />
+            </Table>
+          </View>
+          <Text
+            title2
+            bold
+            style={{color: BaseColor.SecondColor, marginTop: 30}}>
+            Payment Summary
+          </Text>
+          <View style={{marginTop: 10}}>
+            <Table style={styles.tableHead}>
+              <Row
+                style={styles.row}
+                textStyle={styles.text}
+                flexArr={[1, 1, 1]}
+                data={cashtableHead}
+              />
+              <Rows
+                style={styles.rowBottom}
+                textStyle={styles.text}
+                data={cashtableData}
+                flexArr={[1, 1, 1]}
+              />
+            </Table>
+          </View>
         </ScrollView>
       </SafeAreaView>
     );

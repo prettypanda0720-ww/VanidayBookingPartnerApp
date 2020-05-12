@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TextInput, TouchableOpacity} from 'react-native';
-import {BaseStyle, BaseColor, Images} from '@config';
+import {View, ScrollView, TextInput} from 'react-native';
+import {BaseStyle, BaseColor} from '@config';
 import {
   Image,
   Header,
   SafeAreaView,
   Icon,
-  Text,
   Button,
   RadioGroup,
 } from '@components';
@@ -37,17 +36,14 @@ export default class ProfileEdit extends Component {
           title="Edit Profile"
           renderLeft={() => {
             return (
-              <Icon
-                name="chevron-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {
             navigation.goBack();
           }}
           onPressRight={() => {}}
+          style={styles.headerStyle}
         />
         <ScrollView>
           <View style={styles.contain}>

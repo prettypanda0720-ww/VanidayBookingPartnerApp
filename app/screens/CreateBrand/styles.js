@@ -52,4 +52,8 @@ export default StyleSheet.create({
     marginTop: 20,
     padding: 10,
   },
+  headerStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.secondBlackColor,
+  },
 });

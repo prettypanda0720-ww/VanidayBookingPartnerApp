@@ -181,6 +181,7 @@ export default class PhysicalProducts extends Component {
           onPressRight={() => {
             navigation.navigate('SearchHistory');
           }}
+          style={styles.headerStyle}
         />
         {this.renderContent()}
       </SafeAreaView>

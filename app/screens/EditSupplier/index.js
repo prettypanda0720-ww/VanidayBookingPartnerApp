@@ -46,6 +46,7 @@ class EditSupplier extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView
           style={{

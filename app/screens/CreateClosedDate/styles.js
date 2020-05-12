@@ -30,5 +30,9 @@ export default StyleSheet.create({
   rowBetweenAlign: {
     flexDirection: 'row', 
     justifyContent: 'space-between',
+  },
+  headerStyle: {
+    borderBottomColor: BaseColor.secondBlackColor,
+    borderBottomWidth: 1,
   }
 });
