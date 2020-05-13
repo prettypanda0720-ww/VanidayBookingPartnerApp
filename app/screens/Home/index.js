@@ -19,7 +19,6 @@ import {BaseColor, Images} from '@config';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {CalendarActions} from '@actions';
-import PropTypes from 'prop-types';
 import store from 'app/store';
 import XDate from 'xdate';
 
@@ -29,7 +28,7 @@ class App extends Component<{}> {
     this.state = {
       drawerOpen: null,
       items: {},
-      numStaffs: 2,
+      numStaffs: 5,
       showMode: -1 /* if showMode = -1, show all staffs's appointment list, if showMode = nth, show nth-staffs's appointment list, */,
       currentDay: this.getCurrentDate(),
       modalVisible: false,
@@ -175,7 +174,7 @@ class App extends Component<{}> {
           // testID={testIDs.agenda.CONTAINER}
           items={this.state.items}
           loadItemsForMonth={this.loadItems.bind(this)}
-          selected={this.state.currentDay}
+          selected={'2017-05-03'}
           renderItem={this.renderItem.bind(this)}
           renderEmptyDate={this.renderEmptyDate.bind(this)}
           rowHasChanged={this.rowHasChanged.bind(this)}
@@ -216,6 +215,15 @@ class App extends Component<{}> {
   loadItems(day) {
     this.state.items = {};
     this.state.currentDay = day;
+    let names = [
+      '2 Jun Classic Manicure + Pedicure + SPA',
+      '2 Jun Nail Art',
+      '2 Jun Hair Colouring',
+      '3 Jun Woman Hair, Wash and Blow',
+      '3 Jun Gel Manicure + Gel Pedicure + Sock Off',
+      '3 Jun Classic Manicure',
+      '3 Jun Classic Gel Pedicure and Soak Off',
+    ];
     setTimeout(() => {
       for (let i = -15; i < 85; i++) {
         const time = day.timestamp + i * 24 * 60 * 60 * 1000;
@@ -226,23 +234,55 @@ class App extends Component<{}> {
           for (let j = 0; j < this.state.numStaffs; j++) {
             let appointmentbystaff = {};
             appointmentbystaff[j] = [];
-
-            let tpStaffName = j % 2 == 0 ? 'YUKI' : 'William Lay';
-            for (let k = 0; k < 2; k++) {
-              let tpState =
-                k % 2 == 0 ? 'Accepted Appointment' : 'Upcoming Appointment';
-
-              appointmentbystaff[j].push({
-                acceptedState: tpState,
-                name: 'Classic Manicure + Pedicure + Organic SPA + Soak Off',
-                staffName: tpStaffName,
-                appointmentDate: this.timeToAsianString(time),
-                startTime: '2:30 PM',
-                endTime: '4:00 PM',
-                duration: '1.5 HR',
-                height: Math.max(50, Math.floor(Math.random() * 150)),
-              });
+            let tpStaffName = '';
+            switch (j) {
+              case 0:
+                tpStaffName = 'YUKI';
+                break;
+              case 1:
+                tpStaffName = 'William Lay';
+                break;
+              case 2:
+                tpStaffName = 'Judy T';
+                break;
+              case 3:
+                tpStaffName = 'YUKI';
+                break;
+              case 4:
+                tpStaffName = 'William Lay';
+                break;
             }
+            let tpDuration = '';
+            switch (j) {
+              case 0:
+                tpDuration = '1.5HR';
+                break;
+              case 1:
+                tpDuration = '1HR';
+                break;
+              case 2:
+                tpDuration = '0.5HR';
+                break;
+              case 3:
+                tpDuration = '2HR';
+                break;
+              case 4:
+                tpDuration = '2.5HR';
+                break;
+            }
+            let tpState =
+              j % 2 == 0 ? 'Accepted Appointment' : 'Upcoming Appointment';
+
+            appointmentbystaff[j].push({
+              acceptedState: tpState,
+              name: names[j],
+              staffName: tpStaffName,
+              appointmentDate: this.timeToAsianString(time),
+              startTime: '2:30 PM',
+              endTime: '4:00 PM',
+              duration: tpDuration,
+              height: Math.max(50, Math.floor(Math.random() * 150)),
+            });
             this.state.items[strTime].push(appointmentbystaff);
           }
         }

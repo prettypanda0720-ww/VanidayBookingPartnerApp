@@ -103,25 +103,17 @@ class ClientProfile extends Component {
           title="Customer"
           renderLeft={() => {
             return (
-              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
+              <Icon name="angle-left" size={20} color={'rgba(0,0,0,0.65)'} />
             );
           }}
           renderRight={() => {
             return (
               <SafeAreaView style={{flexDirection: 'row'}}>
                 <View style={{marginRight: 15}}>
-                  <Icon
-                    name="envelope"
-                    size={24}
-                    color={BaseColor.MainPrimaryColor}
-                  />
+                  <Icon name="envelope" size={24} color={'rgba(0,0,0,0.65)'} />
                 </View>
                 <View>
-                  <Icon
-                    name="bell"
-                    size={24}
-                    color={BaseColor.MainPrimaryColor}
-                  />
+                  <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />
                 </View>
               </SafeAreaView>
             );
@@ -134,7 +126,7 @@ class ClientProfile extends Component {
           }}
           style={styles.headerStyle}
         />
-        <ScrollView style={{paddingLeft: 20, paddingRight: 20}}>
+        <ScrollView style={{paddingLeft: 20, paddingRight: 20, marginTop: 20}}>
           <ProfileDetail
             image={userData.image}
             textFirst={userData.name}
@@ -149,16 +141,24 @@ class ClientProfile extends Component {
             style={{marginTop: 20, marginBottom: 10}}
           />
           <View style={styles.profileItem}>
-            <Text subhead>Email: river@hotmail.com</Text>
+            <Text subhead style={styles.sectionStyle}>
+              Email: river@hotmail.com
+            </Text>
           </View>
           <View style={styles.profileItem}>
-            <Text subhead>Handphone: 91234567</Text>
+            <Text subhead style={styles.sectionStyle}>
+              Handphone: 91234567
+            </Text>
           </View>
           <View style={styles.profileItem}>
-            <Text subhead>Gender: Male</Text>
+            <Text subhead style={styles.sectionStyle}>
+              Gender: Male
+            </Text>
           </View>
           <View style={styles.profileItem}>
-            <Text subhead>Subscribed to Marketing: YES</Text>
+            <Text subhead style={styles.sectionStyle}>
+              Subscribed to Marketing: YES
+            </Text>
           </View>
           <View style={{width: '100%', marginTop: 15}}>
             <Button
@@ -173,19 +173,35 @@ class ClientProfile extends Component {
           <View style={{flexDirection: 'row', marginTop: 15, marginBotton: 10}}>
             <View
               style={{flexDirection: 'column', flex: 1, alignItems: 'center'}}>
-              <Text subhead semibold numberOfLines={1}>
+              <Text
+                subhead
+                semibold
+                numberOfLines={1}
+                style={styles.sectionStyle}>
                 SGD 0
               </Text>
-              <Text subhead semibold numberOfLines={1}>
+              <Text
+                subhead
+                semibold
+                numberOfLines={1}
+                style={styles.sectionStyle}>
                 Total Sales
               </Text>
             </View>
             <View
               style={{flexDirection: 'column', flex: 1, alignItems: 'center'}}>
-              <Text subhead semibold numberOfLines={1}>
+              <Text
+                subhead
+                semibold
+                numberOfLines={1}
+                style={styles.sectionStyle}>
                 SGD 0
               </Text>
-              <Text subhead semibold numberOfLines={1}>
+              <Text
+                subhead
+                semibold
+                numberOfLines={1}
+                style={styles.sectionStyle}>
                 Total Sales
               </Text>
             </View>

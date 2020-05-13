@@ -49,7 +49,7 @@ class Marketing extends Component {
           style={styles.headerStyle}
         />
         <ScrollView style={styles.container}>
-          <Image style={styles.salonImage} source={Images.splashlogo} />
+          {/* <Image style={styles.salonImage} source={Images.splashlogo} /> */}
           <View style={styles.logoWrapper}>
             <View style={[styles.contentCenter, {flexDirection: 'row'}]}>
               <Image style={styles.image} source={Images.logo} />

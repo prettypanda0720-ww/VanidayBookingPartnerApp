@@ -9,19 +9,19 @@ export default class ProfilePerformance extends Component {
     switch (type) {
       case "primary":
         return (
-          <Text title3 semibold primaryColor>
+          <Text title3 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
             {value}
           </Text>
         );
       case "small":
         return (
-          <Text body1 semibold>
+          <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
             {value}
           </Text>
         );
       default:
         return (
-          <Text headline semibold>
+          <Text headline semibold style={{color: 'rgba(0,0,0,0.65)'}}>
             {value}
           </Text>
         );

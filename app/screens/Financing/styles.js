@@ -56,7 +56,8 @@ export default StyleSheet.create({
     marginTop: 20,
     padding: 10,
     backgroundColor: BaseColor.textSecondaryColor,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'rgba(0,0,0,0.65)'
   },
   contentBetween: {
     justifyContent: 'space-between',
@@ -66,4 +67,7 @@ export default StyleSheet.create({
     borderBottomColor: BaseColor.secondBlackColor,
     borderBottomWidth: 1,
   },
+  sectionStyle: {
+    color:'rgba(0,0,0,0.65)',
+  }
 });

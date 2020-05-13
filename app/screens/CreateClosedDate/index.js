@@ -67,6 +67,8 @@ class CreateClosedDate extends Component {
               <View style={{flex: 1, marginRight: 10}}>
                 <Dropdown
                   label="Start Time"
+                  baseColor={BaseColor.sectionColor}
+                  textColor={BaseColor.titleColor}
                   data={timeInterval}
                   rippleOpacity={0.7}
                 />
@@ -74,13 +76,15 @@ class CreateClosedDate extends Component {
               <View style={{flex: 1, marginLeft: 10}}>
                 <Dropdown
                   label="End Time"
+                  baseColor={BaseColor.sectionColor}
+                  textColor={BaseColor.titleColor}
                   data={timeInterval}
                   rippleOpacity={0.7}
                 />
               </View>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text caption3 style={{color: BaseColor.sectionColor}}>
                 Description
               </Text>
               <TextInput
@@ -88,16 +92,18 @@ class CreateClosedDate extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="e.g. public holiday"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
             <View style={[styles.inputGroup, {marginTop: 50}]}>
-              <Text title2 bold>
+              <Text title2 bold style={{color: BaseColor.sectionColor}}>
                 Repeating Options
               </Text>
               <Dropdown
                 label="Frequency"
+                baseColor={BaseColor.sectionColor}
+                textColor={BaseColor.titleColor}
                 data={dateInterval}
                 rippleOpacity={0.7}
               />

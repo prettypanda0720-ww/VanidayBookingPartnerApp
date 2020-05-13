@@ -35,7 +35,7 @@ import PropTypes from 'prop-types';
 import * as Utils from '@utils';
 import styles from './styles';
 
-class EditService extends Component {
+class NewPricingOption extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -71,44 +71,46 @@ class EditService extends Component {
         />
         <ScrollView style={{flexDirection: 'column', padding: 20, paddingBottom: 40}}>
           <View style={{marginTop: 0}}>
-            <Text title2 bold>
+            <Text title2 bold style={{color: BaseColor.sectionColor}}>
               New pricing option
             </Text>
             <View style={styles.inputGroup}>
               <Dropdown
                 label='Duration'
+                baseColor={BaseColor.sectionColor}
+                textColor={BaseColor.titleColor}
                 data = {duration}
                 rippleOpacity = {0.7}
               />
-              <Text caption3 style={{color: '#b0b0b0'}}>Retail price</Text>
+              <Text caption3 style={{color: BaseColor.sectionColor}}>Retail price</Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}>
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: '#b0b0b0'}}>Special price</Text>
+              <Text caption3 style={{color: BaseColor.sectionColor}}>Special price</Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}>
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: '#b0b0b0'}}>Pricing name(optional)</Text>
+              <Text caption3 style={{color: BaseColor.sectionColor}}>Pricing name(optional)</Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="e.g Long hair"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}>
               </TextInput>
             </View>
@@ -124,5 +126,5 @@ class EditService extends Component {
   }
 }
 
-export default EditService;
+export default NewPricingOption;
 

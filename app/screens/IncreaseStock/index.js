@@ -58,11 +58,11 @@ class IncreaseStock extends Component {
           style={styles.headerStyle}
         />
         <ScrollView style={styles.mainWrapper}>
-          <Text body2 bold>
+          <Text body2 bold style={{color: BaseColor.sectionColor}}>
             1 units currently in stock at Makeup Artist
           </Text>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               INCREASE QTY.
             </Text>
             <TextInput
@@ -70,12 +70,12 @@ class IncreaseStock extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="0"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholderTextColor={BaseColor.titleColor}
               selectionColor={BaseColor.primaryColor}
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               SUPPLY PRICE
             </Text>
             <TextInput
@@ -83,7 +83,7 @@ class IncreaseStock extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="123.00"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholderTextColor={BaseColor.titleColor}
               selectionColor={BaseColor.primaryColor}
             />
           </View>
@@ -101,6 +101,8 @@ class IncreaseStock extends Component {
           </View>
           <Dropdown
             label="INCREASE REASON"
+            baseColor={BaseColor.sectionColor}
+            textColor={BaseColor.titleColor}
             data={reasons}
             rippleOpacity={0.7}
           />

@@ -29,12 +29,12 @@ export default class Sales extends Component {
                   <Icon
                     name="dollar-sign"
                     size={25}
-                    color={BaseColor.blackColor}
+                    color={'rgba(0,0,0,0.65)'}
                     style={{marginLeft: 5}}
                   />
                   <View style={styles.summary}>
-                    <Text body1>Daily Sales</Text>
-                    <Text caption1 style={{marginTop: 4}}>
+                    <Text body1 style={styles.sectionStyle}>Daily Sales</Text>
+                    <Text caption1 style={[styles.sectionStyle, {marginTop: 4}]}>
                       See daily totals of sales made and payments collected
                     </Text>
                   </View>
@@ -42,7 +42,7 @@ export default class Sales extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5, flex: 1}}
                 />
               </View>
@@ -57,12 +57,12 @@ export default class Sales extends Component {
                   <Icon
                     name="calendar"
                     size={25}
-                    color={BaseColor.blackColor}
+                    color={'rgba(0,0,0,0.65)'}
                     style={{marginLeft: 5}}
                   />
                   <View style={styles.summary}>
-                    <Text body1>Appointments</Text>
-                    <Text caption1 numberOfLines={2} style={{marginTop: 4}}>
+                    <Text body1 style={styles.sectionStyle}>Appointments</Text>
+                    <Text caption1 numberOfLines={2} style={[styles.sectionStyle, {marginTop: 4}]}>
                       List of all appointments booked, with filter and export options
                     </Text>
                   </View>
@@ -70,7 +70,7 @@ export default class Sales extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5, flex: 1}}
                 />
               </View>
@@ -85,12 +85,12 @@ export default class Sales extends Component {
                   <Icon
                     name="receipt"
                     size={25}
-                    color={BaseColor.blackColor}
+                    color={'rgba(0,0,0,0.65)'}
                     style={{marginLeft: 5}}
                   />
                   <View style={styles.summary}>
                     <Text body1>Invoices</Text>
-                    <Text caption1 style={{marginTop: 4}}>
+                    <Text caption1 style={[styles.sectionStyle, {marginTop: 4}]}>
                       List of all sales made, with filter and export options
                     </Text>
                   </View>
@@ -98,7 +98,7 @@ export default class Sales extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5, flex: 1}}
                 />
               </View>
@@ -113,12 +113,12 @@ export default class Sales extends Component {
                   <Icon
                     name="credit-card"
                     size={25}
-                    color={BaseColor.blackColor}
+                    color={'rgba(0,0,0,0.65)'}
                     style={{marginLeft: 5}}
                   />
                   <View style={styles.summary}>
-                    <Text body1>Ecards</Text>
-                    <Text caption1 style={{marginTop: 4}}>
+                    <Text body1 style={styles.sectionStyle}>Ecards</Text>
+                    <Text caption1 style={[styles.sectionStyle, {marginTop: 4}]}>
                       List of all ecards issued, with filter and export options
                     </Text>
                   </View>
@@ -126,7 +126,7 @@ export default class Sales extends Component {
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5, flex: 1}}
                 />
               </View>

@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     borderRadius: 8,
-    backgroundColor: BaseColor.fieldColor,
+    backgroundColor: BaseColor.whiteColor,
     padding: 10,
     borderColor: BaseColor.grayColor,
     borderWidth: 1,

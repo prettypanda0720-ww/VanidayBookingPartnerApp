@@ -218,7 +218,7 @@ export default class Appointments extends Component {
             <Table style={styles.tableHead}>
               <Row
                 style={styles.row}
-                textStyle={styles.text}
+                textStyle={styles.textHeader}
                 flexArr={[1, 1, 1, 1]}
                 data={tableHead}
               />
@@ -240,7 +240,7 @@ export default class Appointments extends Component {
             <Table style={styles.tableHead}>
               <Row
                 style={styles.row}
-                textStyle={styles.text}
+                textStyle={styles.textHeader}
                 flexArr={[1, 1, 1]}
                 data={cashtableHead}
               />

@@ -139,16 +139,12 @@ export default class EcardList extends Component {
           title="eCard"
           renderLeft={() => {
             return (
-              <Icon
-                name="angle-left"
-                size={20}
-                color={BaseColor.primaryColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           renderRight={() => {
             return (
-              <Icon name="search" size={20} color={BaseColor.primaryColor} />
+              <Icon name="search" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {
@@ -157,6 +153,7 @@ export default class EcardList extends Component {
           onPressRight={() => {
             navigation.navigate('SearchHistory');
           }}
+          style={styles.headerStyle}
         />
         {this.renderContent()}
       </SafeAreaView>

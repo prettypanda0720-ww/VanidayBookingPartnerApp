@@ -64,29 +64,29 @@ class PhysicalProductProfile extends Component {
           style={styles.headerStyle}
         />
         <ScrollView style={styles.mainWrapper}>
-          <Text title1 bold>
+          <Text title3 bold style={{color: BaseColor.sectionColor}}>
             Large Shampoo
           </Text>
-          <Text caption3 semibold style={{color: BaseColor.secondBlackColor}}>
+          <Text caption3 semibold style={{color: BaseColor.titleColor}}>
             Total On Hand: 1
           </Text>
           <Image source={data.image} style={styles.blockImage} />
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.secondBlackColor}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               BARCODE
             </Text>
-            <Text body1 style={{color: BaseColor.secondBlackColor}}>
+            <Text body1 style={{color: BaseColor.titleColor}}>
               123ABC
             </Text>
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.secondBlackColor}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               Retail Price
             </Text>
             <Text
               body1
               style={{
-                color: BaseColor.secondBlackColor,
+                color: BaseColor.titleColor,
                 textDecorationLine: 'line-through',
               }}>
               SGD120
@@ -96,31 +96,31 @@ class PhysicalProductProfile extends Component {
             </Text>
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.secondBlackColor}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               Supply Prices
             </Text>
             <Text
               body1
               style={{
-                color: BaseColor.secondBlackColor,
+                color: BaseColor.titleColor,
               }}>
               SGD120
             </Text>
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.secondBlackColor}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               AVG. Stock Cost
             </Text>
             <Text
               body1
               style={{
-                color: BaseColor.secondBlackColor,
+                color: BaseColor.titleColor,
               }}>
               SGD120
             </Text>
           </View>
           <View style={styles.stockHisWrapper}>
-            <Text title1 bold>
+            <Text title3 bold style={{color: BaseColor.sectionColor}}>
               Stock History
             </Text>
           </View>

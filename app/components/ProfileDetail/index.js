@@ -20,7 +20,7 @@ export default class ProfileDetail extends Component {
       textThird,
       icon,
     } = this.props;
-    
+
     return (
       <TouchableOpacity
         style={[styles.contain, style]}
@@ -29,12 +29,14 @@ export default class ProfileDetail extends Component {
         <View style={[styles.contentLeft, styleLeft]}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image source={image} style={[styles.thumb, styleThumb]} />
-            <View>
-              {this.displayProfileView()}
-            </View>
+            <View>{this.displayProfileView()}</View>
           </View>
           <View>
-            <Text headline semibold numberOfLines={1}>
+            <Text
+              headline
+              semibold
+              numberOfLines={1}
+              style={styles.sectionStyle}>
               {textFirst}
             </Text>
             <Text
@@ -43,42 +45,46 @@ export default class ProfileDetail extends Component {
                 marginTop: 3,
                 paddingRight: 10,
               }}
-              numberOfLines={1}>
+              numberOfLines={1}
+              style={styles.sectionStyle}>
               {textSecond}
             </Text>
-            <Text footnote grayColor numberOfLines={1}>
+            <Text
+              footnote
+              grayColor
+              numberOfLines={1}
+              style={styles.sectionStyle}>
               {textThird}
             </Text>
             <View
               style={{
-                  width: '50%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                  marginTop: 3,
+                width: '50%',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                marginTop: 3,
               }}>
               <StarRating
-                  disabled={true}
-                  starSize={15}
-                  maxStars={5}
-                  rating={5}
-                  selectedStar={(rating) => {}}
-                  fullStarColor={BaseColor.yellowColor}
+                disabled={true}
+                starSize={15}
+                maxStars={5}
+                rating={5}
+                selectedStar={(rating) => {}}
+                fullStarColor={BaseColor.yellowColor}
               />
               <Text
                 caption2
                 style={{
-                color: BaseColor.textPrimaryColor,
+                  color: 'rgba(0,0,0,0.65)',
                 }}>
                 ({4})
               </Text>
             </View>
-
           </View>
         </View>
         {icon && (
           <View style={[styles.contentRight, styleRight]}>
-            <Icon name="angle-right" size={18} color={BaseColor.grayColor} />
+            <Icon name="angle-right" size={18} color={'rgba(0,0,0,0.65)'} />
           </View>
         )}
       </TouchableOpacity>
@@ -86,16 +92,15 @@ export default class ProfileDetail extends Component {
   }
 
   displayProfileView() {
-    
     if (this.props.point != '') {
-        return (
-          <View style={styles.point}>
-            <Text overline whiteColor semibold>
-              {this.props.point}
-            </Text>
-          </View>
-        );
-    } 
+      return (
+        <View style={styles.point}>
+          <Text overline whiteColor semibold>
+            {this.props.point}
+          </Text>
+        </View>
+      );
+    }
   }
 }
 

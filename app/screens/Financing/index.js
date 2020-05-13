@@ -53,24 +53,24 @@ class Financing extends Component {
             <View style={[styles.contentCenter, {flexDirection: 'row'}]}>
               <Image style={styles.image} source={Images.vaniday} />
               <View style={styles.logoContentWrapper}>
-                <Text subhead bold>
+                <Text subhead bold style={styles.sectionStyle}>
                   The Vaniday Promise
                 </Text>
-                <Text caption1 semibold>
+                <Text caption1 semibold style={styles.sectionStyle}>
                   Getting You The Best Offer
                 </Text>
               </View>
             </View>
             <View style={[styles.inputGroup, styles.contentCenter]}>
-              <Text subhead>Apply Up to</Text>
+              <Text subhead style={styles.sectionStyle}>Apply Up to</Text>
               <Text
                 header
                 bold
-                style={{color: BaseColor.secondBlackColor, marginTop: 0}}>
+                style={[{color: BaseColor.secondBlackColor, marginTop: 0}, styles.sectionStyle]}>
                 $50,000
               </Text>
-              <Text subhead>from 0.5% per month</Text>
-              <Text subhead>6 months tenure</Text>
+              <Text subhead style={styles.sectionStyle}>from 0.5% per month</Text>
+              <Text subhead style={styles.sectionStyle}>6 months tenure</Text>
             </View>
             <Text caption1 style={styles.summaryStyle}>
               We will find you the best offer among various financial partners
@@ -83,8 +83,8 @@ class Financing extends Component {
               {paddingHorizontal: 10, marginTop: 40},
             ]}>
             <View style={[styles.contentCenter, {flexDirection: 'column'}]}>
-              <Icon name="file-alt" size={60} color={BaseColor.secondBlackColor} />
-              <Text caption1 style={{marginTop: 5}}>
+              <Icon name="file-alt" size={60} color={'rgba(0,0,0,0.65)'} />
+              <Text caption1 style={[{marginTop: 5}, styles.sectionStyle]}>
                 No collateral
               </Text>
             </View>
@@ -92,7 +92,7 @@ class Financing extends Component {
               <Icon
                 name="hand-holding-usd"
                 size={60}
-                color={BaseColor.secondBlackColor}
+                color={'rgba(0,0,0,0.65)'}
               />
               <Text caption1 style={{marginTop: 5}}>
                 Easy application
@@ -102,7 +102,7 @@ class Financing extends Component {
               <Icon
                 name="clipboard-list"
                 size={60}
-                color={BaseColor.secondBlackColor}
+                color={'rgba(0,0,0,0.65)'}
               />
               <Text caption1 style={{marginTop: 5}}>
                 Quick approvals
@@ -120,7 +120,7 @@ class Financing extends Component {
                 })
               }
             />
-            <Text footnote numberOfLines={5} style={{paddingHorizontal: 10}}>
+            <Text footnote numberOfLines={5} style={[{paddingHorizontal: 10}, styles.sectionStyle]}>
               I have read, understood and agreed to be subjected to Vaniday's
               Privacy and Policy and I consent for Vaniday to disclose my
               personal data to any third parties and / or any of their

@@ -66,7 +66,7 @@ class Setting extends Component {
         <Header
           title="Profile"
           renderRight={() => {
-            return <Icon name="bell" size={24} color={BaseColor.blackColor} />;
+            return <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />;
           }}
           onPressRight={() => {
             navigation.navigate('Notification');
@@ -88,7 +88,7 @@ class Setting extends Component {
               onPress={() => navigation.navigate('Aboutus', {data: shopData})}
             />
             <View style={styles.contentService}>
-              <Text body2>
+              <Text body2 style={styles.sectionStyle}>
                 In Italian, "Covo" means a hiding place. When you come to our
                 salon, you will experience a private and relaxing space and
                 time. All the stylists are experienced Japanese stylists with
@@ -112,11 +112,11 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('ProfileEdit');
                 }}>
-                <Text body1>Edit Profile</Text>
+                <Text body1 style={styles.sectionStyle}>Edit Profile</Text>
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -125,11 +125,11 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('OpeningHours');
                 }}>
-                <Text body1>Opening Hours</Text>
+                <Text body1 style={styles.sectionStyle}>Opening Hours</Text>
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -138,11 +138,11 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('MerchantClosedDates');
                 }}>
-                <Text body1>Closed Dates</Text>
+                <Text body1 style={styles.sectionStyle}>Closed Dates</Text>
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -151,24 +151,24 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Staffs');
                 }}>
-                <Text body1>Staffs</Text>
+                <Text body1 style={styles.sectionStyle}>Staffs</Text>
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
-                  navigation.navigate('Services');
+                  navigation.navigate('ServiceList');
                 }}>
-                <Text body1>Services</Text>
+                <Text body1 style={styles.sectionStyle}>Services</Text>
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -177,11 +177,11 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Inventory');
                 }}>
-                <Text body1>Inventory</Text>
+                <Text body1 style={styles.sectionStyle}>Inventory</Text>
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -190,7 +190,7 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Services');
                 }}>
-                <Text body1>Country</Text>
+                <Text body1 style={styles.sectionStyle}>Country</Text>
                 <Text subhead>Singapore</Text>
               </View>
               <TouchableOpacity
@@ -198,7 +198,7 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Currency');
                 }}>
-                <Text body1>Currency</Text>
+                <Text body1 style={styles.sectionStyle}>Currency</Text>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -210,7 +210,7 @@ class Setting extends Component {
                   <Icon
                     name="angle-right"
                     size={18}
-                    color={BaseColor.blackColor}
+                    color={'rgba(0,0,0,0.65)'}
                     style={{marginLeft: 5}}
                   />
                 </View>
@@ -220,11 +220,11 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Cancellation');
                 }}>
-                <Text body1>Cancellation and Policy</Text>
+                <Text body1 style={styles.sectionStyle}>Cancellation and Policy</Text>
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -233,11 +233,11 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('TermsAndConditions');
                 }}>
-                <Text body1>Terms And Conditions</Text>
+                <Text body1 style={styles.sectionStyle}>Terms And Conditions</Text>
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -246,11 +246,11 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Report');
                 }}>
-                <Text body1>Report</Text>
+                <Text body1 style={styles.sectionStyle}>Report</Text>
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
@@ -259,16 +259,16 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('FAQ');
                 }}>
-                <Text body1>FAQ</Text>
+                <Text body1 style={styles.sectionStyle}>FAQ</Text>
                 <Icon
                   name="angle-right"
                   size={18}
-                  color={BaseColor.blackColor}
+                  color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
               <View style={[styles.profileItem, {paddingVertical: 15}]}>
-                <Text body1>Reminders</Text>
+                <Text body1 style={styles.sectionStyle}>Reminders</Text>
                 <Switch
                   name="angle-right"
                   size={18}
@@ -277,7 +277,7 @@ class Setting extends Component {
                 />
               </View>
               <View style={styles.profileItem}>
-                <Text body1>App Version</Text>
+                <Text body1 style={styles.sectionStyle}>App Version</Text>
                 <Text body1 grayColor>
                   {BaseSetting.appVersion}
                 </Text>
@@ -288,11 +288,11 @@ class Setting extends Component {
                   onPress={() => {
                     navigation.navigate('Notification');
                   }}>
-                  <Text body1>Notification</Text>
+                  <Text body1 style={styles.sectionStyle}>Notification</Text>
                   <Icon
                     name="angle-right"
                     size={18}
-                    color={BaseColor.blackColor}
+                    color={'rgba(0,0,0,0.65)'}
                     style={{marginLeft: 5}}
                   />
                 </TouchableOpacity>

@@ -101,13 +101,13 @@ export default class DatePicker extends Component {
         <TouchableOpacity
           style={styles.itemPick}
           onPress={() => this.openModal(true)}>
-          <Text body1 bold>
+          <Text body1 semibold style={{color: BaseColor.titleColor}}>
             {time}
           </Text>
           <Icon
             name="angle-down"
             size={18}
-            color={BaseColor.blackColor}
+            color={BaseColor.sectionColor}
             style={{marginLeft: 5}}
           />
         </TouchableOpacity>

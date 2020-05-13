@@ -56,5 +56,9 @@ export default StyleSheet.create({
   changeButton: {
     marginTop: 20,
     paddingHorizontal: 20,
-  }
+  },
+  headerStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.secondBlackColor,
+  },
 });

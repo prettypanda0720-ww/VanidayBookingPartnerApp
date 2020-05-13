@@ -111,17 +111,17 @@ export default class Orders extends Component {
             label="STATUS"
             data={status}
             rippleOpacity={0.7}
-            baseColor={BaseColor.secondBlackColor}
-            tintColor={BaseColor.blackColor}
-            style={{color: BaseColor.blackColor}}
+            baseColor={BaseColor.sectionColor}
+            tintColor={BaseColor.titleColor}
+            style={{color: BaseColor.titleColor}}
           />
           <Dropdown
             label="SUPPLIER"
             data={suppliers}
             rippleOpacity={0.7}
-            baseColor={BaseColor.secondBlackColor}
-            tintColor={BaseColor.blackColor}
-            style={{color: BaseColor.blackColor}}
+            baseColor={BaseColor.sectionColor}
+            tintColor={BaseColor.titleColor}
+            style={{color: BaseColor.titleColor}}
           />
         </View>
         <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>

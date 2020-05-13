@@ -87,11 +87,11 @@ class EditService extends Component {
             paddingRight: 20,
             paddingBottom: 60,
           }}>
-          <Text title2 bold>
+          <Text title2 bold style={{color: BaseColor.sectionColor}}>
             Edit Service
           </Text>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               Service name
             </Text>
             <TextInput
@@ -99,13 +99,13 @@ class EditService extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Service Name"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholderTextColor={BaseColor.titleColor}
               selectionColor={BaseColor.primaryColor}>
               {data.serviceTitle}
             </TextInput>
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               Category
             </Text>
             <ServiceInput data={data} />
@@ -119,19 +119,27 @@ class EditService extends Component {
                 },
               ]}
               onPress={() => navigation.navigate('NewTreatmentType')}>
-              <Text body2>Add another Category</Text>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
+                Add another Category
+              </Text>
               <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                <Icon name="plus" size={15} color={BaseColor.blackColor} />
+                <Icon name="plus" size={15} color={BaseColor.titleColor} />
               </View>
             </TouchableOpacity>
           </View>
           <View style={{marginTop: 30}}>
-            <Text title2 bold>
+            <Text title2 bold style={{color: BaseColor.sectionColor}}>
               Prices
             </Text>
             <View style={{}}>
-              <Dropdown label="Duration" data={duration} rippleOpacity={0.7} />
-              <Text body2 style={{color: '#b0b0b0'}}>
+              <Dropdown
+                label="Duration"
+                data={duration}
+                baseColor={BaseColor.sectionColor}
+                textColor={BaseColor.titleColor}
+                rippleOpacity={0.7}
+              />
+              <Text body2 style={{color: BaseColor.sectionColor}}>
                 Retail price
               </Text>
               <TextInput
@@ -145,7 +153,7 @@ class EditService extends Component {
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: '#b0b0b0'}}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
                 Special price
               </Text>
               <TextInput
@@ -159,7 +167,7 @@ class EditService extends Component {
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: '#b0b0b0'}}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
                 Pricing name(optional)
               </Text>
               <TextInput
@@ -182,13 +190,11 @@ class EditService extends Component {
                 },
               ]}
               onPress={() => navigation.navigate('NewPricingOption')}>
-              <Text body2>Add another pricing option</Text>
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                <Icon name="plus" size={15} color={BaseColor.blackColor} />
-              </View>
+              <Text body2 style={{color: BaseColor.sectionColor}}>Add another pricing option</Text>
+              <Icon name="plus" size={15} color={BaseColor.sectionColor} />
             </TouchableOpacity>
           </View>
-          <Text title2 bold style={{marginTop: 30}}>
+          <Text title2 bold style={{marginTop: 30, color: BaseColor.sectionColor}}>
             Other Options
           </Text>
           <View style={styles.inputGroup}>
@@ -206,10 +212,10 @@ class EditService extends Component {
               ]}
               onPress={() => navigation.navigate('PickStaff')}>
               <View>
-                <Text body2 semibold>
+                <Text subhead semibold style={{color: BaseColor.sectionColor}}>
                   Staff
                 </Text>
-                <Text caption2 style={{color: '#b0b0b0'}}>
+                <Text caption2 style={{color: BaseColor.titleColor}}>
                   2staff assigned
                 </Text>
               </View>
@@ -217,38 +223,7 @@ class EditService extends Component {
                 <Icon
                   name="angle-right"
                   size={15}
-                  color={BaseColor.blackColor}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.inputGroup}>
-            <TouchableOpacity
-              style={[
-                styles.inputGroup,
-                {
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingBottom: 10,
-                  borderBottomColor: BaseColor.grayColor,
-                  borderBottomWidth: 1,
-                },
-              ]}
-              onPress={() => navigation.navigate('OnlineBooking')}>
-              <View>
-                <Text body2 semibold>
-                  Online Booking
-                </Text>
-                <Text caption2 style={{color: '#b0b0b0'}}>
-                  Enabled
-                </Text>
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Icon
-                  name="angle-right"
-                  size={15}
-                  color={BaseColor.blackColor}
+                  color={BaseColor.titleColor}
                 />
               </View>
             </TouchableOpacity>
@@ -268,10 +243,41 @@ class EditService extends Component {
               ]}
               onPress={() => navigation.navigate('NewPricingOption')}>
               <View>
-                <Text body2 semibold>
+                <Text body2 semibold style={{color: BaseColor.sectionColor}}>
+                  Online Booking
+                </Text>
+                <Text caption2 style={{color: BaseColor.titleColor}}>
+                  Enabled
+                </Text>
+              </View>
+              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Icon
+                  name="angle-right"
+                  size={15}
+                  color={BaseColor.titleColor}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.inputGroup}>
+            <TouchableOpacity
+              style={[
+                styles.inputGroup,
+                {
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingBottom: 10,
+                  borderBottomColor: BaseColor.grayColor,
+                  borderBottomWidth: 1,
+                },
+              ]}
+              onPress={() => navigation.navigate('NewPricingOption')}>
+              <View>
+                <Text body2 semibold style={{color: BaseColor.sectionColor}}>
                   Setting
                 </Text>
-                <Text caption2 style={{color: '#b0b0b0'}}>
+                <Text caption2 style={{color: BaseColor.titleColor}}>
                   Custom
                 </Text>
               </View>

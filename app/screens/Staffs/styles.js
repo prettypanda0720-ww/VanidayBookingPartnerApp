@@ -5,7 +5,7 @@ import { BaseColor } from "@config";
 export default StyleSheet.create({
   contain: {
     alignItems: "center",
-    padding: 20,
+    paddingHorizontal: 20,
     width: "100%"
   },
   profileItem: {

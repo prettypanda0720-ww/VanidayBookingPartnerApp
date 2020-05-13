@@ -61,6 +61,7 @@ class CreateSupplier extends Component {
             paddingLeft: 20,
             paddingRight: 20,
             paddingBottom: 60,
+            marginTop: 20,
           }}>
           <Text title2 bold>
             Supplier Details

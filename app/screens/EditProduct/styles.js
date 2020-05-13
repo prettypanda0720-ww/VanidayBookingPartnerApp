@@ -10,7 +10,7 @@ export default StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     width: '100%',
-    color: 'black',
+    color: BaseColor.titleColor,
     marginTop: 5,
     borderColor: BaseColor.grayColor,
     borderWidth: 1,
@@ -28,6 +28,7 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 60,
+    marginTop: 20,
   },
   multilineTextInput: {
     height: 200,
@@ -35,9 +36,9 @@ export default StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     width: '100%',
-    color: 'black',
+    color: BaseColor.titleColor,
     marginTop: 5,
-    borderColor: BaseColor.grayColor,
+    borderColor: BaseColor.titleColor,
     borderWidth: 1,
   },
   profileItem: {

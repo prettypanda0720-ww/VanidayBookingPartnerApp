@@ -53,7 +53,7 @@ class OrderDetail extends Component {
             title="Order P2"
             renderRight={() => {
               return (
-                <Icon name="times" size={20} color={BaseColor.blackColor} />
+                <Icon name="times" size={20} color={BaseColor.sectionColor} />
               );
             }}
             onPressRight={() => {
@@ -61,7 +61,7 @@ class OrderDetail extends Component {
             }}
             style={{
               borderBottomWidth: 1,
-              borderBottomColor: BaseColor.blackColor,
+              borderBottomColor: BaseColor.sectionColor,
             }}
           />
           <ScrollView style={styles.container}>
@@ -70,9 +70,9 @@ class OrderDetail extends Component {
                 <Icon
                   name="creative-commons-nc"
                   size={30}
-                  color={BaseColor.blackColor}
+                  color={BaseColor.sectionColor}
                 />
-                <Text title2 blackColor style={{marginLeft: 10}}>
+                <Text title2 sectionColor style={{marginLeft: 10}}>
                   Order Canceled
                 </Text>
               </View>
@@ -81,7 +81,7 @@ class OrderDetail extends Component {
               </Text>
             </View>
             <View style={styles.inputGroup}>
-              <Text title3 blackColor>
+              <Text title3 sectionColor>
                 Judy T
               </Text>
               <Text footnote style={{color: '#b0b0b0', marginTop: 10}}>
@@ -98,7 +98,7 @@ class OrderDetail extends Component {
               </Text>
             </View>
             <View style={styles.inputGroup}>
-              <Text title3 blackColor>
+              <Text title3 sectionColor>
                 DELIVERY TO
               </Text>
               <Text footnote style={{color: '#b0b0b0', marginTop: 10}}>
@@ -116,12 +116,12 @@ class OrderDetail extends Component {
             })}
             <View style={styles.orderItemWrapper}>
               <View style={[styles.leftCenter, {flex: 1}]}>
-                <Text body2 blackColor>
+                <Text body2 sectionColor>
                   ORDER TOTAL
                 </Text>
               </View>
               <View style={[styles.rightCenter, {flex: 2}]}>
-                <Text title3 bold blackColor>
+                <Text title3 bold sectionColor>
                   SGD 6888
                 </Text>
               </View>
@@ -140,7 +140,7 @@ class OrderDetail extends Component {
         activeOpacity={0.8}>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 blackColor>
+            <Text body2 sectionColor>
               PRODUCT
             </Text>
           </View>
@@ -152,7 +152,7 @@ class OrderDetail extends Component {
         </View>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 blackColor>
+            <Text body2 sectionColor>
               ORDER QTY
             </Text>
           </View>
@@ -168,7 +168,7 @@ class OrderDetail extends Component {
         </View>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 blackColor>
+            <Text body2 sectionColor>
               SUPPLY PRICE
             </Text>
           </View>
@@ -184,7 +184,7 @@ class OrderDetail extends Component {
         </View>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 blackColor>
+            <Text body2 sectionColor>
               TOTAL COST
             </Text>
           </View>

@@ -1,17 +1,6 @@
 import React, {Component} from 'react';
-import {
-  FlatList,
-  View,
-  ScrollView,
-  Switch,
-} from 'react-native';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-} from '@components';
+import {FlatList, View, ScrollView, Switch} from 'react-native';
+import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 
 import {Checkbox} from 'react-native-material-ui';
 
@@ -56,7 +45,9 @@ class EditService extends Component {
         <Header
           title=""
           renderRight={() => {
-            return <Icon name="times" size={20} color={BaseColor.blackColor} />;
+            return (
+              <Icon name="times" size={20} color={BaseColor.sectionColor} />
+            );
           }}
           onPressRight={() => {
             navigation.goBack();
@@ -65,8 +56,12 @@ class EditService extends Component {
         <ScrollView
           style={{flexDirection: 'column', padding: 20, paddingBottom: 40}}>
           <View style={{marginTop: 0}}>
-            <Text title2 bold>Staff</Text>
-            <Text caption1>Select staff who perform this service.</Text>
+            <Text title2 bold style={{color: BaseColor.sectionColor}}>
+              Staff
+            </Text>
+            <Text caption1 style={{color: BaseColor.titleColor}}>
+              Select staff who perform this service.
+            </Text>
             <View style={[styles.inputGroup, {flexDirection: 'column'}]}>
               <Checkbox label="Judy T" value="agree" checked={true} />
               <Checkbox label="Wendy Smith" value="agree" checked={false} />

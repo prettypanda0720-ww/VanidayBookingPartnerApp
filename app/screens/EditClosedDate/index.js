@@ -125,7 +125,7 @@ class EditClosedDate extends Component {
               </View>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text caption3 style={{color: BaseColor.sectionColor}}>
                 Description
               </Text>
               <TextInput
@@ -139,10 +139,16 @@ class EditClosedDate extends Component {
               </TextInput>
             </View>
             <View style={[styles.inputGroup, {marginTop: 50}]}>
-              <Text title2 bold>
+              <Text title2 bold style={{color: BaseColor.sectionColor}}>
                 Repeating Options
               </Text>
-              <Dropdown label="Frequency" data={duration} rippleOpacity={0.7} />
+              <Dropdown
+                label="Frequency"
+                data={duration}
+                baseColor={BaseColor.sectionColor}
+                textColor={BaseColor.titleColor}
+                rippleOpacity={0.7}
+              />
             </View>
           </View>
         </ScrollView>

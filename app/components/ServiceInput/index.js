@@ -70,7 +70,7 @@ class ServiceInput extends Component {
                 title=""
                 renderRight={() => {
                   return (
-                    <Icon name="times" size={20} color={BaseColor.blackColor} />
+                    <Icon name="times" size={20} color={BaseColor.sectionColor} />
                   );
                 }}
                 onPressRight={() => this.hideModal()}
@@ -81,7 +81,7 @@ class ServiceInput extends Component {
                   paddingLeft: 20,
                   paddingRight: 20,
                 }}>
-                <Text title2 bold>
+                <Text title2 bold style={{color: BaseColor.sectionColor}}>
                   Select Service Type
                 </Text>
                 <View style={{paddingTop: 20}}>
@@ -103,7 +103,7 @@ class ServiceInput extends Component {
                       <Icon
                         name="search"
                         size={18}
-                        color={BaseColor.grayColor}
+                        color={BaseColor.titleColor}
                       />
                     </TouchableOpacity>
 
@@ -112,9 +112,9 @@ class ServiceInput extends Component {
                       onChangeText={(text) => this.setState({search: text})}
                       autoCorrect={false}
                       placeholder="Search..."
-                      placeholderTextColor={BaseColor.grayColor}
+                      placeholderTextColor={BaseColor.titleColor}
                       value={search}
-                      selectionColor={BaseColor.primaryColor}
+                      selectionColor={BaseColor.titleColor}
                       onSubmitEditing={() => {
                         this.onSearch(search);
                       }}
@@ -129,18 +129,18 @@ class ServiceInput extends Component {
                       <Icon
                         name="times"
                         size={18}
-                        color={BaseColor.grayColor}
+                        color={BaseColor.titleColor}
                       />
                     </TouchableOpacity>
                   </View>
                 </View>
                 <FlatList
                   data={serviceData}
-                  style={{marginTop: 20}}
+                  style={{marginTop: 0}}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({item}) => (
                     <View style={{flexDirection: 'column', marginTop: 20}}>
-                      <Text title3 bold>
+                      <Text headline bold style={{color: BaseColor.sectionColor}}>
                         {item.title}&nbsp;({item.totalCount})
                       </Text>
                       <FlatList
@@ -160,12 +160,17 @@ class ServiceInput extends Component {
                                 borderBottomColor: BaseColor.grayColor,
                                 borderBottomWidth: 1,
                               }}>
-                              <Text headline style={{color: '#b0b0b0'}}>
+                              <Text
+                                subhead
+                                style={{color: BaseColor.titleColor}}>
                                 {item.serviceTitle}
                               </Text>
                               <Icon
                                 name="chevron-right"
-                                style={[styles.iconStyle, {marginLeft: 5}]}
+                                style={{
+                                  marginLeft: 5,
+                                  color: BaseColor.titleColor,
+                                }}
                               />
                             </View>
                           </TouchableWithoutFeedback>
@@ -176,11 +181,6 @@ class ServiceInput extends Component {
                 />
               </ScrollView>
             </View>
-            <TouchableOpacity
-              onPress={() => this.hideModal()}
-              style={styles.closeButtonStyle}>
-              <Text style={styles.textStyle}>Close</Text>
-            </TouchableOpacity>
           </View>
         </Modal>
         <View style={{marginTop: 10}}>
@@ -188,8 +188,8 @@ class ServiceInput extends Component {
             style={[BaseStyle.textInput, styles.textInput]}
             autoCorrect={false}
             placeholder="Service Name"
-            placeholderTextColor={BaseColor.MainPrimaryColor}
-            selectionColor={BaseColor.blackColor}
+            placeholderTextColor={BaseColor.titleColor}
+            selectionColor={BaseColor.titleColor}
             numberOfLines={1}>
             {this.state.title}
           </Text>
@@ -197,7 +197,7 @@ class ServiceInput extends Component {
             <Icon
               name="angle-down"
               size={20}
-              color={BaseColor.blackColor}
+              color={BaseColor.titleColor}
               onPress={() => this.showModal()}
             />
           </TouchableOpacity>

@@ -30,7 +30,14 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: BaseColor.grayColor,
   },
-  text: {textAlign: 'center'},
+  text: {
+    textAlign: 'center',
+    color: 'rgba(0,0,0,0.65)',
+  },
+  textHeader: {
+    textAlign: 'center',
+    color: BaseColor.secondBlackColor,
+  },
   contain: {
     height: 45,
     flexDirection: 'row',
@@ -107,7 +114,6 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
   },
   serviceItemWrapper: {
-    borderColor: 'green',
     marginRight: 10,
     paddingHorizontal: 20,
     paddingVertical: 10,

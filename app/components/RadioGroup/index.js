@@ -32,7 +32,7 @@ export default class RadioGroup extends React.Component {
               color={BaseColor.MainPrimaryColor}
               value="first"
             />
-            <Text style={{color: BaseColor.blackColor}}>Company</Text>
+            <Text style={{color: BaseColor.sectionColor}}>Company</Text>
           </View>
           <View
             style={{
@@ -46,7 +46,7 @@ export default class RadioGroup extends React.Component {
               color={BaseColor.MainPrimaryColor}
               value="second"
             />
-            <Text style={{color: BaseColor.blackColor}}>Freelancer</Text>
+            <Text style={{color: BaseColor.sectionColor}}>Freelancer</Text>
           </View>
         </View>
       </RadioButton.Group>

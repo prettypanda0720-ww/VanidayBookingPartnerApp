@@ -27,4 +27,7 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: BaseColor.secondBlackColor,
   },
+  sectionStyle: {
+    color: 'rgba(0,0,0,0.65)',
+  }
 });

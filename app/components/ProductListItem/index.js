@@ -66,7 +66,11 @@ export default class ProductListItem extends Component {
               width: '100%',
             }}>
             <View style={[{flex: 1}, styles.contentCenter]}>
-              <Text headline bold numberOfLines={1} style={{marginTop: 5}}>
+              <Text
+                headline
+                bold
+                numberOfLines={1}
+                style={{marginTop: 5, color: BaseColor.sectionColor}}>
                 {title}
               </Text>
             </View>
@@ -74,8 +78,7 @@ export default class ProductListItem extends Component {
               <Button style={styles.btnPromotion}>
                 <Text
                   body2
-                  blackColor
-                  style={{textDecorationLine: 'line-through'}}>
+                  style={{textDecorationLine: 'line-through', color: BaseColor.titleColor}}>
                   &nbsp;SGD&nbsp;{retailprice}&nbsp;
                 </Text>
                 <Text body1 primaryColor bold>
@@ -86,7 +89,7 @@ export default class ProductListItem extends Component {
           </View>
           <View style={styles.blockContentAddress}>
             <View style={{width: '50%'}}>
-              <Text footnote blackColor numberOfLines={2}>
+              <Text footnote blackColor numberOfLines={2} style={{color: BaseColor.titleColor}}>
                 {brand}
               </Text>
             </View>
@@ -102,7 +105,7 @@ export default class ProductListItem extends Component {
                 starSize={20}
                 maxStars={5}
                 rating={rate}
-                selectedStar={rating => {}}
+                selectedStar={(rating) => {}}
                 fullStarColor={BaseColor.yellowColor}
               />
               <Text

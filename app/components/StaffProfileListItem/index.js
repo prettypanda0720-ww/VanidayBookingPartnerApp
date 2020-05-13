@@ -22,7 +22,7 @@ export default class StaffProfileListItem extends Component {
       rate,
       rateCount,
     } = this.props;
-    
+
     return (
       <TouchableOpacity
         style={[styles.contain, style]}
@@ -32,13 +32,17 @@ export default class StaffProfileListItem extends Component {
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image source={image} style={[styles.thumb, styleThumb]} />
             <View style={styles.point}>
-                <Text overline whiteColor semibold>
+              <Text overline whiteColor semibold>
                 {this.props.point}
-                </Text>
+              </Text>
             </View>
           </View>
           <View>
-            <Text headline bold numberOfLines={1}>
+            <Text
+              headline
+              semibold
+              numberOfLines={1}
+              style={{color: BaseColor.sectionColor}}>
               {textFirst}
             </Text>
             <Text
@@ -47,33 +51,34 @@ export default class StaffProfileListItem extends Component {
               style={{
                 marginTop: 3,
                 paddingRight: 10,
+                color: BaseColor.titleColor,
               }}
               numberOfLines={1}>
               {textSecond}
             </Text>
             <View style={styles.listContentRate}>
-                <StarRating
-                    disabled={true}
-                    starSize={10}
-                    maxStars={6}
-                    rating={rate}
-                    selectedStar={rating => {}}
-                    fullStarColor={BaseColor.yellowColor}
-                />
-                <Text
-                    caption1
-                    grayColor
-                    semibold
-                    style={{
-                        marginLeft: 10,
-                        marginRight: 3
-                    }}
-                >
-                    Rating
-                </Text>
-                <Text caption1 primaryColor semibold>
-                    {rateCount}
-                </Text>
+              <StarRating
+                disabled={true}
+                starSize={10}
+                maxStars={6}
+                rating={rate}
+                selectedStar={(rating) => {}}
+                fullStarColor={BaseColor.yellowColor}
+              />
+              <Text
+                caption1
+                grayColor
+                semibold
+                style={{
+                  marginLeft: 10,
+                  marginRight: 3,
+                  color: BaseColor.titleColor,
+                }}>
+                Rating
+              </Text>
+              <Text caption1 primaryColor semibold>
+                {rateCount}
+              </Text>
             </View>
           </View>
         </View>

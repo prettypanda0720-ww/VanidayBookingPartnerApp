@@ -106,10 +106,10 @@ export default class InvoiceListItem extends Component {
               flexDirection: 'row',
               alignItems: 'flex-start',
             }}>
-            <Text body1 bold>
+            <Text body1 bold style={{color: 'rgba(0,0,0,0.65)'}}>
               Salon:
             </Text>
-            <Text body1 semibold>
+            <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
               &nbsp;&nbsp;SGD50
             </Text>
           </View>
@@ -120,10 +120,10 @@ export default class InvoiceListItem extends Component {
               justifyContent: 'flex-end',
               alignItems: 'flex-end',
             }}>
-            <Text body1 bold>
+            <Text body1 bold style={{color: 'rgba(0,0,0,0.65)'}}>
               Vaniday:
             </Text>
-            <Text body1 semibold>
+            <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
               &nbsp;&nbsp;SGD50
             </Text>
           </View>

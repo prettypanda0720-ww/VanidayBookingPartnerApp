@@ -86,11 +86,11 @@ class CreateService extends Component {
             paddingRight: 20,
             paddingBottom: 60,
           }}>
-          <Text title2 bold>
+          <Text title2 bold style={{color: BaseColor.sectionColor}}>
             Create Service
           </Text>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               Service name
             </Text>
             <TextInput
@@ -98,23 +98,29 @@ class CreateService extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Service Name"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}>
-            </TextInput>
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.primaryColor}
+            />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               Category
             </Text>
             <ServiceInput />
           </View>
           <View style={{marginTop: 30}}>
-            <Text title2 bold>
+            <Text title2 bold style={{color: BaseColor.sectionColor}}>
               Prices
             </Text>
             <View style={{}}>
-              <Dropdown label="Duration" data={duration} rippleOpacity={0.7} />
-              <Text body2 style={{color: '#b0b0b0'}}>
+              <Dropdown
+                label="Duration"
+                data={duration}
+                baseColor={BaseColor.sectionColor}
+                textColor={BaseColor.titleColor}
+                rippleOpacity={0.7}
+              />
+              <Text body2 style={{color: BaseColor.sectionColor}}>
                 Retail price
               </Text>
               <TextInput
@@ -122,12 +128,12 @@ class CreateService extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}>
-              </TextInput>
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.primaryColor}
+              />
             </View>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: '#b0b0b0'}}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
                 Special price
               </Text>
               <TextInput
@@ -135,12 +141,12 @@ class CreateService extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}>
-              </TextInput>
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.primaryColor}
+              />
             </View>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: '#b0b0b0'}}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
                 Pricing name(optional)
               </Text>
               <TextInput
@@ -148,9 +154,9 @@ class CreateService extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="e.g Long hair"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}>
-              </TextInput>
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.primaryColor}
+              />
             </View>
             <TouchableOpacity
               style={[
@@ -162,11 +168,11 @@ class CreateService extends Component {
                 },
               ]}
               onPress={() => navigation.navigate('NewPricingOption')}>
-              <Text body2>Add another pricing option</Text>
-              <Icon name="plus" size={15} color={BaseColor.blackColor} />
+              <Text body2 style={{color: BaseColor.sectionColor}}>Add another pricing option</Text>
+              <Icon name="plus" size={15} color={BaseColor.sectionColor} />
             </TouchableOpacity>
           </View>
-          <Text title2 bold style={{marginTop: 30}}>
+          <Text title2 bold style={{marginTop: 30, color: BaseColor.sectionColor}}>
             Other Options
           </Text>
           <View style={styles.inputGroup}>
@@ -184,10 +190,10 @@ class CreateService extends Component {
               ]}
               onPress={() => navigation.navigate('PickStaff')}>
               <View>
-                <Text subhead semibold>
+                <Text subhead semibold style={{color: BaseColor.sectionColor}}>
                   Staff
                 </Text>
-                <Text caption2 style={{color: '#b0b0b0'}}>
+                <Text caption2 style={{color: BaseColor.titleColor}}>
                   2staff assigned
                 </Text>
               </View>
@@ -195,7 +201,7 @@ class CreateService extends Component {
                 <Icon
                   name="angle-right"
                   size={15}
-                  color={BaseColor.blackColor}
+                  color={BaseColor.titleColor}
                 />
               </View>
             </TouchableOpacity>
@@ -215,10 +221,10 @@ class CreateService extends Component {
               ]}
               onPress={() => navigation.navigate('NewPricingOption')}>
               <View>
-                <Text body2 semibold>
+                <Text body2 semibold style={{color: BaseColor.sectionColor}}>
                   Online Booking
                 </Text>
-                <Text caption2 style={{color: '#b0b0b0'}}>
+                <Text caption2 style={{color: BaseColor.titleColor}}>
                   Enabled
                 </Text>
               </View>
@@ -226,7 +232,7 @@ class CreateService extends Component {
                 <Icon
                   name="angle-right"
                   size={15}
-                  color={BaseColor.blackColor}
+                  color={BaseColor.titleColor}
                 />
               </View>
             </TouchableOpacity>
@@ -246,10 +252,10 @@ class CreateService extends Component {
               ]}
               onPress={() => navigation.navigate('NewPricingOption')}>
               <View>
-                <Text body2 semibold>
+                <Text body2 semibold style={{color: BaseColor.sectionColor}}>
                   Setting
                 </Text>
-                <Text caption2 style={{color: '#b0b0b0'}}>
+                <Text caption2 style={{color: BaseColor.titleColor}}>
                   Custom
                 </Text>
               </View>

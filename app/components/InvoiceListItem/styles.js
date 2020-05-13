@@ -17,7 +17,7 @@ export default StyleSheet.create({
   },
   serviceIdStyle: {
     fontSize: 17,
-    color: 'black',
+    color: 'rgba(0,0,0,0.65)',
     fontWeight: 'bold',
   },
   serviceItemNameStyle: {

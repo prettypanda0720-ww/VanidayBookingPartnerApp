@@ -10,4 +10,8 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: BaseColor.whiteColor,
   },
+  headerStyle: {
+    borderBottomColor: BaseColor.secondBlackColor,
+    borderBottomWidth: 1,
+  },
 });

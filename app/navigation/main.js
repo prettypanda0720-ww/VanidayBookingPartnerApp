@@ -216,7 +216,7 @@ const StackNavigator = createStackNavigator(
       screen: CreateStaff,
     },
     Services: {
-      screen: Services,
+      screen: VanidayServices,
     },
     EditService: {
       screen: EditService,
@@ -346,6 +346,9 @@ const StackNavigator = createStackNavigator(
     },
     VanidayServices: {
       screen: VanidayServices,
+    },
+    ServiceList: {
+      screen: Services,
     },
     Financing: {
       screen: Financing,

@@ -32,4 +32,7 @@ export default StyleSheet.create({
     right: 9,
     bottom: 0,
   },
+  sectionStyle: {
+    color: 'rgba(0,0,0,0.65)',
+  }
 });

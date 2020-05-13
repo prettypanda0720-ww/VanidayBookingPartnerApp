@@ -53,7 +53,7 @@ export default class ECardListItem extends Component {
               width: '100%',
             }}>
             <View style={{flex: 1}}>
-              <Text headline bold numberOfLines={1} style={{marginTop: 5}}>
+              <Text headline bold numberOfLines={1} style={{marginTop: 5, color: 'rgba(0,0,0,0.65)'}}>
                 {title}
               </Text>
             </View>

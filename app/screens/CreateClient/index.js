@@ -58,7 +58,7 @@ class CreateClient extends Component {
           <SignupTextInput title={'Last name'} />
           <SignupTextInput title={'Email'} />
         </View>
-        <PhoneInput />
+        {/* <PhoneInput /> */}
         <View style={{flex: 7, flexDirection: 'column'}}>
           <DatePicker />
           <View style={{paddingLeft: 20, paddingRight: 20}}>

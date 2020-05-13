@@ -45,6 +45,7 @@ export default class Services extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
           <ScrollView>
@@ -60,7 +61,7 @@ export default class Services extends Component {
                       paddingLeft: 20,
                       paddingRight: 20,
                     }}>
-                    <Text body1 bold>
+                    <Text body1 semibold style={{color: BaseColor.sectionColor}}>
                       {item.title}&nbsp;({item.totalCount})
                     </Text>
                     <View
@@ -68,14 +69,14 @@ export default class Services extends Component {
                       <Icon
                         name="ellipsis-h"
                         size={15}
-                        color={BaseColor.dividerColor}
+                        color={BaseColor.sectionColor}
                       />
                     </View>
                   </View>
                   <View
                     style={{
                       borderLeftWidth: 4,
-                      borderLeftColor: 'green',
+                      borderLeftColor: BaseColor.MainPrimaryColor,
                       borderTopWidth: 1,
                       borderTopColor: BaseColor.dividerColor,
                     }}>
@@ -99,10 +100,10 @@ export default class Services extends Component {
                             navigation.navigate('EditService', {data: item})
                           }>
                           <View style={{flex: 9, flexDirection: 'column'}}>
-                            <Text subhead semibold>
+                            <Text subhead style={{color: BaseColor.titleColor}}>
                               {item.serviceTitle}
                             </Text>
-                            <Text caption1 style={{marginTop: 5}}>
+                            <Text caption1 style={{marginTop: 5, color: BaseColor.titleColor}}>
                               {item.duration}
                             </Text>
                           </View>
@@ -112,7 +113,7 @@ export default class Services extends Component {
                               justifyContent: 'center',
                               alignItems: 'center',
                             }}>
-                            <Text body2 semibold>
+                            <Text body2 style={{color: BaseColor.titleColor}}>
                               {item.price}
                             </Text>
                           </View>

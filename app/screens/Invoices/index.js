@@ -139,7 +139,7 @@ export default class Invoices extends Component {
             <TouchableOpacity
               style={styles.dateRange}
               onPress={() => this.goBybtn('SelectPeriod')}>
-              <Text footnote>Month to Date</Text>
+              <Text footnote style={{color: 'rgba(0,0,0,0.65)'}}>Month to Date</Text>
               <Icon
                 name="angle-down"
                 size={20}
@@ -180,24 +180,24 @@ export default class Invoices extends Component {
         </ScrollView>
         <View style={styles.total}>
           <View style={styles.alignCenter}>
-            <Text body1 bold>
+            <Text body1 bold style={{color: 'rgba(0,0,0,0.65)'}}>
               Total
             </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <View style={[styles.alignCenter, {flex: 1, flexDirection: 'row'}]}>
-              <Text body1 bold>
+              <Text body1 bold style={{color: 'rgba(0,0,0,0.65)'}}>
                 Salon:
               </Text>
-              <Text body1 semibold>
+              <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
                 &nbsp;&nbsp;SGD200
               </Text>
             </View>
             <View style={[styles.alignCenter, {flex: 1, flexDirection: 'row'}]}>
-              <Text body1 bold>
+              <Text body1 bold style={{color: 'rgba(0,0,0,0.65)'}}>
                 Vaniday:
               </Text>
-              <Text body1 semibold>
+              <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
                 &nbsp;&nbsp;SGD200
               </Text>
             </View>

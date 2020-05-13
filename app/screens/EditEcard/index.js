@@ -59,12 +59,13 @@ export default class EditEcard extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView>
           <Text
             headline
             style={{
-              color: BaseColor.secondBlackColor,
+              color: 'rgba(0,0,0,0.65)',
               paddingHorizontal: 20,
               paddingVertical: 10,
             }}>
@@ -87,7 +88,7 @@ export default class EditEcard extends Component {
           <View style={{paddingHorizontal: 20}}>
             <View style={[styles.inputGroup, {flexDirection: 'row'}]}>
               <View style={{flex: 1, flexDirection: 'column', marginRight: 10}}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                <Text caption3 style={{color: 'rgba(0,0,0,0.65)'}}>
                   Pay
                 </Text>
                 <TextInput
@@ -101,7 +102,7 @@ export default class EditEcard extends Component {
                 </TextInput>
               </View>
               <View style={{flex: 1, flexDirection: 'column', marginLeft: 10}}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                <Text caption3 style={{color: 'rgba(0,0,0,0.65)'}}>
                   Get
                 </Text>
                 <TextInput
@@ -121,14 +122,14 @@ export default class EditEcard extends Component {
                   label="Validate for"
                   data={duration}
                   rippleOpacity={0.7}
-                  baseColor={BaseColor.secondBlackColor}
+                  baseColor={'rgba(0,0,0,0.65)'}
                   tintColor={BaseColor.blackColor}
                   style={{color: BaseColor.blackColor}}
                 />
               </View>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+              <Text caption3 style={{color: 'rgba(0,0,0,0.65)'}}>
                 Terms
               </Text>
               <TextInput
@@ -153,7 +154,7 @@ export default class EditEcard extends Component {
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+              <Text caption3 style={{color: 'rgba(0,0,0,0.65)'}}>
                 About
               </Text>
               <TextInput
@@ -178,7 +179,7 @@ export default class EditEcard extends Component {
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+              <Text caption3 style={{color: 'rgba(0,0,0,0.65)'}}>
                 How does eCard Works
               </Text>
               <TextInput

@@ -25,7 +25,11 @@ export default class Inventory extends Component {
           style={styles.headerStyle}
           renderLeft={() => {
             return (
-              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
+              <Icon
+                name="angle-left"
+                size={20}
+                color={BaseColor.sectionColor}
+              />
             );
           }}
           onPressLeft={() => {
@@ -39,28 +43,22 @@ export default class Inventory extends Component {
               onPress={() => {
                 navigation.navigate('PhysicalProducts');
               }}>
-              <View style={styles.saleItemWrapper}>
-                <View style={{flexDirection: 'row', flex: 20}}>
-                  <Icon
-                    name="box-open"
-                    size={25}
-                    color={BaseColor.blackColor}
-                    style={{marginLeft: 5}}
-                  />
-                  <View style={styles.summary}>
-                    <Text body1>Products</Text>
-                    <Text caption1 style={{marginTop: 4}}>
-                      Manage the stock levels, pricing and details of your
-                      product inventory
-                    </Text>
-                  </View>
-                </View>
+              <View style={{flexDirection: 'row', flex: 1}}>
                 <Icon
-                  name="angle-right"
-                  size={18}
-                  color={BaseColor.blackColor}
-                  style={{marginLeft: 5, flex: 1}}
+                  name="box-open"
+                  size={25}
+                  color={BaseColor.sectionColor}
+                  style={{marginLeft: 5}}
                 />
+                <View style={styles.summary}>
+                  <Text body1>Products</Text>
+                  <Text
+                    caption1
+                    style={{marginTop: 4, color: BaseColor.titleColor}}>
+                    Manage the stock levels, pricing and details of your product
+                    inventory
+                  </Text>
+                </View>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -68,28 +66,23 @@ export default class Inventory extends Component {
               onPress={() => {
                 navigation.navigate('Orders');
               }}>
-              <View style={styles.saleItemWrapper}>
-                <View style={{flexDirection: 'row', flex: 20}}>
-                  <Icon
-                    name="dolly-flatbed"
-                    size={25}
-                    color={BaseColor.blackColor}
-                    style={{marginLeft: 5}}
-                  />
-                  <View style={styles.summary}>
-                    <Text body1>Orders</Text>
-                    <Text caption1 numberOfLines={2} style={{marginTop: 4}}>
-                      Order stock from suppliers and transfer stock between your
-                      locations
-                    </Text>
-                  </View>
-                </View>
+              <View style={{flexDirection: 'row', flex: 1}}>
                 <Icon
-                  name="angle-right"
-                  size={18}
-                  color={BaseColor.blackColor}
-                  style={{marginLeft: 5, flex: 1}}
+                  name="dolly-flatbed"
+                  size={25}
+                  color={BaseColor.sectionColor}
+                  style={{marginLeft: 5}}
                 />
+                <View style={styles.summary}>
+                  <Text body1>Orders</Text>
+                  <Text
+                    caption1
+                    numberOfLines={2}
+                    style={{marginTop: 4, color: BaseColor.titleColor}}>
+                    Order stock from suppliers and transfer stock between your
+                    locations
+                  </Text>
+                </View>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -97,27 +90,21 @@ export default class Inventory extends Component {
               onPress={() => {
                 navigation.navigate('Brands');
               }}>
-              <View style={styles.saleItemWrapper}>
-                <View style={{flexDirection: 'row', flex: 20}}>
-                  <Icon
-                    name="suitcase"
-                    size={25}
-                    color={BaseColor.blackColor}
-                    style={{marginLeft: 5}}
-                  />
-                  <View style={styles.summary}>
-                    <Text body1>Brands</Text>
-                    <Text caption1 style={{marginTop: 4}}>
-                      Manage the brand names associated to your product types
-                    </Text>
-                  </View>
-                </View>
+              <View style={{flexDirection: 'row'}}>
                 <Icon
-                  name="angle-right"
-                  size={18}
-                  color={BaseColor.blackColor}
-                  style={{marginLeft: 5, flex: 1}}
+                  name="suitcase"
+                  size={25}
+                  color={BaseColor.sectionColor}
+                  style={{marginLeft: 5}}
                 />
+                <View style={styles.summary}>
+                  <Text body1>Brands</Text>
+                  <Text
+                    caption1
+                    style={{marginTop: 4, color: BaseColor.titleColor}}>
+                    Manage the brand names associated to your product types
+                  </Text>
+                </View>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -125,27 +112,21 @@ export default class Inventory extends Component {
               onPress={() => {
                 navigation.navigate('Categories');
               }}>
-              <View style={styles.saleItemWrapper}>
-                <View style={{flexDirection: 'row', flex: 20}}>
-                  <Icon
-                    name="th-large"
-                    size={25}
-                    color={BaseColor.blackColor}
-                    style={{marginLeft: 5}}
-                  />
-                  <View style={styles.summary}>
-                    <Text body1>Categories</Text>
-                    <Text caption1 style={{marginTop: 4}}>
-                      Manage the categories associated to your product types
-                    </Text>
-                  </View>
-                </View>
+              <View style={{flexDirection: 'row'}}>
                 <Icon
-                  name="angle-right"
-                  size={18}
-                  color={BaseColor.blackColor}
-                  style={{marginLeft: 5, flex: 1}}
+                  name="th-large"
+                  size={25}
+                  color={BaseColor.sectionColor}
+                  style={{marginLeft: 5}}
                 />
+                <View style={styles.summary}>
+                  <Text body1>Categories</Text>
+                  <Text
+                    caption1
+                    style={{marginTop: 4, color: BaseColor.titleColor}}>
+                    Manage the categories associated to your product types
+                  </Text>
+                </View>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -153,28 +134,22 @@ export default class Inventory extends Component {
               onPress={() => {
                 navigation.navigate('Suppliers');
               }}>
-              <View style={styles.saleItemWrapper}>
-                <View style={{flexDirection: 'row', flex: 20}}>
-                  <Icon
-                    name="shipping-fast"
-                    size={25}
-                    color={BaseColor.blackColor}
-                    style={{marginLeft: 5}}
-                  />
-                  <View style={styles.summary}>
-                    <Text body1>Suppliers</Text>
-                    <Text caption1 style={{marginTop: 4}}>
-                      Manage supplier information for use with your product
-                      stock order
-                    </Text>
-                  </View>
-                </View>
+              <View style={{flexDirection: 'row', flex: 1}}>
                 <Icon
-                  name="angle-right"
-                  size={18}
-                  color={BaseColor.blackColor}
-                  style={{marginLeft: 5, flex: 1}}
+                  name="shipping-fast"
+                  size={25}
+                  color={BaseColor.sectionColor}
+                  style={{marginLeft: 5}}
                 />
+                <View style={styles.summary}>
+                  <Text body1>Suppliers</Text>
+                  <Text
+                    caption1
+                    style={{marginTop: 4, color: BaseColor.titleColor}}>
+                    Manage supplier information for use with your product stock
+                    order
+                  </Text>
+                </View>
               </View>
             </TouchableOpacity>
           </View>

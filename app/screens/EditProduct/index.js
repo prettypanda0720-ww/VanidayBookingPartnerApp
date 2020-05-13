@@ -54,13 +54,13 @@ class EditProduct extends Component {
           style={styles.headerStyle}
         />
         <ScrollView style={styles.mainWrapper}>
-          <Text title2 bold>
+          <Text title2 bold style={{color: BaseColor.sectionColor}}>
             Product Details
           </Text>
           <Text
             headline
             style={{
-              color: BaseColor.secondBlackColor,
+              color: BaseColor.sectionColor,
               paddingVertical: 10,
             }}>
             Product Logo
@@ -80,7 +80,7 @@ class EditProduct extends Component {
             </Button>
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               PRODUCT NAME
             </Text>
             <TextInput
@@ -88,12 +88,12 @@ class EditProduct extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. Large Shampoo"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholderTextColor={BaseColor.titleColor}
               selectionColor={BaseColor.primaryColor}
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               BARCODE (ISBN, UPC, etc.)
             </Text>
             <TextInput
@@ -101,12 +101,12 @@ class EditProduct extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="123 ABC"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholderTextColor={BaseColor.titleColor}
               selectionColor={BaseColor.primaryColor}
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               SKU Stock Keeping Unit
             </Text>
             <TextInput
@@ -114,14 +114,26 @@ class EditProduct extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. 123ABC"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholderTextColor={BaseColor.titleColor}
               selectionColor={BaseColor.primaryColor}
             />
           </View>
-          <Dropdown label="BRAND" data={brands} rippleOpacity={0.7} />
-          <Dropdown label="Category" data={category} rippleOpacity={0.7} />
+          <Dropdown
+            label="BRAND"
+            data={brands}
+            baseColor={BaseColor.sectionColor}
+            textColor={BaseColor.titleColor}
+            rippleOpacity={0.7}
+          />
+          <Dropdown
+            label="Category"
+            data={category}
+            baseColor={BaseColor.sectionColor}
+            textColor={BaseColor.titleColor}
+            rippleOpacity={0.7}
+          />
           <View style={styles.inputGroup}>
-            <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+            <Text caption3 style={{color: BaseColor.sectionColor}}>
               DESCRIPTION
             </Text>
             <TextInput
@@ -129,7 +141,7 @@ class EditProduct extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholderTextColor={BaseColor.titleColor}
               selectionColor={BaseColor.primaryColor}
               multiline={true}>
               In Italian, "Covo" means a hiding place. When you come to our
@@ -146,7 +158,9 @@ class EditProduct extends Component {
             </TextInput>
           </View>
           <View style={[styles.profileItem, {paddingVertical: 15}]}>
-            <Text body1>Enable Retail Sales</Text>
+            <Text body1 style={{color: BaseColor.sectionColor}}>
+              Enable Retail Sales
+            </Text>
             <Switch
               name="angle-right"
               size={18}
@@ -156,7 +170,9 @@ class EditProduct extends Component {
           </View>
           <View>{this.displayRetailView()}</View>
           <View style={[styles.profileItem, {paddingVertical: 25}]}>
-            <Text body1>Enable Stock Control</Text>
+            <Text body1 style={{color: BaseColor.sectionColor}}>
+              Enable Stock Control
+            </Text>
             <Switch
               name="angle-right"
               size={18}
@@ -189,7 +205,7 @@ class EditProduct extends Component {
       return (
         <View style={{flexDirection: 'column'}}>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               RETAIL PRICE
             </Text>
             <TextInput
@@ -197,12 +213,12 @@ class EditProduct extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="0.00"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholderTextColor={BaseColor.titleColor}
               selectionColor={BaseColor.primaryColor}
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               SPECIAL PRICE
             </Text>
             <TextInput
@@ -210,12 +226,14 @@ class EditProduct extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="0.00"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholderTextColor={BaseColor.titleColor}
               selectionColor={BaseColor.primaryColor}
             />
           </View>
           <Dropdown
             label="TAX (included in prices)"
+            baseColor={BaseColor.sectionColor}
+            textColor={BaseColor.titleColor}
             data={tax}
             rippleOpacity={0.7}
           />
@@ -261,7 +279,7 @@ class EditProduct extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="$0.00"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
@@ -272,19 +290,25 @@ class EditProduct extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="0"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
           </View>
-          <Dropdown label="SUPPLIER" data={supplier} rippleOpacity={0.7} />
+          <Dropdown
+            label="SUPPLIER"
+            data={supplier}
+            baseColor={BaseColor.sectionColor}
+            textColor={BaseColor.titleColor}
+            rippleOpacity={0.7}
+          />
           <View
             style={[
               styles.inputGroup,
               {flexDirection: 'row', justifyContent: 'space-between'},
             ]}>
             <View style={[styles.inputGroup, {flex: 1, marginRight: 10}]}>
-              <Text body2 style={{color: '#b0b0b0'}}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
                 REORDER POINT
               </Text>
               <TextInput
@@ -292,12 +316,12 @@ class EditProduct extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="0"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
             <View style={[styles.inputGroup, {flex: 1, marginLeft: 10}]}>
-              <Text body2 style={{color: '#b0b0b0'}}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
                 REORDER QTY
               </Text>
               <TextInput
@@ -305,7 +329,7 @@ class EditProduct extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="0"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>

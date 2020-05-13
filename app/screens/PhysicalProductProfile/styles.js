@@ -30,6 +30,7 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 60,
+    marginTop: 10,
   },
   multilineTextInput: {
     height: 200,

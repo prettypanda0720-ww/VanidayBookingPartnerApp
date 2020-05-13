@@ -136,7 +136,7 @@ export default StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     width: "100%",
-    color: 'black',
+    color: 'gray',
     marginTop: 5,
     borderColor: BaseColor.grayColor,
     borderWidth: 1,
@@ -144,5 +144,9 @@ export default StyleSheet.create({
   contentCenter: {
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-  }
+  },
+  headerStyle: {
+    borderBottomColor: BaseColor.secondBlackColor,
+    borderBottomWidth: 1,
+  },
 });

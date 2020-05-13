@@ -38,7 +38,7 @@ export default class ClosedDateListItem extends Component {
             </View>
           </View>
           <View>
-            <Text headline bold numberOfLines={1}>
+            <Text headline semibold numberOfLines={1} style={{color: BaseColor.sectionColor}}>
               {textFirst}
             </Text>
             <Text
@@ -47,6 +47,7 @@ export default class ClosedDateListItem extends Component {
               style={{
                 marginTop: 3,
                 paddingRight: 10,
+                color: BaseColor.titleColor,
               }}
               numberOfLines={1}>
               {textSecond}
@@ -58,13 +59,14 @@ export default class ClosedDateListItem extends Component {
                 semibold
                 style={{
                   marginRight: 3,
+                  color: BaseColor.titleColor,
                 }}>
                 {reason}
               </Text>
             </View>
           </View>
         </View>
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{justifyContent: 'flex-start', alignItems: 'flex-start'}}>
           <Text headline primaryColor semibold>
             {long} days
           </Text>

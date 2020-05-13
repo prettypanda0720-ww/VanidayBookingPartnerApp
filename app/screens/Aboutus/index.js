@@ -24,15 +24,16 @@ export default class Aboutus extends Component {
           renderLeft={() => {
             return (
               <Icon
-                name="chevron-left"
+                name="angle-left"
                 size={20}
-                color={BaseColor.blackColor}
+                color={BaseColor.sectionColor}
               />
             );
           }}
           onPressLeft={() => {
             navigation.goBack();
           }}
+          style={styles.headerStyle}
         />
         <ScrollView>
           <Text headline style={styles.headerTitle}>

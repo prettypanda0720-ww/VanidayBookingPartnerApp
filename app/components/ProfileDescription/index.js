@@ -9,7 +9,7 @@ export default class ProfileDescription extends Component {
   displaySubNameView(subName) {
     if (subName != '') {
       return (
-        <Text footnote grayColor semibold numberOfLines={1}>
+        <Text footnote semibold numberOfLines={1} style={{color:BaseColor.titleColor}}>
           {subName}
         </Text>
       );
@@ -18,7 +18,7 @@ export default class ProfileDescription extends Component {
   displayDescriptionView(description) {
     if (description != '') {
       return (
-        <Text footnote grayColor numberOfLines={2} style={{paddingRight: 20}}>
+        <Text footnote numberOfLines={2} style={{paddingRight: 20, color: BaseColor.titleColor}} >
           {description}
         </Text>
       );
@@ -32,7 +32,7 @@ export default class ProfileDescription extends Component {
   displayRightContentView(rightContent) {
     if (rightContent != '') {
       return (
-        <Text headline semibold numberOfLines={1} style={{marginRight: 20}}>
+        <Text headline semibold numberOfLines={1} style={{marginRight: 20, color: BaseColor.titleColor}}>
           {rightContent}
         </Text>
       );
@@ -59,7 +59,7 @@ export default class ProfileDescription extends Component {
             {this.displayImageView(image, styleThumb)}
           </View>
           <View style={styles.contentCenter}>
-            <Text headline semibold numberOfLines={1}>
+            <Text headline semibold numberOfLines={1} style={{color: BaseColor.sectionColor}}>
               {name}
             </Text>
             <View>{this.displayDescriptionView(description)}</View>

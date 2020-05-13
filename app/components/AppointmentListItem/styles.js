@@ -96,7 +96,7 @@ export default StyleSheet.create({
     marginBottom: 5,
     backgroundColor: BaseColor.fieldColor,
     borderWidth: 1,
-    justifyContent: 'space-between',
+    // flex: 1,
     flexDirection: 'row',
     borderRadius: 5,
   },
@@ -124,12 +124,6 @@ export default StyleSheet.create({
     color: BaseColor.whiteColor,
     backgroundColor: 'rgba(0,0,0,0)',
     marginTop: -5
-  },
-  day: {
-    width: 63,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginTop: 32,
   },
   today: {
     color: '#7a92a5',
