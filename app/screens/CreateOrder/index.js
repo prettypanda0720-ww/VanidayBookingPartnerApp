@@ -104,33 +104,33 @@ class CreateOrder extends Component {
               marginBottom: 30,
             }}>
             <View style={styles.inputGroup}>
-              <Text title3 blackColor>
+              <Text title3 style={{color: BaseColor.sectionColor}}>
                 Judy T
               </Text>
-              <Text caption3 style={{color: '#b0b0b0', marginTop: 10}}>
+              <Text caption3 style={{color: BaseColor.titleColor, marginTop: 10}}>
                 MosCow
               </Text>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text caption3 style={{color: BaseColor.titleColor}}>
                 12 Street
               </Text>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text caption3 style={{color: BaseColor.titleColor}}>
                 Maskva
               </Text>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text caption3 style={{color: BaseColor.titleColor}}>
                 MosCow, 108811
               </Text>
             </View>
             <View style={styles.inputGroup}>
-              <Text title3 blackColor>
-                DELIVERY TO
+              <Text title3 style={{color: BaseColor.sectionColor}}>
+                Delivery To
               </Text>
-              <Text caption3 style={{color: '#b0b0b0', marginTop: 10}}>
+              <Text caption3 style={{color: BaseColor.titleColor, marginTop: 10}}>
                 Makeup Artist
               </Text>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text caption3 style={{color: BaseColor.titleColor}}>
                 Default Address
               </Text>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text caption3 style={{color: BaseColor.titleColor}}>
                 Default City
               </Text>
             </View>
@@ -141,7 +141,7 @@ class CreateOrder extends Component {
               style={{flex: 1, marginTop: 20}}
               loading={loading}
               onPress={() => navigation.navigate('CategoryProductList')}>
-              + ADD PRODUCT
+              + Add Product
             </Button>
           </ScrollView>
           <TouchableOpacity
@@ -150,7 +150,7 @@ class CreateOrder extends Component {
             activeOpacity={0.9}>
             <View style={[styles.contentCenter, {flex: 1}]}>
               <Text headline whiteColor>
-                CRATE ORDER
+                Create Order
               </Text>
             </View>
             <View
@@ -159,7 +159,7 @@ class CreateOrder extends Component {
                 {flexDirection: 'column', flex: 1},
               ]}>
               <Text headline whiteColor>
-                ORDER TOTAL
+                Order Total
               </Text>
               <Text caption3 whiteColor>
                 SGD 6,888
@@ -173,23 +173,26 @@ class CreateOrder extends Component {
 
   renderItem(item) {
     return (
-      <View style={styles.orderWrapper}>
+      <View
+        style={styles.orderWrapper}
+        onPress={() => navigation.navigate(item.screen)}
+        activeOpacity={0.8}>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 blackColor>
-              PRODUCT
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Product
             </Text>
           </View>
           <View style={[styles.leftCenter, {flex: 2}]}>
-            <Text body2 grayColor>
+            <Text body2 style={{color: BaseColor.titleColor}}>
               {item.name}
             </Text>
           </View>
         </View>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 blackColor>
-              ORDER QTY
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Order Qty
             </Text>
           </View>
           <TextInput
@@ -197,15 +200,15 @@ class CreateOrder extends Component {
             onChangeText={(text) => this.setState({id: text})}
             autoCorrect={false}
             placeholder="Service Name"
-            placeholderTextColor={BaseColor.MainPrimaryColor}
-            selectionColor={BaseColor.primaryColor}>
+            placeholderTextColor={BaseColor.titleColor}
+            selectionColor={BaseColor.titleColor}>
             {item.orderQty}
           </TextInput>
         </View>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 blackColor>
-              SUPPLY PRICE
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Supply Price
             </Text>
           </View>
           <TextInput
@@ -213,19 +216,19 @@ class CreateOrder extends Component {
             onChangeText={(text) => this.setState({id: text})}
             autoCorrect={false}
             placeholder="Service Name"
-            placeholderTextColor={BaseColor.MainPrimaryColor}
-            selectionColor={BaseColor.primaryColor}>
+            placeholderTextColor={BaseColor.titleColor}
+            selectionColor={BaseColor.titleColor}>
             {item.supplyPrice}
           </TextInput>
         </View>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 blackColor>
-              TOTAL COST
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Total Cost
             </Text>
           </View>
           <View style={[styles.leftCenter, {flex: 2}]}>
-            <Text body2 grayColor>
+            <Text body2 style={{color: BaseColor.titleColor}}>
               SGD {item.totalCost}
             </Text>
           </View>

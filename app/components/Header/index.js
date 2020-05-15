@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import { View, TouchableOpacity, StatusBar } from "react-native";
-import { Text } from "@components";
-import styles from "./styles";
-import PropTypes from "prop-types";
+import React, {Component} from 'react';
+import {View, TouchableOpacity, StatusBar} from 'react-native';
+import {BaseColor} from '@config';
+import {Text} from '@components';
+import styles from './styles';
+import PropTypes from 'prop-types';
 
 export default class Header extends Component {
   componentDidMount() {
@@ -10,7 +11,7 @@ export default class Header extends Component {
   }
 
   componentWillUnmount() {
-    StatusBar.setBarStyle("dark-content", true);
+    StatusBar.setBarStyle('dark-content', true);
   }
 
   render() {
@@ -24,22 +25,23 @@ export default class Header extends Component {
       subTitle,
       onPressLeft,
       onPressRight,
-      onPressRightSecond
+      onPressRightSecond,
     } = this.props;
 
     return (
       <View style={[styles.contain, style]}>
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
           <TouchableOpacity
             style={[styles.contentLeft, styleLeft]}
-            onPress={onPressLeft}
-          >
+            onPress={onPressLeft}>
             {this.props.renderLeft()}
           </TouchableOpacity>
         </View>
         <View style={[styles.contentCenter, styleCenter]}>
-          <Text headline>{title}</Text>
-          {subTitle != "" && (
+          <Text headline bold style={{color: BaseColor.blackColor}}>
+            {title}
+          </Text>
+          {subTitle != '' && (
             <Text caption2 light>
               {subTitle}
             </Text>
@@ -48,14 +50,12 @@ export default class Header extends Component {
         <View style={styles.right}>
           <TouchableOpacity
             style={[styles.contentRightSecond, styleRightSecond]}
-            onPress={onPressRightSecond}
-          >
+            onPress={onPressRightSecond}>
             {this.props.renderRightSecond()}
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.contentRight, styleRight]}
-            onPress={onPressRight}
-          >
+            onPress={onPressRight}>
             {this.props.renderRight()}
           </TouchableOpacity>
         </View>
@@ -78,7 +78,7 @@ Header.propTypes = {
   onPressRight: PropTypes.func,
   title: PropTypes.string,
   subTitle: PropTypes.string,
-  barStyle: PropTypes.string
+  barStyle: PropTypes.string,
 };
 
 Header.defaultProps = {
@@ -93,7 +93,7 @@ Header.defaultProps = {
   onPressLeft: () => {},
   onPressRight: () => {},
   onPressRightSecond: () => {},
-  title: "Title",
-  subTitle: "",
-  barStyle: "dark-content"
+  title: 'Title',
+  subTitle: '',
+  barStyle: 'dark-content',
 };

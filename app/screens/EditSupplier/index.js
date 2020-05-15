@@ -60,29 +60,29 @@ class EditSupplier extends Component {
             Supplier Details
           </Text>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
-              SUPPLIER NAME
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Supplier Name
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. L'Oreal"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
             <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-              SUPPLIER DESCRIPTION
+              Supplier Description
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.multilineTextInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. Local provider of hair products"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
               multiline={true}
               textAlign="left"
             />
@@ -91,29 +91,29 @@ class EditSupplier extends Component {
             Contact Information
           </Text>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
-              FIRST NAME
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              First Name
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. John"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
-              LAST NAME
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Last Name
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. Doe"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
@@ -125,29 +125,29 @@ class EditSupplier extends Component {
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
-              EMAIL
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Email
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="mail@example.com"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
-              WEBSITE
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Website
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <Text title2 bold style={{marginTop: 30}}>
@@ -155,74 +155,74 @@ class EditSupplier extends Component {
           </Text>
           <View style={styles.inputGroup}>
             <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-              STREET
+              Street
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.multilineTextInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. 12Main Street"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
               multiline={true}
               textAlign="left"
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
-              SUBURB
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              NeighbourHood
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
-              CITY
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              State
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
-              STATE
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              City
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
-              ZIP / POST CODE
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Zip / Post Code
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
             <CheckBox
-              label={'SAME AS POSTAL ADDRESS'}
+              label={'Same as postal address'}
               checked={this.state.checked}
               onChange={() =>
                 this.setState({

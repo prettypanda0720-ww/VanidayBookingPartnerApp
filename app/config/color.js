@@ -61,8 +61,8 @@ let BaseColor = {
     tagColor: '#01BFA3',
     greenBtnColor: '#58D68D',
     loginBackgroundColor: 'rgba(0,0,0,0.9)',
-    sectionColor: 'rgba(0,0,0,0.65)',
-    titleColor: 'rgba(75,72,72,0.78)',
+    sectionColor: 'rgba(0,0,0,0.8)',
+    titleColor: 'rgba(75,72,72,0.88)',
     secondBlackColor: '#434343',
   }
 };

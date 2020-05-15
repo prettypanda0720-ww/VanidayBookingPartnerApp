@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   textInput: {
     height: 46,
-    backgroundColor: BaseColor.fieldColor,
+    backgroundColor: BaseColor.whiteColor,
     borderRadius: 5,
     padding: 10,
     width: '100%',

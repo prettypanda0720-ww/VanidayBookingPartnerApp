@@ -51,7 +51,7 @@ class DecreaseStock extends Component {
         <Header
           title="Decrease Stock"
           renderRight={() => {
-            return <Icon name="times" size={20} color={BaseColor.blackColor} />;
+            return <Icon name="times" size={20} color={BaseColor.sectionColor} />;
           }}
           onPressRight={() => {
             navigation.goBack();
@@ -64,7 +64,7 @@ class DecreaseStock extends Component {
           </Text>
           <View style={styles.inputGroup}>
             <Text body2 style={{color: BaseColor.sectionColor}}>
-              DECREASE QTY.
+              Decrease Qty.
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
@@ -76,7 +76,7 @@ class DecreaseStock extends Component {
             />
           </View>
           <Dropdown
-            label="DECREASE REASON"
+            label="Decrease Reason"
             baseColor={BaseColor.sectionColor}
             textColor={BaseColor.titleColor}
             data={reasons}

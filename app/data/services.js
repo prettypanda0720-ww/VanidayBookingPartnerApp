@@ -1,7 +1,7 @@
 const ServiceData = [
   {
     id: '1',
-    title: 'FIRST TRIAL',
+    title: 'First Trial',
     totalCount: 4,
     serviceList: [
       {
@@ -24,7 +24,7 @@ const ServiceData = [
   },
   {
     id: '2',
-    title: 'RECOMMEND FOR YOU',
+    title: 'Recommend for you',
     totalCount: 4,
     serviceList: [
       {

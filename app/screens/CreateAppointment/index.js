@@ -298,7 +298,7 @@ class CreateAppointment extends Component {
                           <TouchableWithoutFeedback
                             onPress={() => this.getTitle(item.serviceTitle)}>
                             <View style={styles.serviceItemWrapper}>
-                              <Text headline style={{color: '#b0b0b0'}}>
+                              <Text headline style={{color: BaseColor.sectionColor}}>
                                 {item.serviceTitle}
                               </Text>
                               <Icon

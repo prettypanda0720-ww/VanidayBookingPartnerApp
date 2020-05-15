@@ -94,7 +94,7 @@ class SelectSupplier extends Component {
             paddingBottom: 60,
           }}>
           <View style={[styles.inputGroup, styles.contentCenter]}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.titleColor}}>
               Select a supplier to order product stock from
             </Text>
           </View>

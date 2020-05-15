@@ -71,7 +71,7 @@ class TermsAndConditions extends Component {
         <Header
           title=""
           renderRight={() => {
-            return <Icon name="times" size={20} color={BaseColor.blackColor} />;
+            return <Icon name="times" size={20} color={BaseColor.sectionColor} />;
           }}
           onPressRight={() => {
             navigation.goBack();
@@ -80,11 +80,11 @@ class TermsAndConditions extends Component {
         <ScrollView
           style={{flexDirection: 'column', padding: 20, paddingBottom: 40}}>
           <View style={{marginTop: 0}}>
-            <Text title2 bold>
+            <Text title2 bold style={{color:BaseColor.sectionColor}}>
               Edit Terms and Conditions
             </Text>
             <View style={styles.inputGroup}>
-              <Text headline style={{color: BaseColor.secondBlackColor}}>
+              <Text headline style={{color: BaseColor.sectionColor}}>
                 Terms and Conditions
               </Text>
               <TextInput
@@ -96,8 +96,8 @@ class TermsAndConditions extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}
                 multiline={true}>
                 In Italian, "Covo" means a hiding place. When you come to our
                 salon, you will experience a private and relaxing space and

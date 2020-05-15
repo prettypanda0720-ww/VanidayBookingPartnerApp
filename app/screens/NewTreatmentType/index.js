@@ -84,7 +84,7 @@ class NewTreatmentType extends Component {
               New Category
             </Text>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text caption3 style={{color: BaseColor.sectionColor}}>
                 Category name
               </Text>
               <TextInput
@@ -97,7 +97,7 @@ class NewTreatmentType extends Component {
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: '#b0b0b0'}}>
+              <Text caption3 style={{color: BaseColor.sectionColor}}>
                 Category description
               </Text>
               <TextInput

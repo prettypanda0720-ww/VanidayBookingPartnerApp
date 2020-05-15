@@ -96,7 +96,7 @@ class EditService extends Component {
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text body1 style={{color: '#b0b0b0'}}>
+              <Text body1 style={{color: BaseColor.sectionColor}}>
                 Service description
               </Text>
               <Dropdown label="Service available for" data={available} rippleOpacity={0.7} />

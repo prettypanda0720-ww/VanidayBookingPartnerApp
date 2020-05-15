@@ -15,7 +15,7 @@ export default StyleSheet.create({
     backgroundColor: BaseColor.fieldColor,
     borderRadius: 5,
     padding: 10,
-    color: 'black',
+    color: BaseColor.titleColor,
     marginTop: 5,
     borderColor: BaseColor.grayColor,
     borderWidth: 1,

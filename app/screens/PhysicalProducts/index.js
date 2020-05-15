@@ -167,12 +167,12 @@ export default class PhysicalProducts extends Component {
           title="Products"
           renderLeft={() => {
             return (
-              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
+              <Icon name="angle-left" size={20} color={BaseColor.sectionColor} />
             );
           }}
           renderRight={() => {
             return (
-              <Icon name="search" size={20} color={BaseColor.primaryColor} />
+              <Icon name="search" size={20} color={BaseColor.sectionColor} />
             );
           }}
           onPressLeft={() => {

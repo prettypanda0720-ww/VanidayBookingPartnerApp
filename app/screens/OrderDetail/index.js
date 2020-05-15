@@ -72,42 +72,42 @@ class OrderDetail extends Component {
                   size={30}
                   color={BaseColor.sectionColor}
                 />
-                <Text title2 sectionColor style={{marginLeft: 10}}>
+                <Text title2 sectionColor style={{marginLeft: 10, color: BaseColor.sectionColor}}>
                   Order Canceled
                 </Text>
               </View>
-              <Text caption3 grayColor style={{marginTop: 10}}>
+              <Text caption3 grayColor style={{marginTop: 10, color: BaseColor.titleColor}}>
                 No stock received, order canceled on 8 May 2020, 00:32 at Makeup Artist by Judy T
               </Text>
             </View>
             <View style={styles.inputGroup}>
-              <Text title3 sectionColor>
+              <Text title3 style={{color: BaseColor.sectionColor}}>
                 Judy T
               </Text>
-              <Text footnote style={{color: '#b0b0b0', marginTop: 10}}>
+              <Text footnote style={{color: BaseColor.titleColor, marginTop: 10}}>
                 MosCow
               </Text>
-              <Text footnote style={{color: '#b0b0b0'}}>
+              <Text footnote style={{color: BaseColor.titleColor}}>
                 12 Street
               </Text>
-              <Text footnote style={{color: '#b0b0b0'}}>
+              <Text footnote style={{color: BaseColor.titleColor}}>
                 Maskva
               </Text>
-              <Text footnote style={{color: '#b0b0b0'}}>
+              <Text footnote style={{color: BaseColor.titleColor}}>
                 MosCow, 108811
               </Text>
             </View>
             <View style={styles.inputGroup}>
-              <Text title3 sectionColor>
-                DELIVERY TO
+              <Text title3 style={{color: BaseColor.sectionColor}}>
+                Delivery To
               </Text>
-              <Text footnote style={{color: '#b0b0b0', marginTop: 10}}>
+              <Text footnote style={{color: BaseColor.titleColor, marginTop: 10}}>
                 Makeup Artist
               </Text>
-              <Text footnote style={{color: '#b0b0b0'}}>
+              <Text footnote style={{color: BaseColor.titleColor}}>
                 Default Address
               </Text>
-              <Text footnote style={{color: '#b0b0b0'}}>
+              <Text footnote style={{color: BaseColor.titleColor}}>
                 Default City
               </Text>
             </View>
@@ -116,12 +116,12 @@ class OrderDetail extends Component {
             })}
             <View style={styles.orderItemWrapper}>
               <View style={[styles.leftCenter, {flex: 1}]}>
-                <Text body2 sectionColor>
-                  ORDER TOTAL
+                <Text body2 style={{color: BaseColor.sectionColor}}>
+                  Order Total
                 </Text>
               </View>
               <View style={[styles.rightCenter, {flex: 2}]}>
-                <Text title3 bold sectionColor>
+                <Text title3 bold style={{color: BaseColor.sectionColor}}>
                   SGD 6888
                 </Text>
               </View>
@@ -140,20 +140,20 @@ class OrderDetail extends Component {
         activeOpacity={0.8}>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 sectionColor>
-              PRODUCT
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Product
             </Text>
           </View>
           <View style={[styles.leftCenter, {flex: 2}]}>
-            <Text body2 grayColor>
+            <Text body2 style={{color: BaseColor.titleColor}}>
               {item.name}
             </Text>
           </View>
         </View>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 sectionColor>
-              ORDER QTY
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Order Qty
             </Text>
           </View>
           <TextInput
@@ -161,15 +161,15 @@ class OrderDetail extends Component {
             onChangeText={(text) => this.setState({id: text})}
             autoCorrect={false}
             placeholder="Service Name"
-            placeholderTextColor={BaseColor.MainPrimaryColor}
+            placeholderTextColor={BaseColor.titleColor}
             selectionColor={BaseColor.primaryColor}>
             {item.orderQty}
           </TextInput>
         </View>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 sectionColor>
-              SUPPLY PRICE
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Supply Price
             </Text>
           </View>
           <TextInput
@@ -177,19 +177,19 @@ class OrderDetail extends Component {
             onChangeText={(text) => this.setState({id: text})}
             autoCorrect={false}
             placeholder="Service Name"
-            placeholderTextColor={BaseColor.MainPrimaryColor}
-            selectionColor={BaseColor.primaryColor}>
+            placeholderTextColor={BaseColor.titleColor}
+            selectionColor={BaseColor.titleColor}>
             {item.supplyPrice}
           </TextInput>
         </View>
         <View style={styles.orderItemWrapper}>
           <View style={[styles.leftCenter, {flex: 1}]}>
-            <Text body2 sectionColor>
-              TOTAL COST
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              Total Cost
             </Text>
           </View>
           <View style={[styles.leftCenter, {flex: 2}]}>
-            <Text body2 grayColor>
+            <Text body2 style={{color: BaseColor.titleColor}}>
               SGD {item.totalCost}
             </Text>
           </View>

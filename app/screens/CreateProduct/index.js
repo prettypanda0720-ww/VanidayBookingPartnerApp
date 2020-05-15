@@ -56,7 +56,7 @@ class CreateProduct extends Component {
             Product Details
           </Text>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               PRODUCT NAME
             </Text>
             <TextInput
@@ -69,7 +69,7 @@ class CreateProduct extends Component {
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               BARCODE (ISBN, UPC, etc.)
             </Text>
             <TextInput
@@ -82,7 +82,7 @@ class CreateProduct extends Component {
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               SKU Stock Keeping Unit
             </Text>
             <TextInput
@@ -159,7 +159,7 @@ class CreateProduct extends Component {
       return (
         <View style={{flexDirection: 'column'}}>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               RETAIL PRICE
             </Text>
             <TextInput
@@ -172,7 +172,7 @@ class CreateProduct extends Component {
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               SPECIAL PRICE
             </Text>
             <TextInput
@@ -254,7 +254,7 @@ class CreateProduct extends Component {
               {flexDirection: 'row', justifyContent: 'space-between'},
             ]}>
             <View style={[styles.inputGroup, {flex: 1, marginRight: 10}]}>
-              <Text body2 style={{color: '#b0b0b0'}}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
                 REORDER POINT
               </Text>
               <TextInput
@@ -267,7 +267,7 @@ class CreateProduct extends Component {
               />
             </View>
             <View style={[styles.inputGroup, {flex: 1, marginLeft: 10}]}>
-              <Text body2 style={{color: '#b0b0b0'}}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
                 REORDER QTY
               </Text>
               <TextInput

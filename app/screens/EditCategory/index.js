@@ -73,7 +73,7 @@ class EditCategory extends Component {
             paddingBottom: 60,
           }}>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: '#b0b0b0'}}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
               CATEGORY NAME
             </Text>
             <TextInput
@@ -81,8 +81,8 @@ class EditCategory extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. L'Oreal"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
         </ScrollView>

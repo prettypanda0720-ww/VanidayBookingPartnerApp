@@ -20,7 +20,7 @@ export default class Aboutus extends Component {
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
-          title="Edit Salon Detail"
+          title="Edit Business Detail"
           renderLeft={() => {
             return (
               <Icon
@@ -37,7 +37,7 @@ export default class Aboutus extends Component {
         />
         <ScrollView>
           <Text headline style={styles.headerTitle}>
-            Salon Logo
+            Business Photo
           </Text>
           <View style={styles.wrapper}>
             <Swiper
@@ -61,41 +61,41 @@ export default class Aboutus extends Component {
               style={{flex: 1}}
               loading={loading}
               onPress={() => navigation.goBack()}>
-              Change image of Salon Logo
+              Upload Business Photo
             </Button>
           </View>
           <View style={{paddingHorizontal: 20}}>
             <View style={styles.inputGroup}>
               <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Salon name
+                Business name
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}>
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}>
                 {data.name}
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
               <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Salon address
+                Business address
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}>
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}>
                 {data.address}
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Salon address
+              <Text caption3 style={{color: BaseColor.titleColor}}>
+                Business Description
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.multilineTextInput]}
@@ -106,7 +106,7 @@ export default class Aboutus extends Component {
                 selectionColor={BaseColor.primaryColor}
                 multiline={true}>
                 In Italian, "Covo" means a hiding place. When you come to our
-                salon, you will experience a private and relaxing space and
+                Business, you will experience a private and relaxing space and
                 time. All the stylists are experienced Japanese stylists with
                 Japanese quality service. Our location is on the happening Keong
                 Saik road, on the ground floor in a shop house. We try out best
@@ -114,7 +114,7 @@ export default class Aboutus extends Component {
                 chemicals(developed in Tokyo by our owner stylist) for
                 colouring, pem, rebonding and treatment. We also have Keratin
                 treatment for damaged hair as well. For the best result for both
-                hair and scalp, we use carbonated water in the salon. Please
+                hair and scalp, we use carbonated water in the Business. Please
                 come to experience quality technique and service to Covo.
               </TextInput>
             </View>

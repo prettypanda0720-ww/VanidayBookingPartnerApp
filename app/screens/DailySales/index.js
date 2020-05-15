@@ -15,7 +15,7 @@ import {
   Col,
   Rows,
 } from 'react-native-table-component';
-import {BaseStyle, BaseColor, BaseSetting} from '@config';
+import {BaseStyle, BaseColor} from '@config';
 import {
   Header,
   SafeAreaView,
@@ -144,6 +144,7 @@ export default class Appointments extends Component {
               backgroundColor: '#FFF',
             }}
             styleText={{color: '#000', borderRadius: 0}}
+            outline={{borderColor: BaseColor.fieldColor}}
             loading={loading}
             onPress={() => this.setState({drawerOpen: false})}>
             CLEAR

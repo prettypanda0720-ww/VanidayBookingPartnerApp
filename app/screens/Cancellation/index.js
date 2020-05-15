@@ -63,7 +63,7 @@ class CancellationAndPolicy extends Component {
         <Header
           title=""
           renderRight={() => {
-            return <Icon name="times" size={20} color={BaseColor.blackColor} />;
+            return <Icon name="times" size={20} color={BaseColor.sectionColor} />;
           }}
           onPressRight={() => {
             navigation.goBack();
@@ -71,18 +71,18 @@ class CancellationAndPolicy extends Component {
         />
         <ScrollView style={{flexDirection: 'column', padding: 20, paddingBottom: 40}}>
           <View style={{marginTop: 0}}>
-            <Text title2 bold>
+            <Text title2 bold style={{color:BaseColor.sectionColor}}>
               Edit Cancellation and Policy
             </Text>
             <View style={styles.inputGroup}>
-              <Text headline style={{color: BaseColor.secondBlackColor}}>Cancellation and Policy</Text>
+              <Text headline style={{color: BaseColor.sectionColor}}>Cancellation and Policy</Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.multilineTextInput, {marginTop: 10}]}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}
                 multiline={true}>
                 In Italian, "Covo" means a hiding place. When you come to our
                 salon, you will experience a private and relaxing space and time.

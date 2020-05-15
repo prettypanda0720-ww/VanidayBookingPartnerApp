@@ -83,34 +83,34 @@ export default class OpeningHours extends Component {
                     marginTop: 10,
                   }}>
                   <View style={{flexDirection: 'column'}}>
-                    <Text body1 semibold style={{color: BaseColor.titleColor}}>
+                    <Text title3 semibold style={{color: BaseColor.blackColor}}>
                       Working Time
                     </Text>
                     <View style={{flexDirection: 'row'}}>
-                      <Text body1 semibold style={{color: BaseColor.titleColor}}>
+                      <Text headline semibold style={{color: BaseColor.grayColor}}>
                         {item.workingHours.startTime}
                       </Text>
                       <Text body1 semibold style={{color: BaseColor.titleColor}}>
                         &nbsp;~&nbsp;
                       </Text>
-                      <Text body1 semibold style={{color: BaseColor.titleColor}}>
+                      <Text headline semibold style={{color: BaseColor.grayColor}}>
                         {item.workingHours.endTime}
                       </Text>
                     </View>
                   </View>
 
                   <View style={{flexDirection: 'column'}}>
-                    <Text body1 semibold style={{color: BaseColor.titleColor}}>
+                    <Text title3 semibold style={{color: BaseColor.blackColor}}>
                       Lunch Time
                     </Text>
                     <View style={{flexDirection: 'row'}}>
-                      <Text body1 semibold style={{color: BaseColor.titleColor}}>
+                      <Text headline semibold style={{color: BaseColor.grayColor}}>
                         {item.workingHours.startTime}
                       </Text>
                       <Text body1 semibold style={{color: BaseColor.titleColor}}>
                         &nbsp;~&nbsp;
                       </Text>
-                      <Text body1 semibold style={{color: BaseColor.titleColor}}>
+                      <Text headline semibold style={{color: BaseColor.grayColor}}>
                         {item.workingHours.endTime}
                       </Text>
                     </View>

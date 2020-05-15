@@ -262,7 +262,7 @@ class AppointmentsTab extends Component {
                 <Text caption1 semibold>
                   &nbsp;&nbsp;{item.starttime}
                 </Text>
-                <Text caption1 bold style={{color: 'green'}}>
+                <Text caption1 bold style={{color: BaseColor.sectionColor}}>
                   &nbsp;&nbsp;STARTED
                 </Text>
               </View>

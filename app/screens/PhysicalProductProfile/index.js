@@ -73,7 +73,7 @@ class PhysicalProductProfile extends Component {
           <Image source={data.image} style={styles.blockImage} />
           <View style={styles.inputGroup}>
             <Text body2 style={{color: BaseColor.sectionColor}}>
-              BARCODE
+              Barcode
             </Text>
             <Text body1 style={{color: BaseColor.titleColor}}>
               123ABC

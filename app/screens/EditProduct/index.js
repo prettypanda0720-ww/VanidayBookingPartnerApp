@@ -46,7 +46,7 @@ class EditProduct extends Component {
         <Header
           title="Edit Product"
           renderRight={() => {
-            return <Icon name="times" size={20} color={BaseColor.blackColor} />;
+            return <Icon name="times" size={20} color={BaseColor.sectionColor} />;
           }}
           onPressRight={() => {
             navigation.goBack();
@@ -89,12 +89,12 @@ class EditProduct extends Component {
               autoCorrect={false}
               placeholder="e.g. Large Shampoo"
               placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.primaryColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
             <Text body2 style={{color: BaseColor.sectionColor}}>
-              BARCODE (ISBN, UPC, etc.)
+              Barcode (ISBN, UPC, etc.)
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
@@ -102,7 +102,7 @@ class EditProduct extends Component {
               autoCorrect={false}
               placeholder="123 ABC"
               placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.primaryColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
@@ -115,7 +115,7 @@ class EditProduct extends Component {
               autoCorrect={false}
               placeholder="e.g. 123ABC"
               placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.primaryColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <Dropdown
@@ -142,7 +142,7 @@ class EditProduct extends Component {
               autoCorrect={false}
               placeholder=""
               placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.primaryColor}
+              selectionColor={BaseColor.titleColor}
               multiline={true}>
               In Italian, "Covo" means a hiding place. When you come to our
               salon, you will experience a private and relaxing space and time.
@@ -214,7 +214,7 @@ class EditProduct extends Component {
               autoCorrect={false}
               placeholder="0.00"
               placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.primaryColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <View style={styles.inputGroup}>
@@ -227,7 +227,7 @@ class EditProduct extends Component {
               autoCorrect={false}
               placeholder="0.00"
               placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.primaryColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
           <Dropdown
@@ -280,7 +280,7 @@ class EditProduct extends Component {
                 autoCorrect={false}
                 placeholder="$0.00"
                 placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.primaryColor}
+                selectionColor={BaseColor.titleColor}
               />
             </View>
             <View style={{flex: 1, flexDirection: 'column', marginLeft: 10}}>
@@ -291,7 +291,7 @@ class EditProduct extends Component {
                 autoCorrect={false}
                 placeholder="0"
                 placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.primaryColor}
+                selectionColor={BaseColor.titleColor}
               />
             </View>
           </View>
@@ -317,7 +317,7 @@ class EditProduct extends Component {
                 autoCorrect={false}
                 placeholder="0"
                 placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.primaryColor}
+                selectionColor={BaseColor.titleColor}
               />
             </View>
             <View style={[styles.inputGroup, {flex: 1, marginLeft: 10}]}>
@@ -330,7 +330,7 @@ class EditProduct extends Component {
                 autoCorrect={false}
                 placeholder="0"
                 placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.primaryColor}
+                selectionColor={BaseColor.titleColor}
               />
             </View>
           </View>

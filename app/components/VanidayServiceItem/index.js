@@ -26,7 +26,7 @@ export default class VanidayServiceItem extends Component {
               bold
               style={{
                 marginTop: 10,
-                color: 'rgba(0,0,0,0.65)'
+                color: BaseColor.sectionColor,
               }}>
               {name}
             </Text>

@@ -63,7 +63,7 @@ class IncreaseStock extends Component {
           </Text>
           <View style={styles.inputGroup}>
             <Text body2 style={{color: BaseColor.sectionColor}}>
-              INCREASE QTY.
+              Increase Qty.
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
@@ -76,7 +76,7 @@ class IncreaseStock extends Component {
           </View>
           <View style={styles.inputGroup}>
             <Text body2 style={{color: BaseColor.sectionColor}}>
-              SUPPLY PRICE
+              Supply Price
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
@@ -89,7 +89,7 @@ class IncreaseStock extends Component {
           </View>
           <View style={styles.inputGroup}>
             <CheckBox
-              label={'SAVE PRICE FOR NEXT TIME'}
+              label={'Save price for next time'}
               checked={this.state.checked}
               onChange={() =>
                 this.setState({
@@ -100,7 +100,7 @@ class IncreaseStock extends Component {
             />
           </View>
           <Dropdown
-            label="INCREASE REASON"
+            label="Increase Reason"
             baseColor={BaseColor.sectionColor}
             textColor={BaseColor.titleColor}
             data={reasons}

@@ -54,10 +54,10 @@ class Marketing extends Component {
             <View style={[styles.contentCenter, {flexDirection: 'row'}]}>
               <Image style={styles.image} source={Images.logo} />
               <View style={styles.logoContentWrapper}>
-                <Text subhead bold>
+                <Text subhead bold style={{color: BaseColor.sectionColor}}>
                   The Vaniday Promise
                 </Text>
-                <Text caption1 semibold>
+                <Text caption1 semibold style={{color:BaseColor.titleColor}}>
                   Getting You The Best Offer
                 </Text>
               </View>
@@ -67,11 +67,11 @@ class Marketing extends Component {
               <Text
                 header
                 bold
-                style={{color: BaseColor.secondBlackColor, marginTop: 0}}>
+                style={{color: BaseColor.sectionColor, marginTop: 0}}>
                 $50,000
               </Text>
-              <Text subhead>from 0.5% per month</Text>
-              <Text subhead>6 months tenure</Text>
+              <Text subhead style={{color:BaseColor.titleColor}}>from 0.5% per month</Text>
+              <Text subhead style={{color:BaseColor.titleColor}}>6 months tenure</Text>
             </View>
             <Text caption1 style={styles.summaryStyle}>
               We will find you the best offer among various financial partners
@@ -84,7 +84,7 @@ class Marketing extends Component {
               {paddingHorizontal: 10, marginTop: 40},
             ]}>
             <View style={[styles.contentCenter, {flexDirection: 'column'}]}>
-              <Icon name="file-alt" size={60} color={BaseColor.secondBlackColor} />
+              <Icon name="file-alt" size={60} color={BaseColor.titleColor} />
               <Text caption1 style={{marginTop: 5}}>
                 No collateral
               </Text>
@@ -93,7 +93,7 @@ class Marketing extends Component {
               <Icon
                 name="hand-holding-usd"
                 size={60}
-                color={BaseColor.secondBlackColor}
+                color={BaseColor.titleColor}
               />
               <Text caption1 style={{marginTop: 5}}>
                 Easy application
@@ -103,7 +103,7 @@ class Marketing extends Component {
               <Icon
                 name="clipboard-list"
                 size={60}
-                color={BaseColor.secondBlackColor}
+                color={BaseColor.titleColor}
               />
               <Text caption1 style={{marginTop: 5}}>
                 Quick approvals
