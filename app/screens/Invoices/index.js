@@ -14,6 +14,7 @@ export default class Invoices extends Component {
       loading: false,
       drawerOpen: null,
       invoices: appointments,
+      appointments: appointments,
     };
   }
 
@@ -139,7 +140,9 @@ export default class Invoices extends Component {
             <TouchableOpacity
               style={styles.dateRange}
               onPress={() => this.goBybtn('SelectPeriod')}>
-              <Text footnote style={{color: 'rgba(0,0,0,0.65)'}}>Month to Date</Text>
+              <Text footnote style={{color: 'rgba(0,0,0,0.65)'}}>
+                Month to Date
+              </Text>
               <Icon
                 name="angle-down"
                 size={20}
@@ -158,21 +161,22 @@ export default class Invoices extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView>
+        <ScrollView style={{paddingVertical: 10}}>
           <FlatList
-            data={invoices}
+            data={appointments}
             keyExtractor={(item, index) => item.id}
             style={{marginTop: 10}}
             renderItem={({item, index}) => (
               <InvoiceListItem
                 refId={item.refId}
                 clientName={item.clientName}
-                serviceName={item.serviceName}
-                staffName={item.staffName}
-                status={item.status}
-                price={item.price}
                 appointmentDate={item.appointmentDate}
+                total={item.total}
+                status={item.status}
+                detail={item.detail}
                 startTime={item.startTime}
+                endTime={item.endTime}
+                style={{paddingVertical: 10, marginHorizontal: 20}}
                 onPress={() => {}}
               />
             )}

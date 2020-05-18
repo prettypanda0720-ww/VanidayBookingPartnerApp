@@ -1,36 +1,30 @@
 import * as actionTypes from '@actions/actionTypes';
-const initialState = {
-  login: {
-    success: false,
-  },
-  user: {
-    lang: 'en',
-  },
-};
 
-export default (state = initialState, action = {}) => {
+export default (state = {}, action = {}) => {
   switch (action.type) {
     case actionTypes.AUTH_LOGIN_LOADING:
       return {
         ...state,
         loginLoading: true,
+        loginSuccess: false,
       };
     case actionTypes.LOGIN_SUCCESS:
       return {
         ...state,
-        login: {
-          success: true,
-        },
         loginLoading: false,
+        loginSuccess: true,
+        code: action.payload.code,
+        data: action.payload.data,
+        message: action.payload.message,
       };
     case actionTypes.LOGIN_ERROR:
       return {
         ...state,
-        login: {
-          success: false,
-        },
         loginLoading: false,
-        data: action.payload,
+        loginSuccess: false,
+        code: action.payload.code,
+        data: action.payload.data,
+        message: action.payload.message,
       };
     default:
       return state;

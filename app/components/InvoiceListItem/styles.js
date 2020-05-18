@@ -1,40 +1,57 @@
 import {StyleSheet} from 'react-native';
-import * as Utils from '@utils';
 import {BaseColor} from '@config';
 
 export default StyleSheet.create({
-  //block css
-  serviceItemWrapper: {
-    borderColor: 'green',
-    marginRight: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: 'white',
-    borderLeftWidth: 2,
-    flexDirection: 'column',
-    borderColor: BaseColor.dividerColor,
+  contain: {
+    // shadowOffset: {height: 5},
+    // shadowColor: BaseColor.blackColor,
+    // shadowOpacity: 1.0,
+    // elevation: 1,
+    marginBottom: 20,
+  },
+  nameContent: {
     borderBottomWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderBottomColor: BaseColor.whiteColor,
+    backgroundColor: BaseColor.MainPrimaryColor,
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  serviceIdStyle: {
-    fontSize: 17,
-    color: 'rgba(0,0,0,0.65)',
-    fontWeight: 'bold',
+  validContent: {
+    flexDirection: 'row',
+    // paddingHorizontal: 12,
+    paddingVertical: 7,
+    backgroundColor: BaseColor.fieldColor,
+    // justifyContent: 'space-between',
+    justifyContent: 'center',
+    borderBottomRightRadius: 8,
+    borderBottomLeftRadius: 8,
   },
-  serviceItemNameStyle: {
-    fontSize: 14,
-    color: 'gray',
-    marginTop: 5,
-  },
-  serviceItemDateStyle: {
-    fontSize: 14,
-    color: 'gray',
-    marginTop: 5,
-    fontWeight: 'normal',
-  },
-  total: {
+  mainContent: {
+    backgroundColor: BaseColor.fieldColor,/*BaseColor.lightPrimaryColor*/
+    paddingHorizontal: 12,
+    paddingVertical: 5,
     flexDirection: 'column',
-    borderTopColor: BaseColor.grayColor,
-    borderTopWidth: 1,
-    paddingVertical: 10,
+  },
+  totalContent: {
+    backgroundColor: BaseColor.MainColor /*BaseColor.lightPrimaryColor*/,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+  },
+  boxWithShadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+    elevation: 10,
+    borderWidth: 1,
+    borderColor: 'transparent',
+    borderRadius: 10,
   },
 });

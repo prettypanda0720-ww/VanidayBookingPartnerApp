@@ -80,5 +80,9 @@ export default StyleSheet.create({
   filterContent: {
     paddingHorizontal: 20,
   },
-  
+  total: {
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: BaseColor.sectionColor,
+  }
 });

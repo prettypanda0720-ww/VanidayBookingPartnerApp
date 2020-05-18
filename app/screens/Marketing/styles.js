@@ -67,7 +67,8 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
   },
   salonImage: {
-    width: Utils.getWidthDevice(10),
-    height: 100,
+    width: Utils.scaleWithPixel(300),
+    height: Utils.scaleWithPixel(50),
+    resizeMode: 'contain',
   }
 });

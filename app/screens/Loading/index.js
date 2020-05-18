@@ -16,7 +16,7 @@ class Loading extends Component {
   onProcess() {
     SplashScreen.hide();
     let {navigation, auth} = this.props;
-    let status = auth.login.success;
+    let status = auth.loginSuccess;
     switch (status) {
       case true:
         setTimeout(() => {

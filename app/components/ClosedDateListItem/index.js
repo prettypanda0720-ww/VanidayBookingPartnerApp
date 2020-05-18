@@ -29,14 +29,6 @@ export default class ClosedDateListItem extends Component {
         onPress={onPress}
         activeOpacity={0.9}>
         <View style={[styles.contentLeft, styleLeft]}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Image source={image} style={[styles.thumb, styleThumb]} />
-            <View style={styles.point}>
-              <Text overline whiteColor semibold>
-                {this.props.point}
-              </Text>
-            </View>
-          </View>
           <View>
             <Text headline semibold numberOfLines={1} style={{color: BaseColor.sectionColor}}>
               {textFirst}

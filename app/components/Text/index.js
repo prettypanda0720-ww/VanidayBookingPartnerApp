@@ -46,6 +46,7 @@ export default class Index extends Component {
       whiteColor,
       fieldColor,
       //numberOfLines
+      alignStyle,
       numberOfLines,
       //custom
       style,
@@ -106,6 +107,7 @@ export default class Index extends Component {
           fieldColor && StyleSheet.flatten({color: BaseColor.fieldColor}),
           style && style,
         ])}
+        textAlign={alignStyle}
         numberOfLines={numberOfLines}>
         {this.props.children}
       </Text>
@@ -153,6 +155,7 @@ Index.propTypes = {
   fieldColor: PropTypes.bool,
   //numberOfLines
   numberOfLines: PropTypes.number,
+  textAlign: PropTypes.string,
   //custom style
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   children: PropTypes.node, // plain text
@@ -198,6 +201,7 @@ Index.defaultProps = {
   //numberOfLines
   numberOfLines: 10,
   //custom style
+  textAlign: '',
   style: {},
   children: '',
 };

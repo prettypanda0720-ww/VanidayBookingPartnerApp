@@ -65,7 +65,7 @@ export default class EditEcard extends Component {
           <Text
             headline
             style={{
-              color: 'rgba(0,0,0,0.65)',
+              color: BaseColor.sectionColor,
               paddingHorizontal: 20,
               paddingVertical: 10,
             }}>
@@ -82,13 +82,13 @@ export default class EditEcard extends Component {
               style={{flex: 1}}
               loading={loading}
               onPress={() => navigation.goBack()}>
-              Change image of Ecard Logo
+              + Upload Photo
             </Button>
           </View>
           <View style={{paddingHorizontal: 20}}>
             <View style={[styles.inputGroup, {flexDirection: 'row'}]}>
               <View style={{flex: 1, flexDirection: 'column', marginRight: 10}}>
-                <Text caption3 style={{color: 'rgba(0,0,0,0.65)'}}>
+                <Text caption3 style={{color: BaseColor.sectionColor}}>
                   Pay
                 </Text>
                 <TextInput
@@ -96,13 +96,13 @@ export default class EditEcard extends Component {
                   onChangeText={(text) => this.setState({id: text})}
                   autoCorrect={false}
                   placeholder="200$"
-                  placeholderTextColor={BaseColor.MainPrimaryColor}
-                  selectionColor={BaseColor.primaryColor}>
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
                   {data.address}
                 </TextInput>
               </View>
               <View style={{flex: 1, flexDirection: 'column', marginLeft: 10}}>
-                <Text caption3 style={{color: 'rgba(0,0,0,0.65)'}}>
+                <Text caption3 style={{color: BaseColor.sectionColor}}>
                   Get
                 </Text>
                 <TextInput
@@ -110,8 +110,8 @@ export default class EditEcard extends Component {
                   onChangeText={(text) => this.setState({id: text})}
                   autoCorrect={false}
                   placeholder="240$"
-                  placeholderTextColor={BaseColor.MainPrimaryColor}
-                  selectionColor={BaseColor.primaryColor}>
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
                   {data.address}
                 </TextInput>
               </View>
@@ -122,14 +122,14 @@ export default class EditEcard extends Component {
                   label="Validate for"
                   data={duration}
                   rippleOpacity={0.7}
-                  baseColor={'rgba(0,0,0,0.65)'}
+                  baseColor={BaseColor.sectionColor}
                   tintColor={BaseColor.blackColor}
                   style={{color: BaseColor.blackColor}}
                 />
               </View>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: 'rgba(0,0,0,0.65)'}}>
+              <Text caption3 style={{color: BaseColor.sectionColor}}>
                 Terms
               </Text>
               <TextInput
@@ -137,8 +137,8 @@ export default class EditEcard extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}
                 multiline={true}>
                 In Italian, "Covo" means a hiding place. When you come to our
                 salon, you will experience a private and relaxing space and
@@ -154,7 +154,7 @@ export default class EditEcard extends Component {
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: 'rgba(0,0,0,0.65)'}}>
+              <Text caption3 style={{color: BaseColor.sectionColor}}>
                 About
               </Text>
               <TextInput
@@ -162,8 +162,8 @@ export default class EditEcard extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}
                 multiline={true}>
                 In Italian, "Covo" means a hiding place. When you come to our
                 salon, you will experience a private and relaxing space and
@@ -179,7 +179,7 @@ export default class EditEcard extends Component {
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: 'rgba(0,0,0,0.65)'}}>
+              <Text caption3 style={{color: BaseColor.sectionColor}}>
                 How does eCard Works
               </Text>
               <TextInput
@@ -187,8 +187,8 @@ export default class EditEcard extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}
                 multiline={true}>
                 In Italian, "Covo" means a hiding place. When you come to our
                 salon, you will experience a private and relaxing space and

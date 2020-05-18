@@ -127,7 +127,11 @@ class CreateAppointment extends Component {
                 title=""
                 renderRight={() => {
                   return (
-                    <Icon name="times" size={20} color={BaseColor.blackColor} />
+                    <Icon
+                      name="times"
+                      size={20}
+                      color={BaseColor.sectionColor}
+                    />
                   );
                 }}
                 onPressRight={() => this.hideClientsModal()}
@@ -216,7 +220,7 @@ class CreateAppointment extends Component {
                   activeOpacity={0.8}>
                   <Image style={styles.image} source={Images.icons_create} />
                 </TouchableOpacity>
-              </View>  
+              </View>
             </View>
           </View>
         </Modal>
@@ -298,7 +302,9 @@ class CreateAppointment extends Component {
                           <TouchableWithoutFeedback
                             onPress={() => this.getTitle(item.serviceTitle)}>
                             <View style={styles.serviceItemWrapper}>
-                              <Text headline style={{color: BaseColor.sectionColor}}>
+                              <Text
+                                headline
+                                style={{color: BaseColor.sectionColor}}>
                                 {item.serviceTitle}
                               </Text>
                               <Icon
@@ -325,8 +331,8 @@ class CreateAppointment extends Component {
             navigation.goBack();
           }}
         />
-        <ScrollView style={[styles.container,{paddingBottom: 60}]}>
-          <Text title2 bold>
+        <ScrollView style={styles.container}>
+          <Text title2 bold style={{color: BaseColor.sectionColor}}>
             New Appointment
           </Text>
           <View style={styles.inputGroup}>
@@ -359,15 +365,17 @@ class CreateAppointment extends Component {
             </TouchableOpacity>
           </View>
           <View style={{marginTop: 60}}>
-            <Text title2 bold>
+            <Text title2 bold style={{color: BaseColor.sectionColor}}>
               Services
             </Text>
             <TouchableOpacity
               style={[styles.clientWrapper, {marginTop: 30}]}
               onPress={() => this.showModal()}>
               <View>
-                <Text caption2>Service</Text>
-                <Text headline semibold>
+                <Text caption2 style={{color: BaseColor.sectionColor}}>
+                  Service
+                </Text>
+                <Text headline semibold style={{color: BaseColor.sectionColor}}>
                   {this.state.title}
                 </Text>
               </View>
@@ -375,18 +383,29 @@ class CreateAppointment extends Component {
                 <Icon
                   name="chevron-right"
                   size={15}
-                  color={BaseColor.blackColor}
+                  color={BaseColor.sectionColor}
                 />
               </View>
             </TouchableOpacity>
-            <Dropdown label="Staff" data={staffs} rippleOpacity={0.7} />
             <Dropdown
+              label="Staff"
+              baseColor={BaseColor.sectionColor}
+              textColor={BaseColor.titleColor}
+              data={staffs}
+              rippleOpacity={0.7}
+            />
+            <Dropdown
+              baseColor={BaseColor.sectionColor}
+              textColor={BaseColor.titleColor}
               label="Start Time"
               data={timeInterval}
               rippleOpacity={0.7}
             />
           </View>
-          <Text title2 bold style={{marginTop: 30}}>
+          <Text
+            title2
+            bold
+            style={{marginTop: 30, color: BaseColor.sectionColor}}>
             Notes
           </Text>
           <View style={styles.inputGroup}>
@@ -395,13 +414,19 @@ class CreateAppointment extends Component {
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Notes visible to staff only"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
+              placeholderTextColor={BaseColor.sectionColor}
+              selectionColor={BaseColor.titleColor}
             />
           </View>
         </ScrollView>
-        <View style={{alignItems: 'center'}}>
-          <Text headline bold>
+        <View
+          style={{
+            alignItems: 'center',
+            paddingVertical: 10,
+            borderTopColor: BaseColor.sectionColor,
+            borderTopWidth: 1,
+          }}>
+          <Text headline bold style={{color: BaseColor.sectionColor}}>
             Total: SGD 110 (10min)
           </Text>
         </View>

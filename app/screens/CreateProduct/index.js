@@ -70,7 +70,7 @@ class CreateProduct extends Component {
           </View>
           <View style={styles.inputGroup}>
             <Text body2 style={{color: BaseColor.sectionColor}}>
-              BARCODE (ISBN, UPC, etc.)
+              Barcode (ISBN, UPC, etc.)
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}

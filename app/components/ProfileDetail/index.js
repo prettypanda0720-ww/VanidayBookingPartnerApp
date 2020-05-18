@@ -28,7 +28,7 @@ export default class ProfileDetail extends Component {
         activeOpacity={0.9}>
         <View style={[styles.contentLeft, styleLeft]}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Image source={image} style={[styles.thumb, styleThumb]} />
+            <View>{this.displayImageView(image, styleThumb)}</View>
             <View>{this.displayProfileView()}</View>
           </View>
           <View>
@@ -100,6 +100,12 @@ export default class ProfileDetail extends Component {
           </Text>
         </View>
       );
+    }
+  }
+
+  displayImageView(image, styleThumb) {
+    if (this.props.image != '') {
+      return <Image source={image} style={[styles.thumb, styleThumb]} />;
     }
   }
 }

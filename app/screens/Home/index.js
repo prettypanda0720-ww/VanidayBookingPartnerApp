@@ -340,7 +340,6 @@ class App extends Component<{}> {
   }
 
   showModal() {
-    console.log('modal is clicked');
     this.setState({modalVisible: true});
   }
 

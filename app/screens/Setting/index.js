@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TouchableOpacity, Switch} from 'react-native';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Switch,
+  FlatList,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {AuthActions} from '@actions';
@@ -76,7 +82,7 @@ class Setting extends Component {
         <ScrollView>
           <View style={styles.contain}>
             <ProfileDetail
-              image={shopData.image}
+              image={''}
               textFirst={shopData.name}
               point={shopData.point}
               textSecond={shopData.address}
@@ -112,7 +118,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('ProfileEdit');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Edit Profile</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Edit Profile
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -125,7 +133,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('OpeningHours');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Opening Hours</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Opening Hours
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -138,7 +148,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('MerchantClosedDates');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Closed Dates</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Closed Dates
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -151,7 +163,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Staffs');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Staffs</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Staffs
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -164,7 +178,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('ServiceList');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Services</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Services
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -177,7 +193,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Inventory');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Inventory</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Inventory
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -190,7 +208,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Services');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Country</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Country
+                </Text>
                 <Text subhead>Singapore</Text>
               </View>
               <TouchableOpacity
@@ -198,7 +218,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Currency');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Currency</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Currency
+                </Text>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -220,7 +242,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('Cancellation');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Cancellation and Policy</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Cancellation and Policy
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -233,7 +257,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('TermsAndConditions');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Terms And Conditions</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Terms And Conditions
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -244,9 +270,11 @@ class Setting extends Component {
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
-                  navigation.navigate('Report');
+                  navigation.navigate('Reports');
                 }}>
-                <Text body1 style={styles.sectionStyle}>Report</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Reports
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -259,7 +287,9 @@ class Setting extends Component {
                 onPress={() => {
                   navigation.navigate('FAQ');
                 }}>
-                <Text body1 style={styles.sectionStyle}>FAQ</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  FAQ
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -268,7 +298,9 @@ class Setting extends Component {
                 />
               </TouchableOpacity>
               <View style={[styles.profileItem, {paddingVertical: 15}]}>
-                <Text body1 style={styles.sectionStyle}>Reminders</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  Reminders
+                </Text>
                 <Switch
                   name="angle-right"
                   size={18}
@@ -277,7 +309,9 @@ class Setting extends Component {
                 />
               </View>
               <View style={styles.profileItem}>
-                <Text body1 style={styles.sectionStyle}>App Version</Text>
+                <Text body1 style={styles.sectionStyle}>
+                  App Version
+                </Text>
                 <Text body1 grayColor>
                   {BaseSetting.appVersion}
                 </Text>
@@ -288,7 +322,9 @@ class Setting extends Component {
                   onPress={() => {
                     navigation.navigate('Notification');
                   }}>
-                  <Text body1 style={styles.sectionStyle}>Notification</Text>
+                  <Text body1 style={styles.sectionStyle}>
+                    Notification
+                  </Text>
                   <Icon
                     name="angle-right"
                     size={18}

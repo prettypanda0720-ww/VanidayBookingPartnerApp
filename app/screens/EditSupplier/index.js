@@ -170,7 +170,7 @@ class EditSupplier extends Component {
           </View>
           <View style={styles.inputGroup}>
             <Text body2 style={{color: BaseColor.sectionColor}}>
-              NeighbourHood
+              Neighbourhood
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
@@ -209,7 +209,7 @@ class EditSupplier extends Component {
           </View>
           <View style={styles.inputGroup}>
             <Text body2 style={{color: BaseColor.sectionColor}}>
-              Zip / Post Code
+              Postal Code
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}

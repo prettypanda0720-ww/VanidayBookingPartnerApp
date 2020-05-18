@@ -4,6 +4,7 @@ import AuthReducer from './auth';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import AsyncStorage from '@react-native-community/async-storage';
 import {persistReducer} from 'redux-persist';
+import * as actionTypes from '@actions/actionTypes';
 
 const authPersistConfig = {
   key: 'auth',
@@ -17,7 +18,17 @@ const calendarPersistConfig = {
   stateReconciler: autoMergeLevel2,
 };
 
-export default combineReducers({
+const appReducer = combineReducers({
   auth: persistReducer(authPersistConfig, AuthReducer),
   calendar: persistReducer(calendarPersistConfig, CalendarReducer),
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === actionTypes.RESET_STORE) {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
+
+export default rootReducer;

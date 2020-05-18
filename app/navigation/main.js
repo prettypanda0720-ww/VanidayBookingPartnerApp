@@ -75,7 +75,12 @@ import VanidayServices from '@screens/VanidayServices';
 import Financing from '@screens/Financing';
 import DailySales from '@screens/DailySales';
 import Marketing from '@screens/Marketing';
-
+import Reports from '@screens/Reports';
+import FinancesSummary from '@screens/FinancesSummary';
+import PaymentsSummary from '@screens/PaymentsSummary';
+import PaymentsLog from '@screens/PaymentsLog';
+import TaxesSummary from '@screens/TaxesSummary';
+import TipsCollected from '@screens/TipsCollected';
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
   const nextScene = scenes[scenes.length - 1].route.routeName;
@@ -163,9 +168,6 @@ const StackNavigator = createStackNavigator(
   {
     BottomTabNavigator: {
       screen: BottomTabNavigator,
-    },
-    Walkthrough: {
-      screen: Walkthrough,
     },
     SignUp: {
       screen: SignUp,
@@ -361,6 +363,24 @@ const StackNavigator = createStackNavigator(
     },
     Notification: {
       screen: Notification,
+    },
+    Reports: {
+      screen: Reports,
+    },
+    FinancesSummary: {
+      screen: FinancesSummary,
+    },
+    PaymentsSummary: {
+      screen: PaymentsSummary,
+    },
+    PaymentsLog: {
+      screen: PaymentsLog,
+    },
+    TaxesSummary: {
+      screen: TaxesSummary,
+    },
+    TipsCollected: {
+      screen: TipsCollected,
     },
   },
   {

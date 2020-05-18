@@ -1,115 +1,100 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {SafeAreaView, View, TouchableOpacity, FlatList} from 'react-native';
-import {Image, Text, Icon, StarRating, Button} from '@components';
-import {BaseColor} from '@config';
+import {View, TouchableOpacity} from 'react-native';
+import {Text} from '@components';
 import PropTypes from 'prop-types';
 import styles from './styles';
-export default class InvoiceListItem extends Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-  }
+import {FlatList} from 'react-native-gesture-handler';
 
-  /**
-   * Display hotel item as block
-   */
-  renderBlock() {
+export default class InvoiceListItem extends Component {
+  render() {
     const {
       style,
       refId,
       clientName,
-      serviceName,
-      staffName,
-      status,
-      price,
       appointmentDate,
+      total,
+      status,
+      detail,
       startTime,
+      endTime,
       onPress,
     } = this.props;
     return (
       <TouchableOpacity
-        // testID={testIDs.agenda.ITEM}}
-        style={styles.serviceItemWrapper}>
-        <Text style={styles.serviceIdStyle}>{refId}</Text>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 1}}>
-            <Text style={styles.serviceItemNameStyle}>
-              Client Name: {clientName}
-            </Text>
-          </View>
-          <View style={{flex: 1, alignItems: 'flex-end'}}>
-            <Text
-              style={{
-                fontSize: 18,
-                color: 'green',
-                fontWeight: 'bold',
-              }}>
-              {price}
-            </Text>
-          </View>
-        </View>
-        <View style={{flex: 1}}>
-          <Text style={styles.serviceItemNameStyle}>
-            Service Name: {serviceName}
+        style={[styles.contain, style]}
+        onPress={onPress}
+        activeOpacity={0.9}>
+        <View style={styles.nameContent}>
+          <Text subhead whiteColor bold>
+            {clientName}&nbsp;:&nbsp;{refId}
+          </Text>
+          <Text subhead whiteColor bold>
+            {status}
           </Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 1}}>
-            <Text style={styles.serviceItemNameStyle}>
-              Staff Name: {staffName}
-            </Text>
-          </View>
-          <View style={{flex: 1, alignItems: 'flex-end'}}>
-            <Text
-              style={{
-                fontSize: 18,
-                color: 'green',
-                fontWeight: 'bold',
-              }}>
-              {status}
-            </Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.serviceItemDateStyle}>
-            {appointmentDate}
-          </Text>
-          <View style={{flex: 1, alignItems: 'flex-end'}}>
-            <Text
-              style={{
-                fontSize: 18,
-                color: 'green',
-                fontWeight: 'bold',
-              }}>
-              {startTime}
-            </Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.serviceItemDateStyle}>Payment Mode :</Text>
-          <View style={{flex: 1, alignItems: 'flex-end'}}>
-            <Text
-              style={{
-                fontSize: 18,
-                color: 'green',
-                fontWeight: 'bold',
-              }}>
-              Online
-            </Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
+        <FlatList
+          data={detail}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => {
+            return (
+              <View style={styles.mainContent}>
+                <View style={{flexDirection: 'row'}}>
+                  <Text
+                    caption1
+                    semibold
+                    style={{
+                      flex: 1,
+                      textAlign: 'left',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    {item.serviceName}
+                  </Text>
+                  <Text
+                    caption1
+                    semibold
+                    style={{
+                      flex: 1,
+                      textAlign: 'right',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    {item.price}
+                  </Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text
+                    caption3
+                    style={{
+                      flex: 1,
+                      textAlign: 'left',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    {item.staffName}
+                  </Text>
+                  <Text
+                    caption3
+                    style={{
+                      flex: 1,
+                      textAlign: 'right',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    {item.duration}
+                  </Text>
+                </View>
+              </View>
+            );
+          }}
+        />
+        <View style={[styles.totalContent, {flexDirection: 'row', paddingHorizontal: 10}]}>
           <View
             style={{
               flex: 1,
               flexDirection: 'row',
               alignItems: 'flex-start',
             }}>
-            <Text body1 bold style={{color: 'rgba(0,0,0,0.65)'}}>
-              Salon:
+            <Text headline bold style={{color: 'rgba(0,0,0,0.65)'}}>
+              Business:
             </Text>
-            <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
+            <Text headline semibold style={{color: 'rgba(0,0,0,0.65)'}}>
               &nbsp;&nbsp;SGD50
             </Text>
           </View>
@@ -120,21 +105,21 @@ export default class InvoiceListItem extends Component {
               justifyContent: 'flex-end',
               alignItems: 'flex-end',
             }}>
-            <Text body1 bold style={{color: 'rgba(0,0,0,0.65)'}}>
+            <Text headline bold style={{color: 'rgba(0,0,0,0.65)'}}>
               Vaniday:
             </Text>
-            <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
+            <Text headline semibold style={{color: 'rgba(0,0,0,0.65)'}}>
               &nbsp;&nbsp;SGD50
             </Text>
           </View>
         </View>
+        <View style={styles.validContent}>
+          <Text footnote semibold style={{color: 'rgba(0,0,0,0.65)'}}>
+            {appointmentDate},&nbsp;{startTime}&nbsp;to&nbsp;{endTime}
+          </Text>
+        </View>
       </TouchableOpacity>
     );
-  }
-
-  render() {
-    let {block, grid} = this.props;
-    return this.renderBlock();
   }
 }
 
@@ -144,12 +129,12 @@ InvoiceListItem.propTypes = {
   clientName: PropTypes.string,
   serviceName: PropTypes.string,
   staffName: PropTypes.string,
-  status: PropTypes.string,
   appointmentDate: PropTypes.string,
-  startTime: PropTypes.string,
+  total: PropTypes.string,
   price: PropTypes.string,
+  startTime: PropTypes.string,
+  endTime: PropTypes.string,
   onPress: PropTypes.func,
-  onPressTag: PropTypes.func,
 };
 
 InvoiceListItem.defaultProps = {
@@ -158,10 +143,10 @@ InvoiceListItem.defaultProps = {
   clientName: '',
   serviceName: '',
   staffName: '',
-  status: '',
   appointmentDate: '',
-  startTime: '',
+  total: '',
   price: '',
+  startTime: '',
+  endTime: '',
   onPress: () => {},
-  onPressTag: () => {},
 };

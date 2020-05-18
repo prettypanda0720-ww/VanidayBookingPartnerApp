@@ -161,17 +161,10 @@ class ServiceInput extends Component {
                                 borderBottomWidth: 1,
                               }}>
                               <Text
-                                subhead
+                                footnote
                                 style={{color: BaseColor.titleColor}}>
                                 {item.serviceTitle}
                               </Text>
-                              <Icon
-                                name="chevron-right"
-                                style={{
-                                  marginLeft: 5,
-                                  color: BaseColor.titleColor,
-                                }}
-                              />
                             </View>
                           </TouchableWithoutFeedback>
                         )}

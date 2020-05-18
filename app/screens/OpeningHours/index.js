@@ -26,7 +26,7 @@ export default class OpeningHours extends Component {
           lunchTime: {startTime: '12:30 PM', endTime: '1:30 PM'},
         },
         {
-          title: 'Wensday',
+          title: 'Wednesday',
           workingHours: {startTime: '9:00 AM', endTime: '7:30 PM'},
           lunchTime: {startTime: '12:30 PM', endTime: '1:30 PM'},
         },
@@ -73,7 +73,7 @@ export default class OpeningHours extends Component {
             keyExtractor={(item, index) => item.id}
             renderItem={({item}) => (
               <View style={styles.itemWrapper}>
-                <Text title3 semibold style={{color: BaseColor.sectionColor}}>
+                <Text title3 bold style={{color: BaseColor.SecondColor}}>
                   {item.title}
                 </Text>
                 <View
@@ -83,17 +83,29 @@ export default class OpeningHours extends Component {
                     marginTop: 10,
                   }}>
                   <View style={{flexDirection: 'column'}}>
-                    <Text title3 semibold style={{color: BaseColor.blackColor}}>
+                    <Text
+                      title3
+                      semibold
+                      style={{color: BaseColor.blackColor}}>
                       Working Time
                     </Text>
                     <View style={{flexDirection: 'row'}}>
-                      <Text headline semibold style={{color: BaseColor.grayColor}}>
+                      <Text
+                        headline
+                        semibold
+                        style={{color: BaseColor.grayColor}}>
                         {item.workingHours.startTime}
                       </Text>
-                      <Text body1 semibold style={{color: BaseColor.titleColor}}>
+                      <Text
+                        body1
+                        semibold
+                        style={{color: BaseColor.titleColor}}>
                         &nbsp;~&nbsp;
                       </Text>
-                      <Text headline semibold style={{color: BaseColor.grayColor}}>
+                      <Text
+                        headline
+                        semibold
+                        style={{color: BaseColor.grayColor}}>
                         {item.workingHours.endTime}
                       </Text>
                     </View>
@@ -104,13 +116,22 @@ export default class OpeningHours extends Component {
                       Lunch Time
                     </Text>
                     <View style={{flexDirection: 'row'}}>
-                      <Text headline semibold style={{color: BaseColor.grayColor}}>
+                      <Text
+                        headline
+                        semibold
+                        style={{color: BaseColor.sectionColor}}>
                         {item.workingHours.startTime}
                       </Text>
-                      <Text body1 semibold style={{color: BaseColor.titleColor}}>
+                      <Text
+                        body1
+                        semibold
+                        style={{color: BaseColor.titleColor}}>
                         &nbsp;~&nbsp;
                       </Text>
-                      <Text headline semibold style={{color: BaseColor.grayColor}}>
+                      <Text
+                        headline
+                        semibold
+                        style={{color: BaseColor.sectionColor}}>
                         {item.workingHours.endTime}
                       </Text>
                     </View>

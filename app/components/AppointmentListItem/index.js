@@ -9,7 +9,6 @@ import XDate from 'xdate';
 export default class AppointmentListItem extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
 
   /**
@@ -27,7 +26,6 @@ export default class AppointmentListItem extends Component {
       duration,
       onPress,
     } = this.props;
-    console.log(appointmentDate);
     const date = new Date(appointmentDate);
     return (
       <TouchableOpacity

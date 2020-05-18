@@ -93,6 +93,8 @@ class SelectPeriod extends Component {
             <View style={styles.inputGroup}>
               <Dropdown
                 label="Date range"
+                baseColor={BaseColor.sectionColor}
+                textColor={BaseColor.titleColor}
                 data={duration}
                 rippleOpacity={0.7}
               />
@@ -104,11 +106,11 @@ class SelectPeriod extends Component {
               {flexDirection: 'row', justifyContent: 'space-between'},
             ]}>
             <View style={{flex: 1, flexDirection: 'column', marginRight: 10}}>
-              <Text>START DATE</Text>
+              <Text style={{color:BaseColor.sectionColor}}>START DATE</Text>
               <DatePicker time={'2020-04-01'} style={{marginTop: 10}} />
             </View>
             <View style={{flex: 1, flexDirection: 'column', marginLeft: 10}}>
-              <Text>END DATE</Text>
+              <Text style={{color:BaseColor.sectionColor}}>END DATE</Text>
               <DatePicker time={'2020-05-01'} style={{marginTop: 10}} />
             </View>
           </View>

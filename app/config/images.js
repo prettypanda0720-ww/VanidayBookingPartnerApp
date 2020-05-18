@@ -8,6 +8,7 @@ export const Images = {
   vaniday: require('@assets/images/vaniday.jpg'),
   icons_create: require('@assets/images/icons-create.png'),
   splashlogo: require('@assets/images/splash-logo.png'),
+  myvanidaylogo: require('@assets/images/myVanidayWhite.png'),
   slide: require('@assets/images/slide.png'),
   profile1: require('@assets/images/profile-1.jpg'),
   profile2: require('@assets/images/profile-2.jpg'),

@@ -7,3 +7,7 @@ export const authentication = (email, password) => ({
     password,
   },
 });
+
+export const resetStore = () => ({
+  type: actionTypes.RESET_STORE,
+});

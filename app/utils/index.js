@@ -6,13 +6,13 @@ import {
   UIManager,
   LayoutAnimation,
   PixelRatio,
-  Dimensions
-} from "react-native";
+  Dimensions,
+} from 'react-native';
 
 const scaleValue = PixelRatio.get() / 2;
 
 export const enableExperimental = () => {
-  if (Platform.OS === "android") {
+  if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -25,12 +25,16 @@ export const scaleWithPixel = (size, limitScale = 1.2) => {
 };
 
 export const heightHeader = () => {
-  const width = Dimensions.get("window").width;
-  const height = Dimensions.get("window").height;
+  const width = Dimensions.get('window').width;
+  const height = Dimensions.get('window').height;
   const landscape = width > height;
 
-  if (Platform.OS === "android") return 45;
-  if (Platform.isPad) return 65;
+  if (Platform.OS === 'android') {
+    return 45;
+  }
+  if (Platform.isPad) {
+    return 65;
+  }
   switch (height) {
     case 375:
     case 414:
@@ -43,8 +47,8 @@ export const heightHeader = () => {
 };
 
 export const heightTabView = () => {
-  const height = Dimensions.get("window").height;
-  const width = Dimensions.get("window").width;
+  const height = Dimensions.get('window').height;
+  const width = Dimensions.get('window').width;
   let size = height - heightHeader();
   switch (height) {
     case 375:
@@ -61,15 +65,15 @@ export const heightTabView = () => {
 };
 
 export const getWidthDevice = () => {
-  return Dimensions.get("window").width;
+  return Dimensions.get('window').width;
 };
 
 export const getHeightDevice = () => {
-  return Dimensions.get("window").height;
+  return Dimensions.get('window').height;
 };
 
 export const scrollEnabled = (contentWidth, contentHeight) => {
-  return contentHeight > Dimensions.get("window").height - heightHeader();
+  return contentHeight > Dimensions.get('window').height - heightHeader();
 };
 
 // Animation navigation between screen react-navigation
@@ -79,24 +83,24 @@ export function fromLeft(duration = 300) {
       duration,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
-      useNativeDriver: true
+      useNativeDriver: true,
     },
-    screenInterpolator: ({ layout, position, scene }) => {
-      const { index } = scene;
-      const { initWidth } = layout;
+    screenInterpolator: ({layout, position, scene}) => {
+      const {index} = scene;
+      const {initWidth} = layout;
 
       const translateX = position.interpolate({
         inputRange: [index - 1, index, index + 1],
-        outputRange: [-initWidth, 0, 0]
+        outputRange: [-initWidth, 0, 0],
       });
 
       const opacity = position.interpolate({
         inputRange: [index - 1, index - 0.99, index],
-        outputRange: [0, 1, 1]
+        outputRange: [0, 1, 1],
       });
 
-      return { opacity, transform: [{ translateX }] };
-    }
+      return {opacity, transform: [{translateX}]};
+    },
   };
 }
 
@@ -114,24 +118,24 @@ export function fromTop(duration = 300) {
       duration,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
-      useNativeDriver: true
+      useNativeDriver: true,
     },
-    screenInterpolator: ({ layout, position, scene }) => {
-      const { index } = scene;
-      const { initHeight } = layout;
+    screenInterpolator: ({layout, position, scene}) => {
+      const {index} = scene;
+      const {initHeight} = layout;
 
       const translateY = position.interpolate({
         inputRange: [index - 1, index, index + 1],
-        outputRange: [-initHeight, 0, 0]
+        outputRange: [-initHeight, 0, 0],
       });
 
       const opacity = position.interpolate({
         inputRange: [index - 1, index - 0.99, index],
-        outputRange: [0, 1, 1]
+        outputRange: [0, 1, 1],
       });
 
-      return { opacity, transform: [{ translateY }] };
-    }
+      return {opacity, transform: [{translateY}]};
+    },
   };
 }
 
@@ -149,24 +153,24 @@ export function fromRight(duration = 300) {
       duration,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
-      useNativeDriver: true
+      useNativeDriver: true,
     },
-    screenInterpolator: ({ layout, position, scene }) => {
-      const { index } = scene;
-      const { initWidth } = layout;
+    screenInterpolator: ({layout, position, scene}) => {
+      const {index} = scene;
+      const {initWidth} = layout;
 
       const translateX = position.interpolate({
         inputRange: [index - 1, index, index + 1],
-        outputRange: [initWidth, 0, 0]
+        outputRange: [initWidth, 0, 0],
       });
 
       const opacity = position.interpolate({
         inputRange: [index - 1, index - 0.99, index],
-        outputRange: [0, 1, 1]
+        outputRange: [0, 1, 1],
       });
 
-      return { opacity, transform: [{ translateX }] };
-    }
+      return {opacity, transform: [{translateX}]};
+    },
   };
 }
 
@@ -184,24 +188,24 @@ export function fromBottom(duration = 300) {
       duration,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
-      useNativeDriver: true
+      useNativeDriver: true,
     },
-    screenInterpolator: ({ layout, position, scene }) => {
-      const { index } = scene;
-      const { initHeight } = layout;
+    screenInterpolator: ({layout, position, scene}) => {
+      const {index} = scene;
+      const {initHeight} = layout;
 
       const translateY = position.interpolate({
         inputRange: [index - 1, index, index + 1],
-        outputRange: [initHeight, 0, 0]
+        outputRange: [initHeight, 0, 0],
       });
 
       const opacity = position.interpolate({
         inputRange: [index - 1, index - 0.99, index],
-        outputRange: [0, 1, 1]
+        outputRange: [0, 1, 1],
       });
 
-      return { opacity, transform: [{ translateY }] };
-    }
+      return {opacity, transform: [{translateY}]};
+    },
   };
 }
 
@@ -219,18 +223,18 @@ export function fadeIn(duration = 300) {
       duration,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
-      useNativeDriver: true
+      useNativeDriver: true,
     },
-    screenInterpolator: ({ position, scene }) => {
-      const { index } = scene;
+    screenInterpolator: ({position, scene}) => {
+      const {index} = scene;
 
       const opacity = position.interpolate({
         inputRange: [index - 1, index],
-        outputRange: [0, 1]
+        outputRange: [0, 1],
       });
 
-      return { opacity };
-    }
+      return {opacity};
+    },
   };
 }
 
@@ -248,23 +252,23 @@ export function zoomIn(duration = 300) {
       duration,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
-      useNativeDriver: true
+      useNativeDriver: true,
     },
-    screenInterpolator: ({ position, scene }) => {
-      const { index } = scene;
+    screenInterpolator: ({position, scene}) => {
+      const {index} = scene;
       let start = 0;
 
-      if (Platform.OS !== "ios") {
+      if (Platform.OS !== 'ios') {
         start = 0.005;
       }
 
       const scale = position.interpolate({
         inputRange: [index - 1, index],
-        outputRange: [start, 1]
+        outputRange: [start, 1],
       });
 
-      return { transform: [{ scale }] };
-    }
+      return {transform: [{scale}]};
+    },
   };
 }
 
@@ -282,18 +286,18 @@ export function zoomOut(duration = 300) {
       duration,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
-      useNativeDriver: true
+      useNativeDriver: true,
     },
-    screenInterpolator: ({ position, scene }) => {
-      const { index } = scene;
+    screenInterpolator: ({position, scene}) => {
+      const {index} = scene;
 
       const scale = position.interpolate({
         inputRange: [index - 1, index],
-        outputRange: [10, 1]
+        outputRange: [10, 1],
       });
 
-      return { transform: [{ scale }] };
-    }
+      return {transform: [{scale}]};
+    },
   };
 }
 
@@ -311,18 +315,18 @@ export function flipY(duration = 300) {
       duration,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
-      useNativeDriver: true
+      useNativeDriver: true,
     },
-    screenInterpolator: ({ position, scene }) => {
-      const { index } = scene;
+    screenInterpolator: ({position, scene}) => {
+      const {index} = scene;
 
       const rotateY = position.interpolate({
         inputRange: [index - 1, index],
-        outputRange: ["180deg", "0deg"]
+        outputRange: ['180deg', '0deg'],
       });
 
-      return { transform: [{ rotateY }], backfaceVisibility: "hidden" };
-    }
+      return {transform: [{rotateY}], backfaceVisibility: 'hidden'};
+    },
   };
 }
 
@@ -340,17 +344,17 @@ export function flipX(duration = 300) {
       duration,
       easing: Easing.out(Easing.poly(4)),
       timing: Animated.timing,
-      useNativeDriver: true
+      useNativeDriver: true,
     },
-    screenInterpolator: ({ position, scene }) => {
-      const { index } = scene;
+    screenInterpolator: ({position, scene}) => {
+      const {index} = scene;
 
       const rotateX = position.interpolate({
         inputRange: [index - 1, index],
-        outputRange: ["180deg", "0deg"]
+        outputRange: ['180deg', '0deg'],
       });
 
-      return { transform: [{ rotateX }], backfaceVisibility: "hidden" };
-    }
+      return {transform: [{rotateX}], backfaceVisibility: 'hidden'};
+    },
   };
 }

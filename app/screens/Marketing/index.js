@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Image, ScrollView} from 'react-native';
-import {Header, SafeAreaView, Icon, Text, Button} from '@components';
+import {Header, SafeAreaView, Icon, Button, Text} from '@components';
 import CheckBox from 'react-native-checkbox';
 import {Values} from '@data';
 
@@ -49,86 +49,39 @@ class Marketing extends Component {
           style={styles.headerStyle}
         />
         <ScrollView style={styles.container}>
-          {/* <Image style={styles.salonImage} source={Images.splashlogo} /> */}
-          <View style={styles.logoWrapper}>
-            <View style={[styles.contentCenter, {flexDirection: 'row'}]}>
-              <Image style={styles.image} source={Images.logo} />
-              <View style={styles.logoContentWrapper}>
-                <Text subhead bold style={{color: BaseColor.sectionColor}}>
-                  The Vaniday Promise
-                </Text>
-                <Text caption1 semibold style={{color:BaseColor.titleColor}}>
-                  Getting You The Best Offer
-                </Text>
-              </View>
-            </View>
-            <View style={[styles.inputGroup, styles.contentCenter]}>
-              <Text subhead>Apply Up to</Text>
-              <Text
-                header
-                bold
-                style={{color: BaseColor.sectionColor, marginTop: 0}}>
-                $50,000
-              </Text>
-              <Text subhead style={{color:BaseColor.titleColor}}>from 0.5% per month</Text>
-              <Text subhead style={{color:BaseColor.titleColor}}>6 months tenure</Text>
-            </View>
-            <Text caption1 style={styles.summaryStyle}>
-              We will find you the best offer among various financial partners
+          <View style={[styles.contentCenter, {marginTop: 30}]}>
+            <Image style={styles.salonImage} source={Images.splashlogo} />
+            <Text
+              headline
+              style={{color: BaseColor.sectionColor, marginTop: 20}}>
+              Marketing Package
             </Text>
           </View>
-          <View
-            style={[
-              styles.inputGroup,
-              styles.contentBetween,
-              {paddingHorizontal: 10, marginTop: 40},
-            ]}>
-            <View style={[styles.contentCenter, {flexDirection: 'column'}]}>
-              <Icon name="file-alt" size={60} color={BaseColor.titleColor} />
-              <Text caption1 style={{marginTop: 5}}>
-                No collateral
-              </Text>
-            </View>
-            <View style={[styles.contentCenter, {flexDirection: 'column'}]}>
-              <Icon
-                name="hand-holding-usd"
-                size={60}
-                color={BaseColor.titleColor}
-              />
-              <Text caption1 style={{marginTop: 5}}>
-                Easy application
-              </Text>
-            </View>
-            <View style={[styles.contentCenter, {flexDirection: 'column'}]}>
-              <Icon
-                name="clipboard-list"
-                size={60}
-                color={BaseColor.titleColor}
-              />
-              <Text caption1 style={{marginTop: 5}}>
-                Quick approvals
-              </Text>
-            </View>
-          </View>
-          <View style={[styles.contentBetween, {marginTop: 30}]}>
-            <CheckBox
-              label={''}
-              checked={this.state.checked}
-              checkboxSize={10}
-              onChange={() =>
-                this.setState({
-                  checked: !this.state.checked,
-                })
-              }
-            />
-            <Text footnote numberOfLines={5} style={{paddingHorizontal: 10}}>
-              I have read, understood and agreed to be subjected to Vaniday's
-              Privacy and Policy and I consent for Vaniday to disclose my
-              personal data to any third parties and / or any of their
-              respective agents for purpose of loan application.
-            </Text>
-          </View>
+          <Text
+            bold
+            numberOfLines={3}
+            style={{
+              color: BaseColor.sectionColor,
+              marginTop: 20,
+              width: '100%',
+              textAlign: 'center',
+              fontSize: 30,
+            }}>
+            Grow Your Business With Marketing Package
+          </Text>
         </ScrollView>
+        <Text
+          title3
+          bold
+          numberOfLines={2}
+          style={{
+            color: BaseColor.sectionColor,
+            marginTop: 20,
+            width: '100%',
+            textAlign: 'center',
+          }}>
+          contact@vaniday.com.sg
+        </Text>
         <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
           <Button
             style={{flex: 1, marginLeft: 10}}

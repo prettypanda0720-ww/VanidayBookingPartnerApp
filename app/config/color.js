@@ -64,6 +64,7 @@ let BaseColor = {
     sectionColor: 'rgba(0,0,0,0.8)',
     titleColor: 'rgba(75,72,72,0.88)',
     secondBlackColor: '#434343',
+    darkcoralColor: '#cd5b45',
   }
 };
 
