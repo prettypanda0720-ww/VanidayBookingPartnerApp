@@ -41,7 +41,7 @@ class SplashScreen extends Component {
     return (
       <View style={styles.container}>
         <Image
-          source={Images.splashlogo}
+          source={Images.myvanidaylogo}
           style={styles.logo}
           resizeMode="contain"
         />

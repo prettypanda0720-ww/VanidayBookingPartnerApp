@@ -38,15 +38,12 @@ export default class BookingHistory extends Component {
           renderItem={({item}) => {
             return (
               <View style={styles.mainContent}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
+                <View style={{flexDirection: 'row'}}>
                   <Text
                     caption1
                     semibold
                     style={{
+                      flex: 1,
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
@@ -56,6 +53,7 @@ export default class BookingHistory extends Component {
                     caption1
                     semibold
                     style={{
+                      flex: 1,
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
