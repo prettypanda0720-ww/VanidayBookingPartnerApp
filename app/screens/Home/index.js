@@ -212,6 +212,11 @@ class App extends Component<{}> {
     this.hideModal();
   }
 
+  goToScreen(route, data) {
+    const {navigation} = this.props;
+    navigation.navigate(route,{data});
+  }
+
   loadItems(day) {
     this.state.items = {};
     this.state.currentDay = day;
@@ -223,6 +228,15 @@ class App extends Component<{}> {
       '3 Jun Gel Manicure + Gel Pedicure + Sock Off',
       '3 Jun Classic Manicure',
       '3 Jun Classic Gel Pedicure and Soak Off',
+    ];
+    let clients = [
+      'Judy T',
+      'William Lay',
+      'Wendy Smith',
+      'Judy T',
+      'William Lay',
+      'Wendy Smith',
+      'Wendy Smith',
     ];
     setTimeout(() => {
       for (let i = -15; i < 85; i++) {
@@ -274,7 +288,10 @@ class App extends Component<{}> {
               j % 2 == 0 ? 'Accepted Appointment' : 'Upcoming Appointment';
 
             appointmentbystaff[j].push({
+              refId: '#152364212',
+              total: 'SGD20',
               acceptedState: tpState,
+              customerName: clients[j],
               name: names[j],
               staffName: tpStaffName,
               appointmentDate: this.timeToAsianString(time),
@@ -325,14 +342,17 @@ class App extends Component<{}> {
         keyExtractor={(item, index) => item.id}
         renderItem={({item}) => (
           <AppointmentListItem
+            refId={'#125463215'}
             acceptedState={item.acceptedState}
+            customerName={item.customerName}
             name={item.name}
             staffName={item.staffName}
             appointmentDate={item.appointmentDate}
             startTime={item.startTime}
             endTime={item.endTime}
             duration={item.duration}
-            onPress={() => Alert.alert(item.name)}
+            total={'SGD20'}
+            onPress={() => this.goToScreen('ManageAppointment', item)}
           />
         )}
       />

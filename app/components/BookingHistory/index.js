@@ -38,47 +38,53 @@ export default class BookingHistory extends Component {
           renderItem={({item}) => {
             return (
               <View style={styles.mainContent}>
-                <View style={{flexDirection: 'row'}}>
-                  <Text
-                    caption1
-                    semibold
-                    style={{
-                      flex: 1,
-                      textAlign: 'left',
-                      color: 'rgba(0,0,0,0.65)',
-                    }}>
-                    {item.serviceName}
-                  </Text>
-                  <Text
-                    caption1
-                    semibold
-                    style={{
-                      flex: 1,
-                      textAlign: 'right',
-                      color: 'rgba(0,0,0,0.65)',
-                    }}>
-                    {item.price}
-                  </Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                  <Text
-                    caption3
-                    style={{
-                      flex: 1,
-                      textAlign: 'left',
-                      color: 'rgba(0,0,0,0.65)',
-                    }}>
-                    {item.staffName}
-                  </Text>
-                  <Text
-                    caption3
-                    style={{
-                      flex: 1,
-                      textAlign: 'right',
-                      color: 'rgba(0,0,0,0.65)',
-                    }}>
-                    {item.duration}
-                  </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text
+                      caption1
+                      semibold
+                      style={{
+                        flex: 1,
+                        textAlign: 'left',
+                        color: 'rgba(0,0,0,0.65)',
+                      }}>
+                      {item.serviceName}
+                    </Text>
+                    <Text
+                      caption1
+                      semibold
+                      style={{
+                        flex: 1,
+                        textAlign: 'right',
+                        color: 'rgba(0,0,0,0.65)',
+                      }}>
+                      {item.price}
+                    </Text>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text
+                      caption3
+                      style={{
+                        flex: 1,
+                        textAlign: 'left',
+                        color: 'rgba(0,0,0,0.65)',
+                      }}>
+                      {item.staffName}
+                    </Text>
+                    <Text
+                      caption3
+                      style={{
+                        flex: 1,
+                        textAlign: 'right',
+                        color: 'rgba(0,0,0,0.65)',
+                      }}>
+                      {item.duration}
+                    </Text>
+                  </View>
                 </View>
               </View>
             );

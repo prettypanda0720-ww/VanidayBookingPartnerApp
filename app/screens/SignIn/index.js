@@ -96,7 +96,7 @@ class SignIn extends Component {
       navigation.navigate('Loading');
       this.storeAuthInfo();
     } else if (code == -1 && data != '') {
-      Alert.alert(message);
+      this.props.actions.resetStore();
     }
 
     return (
