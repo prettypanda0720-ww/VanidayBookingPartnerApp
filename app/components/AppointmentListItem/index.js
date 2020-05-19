@@ -18,6 +18,7 @@ export default class AppointmentListItem extends Component {
     const {
       style,
       acceptedState,
+      customerName,
       name,
       staffName,
       appointmentDate,
@@ -63,6 +64,7 @@ export default class AppointmentListItem extends Component {
               {startTime}
             </Text>
           </View>
+          <Text style={styles.serviceItemNameStyle}>{customerName}</Text>
           <Text style={styles.serviceItemNameStyle}>{name}</Text>
           <Text style={[styles.serviceItemDateStyle, {marginTop: 10}]}>
             {staffName}
@@ -93,8 +95,11 @@ export default class AppointmentListItem extends Component {
 
 AppointmentListItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  refId: PropTypes.string,
+  total: PropTypes.string,
   acceptedState: PropTypes.string,
   appointmentDate: PropTypes.string,
+  customerName: PropTypes.string,
   name: PropTypes.string,
   staffName: PropTypes.string,
   startTime: PropTypes.number,
@@ -106,8 +111,11 @@ AppointmentListItem.propTypes = {
 
 AppointmentListItem.defaultProps = {
   style: {},
+  refId: '',
+  total: '',
   acceptedState: '',
   appointmentDate: '',
+  customerName: '',
   name: '',
   staffName: '',
   startTime: '',

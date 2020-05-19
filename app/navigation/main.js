@@ -81,6 +81,8 @@ import PaymentsSummary from '@screens/PaymentsSummary';
 import PaymentsLog from '@screens/PaymentsLog';
 import TaxesSummary from '@screens/TaxesSummary';
 import TipsCollected from '@screens/TipsCollected';
+import ManageAppointment from '@screens/ManageAppointment';
+import RescheduleAppointment from '@screens/RescheduleAppointment';
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
   const nextScene = scenes[scenes.length - 1].route.routeName;
@@ -381,6 +383,12 @@ const StackNavigator = createStackNavigator(
     },
     TipsCollected: {
       screen: TipsCollected,
+    },
+    ManageAppointment: {
+      screen: ManageAppointment,
+    },
+    RescheduleAppointment: {
+      screen: RescheduleAppointment,
     },
   },
   {

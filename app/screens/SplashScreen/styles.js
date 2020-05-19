@@ -4,7 +4,7 @@ import {BaseColor} from '@config';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: BaseColor.MainColor,
+    backgroundColor: BaseColor.whiteColor,
     justifyContent: 'center',
     alignItems: 'center',
   },
