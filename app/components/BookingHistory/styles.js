@@ -31,7 +31,7 @@ export default StyleSheet.create({
     borderBottomLeftRadius: 8,
   },
   mainContent: {
-    backgroundColor: BaseColor.fieldColor,/*BaseColor.lightPrimaryColor*/
+    backgroundColor: BaseColor.fieldColor,
     paddingHorizontal: 12,
     paddingVertical: 5,
     flexDirection: 'column',
@@ -55,4 +55,8 @@ export default StyleSheet.create({
     borderColor: 'transparent',
     borderRadius: 10,
   },
+  serviceItemWrapper: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+  }
 });

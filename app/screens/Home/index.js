@@ -214,7 +214,7 @@ class App extends Component<{}> {
 
   goToScreen(route, data) {
     const {navigation} = this.props;
-    navigation.navigate(route,{data});
+    navigation.navigate(route, {data});
   }
 
   loadItems(day) {
@@ -284,8 +284,7 @@ class App extends Component<{}> {
                 tpDuration = '2.5HR';
                 break;
             }
-            let tpState =
-              j % 2 == 0 ? 'Accepted Appointment' : 'Upcoming Appointment';
+            let tpState = j % 2 == 0 ? 'Pending' : 'Expired';
 
             appointmentbystaff[j].push({
               refId: '#152364212',

@@ -38,53 +38,46 @@ export default class BookingHistory extends Component {
           renderItem={({item}) => {
             return (
               <View style={styles.mainContent}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text
-                      caption1
-                      semibold
-                      style={{
-                        flex: 1,
-                        textAlign: 'left',
-                        color: 'rgba(0,0,0,0.65)',
-                      }}>
-                      {item.serviceName}
-                    </Text>
-                    <Text
-                      caption1
-                      semibold
-                      style={{
-                        flex: 1,
-                        textAlign: 'right',
-                        color: 'rgba(0,0,0,0.65)',
-                      }}>
-                      {item.price}
-                    </Text>
-                  </View>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text
-                      caption3
-                      style={{
-                        flex: 1,
-                        textAlign: 'left',
-                        color: 'rgba(0,0,0,0.65)',
-                      }}>
-                      {item.staffName}
-                    </Text>
-                    <Text
-                      caption3
-                      style={{
-                        flex: 1,
-                        textAlign: 'right',
-                        color: 'rgba(0,0,0,0.65)',
-                      }}>
-                      {item.duration}
-                    </Text>
-                  </View>
+                <View style={styles.serviceItemWrapper}>
+                  <Text
+                    caption1
+                    semibold
+                    style={{
+                      textAlign: 'left',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    {item.serviceName}
+                  </Text>
+                  <Text
+                    caption1
+                    semibold
+                    style={{
+                      flex: 1,
+                      textAlign: 'right',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    {item.price}
+                  </Text>
+                </View>
+                <View style={styles.serviceItemWrapper}>
+                  <Text
+                    caption3
+                    style={{
+                      flex: 1,
+                      textAlign: 'left',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    {item.staffName}
+                  </Text>
+                  <Text
+                    caption3
+                    style={{
+                      flex: 1,
+                      textAlign: 'right',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    {item.duration}
+                  </Text>
                 </View>
               </View>
             );
@@ -124,8 +117,8 @@ BookingHistory.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   refId: PropTypes.string,
   clientName: PropTypes.string,
-  serviceName: PropTypes.string,
   staffName: PropTypes.string,
+  detail: PropTypes.array,
   appointmentDate: PropTypes.string,
   total: PropTypes.string,
   price: PropTypes.string,
@@ -138,8 +131,8 @@ BookingHistory.defaultProps = {
   style: {},
   refId: '',
   clientName: '',
-  serviceName: '',
   staffName: '',
+  detail: [],
   appointmentDate: '',
   total: '',
   price: '',

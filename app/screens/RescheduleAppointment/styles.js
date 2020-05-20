@@ -56,4 +56,8 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: BaseColor.secondBlackColor,
   },
+  rowBetweenAlign: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+  },
 });

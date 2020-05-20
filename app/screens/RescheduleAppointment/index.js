@@ -13,6 +13,7 @@ import {
 } from '@components';
 
 import {BaseStyle, BaseColor} from '@config';
+import {StartTimes} from '@data';
 import styles from './styles';
 
 class RescheduleAppointment extends Component {
@@ -21,6 +22,7 @@ class RescheduleAppointment extends Component {
     this.state = {
       refreshing: false,
       loading: false,
+      timeInterval: StartTimes,
     };
   }
 
@@ -31,7 +33,7 @@ class RescheduleAppointment extends Component {
   render() {
     const {navigation} = this.props;
     const item = this.props.navigation.state.params;
-    const {loading} = this.state;
+    const {loading, timeInterval} = this.state;
     let status = [
       {value: 'Confirmed'},
       {value: 'Pending'},
@@ -64,18 +66,6 @@ class RescheduleAppointment extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
-          renderRight={() => {
-            return (
-              <Icon
-                name="ellipsis-h"
-                size={15}
-                color={BaseColor.sectionColor}
-              />
-            );
-          }}
-          onPressRight={() => {
-            this.showActionSheet();
-          }}
           style={styles.headerStyle}
         />
         <ScrollView
@@ -84,19 +74,31 @@ class RescheduleAppointment extends Component {
             paddingHorizontal: 20,
             paddingVertical: 10,
           }}>
-          <Dropdown
-            label="Status"
-            data={status}
-            rippleOpacity={0.7}
-            baseColor={BaseColor.sectionColor}
-            textColor={BaseColor.titleColor}
-            style={{color: BaseColor.blackColor}}
-          />
           <View style={[styles.inputGroup, {flex: 1, flexDirection: 'column'}]}>
             <Text headline bold style={{color: BaseColor.sectionColor}}>
               Appointment Date
             </Text>
             <DatePicker time={item.appointmentDate} style={{marginTop: 10}} />
+          </View>
+          <View style={[styles.inputGroup, styles.rowBetweenAlign]}>
+            <View style={{flex: 1, marginRight: 10}}>
+              <Dropdown
+                label="Start Time"
+                baseColor={BaseColor.sectionColor}
+                textColor={BaseColor.titleColor}
+                data={timeInterval}
+                rippleOpacity={0.7}
+              />
+            </View>
+            <View style={{flex: 1, marginLeft: 10}}>
+              <Dropdown
+                label="End Time"
+                baseColor={BaseColor.sectionColor}
+                textColor={BaseColor.titleColor}
+                data={timeInterval}
+                rippleOpacity={0.7}
+              />
+            </View>
           </View>
           <BookingHistory
             refId={item.refId}
@@ -124,28 +126,31 @@ class RescheduleAppointment extends Component {
             </Text>
           </View>
         </ScrollView>
-        <ActionSheet
-          ref={(o) => (this.ActionSheet = o)}
-          title={''}
-          options={['Continue', 'Call', 'Cancel']}
-          cancelButtonIndex={2}
-          destructiveButtonIndex={1}
-          onPress={(index) => {
-            switch (index) {
-              case 0:
-                navigation.navigate('Continue');
-                break;
-              case 1:
-                navigation.navigate('Call');
-                break;
-              case 2:
-                navigation.navigate('Cancel');
-                break;
-              default:
-                break;
-            }
-          }}
-        />
+        <View
+          style={[
+            styles.inputGroup,
+            {
+              justifyContent: 'flex-end',
+              flexDirection: 'column',
+              paddingHorizontal: 20,
+              paddingVertical: 20,
+            },
+          ]}>
+          <Button
+            style={{paddingVertical: 10}}
+            styleText={{fontWeight: 'bold', fontSize: 22}}
+            loading={loading}
+            onPress={() => navigation.goBack()}>
+            Confirm
+          </Button>
+          <Button
+            style={{backgroundColor: '#bfbfbf', marginTop: 15}}
+            styleText={{fontWeight: 'bold', fontSize: 22}}
+            loading={loading}
+            onPress={() => navigation.navigate('RescheduleAppointment', item)}>
+            Exit
+          </Button>
+        </View>
       </SafeAreaView>
     );
   }

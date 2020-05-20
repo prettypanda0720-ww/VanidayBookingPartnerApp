@@ -44,7 +44,11 @@ class Loading extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image source={Images.splashlogo} style={styles.logo} resizeMode="contain" />
+        <Image
+          source={Images.splashlogo}
+          style={styles.logo}
+          resizeMode="contain"
+        />
         <View
           // eslint-disable-next-line react-native/no-inline-styles
           style={{
