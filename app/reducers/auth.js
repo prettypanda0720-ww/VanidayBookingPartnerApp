@@ -14,7 +14,7 @@ export default (state = {}, action = {}) => {
         loginLoading: false,
         loginSuccess: true,
         code: action.payload.code,
-        data: action.payload.data,
+        token: action.payload.data,
         message: action.payload.message,
       };
     case actionTypes.LOGIN_ERROR:
@@ -23,7 +23,7 @@ export default (state = {}, action = {}) => {
         loginLoading: false,
         loginSuccess: false,
         code: action.payload.code,
-        data: action.payload.data,
+        token: action.payload.data,
         message: action.payload.message,
       };
     default:

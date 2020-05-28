@@ -21,6 +21,7 @@ class SignIn extends Component {
     this.state = {
       id: '',
       password: '',
+      token: '',
       loginLoading: false,
       success: {
         id: true,
@@ -59,6 +60,7 @@ class SignIn extends Component {
     if (id != null && password != null) {
       await AsyncStorage.setItem('username', id);
       await AsyncStorage.setItem('password', password);
+      await AsyncStorage.setItem('token', password);
     }
   };
 
@@ -83,19 +85,19 @@ class SignIn extends Component {
     const {
       navigation,
       loginLoading,
-      data,
+      token,
       loginSuccess,
       code,
       message,
     } = this.props;
     console.log('-----after communication----');
-    console.log(data);
+    console.log(token);
     console.log(loginSuccess);
     console.log(loginLoading);
-    if (code == 0 && data != '') {
+    if (code == 0 && token != '') {
       navigation.navigate('Loading');
       this.storeAuthInfo();
-    } else if (code == -1 && data != '') {
+    } else if (code == -1 && token != '') {
       this.props.actions.resetStore();
     }
 
@@ -195,7 +197,7 @@ const mapStateToProps = (state) => {
     loginLoading: state.auth.loginLoading,
     loginSuccess: state.auth.loginSuccess,
     code: state.auth.code,
-    data: state.auth.data,
+    token: state.auth.data,
     message: state.auth.message,
   };
 };

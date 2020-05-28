@@ -8,5 +8,6 @@ export const Api = {
   myVaniMiddleWare: {
     API_BASE: 'http://192.168.6.227/api/myvaniday',
     LOGIN_URL: '/auth',
+    GET_ORDER_URL: '/fetchOrderList',
   },
 };

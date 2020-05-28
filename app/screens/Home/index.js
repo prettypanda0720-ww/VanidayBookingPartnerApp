@@ -15,19 +15,19 @@ import {Icon, AppointmentListItem, Text, Agenda} from '@components';
 // import {Agenda} from 'react-native-calendars';
 import Moment from 'moment';
 import {BaseColor, Images} from '@config';
-
+import {HomeActions} from '@actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {CalendarActions} from '@actions';
 import store from 'app/store';
 import XDate from 'xdate';
 
-class App extends Component<{}> {
+class Home extends Component<{}> {
   constructor(props) {
     super(props);
     this.state = {
       drawerOpen: null,
-      items: {},
+      myVanidayHomeData: {},
       numStaffs: 5,
       showMode: -1 /* if showMode = -1, show all staffs's appointment list, if showMode = nth, show nth-staffs's appointment list, */,
       currentDay: this.getCurrentDate(),
@@ -39,6 +39,13 @@ class App extends Component<{}> {
 
   setCalendarViewMode(mode) {
     this.props.actions.setCalendarViewMode(mode);
+  }
+
+  async componentDidMount() {
+    const {home} = this.props;
+    if (home.myVanidayHomeData != undefined) {
+      this.setState({myVanidayHomeData: home.myVanidayHomeData});
+    }
   }
 
   renderSideMenuContent = () => {
@@ -172,12 +179,14 @@ class App extends Component<{}> {
         </View>
         <Agenda
           // testID={testIDs.agenda.CONTAINER}
-          items={this.state.items}
+          items={this.state.myVanidayHomeData}
           loadItemsForMonth={this.loadItems.bind(this)}
-          selected={'2017-05-03'}
+          // selected={this.state.currentDay}
+          selected={'2020-05-28'}
           renderItem={this.renderItem.bind(this)}
           renderEmptyDate={this.renderEmptyDate.bind(this)}
           rowHasChanged={this.rowHasChanged.bind(this)}
+          onDayPress={this.loadItems.bind(this)}
           // renderKnob={() => {return (<View style={{marginTop: 15, width: 60, height: 10, backgroundColor: BaseColor.fieldColor}}></View>);}}
           // markingType={'period'}
           // markedDates={{
@@ -218,138 +227,30 @@ class App extends Component<{}> {
   }
 
   loadItems(day) {
-    this.state.items = {};
-    this.state.currentDay = day;
-    let names = [
-      '2 Jun Classic Manicure + Pedicure + SPA',
-      '2 Jun Nail Art',
-      '2 Jun Hair Colouring',
-      '3 Jun Woman Hair, Wash and Blow',
-      '3 Jun Gel Manicure + Gel Pedicure + Sock Off',
-      '3 Jun Classic Manicure',
-      '3 Jun Classic Gel Pedicure and Soak Off',
-    ];
-    let clients = [
-      'Judy T',
-      'William Lay',
-      'Wendy Smith',
-      'Judy T',
-      'William Lay',
-      'Wendy Smith',
-      'Wendy Smith',
-    ];
-    setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
-        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = this.timeToString(time);
-        if (!this.state.items[strTime]) {
-          this.state.items[strTime] = [];
-
-          for (let j = 0; j < this.state.numStaffs; j++) {
-            let appointmentbystaff = {};
-            appointmentbystaff[j] = [];
-            let tpStaffName = '';
-            switch (j) {
-              case 0:
-                tpStaffName = 'YUKI';
-                break;
-              case 1:
-                tpStaffName = 'William Lay';
-                break;
-              case 2:
-                tpStaffName = 'Judy T';
-                break;
-              case 3:
-                tpStaffName = 'YUKI';
-                break;
-              case 4:
-                tpStaffName = 'William Lay';
-                break;
-            }
-            let tpDuration = '';
-            switch (j) {
-              case 0:
-                tpDuration = '1.5HR';
-                break;
-              case 1:
-                tpDuration = '1HR';
-                break;
-              case 2:
-                tpDuration = '0.5HR';
-                break;
-              case 3:
-                tpDuration = '2HR';
-                break;
-              case 4:
-                tpDuration = '2.5HR';
-                break;
-            }
-            let tpState = j % 2 == 0 ? 'Pending' : 'Expired';
-
-            appointmentbystaff[j].push({
-              refId: '#152364212',
-              total: 'SGD20',
-              acceptedState: tpState,
-              customerName: clients[j],
-              name: names[j],
-              staffName: tpStaffName,
-              appointmentDate: this.timeToAsianString(time),
-              startTime: '2:30 PM',
-              endTime: '4:00 PM',
-              duration: tpDuration,
-              height: Math.max(50, Math.floor(Math.random() * 150)),
-            });
-            this.state.items[strTime].push(appointmentbystaff);
-          }
-        }
-      }
-
-      const newItems = {};
-      Object.keys(this.state.items).forEach((key1) => {
-        Object.keys(this.state.items[key1]).forEach((key2) => {
-          if (this.state.showMode == -1) {
-            newItems[key1] = this.state.items[key1];
-          } else if (this.state.showMode == key2) {
-            newItems[key1] = [];
-            newItems[key1].push(this.state.items[key1][key2]);
-          }
-        });
-      });
-      this.setState({
-        items: newItems,
-      });
-    }, 1000);
+    const {home} = this.props;
+    this.state.myVanidayHomeData[day.dateString] = [];
+    if (home.myVanidayHomeData != undefined) {
+      // this.state.myVanidayHomeData[day.dateString].cle
+      this.state.myVanidayHomeData[day.dateString].push(home.myVanidayHomeData);
+    }
   }
 
   renderItem(item) {
-    const newItems = [];
-    Object.keys(item).forEach((key) => {
-      if (this.state.showMode == -1) {
-        Object(item[key]).forEach((element) => {
-          newItems.push(element);
-        });
-      } else if (this.state.showMode == key) {
-        Object(item[key]).forEach((element) => {
-          newItems.push(element);
-        });
-      }
-    });
-
     return (
       <FlatList
-        data={newItems}
+        data={this.state.myVanidayHomeData}
         keyExtractor={(item, index) => item.id}
         renderItem={({item}) => (
           <AppointmentListItem
             refId={'#125463215'}
-            acceptedState={item.acceptedState}
+            acceptedState={item.status}
             customerName={item.customerName}
-            name={item.name}
+            name={item.serviceName}
             staffName={item.staffName}
             appointmentDate={item.appointmentDate}
-            startTime={item.startTime}
-            endTime={item.endTime}
-            duration={item.duration}
+            startTime={item.bookingFrom}
+            endTime={item.bookingTo}
+            duration={item.service_duration}
             total={'SGD20'}
             onPress={() => this.goToScreen('ManageAppointment', item)}
           />
@@ -366,6 +267,8 @@ class App extends Component<{}> {
     this.setState({modalVisible: false});
   }
   render() {
+    console.log('state orders');
+    console.log(this.state.items);
     return (
       <Drawer
         open={this.state.drawerOpen}
@@ -419,22 +322,25 @@ class App extends Component<{}> {
   getCurrentDate() {
     var today = new Date();
     var date =
-      today.getDate() +
-      '/' +
+      today.getFullYear() +
+      '-' +
       parseInt(today.getMonth() + 1) +
-      '/' +
-      today.getFullYear();
+      '-' +
+      today.getDate();
+    console.log('date format');
+    console.log(date);
     return date;
   }
 }
 
-App.defaultProps = {};
+Home.defaultProps = {};
 
-App.propTypes = {};
+Home.propTypes = {};
 
 const mapStateToProps = (state) => {
   return {
     calendar: state.calendar,
+    home: state.home,
   };
 };
 
@@ -444,4 +350,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

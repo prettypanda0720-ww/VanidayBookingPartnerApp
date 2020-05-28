@@ -83,7 +83,9 @@ export default class AppointmentListItem extends Component {
   }
 
   render() {
-    let {block, grid} = this.props;
+    let {block, grid, appointmentDate} = this.props;
+    console.log('------appointment date-----');
+    console.log(appointmentDate);
     return this.renderBlock();
   }
 

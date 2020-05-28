@@ -22,9 +22,7 @@ class SplashScreen extends Component {
 
     if (username != null && password != null) {
       this.props.actions.authentication(username, password);
-      console.log('-------get username and password from preferences----');
     } else {
-      console.log('-------go to sign in page----');
       setTimeout(() => {
         this.props.navigation.navigate('SignIn');
       }, 200);
@@ -35,7 +33,7 @@ class SplashScreen extends Component {
     const {navigation, loginLoading, data, loginSuccess} = this.props;
 
     if (loginSuccess && data != '') {
-      navigation.navigate('Loading');
+      navigation.navigate('Loading', {token: this.props.data});
     }
 
     return (

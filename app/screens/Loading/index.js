@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {AuthActions} from '@actions';
+import {HomeActions} from '@actions';
 import {ActivityIndicator, View} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {Images, BaseColor} from '@config';
 import SplashScreen from 'react-native-splash-screen';
 import {Image, Text} from '@components';
+import AsyncStorage from '@react-native-community/async-storage';
+import PropTypes from 'prop-types';
 import styles from './styles';
 
 class Loading extends Component {
@@ -33,15 +35,20 @@ class Loading extends Component {
     }
   }
 
-  componentWillMount() {
-    this.props.actions.authentication(false, (response) => {});
-  }
-
-  componentDidMount() {
-    this.onProcess();
+  async componentDidMount() {
+    // let token = await AsyncStorage.getItem('token');
+    console.log('Loading screen is mounted!');
+    const token = this.props.navigation.state.params.token;
+    let currentDate = this.getCurrentDate();
+    await this.props.actions.fetchOrderByDate(token, -1, currentDate);
   }
 
   render() {
+    const {loadingmyVanidayHome, myVanidayHomeData, navigation} = this.props;
+    if (!loadingmyVanidayHome && myVanidayHomeData != undefined) {
+      navigation.navigate('Main', {orders: myVanidayHomeData});
+    }
+
     return (
       <View style={styles.container}>
         <Image
@@ -72,18 +79,43 @@ class Loading extends Component {
       </View>
     );
   }
+
+  getCurrentDate() {
+    var today = new Date();
+    var date =
+      today.getFullYear() +
+      '-' +
+      parseInt(today.getMonth() + 1) +
+      '-' +
+      today.getDate();
+    console.log('date format');
+    console.log(date);
+    return date;
+  }
 }
+
+Loading.defaultProps = {
+  loadingmyVanidayHome: false,
+  myVanidayHomeData: [],
+};
+
+Loading.propTypes = {
+  loadingmyVanidayHome: PropTypes.bool,
+  myVanidayHomeData: PropTypes.array,
+};
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth,
+    loadingmyVanidayHome: state.home.loadingVanidayHome,
+    myVanidayHomeData: state.home.vanidayHomeData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(AuthActions, dispatch),
+    actions: bindActionCreators(HomeActions, dispatch),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Loading);
+// export default Loading;
