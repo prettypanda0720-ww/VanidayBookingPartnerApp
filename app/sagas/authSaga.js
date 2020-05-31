@@ -32,7 +32,6 @@ function* loginTask(action) {
       type: actionTypes.LOGIN_ERROR,
       payload: '',
     });
-    console.log('http exception');
   }
 }
 

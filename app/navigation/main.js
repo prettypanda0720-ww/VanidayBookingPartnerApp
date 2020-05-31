@@ -174,9 +174,9 @@ const StackNavigator = createStackNavigator(
     SignUp: {
       screen: SignUp,
     },
-    SignIn: {
-      screen: SignIn,
-    },
+    // SignIn: {
+    //   screen: SignIn,
+    // },
     Schedule: {
       screen: Schedule,
     },

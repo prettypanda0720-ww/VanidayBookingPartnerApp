@@ -10,6 +10,7 @@ import ReservationsList from './reservation-list';
 import styleConstructor from './style';
 import {VelocityTracker} from '../input';
 import {AGENDA_CALENDAR_KNOB} from '../testIDs';
+import {BaseColor} from '@config';
 
 const HEADER_HEIGHT = 104;
 const KNOB_HEIGHT = 24;
@@ -114,6 +115,7 @@ export default class AgendaView extends Component {
       topDay: parseDate(this.props.selected) || XDate(true),
     };
     console.log('asdfasdasdfasdf');
+    console.log(this.props.selected);
     console.log(parseDate(this.props.selected));
     this.currentMonth = this.state.selectedDay.clone();
     this.onLayout = this.onLayout.bind(this);
@@ -346,12 +348,13 @@ export default class AgendaView extends Component {
 
   generateMarkings() {
     let markings = this.props.markedDates;
-
+    console.log('markings');
+    console.log(markings);
     if (!markings) {
       markings = {};
       Object.keys(this.props.items || {}).forEach((key) => {
         if (this.props.items[key] && this.props.items[key].length) {
-          markings[key] = {marked: true};
+          markings[key] = {marked: true, dotColor: BaseColor.sectionColor};
         }
       });
     }

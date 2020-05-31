@@ -1,4 +1,5 @@
 import request from '@utils/request';
+import store from 'app/store';
 import {Api} from '@config';
 
 function doLogin(email, password) {
@@ -14,12 +15,11 @@ function doLogin(email, password) {
   });
 }
 
-function fetchOrderByDate(token, staffId, currentDate) {
-  
+function fetchOrderByDate(staffId, currentDate) {
   var url = Api.myVaniMiddleWare.GET_ORDER_URL;
-  console.log(url);
+  // const token = store.getState().auth.token;
   const data = {
-    token: token,
+    // token: token,
     staffId: staffId,
     bookingDate: currentDate,
   };

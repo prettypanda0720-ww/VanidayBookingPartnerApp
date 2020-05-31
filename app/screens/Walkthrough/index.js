@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {AuthActions} from '@actions';
-import {View, TouchableOpacity, TextInput, ScrollView} from 'react-native';
+import {View, TouchableOpacity, ScrollView, StatusBar} from 'react-native';
 import {bindActionCreators} from 'redux';
-import {SafeAreaView, Text, Button, Image} from '@components';
+import {Text, Button, Image} from '@components';
 import styles from './styles';
 import Swiper from 'react-native-swiper';
-import {BaseColor, BaseStyle, Images} from '@config';
+import {BaseColor, Images} from '@config';
 import * as Utils from '@utils';
+import LinearGradient from 'react-native-linear-gradient';
 
 class Walkthrough extends Component {
   constructor(props) {
@@ -16,158 +17,95 @@ class Walkthrough extends Component {
     this.state = {
       loading: false,
       scrollEnabled: true,
-      id: '',
-      password: '',
-      success: {
-        id: true,
-        password: true,
-      },
+      slide: [
+        {
+          key: 1,
+          image: Images.profile1,
+          title: 'Post a job if you want any help',
+        },
+        {key: 2, image: Images.profile2, title: 'Find helpers near around'},
+        {key: 3, image: Images.profile3, title: 'Pay to your helpers'},
+        {
+          key: 4,
+          image: Images.profile4,
+          title: 'Rate your helpers and get feedback from them',
+        },
+      ],
     };
   }
-
-  onLogin() {
-    const {id, password, success} = this.state;
-
-    if (id == '' || password == '') {
-      this.setState({
-        success: {
-          ...success,
-          id: false,
-          password: false,
-        },
-      });
-    } else {
-      const user = {
-        email: this.state.id,
-        password: this.state.password,
-      };
-      this.setState({
-        loading: true,
-      });
-      this.authentication();
-    }
-  }
-
-  authentication() {
-    this.setState(
-      {
-        loading: true,
-      },
-      () => {
-        this.props.actions.authentication('123', '123');
-      },
-    );
-  }
-
-  async componentWillReceiveProps(nextProps, nextContext) {
-    await this.handleRedirect(nextProps.auth);
-  }
-
-  handleRedirect = (auth) => {
-    if (auth.login.success) {
-      this.props.navigation.navigate('Loading');
-    } else {
-      this.props.navigation.navigate('Walkthrough');
-    }
-  };
 
   render() {
     const {navigation} = this.props;
     return (
-      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
-        <View style={styles.contain}>
-          <View style={{width: '100%', alignItems: 'center'}}>
-            <Image
-              source={Images.splashlogo}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-            <Text
-              subhead
-              grayColor
-              style={{marginTop: 10, color: BaseColor.secondBlackColor}}>
-              Partner Management
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 30}]}
-              onChangeText={(text) => this.setState({id: text})}
-              onFocus={() => {
-                this.setState({
-                  success: {
-                    ...this.state.success,
-                    id: true,
-                  },
-                });
-              }}
-              autoCorrect={false}
-              placeholder="Email"
-              placeholderTextColor={
-                this.state.success.id
-                  ? BaseColor.secondBlackColor
-                  : BaseColor.primaryColor
-              }
-              value={this.state.id}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 10}]}
-              onChangeText={(text) => this.setState({password: text})}
-              onFocus={() => {
-                this.setState({
-                  success: {
-                    ...this.state.success,
-                    password: true,
-                  },
-                });
-              }}
-              autoCorrect={false}
-              placeholder="Password"
-              secureTextEntry={true}
-              placeholderTextColor={
-                this.state.success.password
-                  ? BaseColor.secondBlackColor
-                  : BaseColor.primaryColor
-              }
-              value={this.state.password}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <Button
+      <LinearGradient
+        start={{x: 0, y: 1}}
+        end={{x: 1, y: 0}}
+        colors={['#5574F7', '#60C3FF']}
+        style={{flex: 1}}>
+        <StatusBar hidden={true} />
+        <ScrollView
+          style={styles.contain}
+          scrollEnabled={this.state.scrollEnabled}
+          onContentSizeChange={(contentWidth, contentHeight) =>
+            this.setState({
+              scrollEnabled: Utils.scrollEnabled(contentWidth, contentHeight),
+            })
+          }>
+          {/* <View style={styles.wrapper}> */}
+          {/* Images Swiper */}
+          <Swiper
+            containerStyle={styles.wrapper}
+            dotStyle={{
+              backgroundColor: BaseColor.textSecondaryColor,
+            }}
+            activeDotColor={BaseColor.primaryColor}
+            paginationStyle={styles.contentPage}
+            removeClippedSubviews={false}>
+            {this.state.slide.map((item, index) => {
+              return (
+                <View style={styles.slide} key={item.key}>
+                  <Image source={item.image} style={styles.img} />
+                  <Text body1 whiteColor style={styles.textSlide}>
+                    {item.title}
+                  </Text>
+                </View>
+              );
+            })}
+          </Swiper>
+          {/* </View> */}
+          <View style={styles.buttonGroup}>
+            {/* <Button
               full
               style={{
+                backgroundColor: BaseColor.navyBlue,
                 marginTop: 20,
-                backgroundColor: BaseColor.secondBlackColor,
               }}
+              onPress={() => {}}>
+              Login with Facebook
+            </Button> */}
+            <Button
+              full
+              style={{marginTop: 20}}
               loading={this.state.loading}
-              onPress={() => {
-                this.onLogin();
-              }}>
+              onPress={() => navigation.navigate('SignIn')}>
               Sign In
             </Button>
             <View style={styles.contentActionBottom}>
               <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                <Text subhead style={{color: BaseColor.secondBlackColor}}>
-                  Be a Partner
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => navigation.navigate('ResetPassword')}>
-                <Text subhead style={{color: BaseColor.secondBlackColor}}>
-                  Forgot Password
+                <Text body1 fieldColor>
+                  Don't have an account? <Text darkBlueColor>Sign up.</Text>
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
-        </View>
-      </SafeAreaView>
+        </ScrollView>
+      </LinearGradient>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-  };
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -1,34 +1,8 @@
 import React, {Component} from 'react';
-import {
-  FlatList,
-  View,
-  TextInput,
-  Animated,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  RefreshControl,
-  ScrollView,
-  Alert,
-} from 'react-native';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-  CustomPhoneInput,
-  ProfileDescription,
-} from '@components';
-import CheckBox from 'react-native-checkbox';
+import {View, TextInput, TouchableOpacity, ScrollView} from 'react-native';
+import {Header, SafeAreaView, Icon, ProfileDescription} from '@components';
+
 import {Values} from '@data';
-import CountryPicker, {
-  DARK_THEME,
-  FlagButton,
-  withFlagButton,
-  withCallingCode,
-  isPickerVisible,
-} from 'react-native-country-picker-modal';
 
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import styles from './styles';
@@ -84,7 +58,9 @@ class CategoryProducts extends Component {
         <Header
           title="HairCut Products"
           renderLeft={() => {
-            return <Icon name="angle-left" size={20} color={BaseColor.blackColor} />;
+            return (
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
+            );
           }}
           onPressLeft={() => {
             navigation.goBack();

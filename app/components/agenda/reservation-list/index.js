@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {FlatList, ActivityIndicator, View} from 'react-native';
+import {Text} from '@components';
 import Reservation from './reservation';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
@@ -119,16 +120,48 @@ class ReservationList extends Component {
   }
 
   renderRow({item, index}) {
+    var dateString = item["day"];
+    const date = new Date(dateString);
+    let day = '';
+    if (date.getDay() == 0) {
+      switch ((parseInt(date.getMonth()) + 1) % 2) {
+        case 0:
+          day = 30;
+          break;
+        case 1:
+          day = 31;
+          break;
+      }
+    }
     return (
       <View onLayout={this.onRowLayoutChange.bind(this, index)}>
-        <Reservation
-          item={item}
-          renderItem={this.props.renderItem}
-          renderDay={this.props.renderDay}
-          renderEmptyDate={this.props.renderEmptyDate}
-          theme={this.props.theme}
-          rowHasChanged={this.props.rowHasChanged}
-        />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+          }}>
+          <View style={this.styles.day}>
+            <Text allowFontScaling={false} style={this.styles.dayNum}>
+              {date.getDay() == 0 ? day : date.getDay()}
+              {/* {date.getDay()} */}
+            </Text>
+            <Text allowFontScaling={false} style={this.styles.dayText}>
+              {XDate.locales[XDate.defaultLocale].dayNamesShort[date.getDay()]}
+            </Text>
+          </View>
+          <View style={{flex: 3}}>
+            <Reservation
+              item={item}
+              renderItem={this.props.renderItem}
+              renderDay={this.props.renderDay}
+              renderEmptyDate={this.props.renderEmptyDate}
+              theme={this.props.theme}
+              rowHasChanged={this.props.rowHasChanged}
+            />
+          </View>
+        </View>
       </View>
     );
   }

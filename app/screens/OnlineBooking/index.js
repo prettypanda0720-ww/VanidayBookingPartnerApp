@@ -1,38 +1,11 @@
 import React, {Component} from 'react';
-import {
-  FlatList,
-  View,
-  TextInput,
-  Animated,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  RefreshControl,
-  ScrollView,
-  Switch,
-} from 'react-native';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  SignupTextInput,
-  Button,
-  ProfileDescription,
-  PhoneInput,
-  DatePicker,
-  VanidayTimePicker,
-  ServiceInput,
-  DurationPicker,
-} from '@components';
+import {View, ScrollView, Switch} from 'react-native';
+import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 
 import {Dropdown} from 'react-native-material-dropdown';
 
-import {TabView, TabBar} from 'react-native-tab-view';
-import CheckBox from 'react-native-checkbox';
-import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
+import {BaseStyle, BaseColor} from '@config';
 import PropTypes from 'prop-types';
-import * as Utils from '@utils';
 import styles from './styles';
 
 class EditService extends Component {

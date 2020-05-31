@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View, Image, ScrollView} from 'react-native';
 import {Header, SafeAreaView, Icon, Button, Text} from '@components';
-import CheckBox from 'react-native-checkbox';
 import {Values} from '@data';
 
 import {BaseStyle, BaseColor, Images} from '@config';

@@ -30,10 +30,10 @@ class SplashScreen extends Component {
   };
 
   render() {
-    const {navigation, loginLoading, data, loginSuccess} = this.props;
-
-    if (loginSuccess && data != '') {
-      navigation.navigate('Loading', {token: this.props.data});
+    const {navigation, loginLoading, token, loginSuccess} = this.props;
+    if (loginSuccess && token != '') {
+      // navigation.navigate('Loading', {token: this.props.token});
+      navigation.navigate('Main');
     }
 
     return (
@@ -78,7 +78,7 @@ SplashScreen.propTypes = {
 const mapStateToProps = (state) => {
   return {
     loginLoading: state.auth.loginLoading,
-    data: state.auth.data,
+    token: state.auth.token,
     loginSuccess: state.auth.loginSuccess,
   };
 };

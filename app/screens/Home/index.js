@@ -7,20 +7,18 @@ import {
   Modal,
   View,
   Alert,
-  FlatList,
 } from 'react-native';
 import styles from './styles';
 import Drawer from 'react-native-drawer';
-import {Icon, AppointmentListItem, Text, Agenda} from '@components';
+import {Icon, AppointmentListItem, Text, Agenda, dateutils} from '@components';
 // import {Agenda} from 'react-native-calendars';
 import Moment from 'moment';
 import {BaseColor, Images} from '@config';
-import {HomeActions} from '@actions';
+import {myAppointmentsSvc} from '@services';
 import {connect} from 'react-redux';
+import {AuthActions} from '@actions';
 import {bindActionCreators} from 'redux';
-import {CalendarActions} from '@actions';
 import store from 'app/store';
-import XDate from 'xdate';
 
 class Home extends Component<{}> {
   constructor(props) {
@@ -30,22 +28,21 @@ class Home extends Component<{}> {
       myVanidayHomeData: {},
       numStaffs: 5,
       showMode: -1 /* if showMode = -1, show all staffs's appointment list, if showMode = nth, show nth-staffs's appointment list, */,
-      currentDay: this.getCurrentDate(),
+      currentDate: this.getCurrentDate(),
+      year: '',
+      month: this.getCurrentMonth(),
+      day: '',
       modalVisible: false,
     };
-
-    let unsubscribe = store.subscribe(() => {});
+    console.log('home constructor');
   }
 
-  setCalendarViewMode(mode) {
-    this.props.actions.setCalendarViewMode(mode);
-  }
-
-  async componentDidMount() {
-    const {home} = this.props;
-    if (home.myVanidayHomeData != undefined) {
-      this.setState({myVanidayHomeData: home.myVanidayHomeData});
-    }
+  componentDidMount() {
+    console.log('home mounted');
+    // const {home} = this.props;
+    // if (home.myVanidayHomeData != undefined) {
+    //   this.setState({myVanidayHomeData: home.myVanidayHomeData});
+    // }
   }
 
   renderSideMenuContent = () => {
@@ -57,7 +54,7 @@ class Home extends Component<{}> {
           onPress={() => {
             this.setState({showMode: -1});
             setTimeout(() => {
-              this.loadItems(this.state.currentDay);
+              this.loadItems(this.state.currentDate);
             }, 1000);
             this.setState({drawerOpen: false});
           }}>
@@ -70,7 +67,7 @@ class Home extends Component<{}> {
             onPress={() => {
               this.setState({showMode: 0});
               setTimeout(() => {
-                this.loadItems(this.state.currentDay);
+                this.loadItems(this.state.currentDate);
               }, 1000);
               this.setState({drawerOpen: false});
             }}>
@@ -84,7 +81,7 @@ class Home extends Component<{}> {
             onPress={() => {
               this.setState({showMode: 1});
               setTimeout(() => {
-                this.loadItems(this.state.currentDay);
+                this.loadItems(this.state.currentDate);
               }, 1000);
               this.setState({drawerOpen: false});
             }}>
@@ -96,7 +93,8 @@ class Home extends Component<{}> {
   };
 
   renderMainContent = () => {
-    var date = new Date(this.state.currentDay);
+    console.log('this.state.myVanidayHomeData');
+    console.log(this.state.myVanidayHomeData);
     return (
       <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
         <Modal
@@ -166,7 +164,7 @@ class Home extends Component<{}> {
               Appointments
             </Text>
             <Text subhead semibold>
-              May
+              {this.state.month}
             </Text>
           </View>
           <TouchableOpacity
@@ -181,23 +179,25 @@ class Home extends Component<{}> {
           // testID={testIDs.agenda.CONTAINER}
           items={this.state.myVanidayHomeData}
           loadItemsForMonth={this.loadItems.bind(this)}
-          // selected={this.state.currentDay}
-          selected={'2020-05-28'}
+          selected={this.state.currentDate}
+          // selected={'2020-05-28'}
           renderItem={this.renderItem.bind(this)}
           renderEmptyDate={this.renderEmptyDate.bind(this)}
           rowHasChanged={this.rowHasChanged.bind(this)}
-          onDayPress={this.loadItems.bind(this)}
+          // onDayPress={this.loadItems.bind(this)}
           // renderKnob={() => {return (<View style={{marginTop: 15, width: 60, height: 10, backgroundColor: BaseColor.fieldColor}}></View>);}}
           // markingType={'period'}
           // markedDates={{
-          //    '2017-05-08': {textColor: '#43515c'},
-          //    '2017-05-09': {textColor: '#43515c'},
-          //    '2017-05-14': {startingDay: true, endingDay: true, color: 'blue'},
-          //    '2017-05-21': {startingDay: true, color: 'blue'},
-          //    '2017-05-22': {endingDay: true, color: 'gray'},
-          //    '2017-05-24': {startingDay: true, color: 'gray'},
-          //    '2017-05-25': {color: 'gray'},
-          //    '2017-05-26': {endingDay: true, color: 'gray'}}}
+          //   '2020-05-08': {textColor: '#43515c'},
+          //   '2020-05-09': {textColor: '#43515c'},
+          //   '2020-05-14': {startingDay: true, endingDay: true, color: 'blue'},
+          //   '2020-05-21': {startingDay: true, color: 'blue'},
+          //   '2020-05-22': {endingDay: true, color: 'gray'},
+          //   '2020-05-24': {marked: true, startingDay: true, color: 'gray'},
+          //   '2020-05-25': {marked: true, color: 'gray'},
+          //   '2020-05-29': {marked: true, endingDay: true, color: 'gray'},
+          //   '2020-05-30': {marked: true, endingDay: true, color: 'gray'},
+          // }}
           // monthFormat={'yyyy'}
           theme={{calendarBackground: 'white', agendaKnobColor: '#BDBDBD'}}
           //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
@@ -227,35 +227,70 @@ class Home extends Component<{}> {
   }
 
   loadItems(day) {
-    const {home} = this.props;
-    this.state.myVanidayHomeData[day.dateString] = [];
-    if (home.myVanidayHomeData != undefined) {
-      // this.state.myVanidayHomeData[day.dateString].cle
-      this.state.myVanidayHomeData[day.dateString].push(home.myVanidayHomeData);
+    const {auth} = this.props;
+    console.log('loaditems');
+    console.log(auth.user.token);
+    this.setState({year: day.year});
+    this.setState({month: this.getMonthName(day.month - 1)});
+    this.setState({day: day.day});
+    if (auth.user.token !== undefined) {
+      myAppointmentsSvc
+        .fetchOrderByDate(auth.user.token, -1, day.dateString)
+        .then((response) => {
+          console.log('appointmentsdata');
+          console.log(response.data.data);
+          this.state.myVanidayHomeData[day.dateString] = [];
+          if (response.data.data != undefined) {
+            console.log('response orders');
+            console.log(response.data.data);
+            this.setState({myVanidayHomeData: response.data.data});
+          }
+        })
+        .catch((error) => {
+          // this.state.myVanidayHomeData[day.dateString] = [];
+          console.log('appointment error');
+          console.log(error);
+        });
     }
   }
 
   renderItem(item) {
+    // const newItems = [];
+    // Object.keys(item).forEach((key) => {
+    //   newItems.push(item[key]);
+    //   console.log('--------------------' + key);
+    //   console.log(item[key]);
+    //   if (this.state.showMode == -1) {
+    //     Object(item[key]).forEach((element) => {
+    //       newItems.push(element);
+    //     });
+    //   } else if (this.state.showMode == key) {
+    //     Object(item[key]).forEach((element) => {
+    //       newItems.push(element);
+    //     });
+    //   }
+    // });
     return (
-      <FlatList
-        data={this.state.myVanidayHomeData}
-        keyExtractor={(item, index) => item.id}
-        renderItem={({item}) => (
-          <AppointmentListItem
-            refId={'#125463215'}
-            acceptedState={item.status}
-            customerName={item.customerName}
-            name={item.serviceName}
-            staffName={item.staffName}
-            appointmentDate={item.appointmentDate}
-            startTime={item.bookingFrom}
-            endTime={item.bookingTo}
-            duration={item.service_duration}
-            total={'SGD20'}
-            onPress={() => this.goToScreen('ManageAppointment', item)}
-          />
-        )}
+      // <FlatList
+      //   data={newItems}
+      //   keyExtractor={(item, index) => item.id}
+      //   renderItem={({item}) => (
+      <AppointmentListItem
+        refId={item.id}
+        acceptedState={item.status}
+        customerName={'Judy T'}
+        name={item.serviceName}
+        staffName={item.staffName}
+        appointmentDate={item.slotDate}
+        startTime={item.slotTime}
+        endTime={item.bookingTo}
+        duration={item.service_duration}
+        total={item.price}
+        day={this.state.day}
+        onPress={() => this.goToScreen('ManageAppointment', item)}
       />
+      // )}
+      // />
     );
   }
 
@@ -267,8 +302,6 @@ class Home extends Component<{}> {
     this.setState({modalVisible: false});
   }
   render() {
-    console.log('state orders');
-    console.log(this.state.items);
     return (
       <Drawer
         open={this.state.drawerOpen}
@@ -293,7 +326,9 @@ class Home extends Component<{}> {
   renderEmptyDate() {
     return (
       <View style={styles.emptyDate}>
-        <Text>This is empty date!</Text>
+        <Text title3 bold style={{color: BaseColor.sectionColor}}>
+          No Upcoming Appointments!
+        </Text>
       </View>
     );
   }
@@ -314,39 +349,52 @@ class Home extends Component<{}> {
     return Moment(date).format('d MMM Y');
   }
 
-  getCurrentMonth(time) {
-    var today = new Date(time);
-    return today.toISOString().split('T')[1];
+  getCurrentMonth() {
+    var today = new Date();
+    return this.getMonthName(parseInt(today.getMonth()) - 1);
   }
 
   getCurrentDate() {
-    var today = new Date();
-    var date =
-      today.getFullYear() +
-      '-' +
-      parseInt(today.getMonth() + 1) +
-      '-' +
-      today.getDate();
-    console.log('date format');
-    console.log(date);
-    return date;
+    // var today = new Date();
+    // var date =
+    //   today.getFullYear() +
+    //   '-' +
+    //   parseInt(today.getMonth() + 1) +
+    //   '-' +
+    //   today.getDate();
+    // return "'" + date.toString() + "'";
+    // return date.toString();
+    return new Date();
+  }
+
+  getMonthName(number) {
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    return monthNames[number];
   }
 }
 
-Home.defaultProps = {};
-
-Home.propTypes = {};
-
 const mapStateToProps = (state) => {
   return {
-    calendar: state.calendar,
-    home: state.home,
+    auth: state.auth,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators(CalendarActions, dispatch),
+    actions: bindActionCreators(AuthActions, dispatch),
   };
 };
 

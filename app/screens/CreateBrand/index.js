@@ -19,15 +19,7 @@ import {
   Button,
   CustomPhoneInput,
 } from '@components';
-import CheckBox from 'react-native-checkbox';
 import {Values} from '@data';
-import CountryPicker, {
-  DARK_THEME,
-  FlagButton,
-  withFlagButton,
-  withCallingCode,
-  isPickerVisible,
-} from 'react-native-country-picker-modal';
 
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import styles from './styles';

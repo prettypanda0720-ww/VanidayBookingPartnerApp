@@ -1,26 +1,12 @@
 import React, {Component} from 'react';
-import {
-  FlatList,
-  View,
-  TextInput,
-  Animated,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  RefreshControl,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import {
   Header,
   SafeAreaView,
   Icon,
   Text,
-  Button,
-  CustomPhoneInput,
   ProfileDescription,
 } from '@components';
-import CheckBox from 'react-native-checkbox';
 import {Values} from '@data';
 import CountryPicker, {
   DARK_THEME,

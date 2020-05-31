@@ -98,4 +98,15 @@ export default StyleSheet.create({
     borderBottomColor: BaseColor.secondBlackColor,
     borderBottomWidth: 1,
   },
+  emptyDate: {
+    flex: 1,
+    paddingVertical: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: BaseColor.grayColor,
+    backgroundColor: BaseColor.fieldColor,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+  }
 });

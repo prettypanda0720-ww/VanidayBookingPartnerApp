@@ -90,15 +90,14 @@ export default StyleSheet.create({
   },
   serviceItemWrapper: {
     borderColor: BaseColor.grayColor,
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 10,
-    marginBottom: 5,
     backgroundColor: BaseColor.fieldColor,
-    borderWidth: 1,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
     // flex: 1,
     flexDirection: 'row',
-    borderRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
   },
   serviceItemNameStyle: {
     fontSize: 14,
@@ -133,5 +132,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: BaseColor.MainPrimaryColor,
+    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 4,
   },
 });

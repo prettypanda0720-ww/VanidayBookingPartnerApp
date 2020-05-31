@@ -13,93 +13,75 @@ import {BaseStyle, BaseColor, Images} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import AsyncStorage from '@react-native-community/async-storage';
 import styles from './styles';
+import {showMessage} from 'react-native-flash-message';
 // import firebaseSvc from '@services/FirebaseSvc';
 
 class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: '',
+      email: '',
       password: '',
-      token: '',
-      loginLoading: false,
-      success: {
-        id: true,
-        password: true,
-      },
-      fireBaseLogin: false,
     };
   }
 
-  onLogin() {
-    const {id, password, success} = this.state;
-
-    if (id == '' || password == '') {
-      this.setState({
-        success: {
-          ...success,
-          id: false,
-          password: false,
-        },
-      });
-    } else {
-      const user = {
-        email: this.state.id,
-        password: this.state.password,
-      };
-      this.setState({
-        loginLoading: true,
-      });
-      this.props.actions.authentication(user.email, user.password);
+  onLogin = () => {
+    if (!this.checkInput()) {
+      return;
     }
-  }
 
-  storeAuthInfo = async () => {
-    const {id, password} = this.state;
+    const {email, password} = this.state;
+    const {navigation, actions} = this.props;
 
-    if (id != null && password != null) {
-      await AsyncStorage.setItem('username', id);
-      await AsyncStorage.setItem('password', password);
-      await AsyncStorage.setItem('token', password);
-    }
-  };
-
-  loginFireBaseSuccess = () => {
-    const {navigation} = this.props;
-    this.props.actions.authentication(true, (response) => {
-      if (response.success) {
-        navigation.navigate('Loading');
+    const credential = {
+      email: email,
+      password: password,
+    };
+    actions.login(credential, (response) => {
+      console.log('------- login response', response);
+      if (response.code == 0) {
+        // showMessage({
+        //   message: response.msg,
+        //   type: 'success',
+        //   icon: 'auto',
+        // });
+        console.log('success');
+        navigation.navigate('Home');
       } else {
-        this.setState({
-          loginLoading: false,
+        showMessage({
+          message: response.msg,
+          type: 'warning',
+          icon: 'auto',
         });
       }
     });
   };
 
-  loginFireBaseFailed() {
-    Alert.alert('failed');
+  checkInput() {
+    const {email, password} = this.state;
+
+    if (email.length === 0) {
+      showMessage({
+        message: 'Please input email address',
+        type: 'warning',
+        icon: 'auto',
+      });
+      return false;
+    }
+    if (password.length === 0) {
+      showMessage({
+        message: 'Please input password',
+        type: 'warning',
+        icon: 'auto',
+      });
+      return false;
+    }
+    return true;
   }
 
   render() {
-    const {
-      navigation,
-      loginLoading,
-      token,
-      loginSuccess,
-      code,
-      message,
-    } = this.props;
-    console.log('-----after communication----');
-    console.log(token);
-    console.log(loginSuccess);
-    console.log(loginLoading);
-    if (code == 0 && token != '') {
-      navigation.navigate('Loading');
-      this.storeAuthInfo();
-    } else if (code == -1 && token != '') {
-      this.props.actions.resetStore();
-    }
+    const {navigation, auth} = this.props;
+    const {email, password} = this.state;
 
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
@@ -118,46 +100,30 @@ class SignIn extends Component {
             </Text>
             <TextInput
               style={[BaseStyle.textInput, {marginTop: 30}]}
-              onChangeText={(text) => this.setState({id: text})}
-              onFocus={() => {
-                this.setState({
-                  success: {
-                    ...this.state.success,
-                    id: true,
-                  },
-                });
-              }}
+              onChangeText={(text) => this.setState({email: text})}
               autoCorrect={false}
               placeholder="Email"
-              placeholderTextColor={
-                this.state.success.id
-                  ? BaseColor.secondBlackColor
-                  : BaseColor.primaryColor
-              }
-              value={this.state.id}
+              placeholderTextColor={BaseColor.grayColor}
+              value={email}
               selectionColor={BaseColor.primaryColor}
+              autoCapitalize={'none'}
+              autoCompleteType={'email'}
+              keyboardType={'email-address'}
+              textContentType={'emailAddress'}
             />
             <TextInput
               style={[BaseStyle.textInput, {marginTop: 10}]}
               onChangeText={(text) => this.setState({password: text})}
-              onFocus={() => {
-                this.setState({
-                  success: {
-                    ...this.state.success,
-                    password: true,
-                  },
-                });
-              }}
               autoCorrect={false}
               placeholder="Password"
-              secureTextEntry={true}
-              placeholderTextColor={
-                this.state.success.password
-                  ? BaseColor.secondBlackColor
-                  : BaseColor.primaryColor
-              }
-              value={this.state.password}
+              placeholderTextColor={BaseColor.grayColor}
+              value={password}
               selectionColor={BaseColor.primaryColor}
+              autoCapitalize={'none'}
+              autoCompleteType={'password'}
+              keyboardType={'password-address'}
+              textContentType={'passwordAddress'}
+              secureTextEntry={true}
             />
             <Button
               full
@@ -165,7 +131,8 @@ class SignIn extends Component {
                 marginTop: 20,
                 backgroundColor: BaseColor.secondBlackColor,
               }}
-              loading={this.state.loginLoading}
+              loading={auth.login.isLoading}
+              disabled={auth.login.isLoading}
               onPress={() => {
                 this.onLogin();
               }}>
@@ -194,11 +161,7 @@ class SignIn extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loginLoading: state.auth.loginLoading,
-    loginSuccess: state.auth.loginSuccess,
-    code: state.auth.code,
-    token: state.auth.data,
-    message: state.auth.message,
+    auth: state.auth,
   };
 };
 

@@ -4,8 +4,11 @@ import {View, TouchableOpacity} from 'react-native';
 import {Text} from '@components';
 import {BaseColor} from '@config';
 import PropTypes from 'prop-types';
+import dateutils from '../dateutils';
 import styles from './styles';
 import XDate from 'xdate';
+import * as Utils from '@utils';
+
 export default class AppointmentListItem extends Component {
   constructor(props) {
     super(props);
@@ -25,26 +28,19 @@ export default class AppointmentListItem extends Component {
       startTime,
       endTime,
       duration,
+      day,
+      price,
+      total,
       onPress,
     } = this.props;
     const date = new Date(appointmentDate);
+    console.log('customer name');
+    console.log(customerName);
     return (
       <TouchableOpacity
         // testID={testIDs.agenda.ITEM}
         onPress={onPress}
         style={styles.serviceItemWrapper}>
-        <View style={styles.day}>
-          <Text allowFontScaling={false} style={styles.dayNum}>
-            {date.getDate() - 1}
-          </Text>
-          <Text allowFontScaling={false} style={styles.dayText}>
-            {
-              XDate.locales[XDate.defaultLocale].dayNamesShort[
-                date.getDay() - 1
-              ]
-            }
-          </Text>
-        </View>
         <View style={{flexDirection: 'column', padding: 10, flex: 1}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text
@@ -53,7 +49,7 @@ export default class AppointmentListItem extends Component {
                 color: BaseColor.MainPrimaryColor,
                 fontWeight: 'bold',
               }}>
-              {acceptedState}
+              {Utils.capitalize(acceptedState)}
             </Text>
             <Text
               style={{
@@ -64,17 +60,23 @@ export default class AppointmentListItem extends Component {
               {startTime}
             </Text>
           </View>
-          <Text style={styles.serviceItemNameStyle}>{customerName}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.serviceItemNameStyle}>{customerName}</Text>  
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Text headline bold style={{color: BaseColor.MainPrimaryColor}}>${total}</Text>
+            </View>
+          </View>
           <Text style={styles.serviceItemNameStyle}>{name}</Text>
           <Text style={[styles.serviceItemDateStyle, {marginTop: 10}]}>
-            {staffName}
+            {staffName == null ? 'Not Assigned' : staffName}
           </Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.serviceItemDateStyle}>
-              {appointmentDate}&nbsp;&nbsp;&nbsp;{duration}
+              {dateutils.getFormattedLongDate(date)}&nbsp;&nbsp;&nbsp;{duration}
+              &nbsp;Min
             </Text>
             <Text style={[styles.serviceItemDateStyle, {fontWeight: 'bold'}]}>
-              {endTime}
+              {dateutils.getTimeFromDate(endTime)}
             </Text>
           </View>
         </View>
@@ -84,8 +86,6 @@ export default class AppointmentListItem extends Component {
 
   render() {
     let {block, grid, appointmentDate} = this.props;
-    console.log('------appointment date-----');
-    console.log(appointmentDate);
     return this.renderBlock();
   }
 
@@ -107,6 +107,7 @@ AppointmentListItem.propTypes = {
   startTime: PropTypes.number,
   endTime: PropTypes.number,
   duration: PropTypes.number,
+  day: PropTypes.string,
   onPress: PropTypes.func,
   onPressTag: PropTypes.func,
 };
@@ -123,6 +124,7 @@ AppointmentListItem.defaultProps = {
   startTime: '',
   endTime: '',
   duration: '',
+  day: '',
   onPress: () => {},
   onPressTag: () => {},
 };
