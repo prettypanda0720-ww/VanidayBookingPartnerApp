@@ -1,101 +1,239 @@
 import React, {Component} from 'react';
-import {
-  View,
-  ScrollView,
-  Animated,
-  FlatList,
-  RefreshControl,
-  TextInput,
-} from 'react-native';
-import {BaseStyle, BaseColor, Images} from '@config';
+import {connect} from 'react-redux';
+import {myAppointmentsSvc} from '@services';
+import {bindActionCreators} from 'redux';
+import {AuthActions} from '@actions';
+import {View, ScrollView, TextInput, TouchableOpacity} from 'react-native';
+import {BaseStyle, BaseColor, FontFamily} from '@config';
+import {withNavigation} from 'react-navigation';
+import {Calendar} from 'react-native-calendars';
+import Modal from 'react-native-modal';
+import MultiSelect from 'react-native-multiple-select';
 import {
   Header,
   SafeAreaView,
   Icon,
   Text,
-  RateDetail,
-  CommentItem,
-  RadioGroup,
   Button,
+  DatePicker,
 } from '@components';
-import {TabView, TabBar} from 'react-native-tab-view';
-import {UserData, ReviewData} from '@data';
+import {Dropdown} from 'react-native-material-dropdown';
 import * as Utils from '@utils';
 import styles from './styles';
 
-export default class StaffProfileDetail extends Component {
+class StaffProfileDetail extends Component {
   constructor(props) {
     super();
     this.state = {
-      scrollY: new Animated.Value(0),
-      index: 0,
-      routes: [
-        {key: 'profile', title: 'Profile'},
-        {key: 'setting', title: 'Setting'},
-      ],
-      userData: UserData[0],
+      loading: false,
+      staff_id: '',
+      staff_full_name: '',
+      staff_gender: '',
+      staff_skill_level: '',
+      staff_joined_date: '',
+      staff_status: '',
+      productTypes: [],
+      selectedItems: [],
+      modalCalendarVisible: false,
+      markedDates: {
+        [this.getCurrentDate()]: {selected: true, marked: false},
+      },
+      modalTimeVisible: false,
     };
   }
 
-  _handleIndexChange = (index) =>
+  getCurrentDate() {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    month = month < 10 ? '0' + month : month;
+    date = date < 10 ? '0' + date : date;
+
+    return year + '-' + month + '-' + date;
+  }
+
+  openCalendarModal() {
     this.setState({
-      index,
+      modalCalendarVisible: true,
     });
+  }
 
-  _renderTabBar = (props) => (
-    <TabBar
-      {...props}
-      scrollEnabled
-      indicatorStyle={styles.indicator}
-      style={styles.tabbar}
-      tabStyle={styles.tab}
-      inactiveColor={BaseColor.grayColor}
-      activeColor={BaseColor.textPrimaryColor}
-      renderLabel={({route, focused, color}) => (
-        <View style={styles.tabLabel}>
-          <Text headline semibold={focused} style={{color}}>
-            {route.title}
-          </Text>
-        </View>
-      )}
-    />
-  );
+  onSave = () => {
+    // const {
+    //   vendor_stripe_id,
+    //   unique_entity_number,
+    //   contact_number,
+    //   shopTitle,
+    //   location,
+    //   description,
+    //   primary_type,
+    //   secondary_type,
+    //   cancellation_policy,
+    //   terms_and_conditions,
+    //   free_cancellation_hour,
+    // } = this.state;
+    // const {navigation, actions} = this.props;
 
-  _renderScene = ({route, jumpTo}) => {
-    switch (route.key) {
-      case 'profile':
-        return (
-          <ProfileTab jumpTo={jumpTo} navigation={this.props.navigation} />
-        );
-      case 'setting':
-        return (
-          <SettingsTab jumpTo={jumpTo} navigation={this.props.navigation} />
-        );
+    // const {auth} = this.props;
+    // const data = {
+    //   token: auth.user.token,
+    //   vendorData: {
+    //     shop_title: shopTitle,
+    //     company_locality: location,
+    //     company_description: description,
+    //     vendor_stripe_id: vendor_stripe_id,
+    //     unique_entity_number: unique_entity_number,
+    //     contact_number: contact_number,
+    //     primary_type: primary_type,
+    //     secondary_type: secondary_type,
+    //     cancellation_policy: cancellation_policy,
+    //     terms_and_conditions: terms_and_conditions,
+    //     free_cancellation_hour: free_cancellation_hour,
+    //   },
+    // };
+
+    // if (auth.user.token !== undefined) {
+    //   myAppointmentsSvc
+    //     .updateProfileData(data)
+    //     .then((response) => {
+    //       const res_profile = response.data;
+    //       if (res_profile.code == 0) {
+    //         Utils.notifyMessage('Business Detail is successfully updated!');
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       Utils.notifyMessage(error);
+    //       console.log('appointment error');
+    //       console.log(error);
+    //     });
+    // }
+  };
+
+  onDelete = () => {
+    const {staff_id} = this.state;
+    const {navigation} = this.props;
+
+    const {auth} = this.props;
+    const data = {
+      token: auth.user.token,
+      staffId: staff_id,
+    };
+    if (auth.user.token !== undefined) {
+      myAppointmentsSvc
+        .deleteStaffList(data)
+        .then((response) => {
+          const res_profile = response.data;
+          if (res_profile.code == 0) {
+            Utils.notifyMessage('Staff is successfully removed!');
+            navigation.goBack();
+          }
+        })
+        .catch((error) => {
+          Utils.notifyMessage(error);
+          console.log('delete staff error!');
+          console.log(error);
+        });
     }
   };
 
+  componentDidMount() {
+    const data = this.props.navigation.state.params.data;
+    let selItems = data.product_ids.map((item, index) => {
+      return item.entity_id;
+    });
+    const productTypes = this.props.navigation.state.params.productTypes;
+    this.setState({
+      staff_id: data.staff_id,
+      staff_full_name: data.staff_full_name,
+      staff_title: data.staff_title,
+      staff_gender: data.staff_gender,
+      staff_skill_level: data.staff_skill_level,
+      staff_joined_date: data.staff_joined_date,
+      staff_status: data.staff_status,
+      selectedItems: selItems,
+      productTypes: productTypes,
+    });
+  }
+
+  onSelectedItemsChange = (selectedItems) => {
+    this.setState({selectedItems: selectedItems});
+  };
+
+  getGenderName(key) {
+    let name = '';
+    switch (parseInt(key)) {
+      case 0:
+        name = 'Not Specified';
+        break;
+      case 1:
+        name = 'Male';
+        break;
+      case 2:
+        name = 'Female';
+        break;
+    }
+    return name;
+  }
+
+  getGenderKey(value) {
+    let key = '';
+    switch (value) {
+      case 'Male':
+        key = 1;
+        break;
+      case 'Female':
+        key = 2;
+        break;
+      case 'Not Specified':
+        key = 0;
+        break;
+    }
+    return key;
+  }
+
+  setBookingDate(day) {
+    this.setState({
+      markedDates: {
+        [day.dateString]: {selected: true, marked: false},
+      },
+    });
+
+    this.markedDates = day.dateString;
+  }
+
+  onDateApply() {
+    let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
+    this.setState({staff_joined_date: shortDate});
+  }
+
   render() {
     const {navigation} = this.props;
-    const {userData} = this.state;
-    const imageScale = this.state.scrollY.interpolate({
-      inputRange: [0, 100],
-      outputRange: [1, 0.5],
-      extrapolate: 'clamp',
-    });
-    
-    const imageTranslateY = this.state.scrollY.interpolate({
-      inputRange: [0, 100],
-      outputRange: [-5, 50],
-      extrapolate: 'clamp',
-    });
-    
+    const {
+      loading,
+      productTypes,
+      staff_full_name,
+      staff_title,
+      staff_gender,
+      staff_skill_level,
+      staff_joined_date,
+      staff_status,
+      selectedItems,
+      modalCalendarVisible,
+      markedDates,
+    } = this.state;
+    console.log('selectedItems', selectedItems);
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Staff Profile"
           renderLeft={() => {
             return (
-              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
+              <Icon
+                name="angle-left"
+                size={20}
+                color={BaseColor.sectionColor}
+              />
             );
           }}
           onPressLeft={() => {
@@ -103,222 +241,247 @@ export default class StaffProfileDetail extends Component {
           }}
           style={styles.headerStyle}
         />
-        <ScrollView
-          scrollEventThrottle={8}
-          onScroll={Animated.event([
-            {
-              nativeEvent: {
-                contentOffset: {y: this.state.scrollY},
-              },
-            },
-          ])}>
-          <View style={styles.containField}>
-            <View style={styles.contentLeftItem}>
-              <Text title2 semibold>
-                {userData.performance[2].value}
+        <ScrollView>
+          <View style={{paddingHorizontal: 20, marginTop: 20}}>
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                Full Name
               </Text>
-              <Text caption1 grayColor>
-                {userData.performance[2].title}
-              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({staff_full_name: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}>
+                {staff_full_name}
+              </TextInput>
             </View>
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                Title
+              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({staff_title: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}>
+                {staff_title}
+              </TextInput>
+            </View>
+            <Dropdown
+              label="Gender"
+              data={[
+                {value: 'Not Specified'},
+                {value: 'Male'},
+                {value: 'Female'},
+              ]}
+              rippleOpacity={0.7}
+              baseColor={BaseColor.secondBlackColor}
+              tintColor={BaseColor.blackColor}
+              style={{color: BaseColor.blackColor}}
+              value={this.getGenderName(staff_gender)}
+              onChangeText={(value) => {
+                this.setState({
+                  staff_gender: this.getGenderKey(value),
+                });
+              }}
+            />
+            <Dropdown
+              label="Skill Level"
+              data={[
+                {value: '1'},
+                {value: '2'},
+                {value: '3'},
+                {value: '4'},
+                {value: '5'},
+              ]}
+              rippleOpacity={0.7}
+              baseColor={BaseColor.secondBlackColor}
+              tintColor={BaseColor.blackColor}
+              style={{color: BaseColor.blackColor}}
+              value={staff_skill_level}
+              onChangeText={(value) => {
+                this.setState({
+                  staff_skill_level: value,
+                });
+              }}
+            />
             <View
               style={{
-                flex: 2,
+                flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'flex-end',
+                justifyContent: 'center',
+                marginTop: 10,
               }}>
-              <Animated.Image
-                source={Images.profile2}
-                style={[
-                  styles.profileImageStyle,
-                  {
-                    transform: [
-                      {
-                        scale: imageScale,
-                      },
-                      {
-                        translateY: imageTranslateY,
-                      },
-                    ],
-                  },
-                ]}
+              {/* <View style={{flex: 1}}>
+                <Text headline style={{color: BaseColor.secondBlackColor}}>
+                  Joined Date
+                </Text>
+              </View> */}
+              <Modal
+                isVisible={modalCalendarVisible}
+                backdropColor="rgba(0, 0, 0, 0.5)"
+                backdropOpacity={1}
+                animationIn="fadeIn"
+                animationInTiming={600}
+                animationOutTiming={600}
+                backdropTransitionInTiming={600}
+                backdropTransitionOutTiming={600}>
+                <View style={styles.contentModal}>
+                  <View style={styles.contentCalendar}>
+                    <Calendar
+                      style={{
+                        borderRadius: 8,
+                      }}
+                      markedDates={markedDates}
+                      current={this.getCurrentDate()}
+                      minDate={this.getCurrentDate()}
+                      maxDate={'2099-12-31'}
+                      onDayPress={(day) => this.setBookingDate(day)}
+                      monthFormat={'yyyy MMMM'}
+                      onMonthChange={(month) => {
+                        console.log('month changed', month);
+                      }}
+                      theme={{
+                        textSectionTitleColor: BaseColor.textPrimaryColor,
+                        selectedDayBackgroundColor: BaseColor.primaryColor,
+                        selectedDayTextColor: '#ffffff',
+                        todayTextColor: BaseColor.primaryColor,
+                        dayTextColor: BaseColor.textPrimaryColor,
+                        textDisabledColor: BaseColor.grayColor,
+                        dotColor: BaseColor.primaryColor,
+                        selectedDotColor: '#ffffff',
+                        arrowColor: BaseColor.primaryColor,
+                        monthTextColor: BaseColor.textPrimaryColor,
+                        textDayFontFamily: FontFamily.default,
+                        textMonthFontFamily: FontFamily.default,
+                        textDayHeaderFontFamily: FontFamily.default,
+                        textMonthFontWeight: 'bold',
+                        textDayFontSize: 14,
+                        textMonthFontSize: 16,
+                        textDayHeaderFontSize: 14,
+                      }}
+                    />
+                    <View style={styles.contentActionCalendar}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({modalCalendarVisible: false});
+                        }}>
+                        <Text body1>Cancel</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({modalCalendarVisible: false});
+                          this.onDateApply();
+                        }}>
+                        <Text body1 primaryColor>
+                          Done
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
+              <TouchableOpacity
+                style={styles.dateInfo}
+                onPress={() => this.openCalendarModal()}>
+                <Text headline light style={{color: BaseColor.sectionColor}}>
+                  Joined Date
+                </Text>
+                <Text headline semibold>
+                  {Utils.getDateFromDate(staff_joined_date)}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <Dropdown
+              label="Status"
+              data={[{value: 'Inactive'}, {value: 'Active'}]}
+              rippleOpacity={0.7}
+              baseColor={BaseColor.secondBlackColor}
+              tintColor={BaseColor.blackColor}
+              style={{color: BaseColor.blackColor}}
+              value={staff_status == 0 ? 'Inactive' : 'Active'}
+              onChangeText={(value) => {
+                this.setState({
+                  staff_status: value == 'Inactive' ? 0 : 1,
+                });
+              }}
+            />
+            <Text
+              footnote
+              style={{color: BaseColor.sectionColor, marginTop: 20}}>
+              Product Ids
+            </Text>
+            <View style={{flex: 1, marginTop: 10}}>
+              <MultiSelect
+                hideTags
+                items={productTypes}
+                uniqueKey="id"
+                ref={(component) => {
+                  this.multiSelect = component;
+                }}
+                onSelectedItemsChange={this.onSelectedItemsChange}
+                selectedItems={selectedItems}
+                selectText="Select Services"
+                searchInputPlaceholderText="Search Services..."
+                onChangeInput={(text) => console.log(text)}
+                altFontFamily="ProximaNova-Light"
+                tagRemoveIconColor={BaseColor.titleColor}
+                tagBorderColor={BaseColor.titleColor}
+                tagTextColor={BaseColor.titleColor}
+                selectedItemTextColor={BaseColor.titleColor}
+                selectedItemIconColor={BaseColor.titleColor}
+                itemTextColor="#000"
+                displayKey="product_name"
+                searchInputStyle={{color: BaseColor.titleColor}}
+                submitButtonColor={BaseColor.titleColor}
+                submitButtonText="Submit"
               />
-              <Text
-                headline
-                semibold
-                numberOfLines={1}
-                style={{marginBottom: 20}}>
-                {userData.name}
-              </Text>
-            </View>
-            <View style={styles.contentLeftItem}>
-              <Text title2 semibold>
-                {userData.performance[1].value}
-              </Text>
-              <Text caption1 grayColor>
-                {userData.performance[1].title}
-              </Text>
+              <View>
+                {/* {this.multiselect
+                  ? this.multiSelect.getSelectedItemsExt(selectedItems)
+                  : null} */}
+                {this.multiSelect &&
+                  this.multiSelect.getSelectedItemsExt &&
+                  this.multiSelect.getSelectedItemsExt(selectedItems)}
+              </View>
             </View>
           </View>
-          <TabView
-            lazy
-            navigationState={this.state}
-            renderScene={this._renderScene}
-            renderTabBar={this._renderTabBar}
-            onIndexChange={this._handleIndexChange}
-          />
         </ScrollView>
-      </SafeAreaView>
-    );
-  }
-}
-
-class ProfileTab extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      rateDetail: {
-        point: 4.7,
-        maxPoint: 5,
-        totalRating: 25,
-        data: ['80%', '10%', '10%', '0%', '0%'],
-      },
-      reviewList: ReviewData,
-    };
-  }
-
-  render() {
-    let {rateDetail, reviewList} = this.state;
-    return (
-      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
-        <View style={{paddingLeft: 20}}>
-          <View style={styles.profileItem}>
-            <Text subhead>FullName: Steve Garrett</Text>
-          </View>
-          <View style={styles.profileItem}>
-            <Text subhead>Email: river@hotmail.com</Text>
-          </View>
-          <View style={styles.profileItem}>
-            <Text subhead>Handphone: 91234567</Text>
-          </View>
-          <View style={styles.profileItem}>
-            <Text subhead>Gender: Male</Text>
-          </View>
-          <View style={styles.profileItem}>
-            <Text subhead>Subscribed to Marketing: YES</Text>
-          </View>
-        </View>
-        <FlatList
-          style={{padding: 20}}
-          refreshControl={
-            <RefreshControl
-              colors={[BaseColor.primaryColor]}
-              tintColor={BaseColor.primaryColor}
-              refreshing={this.state.refreshing}
-              onRefresh={() => {}}
-            />
-          }
-          data={reviewList}
-          keyExtractor={(item, index) => item.id}
-          ListHeaderComponent={() => (
-            <RateDetail
-              point={rateDetail.point}
-              maxPoint={rateDetail.maxPoint}
-              totalRating={rateDetail.totalRating}
-              data={rateDetail.data}
-            />
-          )}
-          renderItem={({item}) => (
-            <CommentItem
-              style={{marginTop: 10}}
-              image={item.source}
-              name={item.name}
-              rate={item.rate}
-              date={item.date}
-              title={item.title}
-              comment={item.comment}
-            />
-          )}
-        />
-      </SafeAreaView>
-    );
-  }
-}
-
-class SettingsTab extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      loading: false,
-    };
-  }
-
-  render() {
-    return (
-      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
-        <View style={{padding: 20}}>
-          <TextInput
-            style={[BaseStyle.textInput, styles.textInput]}
-            onChangeText={(text) => this.setState({id: text})}
-            autoCorrect={false}
-            placeholder="First Name"
-            placeholderTextColor={BaseColor.MainPrimaryColor}
-            selectionColor={BaseColor.primaryColor}
-          />
-          <TextInput
-            style={[BaseStyle.textInput, styles.textInput]}
-            onChangeText={(text) => this.setState({id: text})}
-            autoCorrect={false}
-            placeholder="Last Name"
-            placeholderTextColor={BaseColor.MainPrimaryColor}
-            selectionColor={BaseColor.primaryColor}
-          />
-          <TextInput
-            style={[BaseStyle.textInput, styles.textInput]}
-            onChangeText={(text) => this.setState({id: text})}
-            autoCorrect={false}
-            placeholder="Email"
-            placeholderTextColor={BaseColor.grayColor}
-            selectionColor={BaseColor.primaryColor}
-          />
-          <TextInput
-            style={[BaseStyle.textInput, styles.textInput]}
-            onChangeText={(text) => this.setState({id: text})}
-            autoCorrect={false}
-            placeholder="Address"
-            placeholderTextColor={BaseColor.grayColor}
-            selectionColor={BaseColor.primaryColor}
-          />
-          <TextInput
-            style={[BaseStyle.textInput, styles.textInput]}
-            onChangeText={(text) => this.setState({id: text})}
-            autoCorrect={false}
-            placeholder="Mobile Number"
-            placeholderTextColor={BaseColor.grayColor}
-            selectionColor={BaseColor.primaryColor}
-          />
-          <RadioGroup />
-          <View style={{marginTop: 20}}>
-            <Button
-              loading={this.state.loading}
-              full
-              onPress={() => {
-                this.setState(
-                  {
-                    loading: true,
-                  },
-                  () => {
-                    setTimeout(() => {
-                      navigation.goBack();
-                    }, 500);
-                  },
-                );
-              }}>
-              Save
-            </Button>
-          </View>
+        <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
+          <Button
+            style={{flex: 1, marginLeft: 10}}
+            loading={loading}
+            onPress={() => this.onDelete()}>
+            DELETE
+          </Button>
+          <Button
+            style={{flex: 1, marginLeft: 10}}
+            loading={loading}
+            onPress={() => this.onSave()}>
+            UPDATE
+          </Button>
         </View>
       </SafeAreaView>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  };
+};
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(StaffProfileDetail),
+);

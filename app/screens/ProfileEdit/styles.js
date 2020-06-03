@@ -26,4 +26,10 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: BaseColor.secondBlackColor,
   },
+  profileItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
 });

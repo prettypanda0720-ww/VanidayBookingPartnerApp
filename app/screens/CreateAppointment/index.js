@@ -422,6 +422,7 @@ class CreateAppointment extends Component {
         <View
           style={{
             alignItems: 'center',
+            marginTop: 20,
             paddingVertical: 10,
             borderTopColor: BaseColor.sectionColor,
             borderTopWidth: 1,

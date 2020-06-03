@@ -1,46 +1,71 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, Image, Switch} from 'react-native';
+import {connect} from 'react-redux';
+import {AuthActions} from '@actions';
+import {myAppointmentsSvc} from '@services';
+import {withNavigation} from 'react-navigation';
+import {bindActionCreators} from 'redux';
+import {
+  View,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native';
 import {BaseStyle, BaseColor, Images} from '@config';
 import {Header, SafeAreaView, Icon, StaffProfileListItem} from '@components';
+import * as Utils from '@utils';
 import styles from './styles';
 
-export default class StaffMembers extends Component {
+class StaffMembers extends Component {
   constructor(props) {
     super();
     this.state = {
-      loading: false,
-      ourTeam: [
-        {
-          image: Images.profile2,
-          point: '9.5',
-          name: 'Judy T',
-          screen: 'StaffProfileDetail',
-          description: 'riverstar1992@gmail.com',
-          address: 'HairRemoval Expert',
-          id: 'asdf',
-          route: 'asdf',
-          rate: 3,
-          rateCount: '12 of 20',
-        },
-        {
-          image: Images.profile3,
-          point: '5.5',
-          name: 'William Lay',
-          screen: 'StaffProfileDetail',
-          description: 'riverstar1992@gmail.com',
-          address: 'Massage Expert',
-          id: 'asdf',
-          route: 'asdf',
-          rate: 5,
-          rateCount: '12 of 20',
-        },
-      ],
+      loading: true,
+      productTypes: [],
+      staffList: [],
     };
+  }
+
+  componentDidMount() {
+    const {auth, navigation} = this.props;
+    const data = {
+      token: auth.user.token,
+    };
+    this.focusListener = navigation.addListener('didFocus', () => {
+      if (auth.user.token !== undefined) {
+        myAppointmentsSvc
+          .getStaffList(data)
+          .then((response) => {
+            const res_profile = response.data;
+            if (res_profile.code == 0) {
+              this.setState({staffList: res_profile.data, loading: false});
+              console.log('staffList', res_profile.data);
+            }
+          })
+          .catch((error) => {
+            console.log('appointment error');
+            console.log(error);
+          });
+        myAppointmentsSvc
+          .getServiceList(data)
+          .then((response) => {
+            const res_profile = response.data;
+            if (res_profile.code == 0) {
+              this.setState({productTypes: res_profile.data});
+              console.log('productTypes', res_profile.data);
+            }
+          })
+          .catch((error) => {
+            console.log('appointment error');
+            console.log(error);
+          });
+      }
+    });
   }
 
   render() {
     const {navigation} = this.props;
-    const {loading} = this.state;
+    const {loading, staffList, productTypes} = this.state;
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
@@ -55,33 +80,72 @@ export default class StaffMembers extends Component {
           }}
           style={styles.headerStyle}
         />
-        <View style={styles.membersWrapper}>
-          {this.state.ourTeam.map((item, index) => {
+        <ScrollView style={styles.membersWrapper}>
+          {staffList.map((item, index) => {
             return (
               <StaffProfileListItem
-                image={item.image}
-                textFirst={item.name}
-                point={item.point}
-                textSecond={item.address}
-                textThird={item.id}
-                rate={item.rate}
-                rateCount={item.rateCount}
+                staff_id={item.staff_id}
+                staff_full_name={item.staff_full_name}
+                staff_gender={item.staff_gender}
+                staff_skill_level={item.staff_skill_level}
+                staff_joined_date={Utils.getDateFromDate(
+                  item.staff_joined_date,
+                )}
+                staff_status={item.staff_status}
+                product_ids={item.product_ids}
+                seller_id={item.seller_id}
+                create_at={item.create_at}
+                updated_at={item.updated_at}
+                staff_title={item.staff_title}
                 style={styles.memberItemWrapper}
                 styleThumb={styles.staffThumb}
-                onPress={() => navigation.navigate(item.screen)}
+                onPress={() =>
+                  navigation.navigate('StaffProfileDetail', {
+                    data: item,
+                    productTypes: productTypes,
+                  })
+                }
               />
             );
           })}
-        </View>
+        </ScrollView>
         <View style={styles.floatingBtn}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('CreateStaff')}
+            onPress={() =>
+              navigation.navigate('CreateStaff', {
+                productTypes: productTypes,
+              })
+            }
             style={styles.button}
             activeOpacity={0.8}>
             <Image style={styles.image} source={Images.icons_create} />
           </TouchableOpacity>
         </View>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator
+            size="large"
+            color={BaseColor.sectionColor}
+            style={styles.loading}
+            animating={this.state.loading}
+          />
+        </View>
       </SafeAreaView>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  };
+};
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(StaffMembers),
+);

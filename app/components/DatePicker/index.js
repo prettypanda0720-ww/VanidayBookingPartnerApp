@@ -13,13 +13,13 @@ export default class DatePicker extends Component {
     super(props);
     this.state = {
       markedDates: {},
-      modalVisible: false
+      modalVisible: false,
     };
   }
 
   openModal(open) {
     this.setState({
-      modalVisible: open
+      modalVisible: open,
     });
   }
 
@@ -41,7 +41,7 @@ export default class DatePicker extends Component {
             <View style={styles.contentCalendar}>
               <Calendar
                 style={{
-                  borderRadius: 8
+                  borderRadius: 8,
                 }}
                 markedDates={this.state.markedDates}
                 current={'2019-05-05'}
@@ -74,7 +74,7 @@ export default class DatePicker extends Component {
                   textMonthFontWeight: 'bold',
                   textDayFontSize: 14,
                   textMonthFontSize: 16,
-                  textDayHeaderFontSize: 14
+                  textDayHeaderFontSize: 14,
                 }}
               />
               <View style={styles.contentActionCalendar}>
@@ -121,7 +121,7 @@ DatePicker.propTypes = {
   time: PropTypes.string,
   label: PropTypes.string,
   onCancel: PropTypes.func,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 };
 
 DatePicker.defaultProps = {
@@ -129,5 +129,5 @@ DatePicker.defaultProps = {
   time: '2020-04-25',
   label: 'Label',
   onCancel: () => {},
-  onChange: () => {}
+  onChange: () => {},
 };

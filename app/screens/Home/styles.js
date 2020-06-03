@@ -108,5 +108,15 @@ export default StyleSheet.create({
     borderTopWidth: 1,
     borderRightWidth: 1,
     borderBottomWidth: 1,
+  },
+  knobStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: 120,
+    height: 17,
+    paddingHorizontal: 10,
+    backgroundColor: BaseColor.titleColor,
+    borderRadius: 5,
   }
 });

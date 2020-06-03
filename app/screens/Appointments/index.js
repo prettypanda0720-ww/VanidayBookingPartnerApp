@@ -34,7 +34,6 @@ export default class Appointments extends Component {
   }
 
   showModal() {
-    console.log('modal is clicked');
     this.setState({modalVisible: true});
   }
 

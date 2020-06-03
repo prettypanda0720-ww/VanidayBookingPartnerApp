@@ -26,7 +26,7 @@ export default class BookingHistory extends Component {
         activeOpacity={0.9}>
         <View style={styles.nameContent}>
           <Text subhead whiteColor bold>
-            {clientName}&nbsp;:&nbsp;{refId}
+            {clientName}&nbsp;:&nbsp;#{refId}
           </Text>
           <Text subhead whiteColor bold>
             {status}
@@ -56,7 +56,7 @@ export default class BookingHistory extends Component {
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    {item.price}
+                    ${item.price}
                   </Text>
                 </View>
                 <View style={styles.serviceItemWrapper}>
@@ -67,7 +67,7 @@ export default class BookingHistory extends Component {
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    {item.staffName}
+                    {item.staffName == null? 'Not Assigned': item.staffName}
                   </Text>
                   <Text
                     caption3
@@ -76,7 +76,7 @@ export default class BookingHistory extends Component {
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    {item.duration}
+                    {item.duration}&nbsp;Min
                   </Text>
                 </View>
               </View>
@@ -99,7 +99,7 @@ export default class BookingHistory extends Component {
                 textAlign: 'right',
                 color: 'rgba(0,0,0,0.65)',
               }}>
-              {total}
+              ${total}
             </Text>
           </View>
         </View>

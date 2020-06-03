@@ -76,11 +76,8 @@ const onUpdateName = (payload) => {
 
 export const login = (loginCredential, callback) => (dispatch) => {
   dispatch(onLoginStart());
-  console.log('loginCredential');
-  console.log(loginCredential);
   UserServices.login(loginCredential)
     .then((response) => {
-      // console.log('--------- login response from auth action', response);
       if (response.data.code === 0) {
         const payload = {
           token: response.data.data,

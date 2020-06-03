@@ -56,4 +56,15 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: BaseColor.secondBlackColor,
   },
+  customBtn: {
+    height: 45,
+  },
+  btnTextStyle1: {
+    fontSize: 15,
+    color: '#FD8374',
+  },
+  btnTextStyle2: {
+    fontSize: 15,
+    color: '#FD8374',
+  },
 });

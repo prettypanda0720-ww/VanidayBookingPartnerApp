@@ -21,5 +21,13 @@ export default StyleSheet.create({
   },
   inputGroup: {
     marginTop: 15,
-  }
+  },
+  profileItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  sectionStyle: {
+    color: 'rgba(0,0,0,0.65)',
+  },
 });

@@ -4,18 +4,10 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  Switch,
   FlatList,
 } from 'react-native';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-  StaffProfileListItem,
-} from '@components';
+import {Header, SafeAreaView, Icon, Text} from '@components';
 import styles from './styles';
 
 // Load sample data
@@ -61,7 +53,10 @@ export default class Services extends Component {
                       paddingLeft: 20,
                       paddingRight: 20,
                     }}>
-                    <Text body1 semibold style={{color: BaseColor.sectionColor}}>
+                    <Text
+                      body1
+                      semibold
+                      style={{color: BaseColor.sectionColor}}>
                       {item.title}&nbsp;({item.totalCount})
                     </Text>
                     <View
@@ -99,19 +94,27 @@ export default class Services extends Component {
                           onPress={() =>
                             navigation.navigate('EditService', {data: item})
                           }>
-                          <View style={{flex: 9, flexDirection: 'column'}}>
-                            <Text subhead style={{color: BaseColor.titleColor}}>
+                          <View style={{flexDirection: 'column', flex: 8}}>
+                            <Text
+                              subhead
+                              numberOfLines={3}
+                              style={{color: BaseColor.titleColor}}>
                               {item.serviceTitle}
                             </Text>
-                            <Text caption1 style={{marginTop: 5, color: BaseColor.titleColor}}>
+                            <Text
+                              caption1
+                              style={{
+                                marginTop: 5,
+                                color: BaseColor.titleColor,
+                              }}>
                               {item.duration}
                             </Text>
                           </View>
                           <View
                             style={{
-                              flex: 1,
                               justifyContent: 'center',
                               alignItems: 'center',
+                              flex: 1.2
                             }}>
                             <Text body2 style={{color: BaseColor.titleColor}}>
                               {item.price}

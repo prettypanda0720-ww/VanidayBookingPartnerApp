@@ -14,7 +14,7 @@ export default StyleSheet.create({
     borderRadius: 0,
   },
   inputGroup: {
-    marginTop: 20,
+    marginTop: 15,
   },
   textInput: {
     height: 46,

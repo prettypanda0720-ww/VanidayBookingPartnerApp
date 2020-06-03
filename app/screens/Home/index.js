@@ -18,6 +18,7 @@ import {myAppointmentsSvc} from '@services';
 import {connect} from 'react-redux';
 import {AuthActions} from '@actions';
 import {bindActionCreators} from 'redux';
+import {withNavigation} from 'react-navigation';
 import store from 'app/store';
 
 class Home extends Component<{}> {
@@ -29,21 +30,13 @@ class Home extends Component<{}> {
       numStaffs: 5,
       showMode: -1 /* if showMode = -1, show all staffs's appointment list, if showMode = nth, show nth-staffs's appointment list, */,
       currentDate: this.getCurrentDate(),
-      year: '',
       month: this.getCurrentMonth(),
       day: '',
       modalVisible: false,
     };
-    console.log('home constructor');
   }
 
-  componentDidMount() {
-    console.log('home mounted');
-    // const {home} = this.props;
-    // if (home.myVanidayHomeData != undefined) {
-    //   this.setState({myVanidayHomeData: home.myVanidayHomeData});
-    // }
-  }
+  componentDidMount() {}
 
   renderSideMenuContent = () => {
     return (
@@ -93,8 +86,6 @@ class Home extends Component<{}> {
   };
 
   renderMainContent = () => {
-    console.log('this.state.myVanidayHomeData');
-    console.log(this.state.myVanidayHomeData);
     return (
       <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
         <Modal
@@ -157,13 +148,13 @@ class Home extends Component<{}> {
           </TouchableOpacity>
         </Modal>
         <View style={[styles.mainContainer, styles.headerStyle]}>
-          <View style={{flex: 1}} />
+          <View style={{flex: 1}}/>
           <View
             style={[styles.contentCenter, {flex: 10, flexDirection: 'column'}]}>
             <Text headline bold>
               Appointments
             </Text>
-            <Text subhead semibold>
+            <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
               {this.state.month}
             </Text>
           </View>
@@ -179,13 +170,26 @@ class Home extends Component<{}> {
           // testID={testIDs.agenda.CONTAINER}
           items={this.state.myVanidayHomeData}
           loadItemsForMonth={this.loadItems.bind(this)}
+          // loadItemsForMonth={(day) => this.loadMonthData(day)}
           selected={this.state.currentDate}
-          // selected={'2020-05-28'}
           renderItem={this.renderItem.bind(this)}
           renderEmptyDate={this.renderEmptyDate.bind(this)}
           rowHasChanged={this.rowHasChanged.bind(this)}
           // onDayPress={this.loadItems.bind(this)}
-          // renderKnob={() => {return (<View style={{marginTop: 15, width: 60, height: 10, backgroundColor: BaseColor.fieldColor}}></View>);}}
+          renderKnob={() => {
+            return (
+              <View style={styles.knobStyle}>
+                <Text footnote style={{color: BaseColor.whiteColor}}>
+                  Select Date
+                </Text>
+                <Icon
+                  name="angle-down"
+                  size={20}
+                  color={BaseColor.whiteColor}
+                />
+              </View>
+            );
+          }}
           // markingType={'period'}
           // markedDates={{
           //   '2020-05-08': {textColor: '#43515c'},
@@ -199,7 +203,11 @@ class Home extends Component<{}> {
           //   '2020-05-30': {marked: true, endingDay: true, color: 'gray'},
           // }}
           // monthFormat={'yyyy'}
-          theme={{calendarBackground: 'white', agendaKnobColor: '#BDBDBD'}}
+          theme={{
+            calendarBackground: 'white',
+            agendaKnobColor: 'red',
+            textColor: BaseColor.sectionColor,
+          }}
           //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
           // hideExtraDays={false}
         />
@@ -223,17 +231,15 @@ class Home extends Component<{}> {
 
   goToScreen(route, data) {
     const {navigation} = this.props;
-    navigation.navigate(route, {data});
+    navigation.navigate(route, {bookingData: data});
   }
 
   loadItems(day) {
+    console.log('loaditems day', day);
     const {auth} = this.props;
-    console.log('loaditems');
-    console.log(auth.user.token);
-    this.setState({year: day.year});
-    this.setState({month: this.getMonthName(day.month - 1)});
-    this.setState({day: day.day});
-    if (auth.user.token !== undefined) {
+    if (day !== undefined && auth.user.token !== undefined) {
+      this.setState({month: this.getMonthName(day.month)});
+      this.setState({day: day.day});
       myAppointmentsSvc
         .fetchOrderByDate(auth.user.token, -1, day.dateString)
         .then((response) => {
@@ -241,8 +247,6 @@ class Home extends Component<{}> {
           console.log(response.data.data);
           this.state.myVanidayHomeData[day.dateString] = [];
           if (response.data.data != undefined) {
-            console.log('response orders');
-            console.log(response.data.data);
             this.setState({myVanidayHomeData: response.data.data});
           }
         })
@@ -255,26 +259,7 @@ class Home extends Component<{}> {
   }
 
   renderItem(item) {
-    // const newItems = [];
-    // Object.keys(item).forEach((key) => {
-    //   newItems.push(item[key]);
-    //   console.log('--------------------' + key);
-    //   console.log(item[key]);
-    //   if (this.state.showMode == -1) {
-    //     Object(item[key]).forEach((element) => {
-    //       newItems.push(element);
-    //     });
-    //   } else if (this.state.showMode == key) {
-    //     Object(item[key]).forEach((element) => {
-    //       newItems.push(element);
-    //     });
-    //   }
-    // });
     return (
-      // <FlatList
-      //   data={newItems}
-      //   keyExtractor={(item, index) => item.id}
-      //   renderItem={({item}) => (
       <AppointmentListItem
         refId={item.id}
         acceptedState={item.status}
@@ -289,8 +274,6 @@ class Home extends Component<{}> {
         day={this.state.day}
         onPress={() => this.goToScreen('ManageAppointment', item)}
       />
-      // )}
-      // />
     );
   }
 
@@ -326,7 +309,7 @@ class Home extends Component<{}> {
   renderEmptyDate() {
     return (
       <View style={styles.emptyDate}>
-        <Text title3 bold style={{color: BaseColor.sectionColor}}>
+        <Text title3 style={{color: BaseColor.sectionColor}}>
           No Upcoming Appointments!
         </Text>
       </View>
@@ -384,6 +367,14 @@ class Home extends Component<{}> {
     ];
     return monthNames[number];
   }
+
+  loadMonthData(day) {
+    console.log('Month date :- ', day);
+  }
+
+  onDatePress(day) {
+    console.log('On date press :- ', day);
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -398,4 +389,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(Home),
+);

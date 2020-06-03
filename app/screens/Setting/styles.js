@@ -4,6 +4,7 @@ import {BaseColor} from '@config';
 
 export default StyleSheet.create({
   contain: {
+    // flexDirection: 'column',
     alignItems: 'center',
     padding: 20,
     width: '100%',
@@ -29,5 +30,25 @@ export default StyleSheet.create({
   },
   sectionStyle: {
     color: 'rgba(0,0,0,0.65)',
-  }
+  },
+  multilineText: {
+    height: 200,
+    backgroundColor: BaseColor.whiteColor,
+    borderRadius: 5,
+    padding: 10,
+    width: '100%',
+    color: BaseColor.titleColor,
+    marginTop: 5,
+    borderColor: BaseColor.grayColor,
+    borderWidth: 1,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: 250,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

@@ -11,6 +11,7 @@ import {
 } from '@components';
 
 import {BaseStyle, BaseColor} from '@config';
+import * as Utils from '@utils';
 import styles from './styles';
 
 class ManageAppointment extends Component {
@@ -24,16 +25,15 @@ class ManageAppointment extends Component {
 
   render() {
     const {navigation} = this.props;
-    const item = this.props.navigation.state.params.data;
-    console.log(item);
+    const item = this.props.navigation.state.params.bookingData;
     const {loading} = this.state;
     let status = [{value: 'Accept'}, {value: 'Cancel'}, {value: 'No Show'}];
-    item.detail = [
+    const detail = [
       {
-        serviceName: item.name,
+        serviceName: item.serviceName,
         staffName: item.staffName,
-        price: item.total,
-        duration: item.duration,
+        price: item.price,
+        duration: item.service_duration,
       },
     ];
     return (
@@ -74,14 +74,14 @@ class ManageAppointment extends Component {
                 />
               </View>
               <BookingHistory
-                refId={item.refId}
-                clientName={item.customerName}
-                appointmentDate={item.appointmentDate}
-                total={item.total}
-                status={item.acceptedState}
-                detail={item.detail}
-                startTime={item.startTime}
-                endTime={item.endTime}
+                refId={item.id}
+                clientName={'Judy T'}
+                appointmentDate={item.slotDate}
+                total={item.price}
+                status={Utils.capitalize(item.status)}
+                detail={detail}
+                startTime={item.slotTime}
+                endTime={item.bookingTo}
                 style={{paddingVertical: 20, marginHorizontal: 20}}
                 onPress={() => {
                   this.props.navigation.navigate('');
@@ -110,46 +110,56 @@ class ManageAppointment extends Component {
                   backgroundColor: '#e5e5e5',
                 },
               ]}>
-              <View style={{marginTop: 20, flexDirection: 'row'}}>
-                <Button
-                  style={{flex: 1, backgroundColor: '#e5ccc2'}}
-                  styleText={{
-                    fontWeight: 'bold',
-                    fontSize: 22,
-                    color: '#FD8374',
-                  }}
-                  loading={loading}
-                  onPress={() =>
-                    navigation.navigate('RescheduleAppointment', item)
-                  }>
-                  Reschedule
-                </Button>
-                <Button
-                  style={{flex: 1, marginLeft: 10, backgroundColor: '#e5ccc2'}}
-                  styleText={{
-                    fontWeight: 'bold',
-                    fontSize: 22,
-                    color: '#FD8374',
-                  }}
-                  loading={loading}
-                  onPress={() => navigation.goBack()}>
-                  Chat
-                </Button>
+              <View style={{flexDirection: 'row'}}>
+                <View style={{flex: 1, marginRight: 8}}>
+                  <Button
+                    full
+                    style={[styles.customBtn, {backgroundColor: '#e5ccc2'}]}
+                    styleText={styles.btnTextStyle1}
+                    loading={loading}
+                    onPress={() =>
+                      navigation.navigate('RescheduleAppointment', {
+                        bookingData: item,
+                      })
+                    }>
+                    Reschedule
+                  </Button>
+                </View>
+                <View style={{flex: 1, marginLeft: 8}}>
+                  <Button
+                    full
+                    style={[styles.customBtn, {backgroundColor: '#e5ccc2'}]}
+                    styleText={styles.btnTextStyle1}
+                    loading={loading}
+                    onPress={() => navigation.goBack()}>
+                    Chat
+                  </Button>
+                </View>
               </View>
               <Button
-                style={{paddingVertical: 10, marginTop: 15}}
-                styleText={{fontWeight: 'bold', fontSize: 22}}
+                style={[
+                  styles.customBtn,
+                  {
+                    paddingVertical: 10,
+                    marginTop: 15,
+                  },
+                ]}
+                styleText={{fontSize: 15}}
                 loading={loading}
                 onPress={() => navigation.goBack()}>
                 Confirm
               </Button>
               <Button
-                style={{backgroundColor: '#bfbfbf', marginTop: 15}}
-                styleText={{fontWeight: 'bold', fontSize: 22}}
+                style={[
+                  styles.customBtn,
+                  {
+                    backgroundColor: '#bfbfbf',
+                    marginTop: 15,
+                  },
+                ]}
+                styleText={{fontSize: 15}}
                 loading={loading}
-                onPress={() =>
-                  navigation.goBack()
-                }>
+                onPress={() => navigation.goBack()}>
                 Exit
               </Button>
             </View>

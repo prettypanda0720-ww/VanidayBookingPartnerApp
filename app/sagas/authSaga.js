@@ -3,7 +3,6 @@ import * as actionTypes from '@actions/actionTypes';
 import myVanidaySvc from '@services/myVanidaySvc';
 
 function* loginTask(action) {
-  console.log('auth saga is called!');
   try {
     const {payload} = action;
  

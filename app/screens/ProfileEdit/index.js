@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TextInput} from 'react-native';
+import {View, ScrollView, TextInput, Switch} from 'react-native';
 import {BaseStyle, BaseColor} from '@config';
 import {
   Image,
@@ -8,6 +8,7 @@ import {
   Icon,
   Button,
   RadioGroup,
+  Text,
 } from '@components';
 import styles from './styles';
 
@@ -25,6 +26,7 @@ export default class ProfileEdit extends Component {
       address: ShopsData[0].address,
       image: ShopsData[0].image,
       loading: false,
+      retailReminders: false,
     };
   }
 
@@ -47,9 +49,6 @@ export default class ProfileEdit extends Component {
         />
         <ScrollView>
           <View style={styles.contain}>
-            <View>
-              <Image source={this.state.image} style={[styles.thumb]} />
-            </View>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
@@ -90,7 +89,19 @@ export default class ProfileEdit extends Component {
               placeholderTextColor={BaseColor.grayColor}
               selectionColor={BaseColor.primaryColor}
             />
-            <RadioGroup />
+            {/* <RadioGroup /> */}
+            <View style={[styles.profileItem, {paddingVertical: 15}]}>
+              <Switch
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleRetailSwitch}
+                value={this.state.retailReminders}
+              />
+              <Text body1 style={{color: BaseColor.titleColor}}>
+                Salon Owner / Product Seller
+              </Text>
+            </View>
+            <View>{this.displayRetailView()}</View>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
@@ -162,5 +173,66 @@ export default class ProfileEdit extends Component {
         </View>
       </SafeAreaView>
     );
+  }
+
+  displayRetailView() {
+    let tax = [{value: 'No tax'}, {value: 'tax'}];
+    if (this.state.retailReminders) {
+      return (
+        <View style={{flexDirection: 'column'}}>
+          <View style={styles.inputGroup}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              RETAIL PRICE
+            </Text>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.setState({id: text})}
+              autoCorrect={false}
+              placeholder="0.00"
+              placeholderTextColor={BaseColor.MainPrimaryColor}
+              selectionColor={BaseColor.primaryColor}
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <Text body2 style={{color: BaseColor.sectionColor}}>
+              SPECIAL PRICE
+            </Text>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.setState({id: text})}
+              autoCorrect={false}
+              placeholder="0.00"
+              placeholderTextColor={BaseColor.MainPrimaryColor}
+              selectionColor={BaseColor.primaryColor}
+            />
+          </View>
+          <Dropdown
+            label="TAX (included in prices)"
+            data={tax}
+            rippleOpacity={0.7}
+          />
+          <View style={styles.inputGroup}>
+            <CheckBox
+              label={'Enable commision'}
+              checked={this.state.checked}
+              onChange={() =>
+                this.setState({
+                  checked: !this.state.checked,
+                })
+              }
+              style={{height: 10}}
+            />
+          </View>
+        </View>
+      );
+    } else {
+      return (
+        <View style={[styles.contentCenter, styles.retailWrapper]}>
+          <Text caption1 semibold>
+            Switch on 'Enable Retail Sales' to sell this product at checkout.
+          </Text>
+        </View>
+      );
+    }
   }
 }

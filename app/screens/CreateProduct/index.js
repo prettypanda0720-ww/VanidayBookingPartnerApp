@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 
 import {Dropdown} from 'react-native-material-dropdown';
-
+import {View, ScrollView, TextInput, Switch} from 'react-native';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import CheckBox from 'react-native-checkbox';
 import styles from './styles';

@@ -5,8 +5,10 @@ import {
   TouchableOpacity,
   Switch,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
+import {myAppointmentsSvc} from '@services';
 import {bindActionCreators} from 'redux';
 import {AuthActions} from '@actions';
 import {BaseStyle, BaseColor, BaseSetting} from '@config';
@@ -21,6 +23,8 @@ import {
 } from '@components';
 import styles from './styles';
 import * as Utils from '@utils';
+import {withNavigation} from 'react-navigation';
+import {Api} from '@config';
 // Load sample data
 import {ShopsData} from '@data';
 
@@ -29,11 +33,55 @@ class Setting extends Component {
     super();
     this.state = {
       reminders: false,
+      dataLoading: true,
       loading: false,
       shopData: ShopsData[0],
+      vendor_stripe_id: '',
+      unique_entity_number: '',
+      contact_number: '',
+      shopTitle: '',
+      location: '',
+      description: '',
+      rating: '',
+      photos: [],
     };
   }
 
+  componentDidMount() {
+    const {auth, navigation} = this.props;
+    this.focusListener = navigation.addListener('didFocus', () => {
+      // The screen is focused
+      // Call any action
+      if (auth.user.token !== undefined) {
+        myAppointmentsSvc
+          .fetchProfileData(auth.user.token)
+          .then((response) => {
+            const res_profile = response.data.data;
+            if (response.data.data != undefined) {
+              this.setState({
+                dataLoading: false,
+                vendor_stripe_id: res_profile.vendor_stripe_id,
+                unique_entity_number: res_profile.unique_entity_number,
+                contact_number: res_profile.contact_number,
+                shopTitle: res_profile.shop_title,
+                location: res_profile.company_locality,
+                description: res_profile.company_description,
+                rating: res_profile.average_rating,
+                photos: JSON.parse(res_profile.vendor_carousel).map(
+                  (photo, index) => {
+                    return res_profile.venCarPrefix + photo;
+                  },
+                ),
+              });
+            }
+          })
+          .catch((error) => {
+            console.log('appointment error');
+            console.log(error);
+          });
+      }
+    });
+  }
   /**
    * @description Simple logout with Redux
    * @author Passion UI <passionui.com>
@@ -65,8 +113,18 @@ class Setting extends Component {
 
   render() {
     const {navigation} = this.props;
-    const {shopData, loading} = this.state;
-
+    const {
+      shopData,
+      loading,
+      vendor_stripe_id,
+      unique_entity_number,
+      contact_number,
+      shopTitle,
+      location,
+      description,
+      rating,
+      photos,
+    } = this.state;
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
@@ -83,29 +141,29 @@ class Setting extends Component {
           <View style={styles.contain}>
             <ProfileDetail
               image={''}
-              textFirst={shopData.name}
-              point={shopData.point}
-              textSecond={shopData.address}
-              textThird={shopData.id}
+              textFirst={shopTitle}
+              point={rating}
+              textSecond={location}
+              textThird={''}
               styleThumb={{
                 width: Utils.scaleWithPixel(135),
                 height: Utils.scaleWithPixel(65),
               }}
-              onPress={() => navigation.navigate('Aboutus', {data: shopData})}
+              onPress={() =>
+                navigation.navigate('Aboutus', {
+                  vendor_stripe_id: vendor_stripe_id,
+                  unique_entity_number: unique_entity_number,
+                  contact_number: contact_number,
+                  title: shopTitle,
+                  location: location,
+                  description: description,
+                  photos: photos,
+                })
+              }
             />
             <View style={styles.contentService}>
               <Text body2 style={styles.sectionStyle}>
-                In Italian, "Covo" means a hiding place. When you come to our
-                salon, you will experience a private and relaxing space and
-                time. All the stylists are experienced Japanese stylists with
-                Japanese quality service. Our location is on the happening Keong
-                Saik road, on the ground floor in a shop house. We try out best
-                to cater damage-free hair using in-house developed
-                chemicals(developed in Tokyo by our owner stylist) for
-                colouring, pem, rebonding and treatment. We also have Keratin
-                treatment for damaged hair as well. For the best result for both
-                hair and scalp, we use carbonated water in the salon. Please
-                come to experience quality technique and service to Covo.
+                {description}
               </Text>
             </View>
             <ProfilePerformance
@@ -113,7 +171,7 @@ class Setting extends Component {
               style={{marginTop: 20, marginBottom: 20}}
             />
             <View style={{width: '100%'}}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
                   navigation.navigate('ProfileEdit');
@@ -127,7 +185,7 @@ class Setting extends Component {
                   color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
@@ -336,6 +394,14 @@ class Setting extends Component {
             </View>
           </View>
         </ScrollView>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator
+            size="large"
+            color={BaseColor.sectionColor}
+            style={styles.loading}
+            animating={this.state.loading}
+          />
+        </View>
         <View style={{padding: 20}}>
           <Button full loading={loading} onPress={() => this.onLogOut()}>
             Sign Out
@@ -347,7 +413,9 @@ class Setting extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    auth: state.auth,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -356,4 +424,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Setting);
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(Setting),
+);

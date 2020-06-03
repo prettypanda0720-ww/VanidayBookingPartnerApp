@@ -13,7 +13,7 @@ import {AGENDA_CALENDAR_KNOB} from '../testIDs';
 import {BaseColor} from '@config';
 
 const HEADER_HEIGHT = 104;
-const KNOB_HEIGHT = 24;
+const KNOB_HEIGHT = 34;
 // Fallback when RN version is < 0.44
 const viewPropTypes = ViewPropTypes || View.propTypes;
 
@@ -114,9 +114,6 @@ export default class AgendaView extends Component {
       selectedDay: parseDate(this.props.selected) || XDate(true),
       topDay: parseDate(this.props.selected) || XDate(true),
     };
-    console.log('asdfasdasdfasdf');
-    console.log(this.props.selected);
-    console.log(parseDate(this.props.selected));
     this.currentMonth = this.state.selectedDay.clone();
     this.onLayout = this.onLayout.bind(this);
     this.onScrollPadLayout = this.onScrollPadLayout.bind(this);
@@ -198,13 +195,13 @@ export default class AgendaView extends Component {
 
   onVisibleMonthsChange(months) {
     if (this.props.onVisibleMonthsChange) {
-      this.props.onVisibleMonthsChange(months);
+      this.props.onVisibleMonthsChange(months[1]);
     }
     if (this.props.items && !this.state.firstResevationLoad) {
       clearTimeout(this.scrollTimeout);
       this.scrollTimeout = setTimeout(() => {
         if (this.props.loadItemsForMonth && this._isMounted) {
-          this.props.loadItemsForMonth(months[0]);
+          this.props.loadItemsForMonth(months[1]);
         }
       }, 200);
     }
@@ -305,8 +302,6 @@ export default class AgendaView extends Component {
   }
 
   renderReservations() {
-    console.log('-----reservations-----');
-    console.log(this.props.items);
     return (
       <ReservationsList
         onScrollBeginDrag={this.props.onScrollBeginDrag}
@@ -348,8 +343,6 @@ export default class AgendaView extends Component {
 
   generateMarkings() {
     let markings = this.props.markedDates;
-    console.log('markings');
-    console.log(markings);
     if (!markings) {
       markings = {};
       Object.keys(this.props.items || {}).forEach((key) => {

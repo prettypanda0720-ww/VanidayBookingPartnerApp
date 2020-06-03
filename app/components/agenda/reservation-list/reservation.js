@@ -40,8 +40,6 @@ class Reservation extends Component {
   }
 
   renderDate(date, item) {
-    console.log('renderDate' + date);
-    console.log('item' + item);
     if (_.isFunction(this.props.renderDay)) {
       return this.props.renderDay(date ? xdateToData(date) : undefined, item);
     }
@@ -66,10 +64,6 @@ class Reservation extends Component {
 
   render() {
     const {reservation, date} = this.props.item;
-    console.log('reservation.js');
-    console.log(reservation);
-    console.log('date');
-    console.log(date);
     let content;
     if (reservation) {
       const firstItem = date ? true : false;

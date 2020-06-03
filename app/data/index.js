@@ -13,6 +13,8 @@ import {ECardData} from './eCard';
 import {ProductsData} from './products';
 import {VanidayServiceData} from './vanidayservices';
 import {Values} from './Values';
+import {primarytypes} from './primarytypes';
+import {productids} from './productids';
 // Sample data for display on template
 export {
   CurrencyData,
@@ -28,4 +30,6 @@ export {
   ProductsData,
   Values,
   VanidayServiceData,
+  primarytypes,
+  productids,
 };

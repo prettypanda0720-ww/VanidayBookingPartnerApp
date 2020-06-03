@@ -2,12 +2,17 @@ import {BaseColor} from '@config';
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  contain: {flexDirection: 'row'},
+  contain: {flexDirection: 'row', flex: 1},
   contentLeft: {
-    flex: 8,
+    flex: 4,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  contentRight: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
   thumb: {
     width: 120,
@@ -15,11 +20,6 @@ export default StyleSheet.create({
     // resizeMode: 'contain',
     // borderRadius: 30,
     marginRight: 20,
-  },
-  contentRight: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'flex-end',
   },
   point: {
     width: 18,
@@ -33,8 +33,9 @@ export default StyleSheet.create({
     bottom: 0,
   },
   listContentRate: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 5
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5,
   },
 });

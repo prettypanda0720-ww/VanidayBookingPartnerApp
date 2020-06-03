@@ -32,6 +32,8 @@ class EditService extends Component {
       search: '',
       refreshing: false,
       loading: false,
+      isEnalbeProduct: false,
+      isFeatured: false,
       index: 0,
       routes: [
         {key: 'general', title: 'General'},
@@ -40,6 +42,14 @@ class EditService extends Component {
       ],
     };
   }
+
+  toggleProductSwitch = (value) => {
+    this.setState({isEnalbeProduct: value});
+  };
+
+  toggleFeaturedSwitch = (value) => {
+    this.setState({isFeatured: value});
+  };
 
   render() {
     const {navigation} = this.props;
@@ -99,7 +109,7 @@ class EditService extends Component {
               Category
             </Text>
             <ServiceInput data={data} />
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={[
                 styles.inputGroup,
                 {
@@ -115,7 +125,7 @@ class EditService extends Component {
               <View style={{alignItems: 'center', justifyContent: 'center'}}>
                 <Icon name="plus" size={15} color={BaseColor.titleColor} />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <View style={{marginTop: 30}}>
             <Text title2 bold style={{color: BaseColor.sectionColor}}>
@@ -130,7 +140,7 @@ class EditService extends Component {
                 rippleOpacity={0.7}
               />
               <Text body2 style={{color: BaseColor.sectionColor}}>
-                Retail price
+                Normal price
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
@@ -144,7 +154,7 @@ class EditService extends Component {
             </View>
             <View style={styles.inputGroup}>
               <Text body2 style={{color: BaseColor.sectionColor}}>
-                Special price
+                Discount price
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
@@ -156,7 +166,29 @@ class EditService extends Component {
                 {data.price}
               </TextInput>
             </View>
-            <View style={styles.inputGroup}>
+            <View style={[styles.profileItem, {marginTop: 20}]}>
+              <Text body1 style={styles.sectionStyle}>
+                Enable Product
+              </Text>
+              <Switch
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleProductSwitch}
+                value={this.state.isEnalbeProduct}
+              />
+            </View>
+            <View style={[styles.profileItem, {marginTop: 20}]}>
+              <Text body1 style={styles.sectionStyle}>
+                Featured
+              </Text>
+              <Switch
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleFeaturedSwitch}
+                value={this.state.isFeatured}
+              />
+            </View>
+            {/* <View style={styles.inputGroup}>
               <Text body2 style={{color: BaseColor.sectionColor}}>
                 Pricing name(optional)
               </Text>
@@ -169,8 +201,8 @@ class EditService extends Component {
                 selectionColor={BaseColor.primaryColor}>
                 {data.price}
               </TextInput>
-            </View>
-            <TouchableOpacity
+            </View> */}
+            {/* <TouchableOpacity
               style={[
                 styles.inputGroup,
                 {
@@ -182,10 +214,10 @@ class EditService extends Component {
               onPress={() => navigation.navigate('NewPricingOption')}>
               <Text body2 style={{color: BaseColor.sectionColor}}>Add another pricing option</Text>
               <Icon name="plus" size={15} color={BaseColor.sectionColor} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
-          <Text title2 bold style={{marginTop: 30, color: BaseColor.sectionColor}}>
-            Other Options
+          {/* <Text title2 bold style={{marginTop: 30, color: BaseColor.sectionColor}}>
+            Staff Assigned
           </Text>
           <View style={styles.inputGroup}>
             <TouchableOpacity
@@ -217,8 +249,8 @@ class EditService extends Component {
                 />
               </View>
             </TouchableOpacity>
-          </View>
-          <View style={styles.inputGroup}>
+          </View> */}
+          {/* <View style={styles.inputGroup}>
             <TouchableOpacity
               style={[
                 styles.inputGroup,
@@ -279,7 +311,7 @@ class EditService extends Component {
                 />
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </ScrollView>
         <View
           style={{

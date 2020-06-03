@@ -7,6 +7,8 @@ import {
   LayoutAnimation,
   PixelRatio,
   Dimensions,
+  ToastAndroid,
+  AlertIOS,
 } from 'react-native';
 
 const scaleValue = PixelRatio.get() / 2;
@@ -359,6 +361,74 @@ export function flipX(duration = 300) {
   };
 }
 
-export function capitalize(str){
+export function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function getTimeFromDate(date) {
+  const words = date.split(' ');
+  const count = words.length;
+  if (count > 0) {
+    return words[count - 1];
+  } else {
+    return '';
+  }
+}
+
+export function getDateFromDate(date) {
+  if (date !== null) {
+    const words = date.split(' ');
+    const count = words.length;
+    if (count > 0) {
+      return words[0];
+    } else {
+      return '';
+    }
+  } else {
+    return '';
+  }
+}
+
+export function getFormattedShortDate(date) {
+  var year = date.getFullYear();
+
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+
+  return year + '-' + month + '-' + day;
+}
+
+export function getFormattedLongDate(date) {
+  let mlist = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
+  var year = date.getFullYear();
+
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+
+  return day + ' ' + mlist[date.getMonth()] + ', ' + year;
+}
+
+export function notifyMessage(msg) {
+  if (Platform.OS === 'android') {
+    ToastAndroid.show(msg, ToastAndroid.SHORT);
+  } else {
+    AlertIOS.alert(msg);
+  }
 }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, ScrollView, TextInput} from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
-import ActionSheet from 'react-native-actionsheet';
+import * as Utils from '@utils';
 import {
   Header,
   SafeAreaView,
@@ -32,7 +32,7 @@ class RescheduleAppointment extends Component {
 
   render() {
     const {navigation} = this.props;
-    const item = this.props.navigation.state.params;
+    const item = this.props.navigation.state.params.bookingData;
     const {loading, timeInterval} = this.state;
     let status = [
       {value: 'Confirmed'},
@@ -42,10 +42,10 @@ class RescheduleAppointment extends Component {
     ];
     const detail = [
       {
-        serviceName: item.name,
+        serviceName: item.serviceName,
         staffName: item.staffName,
-        price: item.total,
-        duration: item.duration,
+        price: item.price,
+        duration: item.service_duration,
       },
     ];
     return (
@@ -72,13 +72,12 @@ class RescheduleAppointment extends Component {
           style={{
             flexDirection: 'column',
             paddingHorizontal: 20,
-            paddingVertical: 10,
           }}>
           <View style={[styles.inputGroup, {flex: 1, flexDirection: 'column'}]}>
             <Text headline bold style={{color: BaseColor.sectionColor}}>
               Appointment Date
             </Text>
-            <DatePicker time={item.appointmentDate} style={{marginTop: 10}} />
+            <DatePicker time={item.slotDate} style={{marginTop: 10}} />
           </View>
           <View style={[styles.inputGroup, styles.rowBetweenAlign]}>
             <View style={{flex: 1, marginRight: 10}}>
@@ -88,6 +87,7 @@ class RescheduleAppointment extends Component {
                 textColor={BaseColor.titleColor}
                 data={timeInterval}
                 rippleOpacity={0.7}
+                value={item.slotTime}
               />
             </View>
             <View style={{flex: 1, marginLeft: 10}}>
@@ -97,19 +97,20 @@ class RescheduleAppointment extends Component {
                 textColor={BaseColor.titleColor}
                 data={timeInterval}
                 rippleOpacity={0.7}
+                value={Utils.getTimeFromDate(item.bookingTo)}
               />
             </View>
           </View>
           <BookingHistory
-            refId={item.refId}
-            clientName={item.customerName}
-            appointmentDate={item.appointmentDate}
-            total={item.total}
-            status={item.acceptedState}
+            refId={item.id}
+            clientName={'Judy T'}
+            appointmentDate={item.slotDate}
+            total={item.price}
+            status={Utils.capitalize(item.status)}
             detail={detail}
-            startTime={item.startTime}
-            endTime={item.endTime}
-            style={{paddingVertical: 10, marginTop: 10}}
+            startTime={item.slotTime}
+            endTime={item.bookingTo}
+            style={{paddingVertical: 20, marginHorizontal: 0}}
             onPress={() => {
               this.props.navigation.navigate('');
             }}
@@ -133,21 +134,33 @@ class RescheduleAppointment extends Component {
               justifyContent: 'flex-end',
               flexDirection: 'column',
               paddingHorizontal: 20,
-              paddingVertical: 20,
+              paddingVertical: 10,
             },
           ]}>
           <Button
-            style={{paddingVertical: 10}}
-            styleText={{fontWeight: 'bold', fontSize: 22}}
+            style={[
+              styles.customBtn,
+              {
+                paddingVertical: 10,
+                marginTop: 15,
+              },
+            ]}
+            styleText={{fontSize: 15}}
             loading={loading}
             onPress={() => navigation.goBack()}>
             Confirm
           </Button>
           <Button
-            style={{backgroundColor: '#bfbfbf', marginTop: 15}}
-            styleText={{fontWeight: 'bold', fontSize: 22}}
+            style={[
+              styles.customBtn,
+              {
+                backgroundColor: '#bfbfbf',
+                marginTop: 15,
+              },
+            ]}
+            styleText={{fontSize: 15}}
             loading={loading}
-            onPress={() => navigation.navigate('RescheduleAppointment', item)}>
+            onPress={() => navigation.goBack()}>
             Exit
           </Button>
         </View>

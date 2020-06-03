@@ -120,19 +120,9 @@ class ReservationList extends Component {
   }
 
   renderRow({item, index}) {
-    var dateString = item["day"];
+    var dateString = item['day'].toString();
     const date = new Date(dateString);
-    let day = '';
-    if (date.getDay() == 0) {
-      switch ((parseInt(date.getMonth()) + 1) % 2) {
-        case 0:
-          day = 30;
-          break;
-        case 1:
-          day = 31;
-          break;
-      }
-    }
+
     return (
       <View onLayout={this.onRowLayoutChange.bind(this, index)}>
         <View
@@ -144,8 +134,7 @@ class ReservationList extends Component {
           }}>
           <View style={this.styles.day}>
             <Text allowFontScaling={false} style={this.styles.dayNum}>
-              {date.getDay() == 0 ? day : date.getDay()}
-              {/* {date.getDay()} */}
+              {date.getDate()}
             </Text>
             <Text allowFontScaling={false} style={this.styles.dayText}>
               {XDate.locales[XDate.defaultLocale].dayNamesShort[date.getDay()]}
@@ -225,8 +214,6 @@ class ReservationList extends Component {
   }
 
   render() {
-    console.log('reservation list');
-    console.log(this.props.reservations);
     if (
       !this.props.reservations ||
       !this.props.reservations[this.props.selectedDay.toString('yyyy-MM-dd')]

@@ -29,7 +29,7 @@ export default class ProfileDetail extends Component {
         <View style={[styles.contentLeft, styleLeft]}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <View>{this.displayImageView(image, styleThumb)}</View>
-            <View>{this.displayProfileView()}</View>
+            {/* <View>{this.displayProfileView()}</View> */}
           </View>
           <View>
             <Text
@@ -39,14 +39,7 @@ export default class ProfileDetail extends Component {
               style={styles.sectionStyle}>
               {textFirst}
             </Text>
-            <Text
-              body2
-              style={{
-                marginTop: 3,
-                paddingRight: 10,
-              }}
-              numberOfLines={1}
-              style={styles.sectionStyle}>
+            <Text body2 numberOfLines={1} style={styles.sectionStyle}>
               {textSecond}
             </Text>
             <Text
@@ -68,7 +61,7 @@ export default class ProfileDetail extends Component {
                 disabled={true}
                 starSize={15}
                 maxStars={5}
-                rating={5}
+                rating={parseFloat(point)}
                 selectedStar={(rating) => {}}
                 fullStarColor={BaseColor.yellowColor}
               />
@@ -77,7 +70,7 @@ export default class ProfileDetail extends Component {
                 style={{
                   color: 'rgba(0,0,0,0.65)',
                 }}>
-                ({4})
+                ({point})
               </Text>
             </View>
           </View>
@@ -91,12 +84,12 @@ export default class ProfileDetail extends Component {
     );
   }
 
-  displayProfileView() {
-    if (this.props.point != '') {
+  displayProfileView(point) {
+    if (this.props.point !== '') {
       return (
         <View style={styles.point}>
           <Text overline whiteColor semibold>
-            {this.props.point}
+            {point}
           </Text>
         </View>
       );

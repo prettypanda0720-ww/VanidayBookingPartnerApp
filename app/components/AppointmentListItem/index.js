@@ -34,8 +34,6 @@ export default class AppointmentListItem extends Component {
       onPress,
     } = this.props;
     const date = new Date(appointmentDate);
-    console.log('customer name');
-    console.log(customerName);
     return (
       <TouchableOpacity
         // testID={testIDs.agenda.ITEM}
@@ -61,9 +59,11 @@ export default class AppointmentListItem extends Component {
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.serviceItemNameStyle}>{customerName}</Text>  
+            <Text style={styles.serviceItemNameStyle}>{customerName}</Text>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text headline bold style={{color: BaseColor.MainPrimaryColor}}>${total}</Text>
+              <Text headline bold style={{color: BaseColor.MainPrimaryColor}}>
+                ${total}
+              </Text>
             </View>
           </View>
           <Text style={styles.serviceItemNameStyle}>{name}</Text>
