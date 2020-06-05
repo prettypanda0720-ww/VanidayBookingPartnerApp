@@ -33,4 +33,8 @@ export const Images = {
   product3: require('@assets/images/products/product-3.jpg'),
   product4: require('@assets/images/products/product-4.jpg'),
   product5: require('@assets/images/products/product-5.jpg'),
+  marketing: require('@assets/images/marketing.jpg'),
+  financing: require('@assets/images/financing.jpg'),
+  it: require('@assets/images/it.jpg'),
+  design: require('@assets/images/design.jpg'),
 };

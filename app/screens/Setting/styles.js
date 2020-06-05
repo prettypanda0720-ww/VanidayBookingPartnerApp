@@ -21,6 +21,7 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginTop: 10,
+    marginBottom: 10,
     borderColor: BaseColor.fieldColor,
     borderBottomWidth: 1,
   },
@@ -44,11 +45,19 @@ export default StyleSheet.create({
   },
   loadingContainer: {
     position: 'absolute',
-    top: 250,
+    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  bizProfile: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    width: '100%',
+    borderBottomColor: BaseColor.textSecondaryColor,
+    borderBottomWidth: 1,
+    paddingBottom: 10,
   },
 });

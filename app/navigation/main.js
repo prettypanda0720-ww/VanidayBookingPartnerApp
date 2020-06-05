@@ -28,7 +28,7 @@ import StaffMembers from '@screens/StaffMembers';
 import StaffProfileDetail from '@screens/StaffProfileDetail';
 import OpeningHours from '@screens/OpeningHours';
 import CreateStaff from '@screens/CreateStaff';
-import Services from '@screens/Services';
+// import Services from '@screens/Services';
 import EditService from '@screens/EditService';
 import NewPricingOption from '@screens/NewPricingOption';
 import PickStaff from '@screens/PickStaff';
@@ -83,6 +83,8 @@ import TaxesSummary from '@screens/TaxesSummary';
 import TipsCollected from '@screens/TipsCollected';
 import ManageAppointment from '@screens/ManageAppointment';
 import RescheduleAppointment from '@screens/RescheduleAppointment';
+import ServiceList from '@screens/ServiceList';
+import EditOpeningHours from '@screens/EditOpeningHours';
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
   const nextScene = scenes[scenes.length - 1].route.routeName;
@@ -219,9 +221,9 @@ const StackNavigator = createStackNavigator(
     CreateStaff: {
       screen: CreateStaff,
     },
-    Services: {
-      screen: VanidayServices,
-    },
+    // Services: {
+    //   screen: VanidayServices,
+    // },
     EditService: {
       screen: EditService,
     },
@@ -352,7 +354,7 @@ const StackNavigator = createStackNavigator(
       screen: VanidayServices,
     },
     ServiceList: {
-      screen: Services,
+      screen: ServiceList,
     },
     Financing: {
       screen: Financing,
@@ -389,6 +391,9 @@ const StackNavigator = createStackNavigator(
     },
     RescheduleAppointment: {
       screen: RescheduleAppointment,
+    },
+    EditOpeningHours: {
+      screen: EditOpeningHours,
     },
   },
   {

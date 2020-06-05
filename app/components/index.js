@@ -30,6 +30,7 @@ import ProductListItem from './ProductListItem';
 import VanidayServiceItem from './VanidayServiceItem';
 import BookingHistory from './BookingHistory';
 import Agenda from './agenda';
+import ExpandableItemComponent from './ExpandableItemComponent';
 
 export {
   Header,
@@ -55,7 +56,7 @@ export {
   CommentItem,
   ServiceInput,
   DurationPicker,
-  ClosedDateListItem,  
+  ClosedDateListItem,
   FilterSort,
   ECardListItem,
   InvoiceListItem,
@@ -64,4 +65,5 @@ export {
   VanidayServiceItem,
   BookingHistory,
   Agenda,
+  ExpandableItemComponent,
 };

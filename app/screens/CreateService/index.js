@@ -1,22 +1,16 @@
 import React, {Component} from 'react';
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  Switch,
-} from 'react-native';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-  ServiceInput,
-} from '@components';
+import {connect} from 'react-redux';
+import {myAppointmentsSvc} from '@services';
+import {AuthActions} from '@actions';
+import {bindActionCreators} from 'redux';
+import {View, TextInput, ScrollView, Switch} from 'react-native';
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 
 import {Dropdown} from 'react-native-material-dropdown';
-import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
+import {withNavigation} from 'react-navigation';
+import * as Utils from '@utils';
+import {BaseStyle, BaseColor} from '@config';
 import styles from './styles';
 
 class CreateService extends Component {
@@ -26,15 +20,97 @@ class CreateService extends Component {
       search: '',
       refreshing: false,
       loading: false,
+      service_name: '',
+      sku: '',
+      price: '',
+      service_duration: '',
+      vendor_sections: '',
       isEnalbeProduct: false,
       isFeatured: false,
       index: 0,
-      routes: [
-        {key: 'general', title: 'General'},
-        {key: 'services', title: 'Services'},
-        {key: 'workinghours', title: 'Working hours'},
-      ],
+      description: '',
+      short_description: '',
+      subMenuList: [],
+      selectedItems: [],
     };
+  }
+
+  onSave = () => {
+    const {
+      service_name,
+      sku,
+      price,
+      selectedItems,
+      service_duration,
+      vendor_sections,
+      description,
+      short_description,
+      isEnalbeProduct,
+      isFeatured,
+    } = this.state;
+    const {navigation} = this.props;
+
+    const {auth} = this.props;
+    const data = {
+      token: auth.user.token,
+      productInfo: {
+        service_name: service_name,
+        sku: sku,
+        price: price,
+        category_ids: selectedItems,
+        service_duration: service_duration,
+        vendor_sections: isEnalbeProduct ? 1 : 0,
+        is_featured: isFeatured ? 1 : 0,
+        // status: isEnalbeProduct ? 1 : 0,
+        description: description,
+        short_description: short_description,
+      },
+    };
+    console.log('create service list', data);
+    if (auth.user.token !== undefined) {
+      myAppointmentsSvc
+        .createServiceList(data)
+        .then((response) => {
+          const res_profile = response.data;
+          if (res_profile.code == 0) {
+            Utils.notifyMessage('Creating Service is successfully done!');
+            navigation.goBack();
+          }
+        })
+        .catch((error) => {
+          Utils.notifyMessage(error);
+          console.log('appointment error');
+          console.log(error);
+        });
+    }
+  };
+
+  onSelectedItemsChange = (selectedItems) => {
+    this.setState({selectedItems: selectedItems});
+  };
+
+  componentDidMount() {
+    const {auth} = this.props;
+    const postData = {
+      token: auth.user.token,
+    };
+    myAppointmentsSvc
+      .getSubMenuByMerchant(postData)
+      .then((response) => {
+        const res_profile = response.data;
+        if (res_profile.code == 0) {
+          console.log('sub menu datalist', res_profile.data);
+          this.setState({
+            subMenuList: res_profile.data,
+            dataLoading: false,
+          });
+        }
+      })
+      .catch((error) => {
+        Utils.notifyMessage(error);
+        console.log('appointment error');
+        console.log(error);
+      });
   }
 
   toggleProductSwitch = (value) => {
@@ -47,17 +123,17 @@ class CreateService extends Component {
 
   render() {
     const {navigation} = this.props;
-    const {loading} = this.state;
+    const {loading, subMenuList} = this.state;
     let duration = [
-      {value: '1h'},
-      {value: '2h'},
-      {value: '3h'},
-      {value: '4h'},
-      {value: '5h'},
-      {value: '6h'},
-      {value: '7h'},
-      {value: '8h'},
-      {value: '9h'},
+      {value: '30min'},
+      {value: '60min'},
+      {value: '90min'},
+      {value: '120min'},
+      {value: '150min'},
+      {value: '180min'},
+      {value: '210min'},
+      {value: '240min'},
+      {value: '270min'},
     ];
 
     return (
@@ -89,7 +165,7 @@ class CreateService extends Component {
             </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
+              onChangeText={(text) => this.setState({service_name: text})}
               autoCorrect={false}
               placeholder="Service Name"
               placeholderTextColor={BaseColor.titleColor}
@@ -98,9 +174,52 @@ class CreateService extends Component {
           </View>
           <View style={styles.inputGroup}>
             <Text body2 style={{color: BaseColor.sectionColor}}>
-              Category
+              SKU
             </Text>
-            <ServiceInput />
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.setState({sku: text})}
+              autoCorrect={false}
+              placeholder="SKU"
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.primaryColor}
+            />
+          </View>
+          <SectionedMultiSelect
+            items={subMenuList}
+            uniqueKey="id"
+            subKey="subcategory"
+            selectText="Select Categories..."
+            showDropDowns={true}
+            readOnlyHeadings={false}
+            onSelectedItemsChange={this.onSelectedItemsChange}
+            selectedItems={this.state.selectedItems}
+          />
+          <View style={styles.inputGroup}>
+            <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+              Short Description
+            </Text>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.setState({short_description: text})}
+              autoCorrect={false}
+              placeholder=""
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+              Description
+            </Text>
+            <TextInput
+              style={[BaseStyle.textInput, styles.multilineTextInput]}
+              onChangeText={(text) => this.setState({description: text})}
+              autoCorrect={false}
+              placeholder=""
+              placeholderTextColor={BaseColor.titleColor}
+              selectionColor={BaseColor.titleColor}
+            />
           </View>
           <View style={{marginTop: 30}}>
             <Text title2 bold style={{color: BaseColor.sectionColor}}>
@@ -113,32 +232,38 @@ class CreateService extends Component {
                 baseColor={BaseColor.sectionColor}
                 textColor={BaseColor.titleColor}
                 rippleOpacity={0.7}
+                onChangeText={(value) => {
+                  this.setState({
+                    service_duration: value,
+                  });
+                }}
+                value={this.state.service_duration}
               />
               <Text body2 style={{color: BaseColor.sectionColor}}>
                 Normal price
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({id: text})}
+                onChangeText={(text) => this.setState({price: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
                 placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
-            <View style={styles.inputGroup}>
+            {/* <View style={styles.inputGroup}>
               <Text body2 style={{color: BaseColor.sectionColor}}>
                 Discount price
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({id: text})}
+                onChangeText={(text) => this.setState({service_duration: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
                 placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
               />
-            </View>
+            </View> */}
             <View style={[styles.profileItem, {marginTop: 20}]}>
               <Text body1 style={styles.sectionStyle}>
                 Enable Product
@@ -295,7 +420,7 @@ class CreateService extends Component {
           <Button
             style={{flex: 1, marginLeft: 10}}
             loading={loading}
-            onPress={() => navigation.goBack()}>
+            onPress={() => this.onSave()}>
             Save
           </Button>
         </View>
@@ -304,4 +429,18 @@ class CreateService extends Component {
   }
 }
 
-export default CreateService;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  };
+};
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(CreateService),
+);

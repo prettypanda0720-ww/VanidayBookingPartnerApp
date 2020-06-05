@@ -67,7 +67,7 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
   },
   salonImage: {
-    width: Utils.scaleWithPixel(300),
+    width: Utils.scaleWithPixel(200),
     height: Utils.scaleWithPixel(50),
     resizeMode: 'contain',
   }

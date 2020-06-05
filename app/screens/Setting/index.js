@@ -44,6 +44,8 @@ class Setting extends Component {
       description: '',
       rating: '',
       photos: [],
+      serviceList: [],
+      openingHours: '',
     };
   }
 
@@ -72,6 +74,10 @@ class Setting extends Component {
                     return res_profile.venCarPrefix + photo;
                   },
                 ),
+                serviceList: res_profile.serviceList,
+                vendor_primary_type: res_profile.vendor_primary_type,
+                vendor_secondary_type: res_profile.vendor_secondary_type,
+                openingHours: res_profile.openingHour,
               });
             }
           })
@@ -124,6 +130,10 @@ class Setting extends Component {
       description,
       rating,
       photos,
+      serviceList,
+      vendor_primary_type,
+      vendor_secondary_type,
+      openingHours,
     } = this.state;
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
@@ -139,12 +149,20 @@ class Setting extends Component {
         />
         <ScrollView>
           <View style={styles.contain}>
+            <View style={styles.bizProfile}>
+              <Text body1 style={styles.sectionStyle}>
+                Business Profile
+              </Text>
+            </View>
             <ProfileDetail
               image={''}
               textFirst={shopTitle}
               point={rating}
               textSecond={location}
               textThird={''}
+              style={{
+                paddingVertical: 20,
+              }}
               styleThumb={{
                 width: Utils.scaleWithPixel(135),
                 height: Utils.scaleWithPixel(65),
@@ -158,6 +176,8 @@ class Setting extends Component {
                   location: location,
                   description: description,
                   photos: photos,
+                  vendor_primary_type: vendor_primary_type,
+                  vendor_secondary_type: vendor_secondary_type,
                 })
               }
             />
@@ -166,18 +186,24 @@ class Setting extends Component {
                 {description}
               </Text>
             </View>
-            <ProfilePerformance
+            {/* <ProfilePerformance
               data={shopData.performance}
               style={{marginTop: 20, marginBottom: 20}}
-            />
+            /> */}
             <View style={{width: '100%'}}>
-              {/* <TouchableOpacity
-                style={styles.profileItem}
+              <TouchableOpacity
+                style={[
+                  styles.profileItem,
+                  {
+                    borderColor: BaseColor.textSecondaryColor,
+                    borderTopWidth: 1,
+                  },
+                ]}
                 onPress={() => {
                   navigation.navigate('ProfileEdit');
                 }}>
                 <Text body1 style={styles.sectionStyle}>
-                  Edit Profile
+                  Person Profile
                 </Text>
                 <Icon
                   name="angle-right"
@@ -185,11 +211,11 @@ class Setting extends Component {
                   color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
-                  navigation.navigate('OpeningHours');
+                  navigation.navigate('OpeningHours', {data: openingHours});
                 }}>
                 <Text body1 style={styles.sectionStyle}>
                   Opening Hours
@@ -234,7 +260,7 @@ class Setting extends Component {
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
-                  navigation.navigate('ServiceList');
+                  navigation.navigate('ServiceList', {data: serviceList});
                 }}>
                 <Text body1 style={styles.sectionStyle}>
                   Services
@@ -271,60 +297,6 @@ class Setting extends Component {
                 </Text>
                 <Text subhead>Singapore</Text>
               </View>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('Currency');
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  Currency
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                  <Text body1 grayColor>
-                    USD
-                  </Text>
-                  <Icon
-                    name="angle-right"
-                    size={18}
-                    color={'rgba(0,0,0,0.65)'}
-                    style={{marginLeft: 5}}
-                  />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('Cancellation');
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  Cancellation and Policy
-                </Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('TermsAndConditions');
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  Terms And Conditions
-                </Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
@@ -394,18 +366,18 @@ class Setting extends Component {
             </View>
           </View>
         </ScrollView>
+        <View style={{padding: 20}}>
+          <Button full loading={loading} onPress={() => this.onLogOut()}>
+            Sign Out
+          </Button>
+        </View>
         <View style={styles.loadingContainer}>
           <ActivityIndicator
             size="large"
             color={BaseColor.sectionColor}
             style={styles.loading}
-            animating={this.state.loading}
+            animating={this.state.dataLoading}
           />
-        </View>
-        <View style={{padding: 20}}>
-          <Button full loading={loading} onPress={() => this.onLogOut()}>
-            Sign Out
-          </Button>
         </View>
       </SafeAreaView>
     );

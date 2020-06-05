@@ -101,7 +101,7 @@ class Home extends Component<{}> {
             style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.4)'}}>
             <View style={styles.saleWrapper}>
               <View style={{flexDirection: 'column'}}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => Alert.alert('asdf')}
                   style={[styles.actionBtnWrapper, {marginBottom: 10}]}>
                   <Text headline bold style={{color: '#fff'}}>
@@ -114,7 +114,7 @@ class Home extends Component<{}> {
                     ]}>
                     <Icon name="bookmark" size={30} color={'#fff'} />
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   onPress={() => this.goBybtn('CreateClosedDate')}
                   style={[styles.actionBtnWrapper, {marginBottom: 10}]}>

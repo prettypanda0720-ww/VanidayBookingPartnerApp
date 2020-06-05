@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
 import {bindActionCreators} from 'redux';
 import {AuthActions} from '@actions';
-import {View, ScrollView, TextInput} from 'react-native';
+import {View, ScrollView, TextInput, ActivityIndicator} from 'react-native';
 import {BaseStyle, BaseColor} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import {primarytypes} from '@data';
@@ -16,6 +16,7 @@ class Aboutus extends Component {
   constructor(props) {
     super();
     this.state = {
+      dataLoading: true,
       loading: false,
       vendor_stripe_id: '',
       unique_entity_number: '',
@@ -29,7 +30,8 @@ class Aboutus extends Component {
       terms_and_conditions: '',
       free_cancellation_hour: '',
       photos: [],
-      serviceTypes: primarytypes,
+      serviceTypes: [],
+      productTypes: [],
     };
   }
 
@@ -47,8 +49,7 @@ class Aboutus extends Component {
       terms_and_conditions,
       free_cancellation_hour,
     } = this.state;
-    const {navigation, actions} = this.props;
-
+  
     const {auth} = this.props;
     const data = {
       token: auth.user.token,
@@ -59,14 +60,14 @@ class Aboutus extends Component {
         vendor_stripe_id: vendor_stripe_id,
         unique_entity_number: unique_entity_number,
         contact_number: contact_number,
-        primary_type: primary_type,
-        secondary_type: secondary_type,
-        cancellation_policy: cancellation_policy,
-        terms_and_conditions: terms_and_conditions,
-        free_cancellation_hour: free_cancellation_hour,
+        return_policy: cancellation_policy,
+        privacy_policy: terms_and_conditions,
+        vendor_free_cancellation_hour: 4,
+        vendor_primary_type: primary_type,
+        vendor_secondary_type: secondary_type,
       },
     };
-
+    console.log('typedata', data);
     if (auth.user.token !== undefined) {
       myAppointmentsSvc
         .updateProfileData(data)
@@ -85,6 +86,7 @@ class Aboutus extends Component {
   };
 
   componentDidMount() {
+    console.log('aboutus', this.props.navigation.state.params.title);
     this.setState({
       shopTitle: this.props.navigation.state.params.title,
       vendor_stripe_id: this.props.navigation.state.params.vendor_stripe_id,
@@ -94,21 +96,69 @@ class Aboutus extends Component {
       location: this.props.navigation.state.params.location,
       description: this.props.navigation.state.params.description,
       photos: this.props.navigation.state.params.photos,
+      primary_type: this.props.navigation.state.params.vendor_primary_type,
+      secondary_type: this.props.navigation.state.params.vendor_secondary_type,
     });
+
+    myAppointmentsSvc
+      .getHomeCategory()
+      .then((response) => {
+        const res_profile = response.data;
+        if (res_profile.code == 0) {
+          this.setState({
+            serviceTypes: res_profile.data,
+            productTypes: res_profile.data.map((element) => {
+              return {value: element.name};
+            }),
+            dataLoading: false,
+          });
+        }
+      })
+      .catch((error) => {
+        Utils.notifyMessage(error);
+        console.log('appointment error');
+        console.log(error);
+      });
+  }
+
+  getNameByType(type) {
+    var count = Object.keys(this.state.serviceTypes).length;
+    let name = '';
+    for (var i = 0; i < count; i++) {
+      name = this.state.serviceTypes[i].name;
+      if (type == this.state.serviceTypes[i].id) {
+        name = this.state.serviceTypes[i].name;
+        return name;
+      }
+    }
+  }
+
+  getKeyByValue(value) {
+    var count = Object.keys(this.state.serviceTypes).length;
+    let key = '';
+    for (var i = 0; i < count; i++) {
+      if (value == this.state.serviceTypes[i].name) {
+        key = this.state.serviceTypes[i].id;
+        console.log(value, key);
+        return key;
+      }
+    }
   }
 
   render() {
     const {navigation} = this.props;
-    const {loading, serviceTypes} = this.state;
-    const vendor_stripe_id = this.props.navigation.state.params
-      .vendor_stripe_id;
-    const unique_entity_number = this.props.navigation.state.params
-      .unique_entity_number;
-    const contact_number = this.props.navigation.state.params.contact_number;
-    const title = this.props.navigation.state.params.title;
-    const location = this.props.navigation.state.params.location;
-    const description = this.props.navigation.state.params.description;
-    const photos = this.props.navigation.state.params.photos;
+    const {
+      loading,
+      vendor_stripe_id,
+      unique_entity_number,
+      contact_number,
+      shopTitle,
+      location,
+      description,
+      photos,
+      serviceTypes,
+      productTypes,
+    } = this.state;
 
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
@@ -187,37 +237,39 @@ class Aboutus extends Component {
                 placeholder=""
                 placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.titleColor}>
-                {title}
+                {shopTitle}
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
               <Dropdown
                 label="Primary Type"
-                data={serviceTypes}
+                data={productTypes}
                 rippleOpacity={0.7}
                 baseColor={BaseColor.secondBlackColor}
                 tintColor={BaseColor.blackColor}
                 style={{color: BaseColor.blackColor}}
                 onChangeText={(value) => {
                   this.setState({
-                    primary_type: value,
+                    primary_type: this.getKeyByValue(value),
                   });
                 }}
+                value={this.getNameByType(this.state.primary_type)}
               />
             </View>
             <View style={styles.inputGroup}>
               <Dropdown
                 label="Seconday Type"
-                data={serviceTypes}
+                data={productTypes}
                 rippleOpacity={0.7}
                 baseColor={BaseColor.secondBlackColor}
                 tintColor={BaseColor.blackColor}
                 style={{color: BaseColor.blackColor}}
                 onChangeText={(value) => {
                   this.setState({
-                    secondary_type: value,
+                    secondary_type: this.getKeyByValue(value),
                   });
                 }}
+                value={this.getNameByType(this.state.secondary_type)}
               />
             </View>
             <View style={styles.inputGroup}>
@@ -340,6 +392,14 @@ class Aboutus extends Component {
             </View>
           </View>
         </ScrollView>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator
+            size="large"
+            color={BaseColor.sectionColor}
+            style={styles.loading}
+            animating={this.state.dataLoading}
+          />
+        </View>
         <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
           <Button
             style={{flex: 1, marginLeft: 10}}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {View, ScrollView, FlatList} from 'react-native';
-import {BaseStyle, BaseColor} from '@config';
+import {View, ScrollView, TouchableOpacity, Image} from 'react-native';
+import {BaseStyle, BaseColor, Images} from '@config';
 import {
   SafeAreaView,
   Icon,
@@ -40,26 +40,44 @@ export default class VanidayServices extends Component {
             }}
             style={styles.headerStyle}
           />
-          <ScrollView style={styles.container}>
-            <Text body2 style={{color: BaseColor.secondBlackColor}}>
-              Check out our full suite of services that help grow your business.
-            </Text>
-            <View style={styles.inputGroup}>
-              <FlatList
-                columnWrapperStyle={{marginBottom: 20}}
-                numColumns={2}
-                data={vanidayServices}
-                keyExtractor={(item, index) => item.id}
-                renderItem={({item, index}) => (
-                  <VanidayServiceItem
-                    image={item.image}
-                    name={item.name}
-                    style={index % 2 ? {marginLeft: 15} : {}}
-                    onPress={() => navigation.navigate(item.name)}
-                  />
-                )}
-              />
-            </View>
+          <ScrollView>
+            <TouchableOpacity
+              style={styles.profileItem}
+              onPress={() => {
+                navigation.navigate('Financing');
+              }}>
+              <View style={styles.wrapper}>
+                <Image source={Images.financing} style={styles.thumb} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.profileItem}
+              onPress={() => {
+                navigation.navigate('Marketing');
+              }}>
+              <View style={styles.wrapper}>
+                <Image source={Images.marketing} style={styles.thumb} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.profileItem}
+              onPress={() => {
+                navigation.navigate('');
+              }}>
+              <View style={styles.wrapper}>
+                <Image source={Images.it} style={styles.thumb} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.profileItem}
+              onPress={() => {
+                navigation.navigate('');
+              }}>
+              <View style={styles.wrapper}>
+                <Image source={Images.design} style={styles.thumb} />
+              </View>
+            </TouchableOpacity>
+            {/* </View> */}
           </ScrollView>
         </SafeAreaView>
       </SafeAreaView>

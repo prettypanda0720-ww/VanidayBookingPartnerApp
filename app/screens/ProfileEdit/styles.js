@@ -27,9 +27,14 @@ export default StyleSheet.create({
     borderBottomColor: BaseColor.secondBlackColor,
   },
   profileItem: {
+    width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     paddingVertical: 20,
   },
+  inputGroup: {
+    width: '100%',
+    paddingVertical: 5,
+  }
 });

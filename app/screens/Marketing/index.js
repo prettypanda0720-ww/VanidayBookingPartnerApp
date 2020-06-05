@@ -64,14 +64,14 @@ class Marketing extends Component {
               marginTop: 20,
               width: '100%',
               textAlign: 'center',
-              fontSize: 30,
+              fontSize: 25,
             }}>
             Grow Your Business With Marketing Package
           </Text>
         </ScrollView>
         <Text
           title3
-          bold
+          semibold
           numberOfLines={2}
           style={{
             color: BaseColor.sectionColor,

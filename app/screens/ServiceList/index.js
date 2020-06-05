@@ -5,21 +5,34 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
+import {withNavigation} from 'react-navigation';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import {Header, SafeAreaView, Icon, Text} from '@components';
+import {connect} from 'react-redux';
+import {myAppointmentsSvc} from '@services';
+import {bindActionCreators} from 'redux';
+import {AuthActions} from '@actions';
 import styles from './styles';
 
-// Load sample data
-import {ServiceData} from '@data';
-
-export default class Services extends Component {
+class ServiceList extends Component {
   constructor(props) {
     super();
     this.state = {
-      loading: false,
-      serviceData: ServiceData,
+      loading: true,
+      serviceData: [],
     };
+  }
+
+  componentDidMount() {
+    const {auth, navigation} = this.props;
+    this.focusListener = navigation.addListener('didFocus', () => {
+      // The screen is focused
+      // Call any action
+      const data = this.props.navigation.state.params.data;
+      this.setState({serviceData: data, loading: false});
+    });
   }
 
   render() {
@@ -57,7 +70,8 @@ export default class Services extends Component {
                       body1
                       semibold
                       style={{color: BaseColor.sectionColor}}>
-                      {item.title}&nbsp;({item.totalCount})
+                      {item.sectionName}
+                      {/* &nbsp;({item.totalCount}) */}
                     </Text>
                     <View
                       style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -76,7 +90,7 @@ export default class Services extends Component {
                       borderTopColor: BaseColor.dividerColor,
                     }}>
                     <FlatList
-                      data={item.serviceList}
+                      data={item.dataList}
                       keyExtractor={(item, index) => item.id}
                       renderItem={({item}) => (
                         <TouchableOpacity
@@ -99,7 +113,7 @@ export default class Services extends Component {
                               subhead
                               numberOfLines={3}
                               style={{color: BaseColor.titleColor}}>
-                              {item.serviceTitle}
+                              {item.product_name}
                             </Text>
                             <Text
                               caption1
@@ -107,17 +121,17 @@ export default class Services extends Component {
                                 marginTop: 5,
                                 color: BaseColor.titleColor,
                               }}>
-                              {item.duration}
+                              {item.service_duration}&nbsp;Min
                             </Text>
                           </View>
                           <View
                             style={{
                               justifyContent: 'center',
                               alignItems: 'center',
-                              flex: 1.2
+                              flex: 1.2,
                             }}>
                             <Text body2 style={{color: BaseColor.titleColor}}>
-                              {item.price}
+                              $&nbsp;{item.product_price}
                             </Text>
                           </View>
                         </TouchableOpacity>
@@ -128,6 +142,14 @@ export default class Services extends Component {
               );
             })}
           </ScrollView>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={this.state.loading}
+            />
+          </View>
         </SafeAreaView>
         <View style={styles.floatingBtn}>
           <TouchableOpacity
@@ -141,3 +163,19 @@ export default class Services extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  };
+};
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(ServiceList),
+);

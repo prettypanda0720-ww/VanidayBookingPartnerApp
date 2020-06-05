@@ -10,6 +10,8 @@ import {
   RadioGroup,
   Text,
 } from '@components';
+import {Checkbox} from 'react-native-material-ui';
+import {Dropdown} from 'react-native-material-dropdown';
 import styles from './styles';
 
 // Load sample data
@@ -26,9 +28,46 @@ export default class ProfileEdit extends Component {
       address: ShopsData[0].address,
       image: ShopsData[0].image,
       loading: false,
-      retailReminders: false,
+      isOwner: false,
+      checked: false,
     };
   }
+
+  getGenderName(key) {
+    let name = '';
+    switch (parseInt(key)) {
+      case 0:
+        name = 'Not Specified';
+        break;
+      case 1:
+        name = 'Male';
+        break;
+      case 2:
+        name = 'Female';
+        break;
+    }
+    return name;
+  }
+
+  getGenderKey(value) {
+    let key = '';
+    switch (value) {
+      case 'Male':
+        key = 1;
+        break;
+      case 'Female':
+        key = 2;
+        break;
+      case 'Not Specified':
+        key = 0;
+        break;
+    }
+    return key;
+  }
+
+  toggleSwitch = (value) => {
+    this.setState({isOwner: value});
+  };
 
   render() {
     const {navigation} = this.props;
@@ -49,107 +88,116 @@ export default class ProfileEdit extends Component {
         />
         <ScrollView>
           <View style={styles.contain}>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="First Name"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="Last Name"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="Email"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="Address"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="Mobile Number"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({id: text})}
+                autoCorrect={false}
+                placeholder="First Name"
+                placeholderTextColor={BaseColor.MainPrimaryColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({id: text})}
+                autoCorrect={false}
+                placeholder="Last Name"
+                placeholderTextColor={BaseColor.MainPrimaryColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({id: text})}
+                autoCorrect={false}
+                placeholder="Email"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={BaseStyle.textInput}
+                onChangeText={(text) => this.setState({password: text})}
+                autoCorrect={false}
+                placeholder="Password"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+                autoCapitalize={'none'}
+                autoCompleteType={'password'}
+                keyboardType={'password-address'}
+                textContentType={'passwordAddress'}
+                secureTextEntry={true}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={BaseStyle.textInput}
+                onChangeText={(text) => this.setState({password: text})}
+                autoCorrect={false}
+                placeholder="Confirm Password"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+                autoCapitalize={'none'}
+                autoCompleteType={'password'}
+                keyboardType={'password-address'}
+                textContentType={'passwordAddress'}
+                secureTextEntry={true}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Dropdown
+                label="Select a Gender"
+                data={[
+                  {value: 'Not Specified'},
+                  {value: 'Male'},
+                  {value: 'Female'},
+                ]}
+                rippleOpacity={0.7}
+                baseColor={BaseColor.secondBlackColor}
+                tintColor={BaseColor.blackColor}
+                style={{color: BaseColor.blackColor}}
+                // value={this.getGenderName(staff_gender)}
+                onChangeText={(value) => {
+                  this.setState({
+                    staff_gender: this.getGenderKey(value),
+                  });
+                }}
+              />
+            </View>
             {/* <RadioGroup /> */}
             <View style={[styles.profileItem, {paddingVertical: 15}]}>
+              <Text subhead style={{color: BaseColor.titleColor}}>
+                Product Seller
+              </Text>
               <Switch
                 name="angle-right"
                 size={18}
-                onValueChange={this.toggleRetailSwitch}
-                value={this.state.retailReminders}
+                onValueChange={this.toggleSwitch}
+                value={this.state.isOwner}
               />
-              <Text body1 style={{color: BaseColor.titleColor}}>
-                Salon Owner / Product Seller
+              <Text subhead style={{color: BaseColor.titleColor}}>
+                Salon Owner
               </Text>
             </View>
-            <View>{this.displayRetailView()}</View>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="Business Name"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="Business Name"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="Business Tel"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="Business Email"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="Business Address"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="Neighborhood"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
+            <View style={{flexDirection: 'column', width: '100%'}}>
+              {this.displayOwnerView()}
+            </View>
+            <View style={styles.inputGroup}>
+              <Checkbox
+                label="I would like to receive promotions, tips and announcements via email"
+                value="agree"
+                checked={this.state.checked}
+                onCheck={() =>
+                  this.setState({
+                    checked: !this.state.checked,
+                  })
+                }
+              />
+            </View>
           </View>
         </ScrollView>
         <View style={{padding: 20}}>
@@ -175,62 +223,78 @@ export default class ProfileEdit extends Component {
     );
   }
 
-  displayRetailView() {
-    let tax = [{value: 'No tax'}, {value: 'tax'}];
-    if (this.state.retailReminders) {
+  displayOwnerView() {
+    if (this.state.isOwner) {
       return (
-        <View style={{flexDirection: 'column'}}>
+        <View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              RETAIL PRICE
-            </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
-              placeholder="0.00"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholder="Business Url"
+              placeholderTextColor={BaseColor.grayColor}
               selectionColor={BaseColor.primaryColor}
             />
           </View>
           <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              SPECIAL PRICE
-            </Text>
             <TextInput
               style={[BaseStyle.textInput, styles.textInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
-              placeholder="0.00"
-              placeholderTextColor={BaseColor.MainPrimaryColor}
+              placeholder="Business Name"
+              placeholderTextColor={BaseColor.grayColor}
+              selectionColor={BaseColor.primaryColor}
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.setState({id: text})}
+              autoCorrect={false}
+              placeholder="Business Tel"
+              placeholderTextColor={BaseColor.grayColor}
+              selectionColor={BaseColor.primaryColor}
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.setState({id: text})}
+              autoCorrect={false}
+              placeholder="Unique Entity Number"
+              placeholderTextColor={BaseColor.grayColor}
+              selectionColor={BaseColor.primaryColor}
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.setState({id: text})}
+              autoCorrect={false}
+              placeholder="Business Address"
+              placeholderTextColor={BaseColor.grayColor}
               selectionColor={BaseColor.primaryColor}
             />
           </View>
           <Dropdown
-            label="TAX (included in prices)"
-            data={tax}
+            label="Select your neighbourhood"
+            data={[
+              {value: 'Aljunied'},
+              {value: 'Ang Mo Kio'},
+              {value: 'Balestier'},
+            ]}
             rippleOpacity={0.7}
+            baseColor={BaseColor.secondBlackColor}
+            tintColor={BaseColor.blackColor}
+            style={{color: BaseColor.blackColor}}
+            // value={this.getGenderName(staff_gender)}
+            onChangeText={(value) => {
+              // this.setState({
+              //   staff_gender: this.getGenderKey(value),
+              // });
+            }}
           />
-          <View style={styles.inputGroup}>
-            <CheckBox
-              label={'Enable commision'}
-              checked={this.state.checked}
-              onChange={() =>
-                this.setState({
-                  checked: !this.state.checked,
-                })
-              }
-              style={{height: 10}}
-            />
-          </View>
-        </View>
-      );
-    } else {
-      return (
-        <View style={[styles.contentCenter, styles.retailWrapper]}>
-          <Text caption1 semibold>
-            Switch on 'Enable Retail Sales' to sell this product at checkout.
-          </Text>
         </View>
       );
     }
