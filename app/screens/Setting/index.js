@@ -35,7 +35,6 @@ class Setting extends Component {
       reminders: false,
       dataLoading: true,
       loading: false,
-      shopData: ShopsData[0],
       vendor_stripe_id: '',
       unique_entity_number: '',
       contact_number: '',
@@ -117,10 +116,10 @@ class Setting extends Component {
     this.setState({reminders: value});
   };
 
-  render() {
+  displayContentView() {
     const {navigation} = this.props;
     const {
-      shopData,
+      dataLoading,
       loading,
       vendor_stripe_id,
       unique_entity_number,
@@ -135,225 +134,74 @@ class Setting extends Component {
       vendor_secondary_type,
       openingHours,
     } = this.state;
-    return (
-      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
-        <Header
-          title="Profile"
-          renderRight={() => {
-            return <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />;
-          }}
-          onPressRight={() => {
-            navigation.navigate('Notification');
-          }}
-          style={styles.headerStyle}
-        />
-        <ScrollView>
-          <View style={styles.contain}>
-            <View style={styles.bizProfile}>
-              <Text body1 style={styles.sectionStyle}>
-                Business Profile
-              </Text>
-            </View>
-            <ProfileDetail
-              image={''}
-              textFirst={shopTitle}
-              point={rating}
-              textSecond={location}
-              textThird={''}
-              style={{
-                paddingVertical: 20,
-              }}
-              styleThumb={{
-                width: Utils.scaleWithPixel(135),
-                height: Utils.scaleWithPixel(65),
-              }}
-              onPress={() =>
-                navigation.navigate('Aboutus', {
-                  vendor_stripe_id: vendor_stripe_id,
-                  unique_entity_number: unique_entity_number,
-                  contact_number: contact_number,
-                  title: shopTitle,
-                  location: location,
-                  description: description,
-                  photos: photos,
-                  vendor_primary_type: vendor_primary_type,
-                  vendor_secondary_type: vendor_secondary_type,
-                })
-              }
-            />
-            <View style={styles.contentService}>
-              <Text body2 style={styles.sectionStyle}>
-                {description}
-              </Text>
-            </View>
-            {/* <ProfilePerformance
-              data={shopData.performance}
-              style={{marginTop: 20, marginBottom: 20}}
-            /> */}
-            <View style={{width: '100%'}}>
-              <TouchableOpacity
-                style={[
-                  styles.profileItem,
-                  {
-                    borderColor: BaseColor.textSecondaryColor,
-                    borderTopWidth: 1,
-                  },
-                ]}
-                onPress={() => {
-                  navigation.navigate('ProfileEdit');
-                }}>
+    if (!dataLoading) {
+      return (
+        <SafeAreaView
+          style={BaseStyle.safeAreaView}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Profile"
+            renderRight={() => {
+              return <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />;
+            }}
+            onPressRight={() => {
+              navigation.navigate('Notification');
+            }}
+            style={styles.headerStyle}
+          />
+          <ScrollView>
+            <View style={styles.contain}>
+              <View style={styles.bizProfile}>
                 <Text body1 style={styles.sectionStyle}>
-                  Person Profile
+                  Business Profile
                 </Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('OpeningHours', {data: openingHours});
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  Opening Hours
-                </Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('MerchantClosedDates');
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  Closed Dates
-                </Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('Staffs');
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  Staffs
-                </Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('ServiceList', {data: serviceList});
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  Services
-                </Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('Inventory');
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  Inventory
-                </Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <View
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('Services');
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  Country
-                </Text>
-                <Text subhead>Singapore</Text>
               </View>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('Reports');
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  Reports
-                </Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('FAQ');
-                }}>
-                <Text body1 style={styles.sectionStyle}>
-                  FAQ
-                </Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <View style={[styles.profileItem, {paddingVertical: 15}]}>
-                <Text body1 style={styles.sectionStyle}>
-                  Reminders
-                </Text>
-                <Switch
-                  name="angle-right"
-                  size={18}
-                  onValueChange={this.toggleSwitch}
-                  value={this.state.reminders}
-                />
-              </View>
-              <View style={styles.profileItem}>
-                <Text body1 style={styles.sectionStyle}>
-                  App Version
-                </Text>
-                <Text body1 grayColor>
-                  {BaseSetting.appVersion}
+              <ProfileDetail
+                image={''}
+                textFirst={shopTitle}
+                point={rating}
+                textSecond={location}
+                textThird={''}
+                style={{
+                  paddingVertical: 20,
+                }}
+                styleThumb={{
+                  width: Utils.scaleWithPixel(135),
+                  height: Utils.scaleWithPixel(65),
+                }}
+                onPress={() =>
+                  navigation.navigate('Aboutus', {
+                    vendor_stripe_id: vendor_stripe_id,
+                    unique_entity_number: unique_entity_number,
+                    contact_number: contact_number,
+                    title: shopTitle,
+                    location: location,
+                    description: description,
+                    photos: photos,
+                    vendor_primary_type: vendor_primary_type,
+                    vendor_secondary_type: vendor_secondary_type,
+                  })
+                }
+              />
+              <View style={styles.contentService}>
+                <Text body2 style={styles.sectionStyle}>
+                  {description}
                 </Text>
               </View>
               <View style={{width: '100%'}}>
                 <TouchableOpacity
-                  style={styles.profileItem}
+                  style={[
+                    styles.profileItem,
+                    {
+                      borderColor: BaseColor.textSecondaryColor,
+                      borderTopWidth: 1,
+                    },
+                  ]}
                   onPress={() => {
-                    navigation.navigate('Notification');
+                    navigation.navigate('ProfileEdit');
                   }}>
                   <Text body1 style={styles.sectionStyle}>
-                    Notification
+                    Person Profile
                   </Text>
                   <Icon
                     name="angle-right"
@@ -362,25 +210,198 @@ class Setting extends Component {
                     style={{marginLeft: 5}}
                   />
                 </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('OpeningHours', {data: openingHours});
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Opening Hours
+                  </Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={'rgba(0,0,0,0.65)'}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('MerchantClosedDates');
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Closed Dates
+                  </Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={'rgba(0,0,0,0.65)'}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('Staffs');
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Staffs
+                  </Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={'rgba(0,0,0,0.65)'}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('ServiceList', {data: serviceList});
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Services
+                  </Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={'rgba(0,0,0,0.65)'}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('Inventory');
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Inventory
+                  </Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={'rgba(0,0,0,0.65)'}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity>
+                <View
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('Services');
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Country
+                  </Text>
+                  <Text subhead>Singapore</Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('Reports');
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Reports
+                  </Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={'rgba(0,0,0,0.65)'}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('FAQ');
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    FAQ
+                  </Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={'rgba(0,0,0,0.65)'}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity>
+                <View style={[styles.profileItem, {paddingVertical: 15}]}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Reminders
+                  </Text>
+                  <Switch
+                    name="angle-right"
+                    size={18}
+                    onValueChange={this.toggleSwitch}
+                    value={this.state.reminders}
+                  />
+                </View>
+                <View style={styles.profileItem}>
+                  <Text body1 style={styles.sectionStyle}>
+                    App Version
+                  </Text>
+                  <Text body1 grayColor>
+                    {BaseSetting.appVersion}
+                  </Text>
+                </View>
+                <View style={{width: '100%'}}>
+                  <TouchableOpacity
+                    style={styles.profileItem}
+                    onPress={() => {
+                      navigation.navigate('Notification');
+                    }}>
+                    <Text body1 style={styles.sectionStyle}>
+                      Notification
+                    </Text>
+                    <Icon
+                      name="angle-right"
+                      size={18}
+                      color={'rgba(0,0,0,0.65)'}
+                      style={{marginLeft: 5}}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
+          </ScrollView>
+          <View style={{padding: 20}}>
+            <Button full loading={loading} onPress={() => this.onLogOut()}>
+              Sign Out
+            </Button>
           </View>
-        </ScrollView>
-        <View style={{padding: 20}}>
-          <Button full loading={loading} onPress={() => this.onLogOut()}>
-            Sign Out
-          </Button>
-        </View>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator
-            size="large"
-            color={BaseColor.sectionColor}
-            style={styles.loading}
-            animating={this.state.dataLoading}
+        </SafeAreaView>
+      );
+    } else {
+      const {dataLoading} = this.state;
+      return (
+        <SafeAreaView
+          style={BaseStyle.safeAreaView}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Profile"
+            renderRight={() => {
+              return <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />;
+            }}
+            onPressRight={() => {
+              navigation.navigate('Notification');
+            }}
+            style={styles.headerStyle}
           />
-        </View>
-      </SafeAreaView>
-    );
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={dataLoading}
+            />
+          </View>
+        </SafeAreaView>
+      );
+    }
+  }
+
+  render() {
+    return <View style={{flex: 1}}>{this.displayContentView()}</View>;
   }
 }
 

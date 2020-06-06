@@ -41,4 +41,13 @@ export default StyleSheet.create({
     borderColor: BaseColor.grayColor,
     borderWidth: 1,
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.secondBlackColor,
+  },
 });

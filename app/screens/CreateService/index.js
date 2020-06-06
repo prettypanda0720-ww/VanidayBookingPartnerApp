@@ -3,7 +3,13 @@ import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
 import {AuthActions} from '@actions';
 import {bindActionCreators} from 'redux';
-import {View, TextInput, ScrollView, Switch} from 'react-native';
+import {
+  View,
+  TextInput,
+  ScrollView,
+  Switch,
+  ActivityIndicator,
+} from 'react-native';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 
@@ -19,7 +25,8 @@ class CreateService extends Component {
     this.state = {
       search: '',
       refreshing: false,
-      loading: false,
+      dataLoading: true,
+      saveLoading: false,
       service_name: '',
       sku: '',
       price: '',
@@ -35,8 +42,45 @@ class CreateService extends Component {
     };
   }
 
-  onSave = () => {
+  checkInput() {
     const {
+      service_name,
+      sku,
+      selectedItems,
+      price,
+      service_duration,
+    } = this.state;
+
+    if (service_name.length === 0) {
+      Utils.notifyMessage('Service Name is required!');
+      return false;
+    }
+    if (sku.length === 0) {
+      Utils.notifyMessage('SKU is required!');
+      return false;
+    }
+    if (selectedItems.length === 0) {
+      Utils.notifyMessage('Categories is required!');
+      return false;
+    }
+    if (price.length === 0) {
+      Utils.notifyMessage('Price is required!');
+      return false;
+    }
+    if (service_duration.length === 0) {
+      Utils.notifyMessage('Duration is required!');
+      return false;
+    }
+    return true;
+  }
+
+  onSave = () => {
+    if (!this.checkInput()) {
+      return;
+    }
+    this.setState({saveLoading: true});
+    const {
+      saveLoading,
       service_name,
       sku,
       price,
@@ -49,7 +93,14 @@ class CreateService extends Component {
       isFeatured,
     } = this.state;
     const {navigation} = this.props;
-
+    let selItemsStr = '';
+    const count = selectedItems.length;
+    if (count > 0) {
+      selItemsStr = selectedItems[0];
+      for (let index = 1; index < count; index++) {
+        selItemsStr += ',' + selectedItems[index];
+      }
+    }
     const {auth} = this.props;
     const data = {
       token: auth.user.token,
@@ -57,7 +108,7 @@ class CreateService extends Component {
         service_name: service_name,
         sku: sku,
         price: price,
-        category_ids: selectedItems,
+        category_ids: selItemsStr,
         service_duration: service_duration,
         vendor_sections: isEnalbeProduct ? 1 : 0,
         is_featured: isFeatured ? 1 : 0,
@@ -74,6 +125,7 @@ class CreateService extends Component {
           const res_profile = response.data;
           if (res_profile.code == 0) {
             Utils.notifyMessage('Creating Service is successfully done!');
+            this.setState({saveLoading: false});
             navigation.goBack();
           }
         })
@@ -121,311 +173,225 @@ class CreateService extends Component {
     this.setState({isFeatured: value});
   };
 
-  render() {
+  displayContentView() {
     const {navigation} = this.props;
-    const {loading, subMenuList} = this.state;
+    const {loading, dataLoading, saveLoading, subMenuList} = this.state;
     let duration = [
-      {value: '30min'},
-      {value: '60min'},
-      {value: '90min'},
-      {value: '120min'},
-      {value: '150min'},
-      {value: '180min'},
-      {value: '210min'},
-      {value: '240min'},
-      {value: '270min'},
+      {value: '30'},
+      {value: '60'},
+      {value: '90'},
+      {value: '120'},
+      {value: '150'},
+      {value: '180'},
+      {value: '210'},
+      {value: '240'},
+      {value: '270'},
     ];
-
-    return (
-      <SafeAreaView
-        style={[BaseStyle.safeAreaView]}
-        forceInset={{top: 'always'}}>
-        <Header
-          title=""
-          renderRight={() => {
-            return <Icon name="times" size={20} color={BaseColor.blackColor} />;
-          }}
-          onPressRight={() => {
-            navigation.goBack();
-          }}
-        />
-        <ScrollView
-          style={{
-            flexDirection: 'column',
-            paddingLeft: 20,
-            paddingRight: 20,
-            paddingBottom: 60,
-          }}>
-          <Text title2 bold style={{color: BaseColor.sectionColor}}>
-            Create Service
-          </Text>
-          <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              Service name
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({service_name: text})}
-              autoCorrect={false}
-              placeholder="Service Name"
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-          </View>
-          <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              SKU
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({sku: text})}
-              autoCorrect={false}
-              placeholder="SKU"
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-          </View>
-          <SectionedMultiSelect
-            items={subMenuList}
-            uniqueKey="id"
-            subKey="subcategory"
-            selectText="Select Categories..."
-            showDropDowns={true}
-            readOnlyHeadings={false}
-            onSelectedItemsChange={this.onSelectedItemsChange}
-            selectedItems={this.state.selectedItems}
+    if (!dataLoading) {
+      return (
+        <SafeAreaView
+          style={[BaseStyle.safeAreaView]}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Create Service"
+            renderRight={() => {
+              return (
+                <Icon name="times" size={20} color={BaseColor.blackColor} />
+              );
+            }}
+            onPressRight={() => {
+              navigation.goBack();
+            }}
+            style={styles.headerStyle}
           />
-          <View style={styles.inputGroup}>
-            <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-              Short Description
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({short_description: text})}
-              autoCorrect={false}
-              placeholder=""
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.titleColor}
+          <ScrollView
+            style={{
+              flexDirection: 'column',
+              paddingLeft: 20,
+              paddingRight: 20,
+              paddingBottom: 60,
+            }}>
+            <View style={styles.inputGroup}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
+                Service name
+              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({service_name: text})}
+                autoCorrect={false}
+                placeholder="Service Name"
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
+                SKU
+              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({sku: text})}
+                autoCorrect={false}
+                placeholder="SKU"
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <SectionedMultiSelect
+              items={subMenuList}
+              uniqueKey="id"
+              subKey="subcategory"
+              selectText="Select Categories..."
+              showDropDowns={true}
+              readOnlyHeadings={false}
+              onSelectedItemsChange={this.onSelectedItemsChange}
+              selectedItems={this.state.selectedItems}
+            />
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                Short Description
+              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) =>
+                  this.setState({short_description: text})
+                }
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                Description
+              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.multilineTextInput]}
+                onChangeText={(text) => this.setState({description: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}
+              />
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text title2 bold style={{color: BaseColor.sectionColor}}>
+                Prices
+              </Text>
+              <View style={{}}>
+                <Dropdown
+                  label="Duration(min)"
+                  data={duration}
+                  baseColor={BaseColor.sectionColor}
+                  textColor={BaseColor.titleColor}
+                  rippleOpacity={0.7}
+                  onChangeText={(value) => {
+                    this.setState({
+                      service_duration: value,
+                    });
+                  }}
+                  value={this.state.service_duration}
+                />
+                <Text body2 style={{color: BaseColor.sectionColor}}>
+                  Normal price
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) => this.setState({price: text})}
+                  autoCorrect={false}
+                  placeholder="$ 0.00"
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.primaryColor}
+                  keyboardType={'numeric'}
+                />
+              </View>
+              {/* <View style={styles.inputGroup}>
+                <Text body2 style={{color: BaseColor.sectionColor}}>
+                  Discount price
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) => this.setState({service_duration: text})}
+                  autoCorrect={false}
+                  placeholder="$ 0.00"
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.primaryColor}
+                />
+              </View> */}
+              <View style={[styles.profileItem, {marginTop: 20}]}>
+                <Text body1 style={styles.sectionStyle}>
+                  Enable Product
+                </Text>
+                <Switch
+                  name="angle-right"
+                  size={18}
+                  onValueChange={this.toggleProductSwitch}
+                  value={this.state.isEnalbeProduct}
+                />
+              </View>
+              <View style={[styles.profileItem, {marginTop: 20}]}>
+                <Text body1 style={styles.sectionStyle}>
+                  Featured
+                </Text>
+                <Switch
+                  name="angle-right"
+                  size={18}
+                  onValueChange={this.toggleFeaturedSwitch}
+                  value={this.state.isFeatured}
+                />
+              </View>
+            </View>
+          </ScrollView>
+          <View
+            style={{
+              marginBottom: 40,
+              padding: 20,
+              flex: 1,
+              flexDirection: 'row',
+            }}>
+            <Button
+              style={{flex: 1, marginLeft: 10}}
+              loading={saveLoading}
+              onPress={() => this.onSave()}>
+              Save
+            </Button>
+          </View>
+        </SafeAreaView>
+      );
+    } else {
+      const {dataLoading} = this.state;
+      return (
+        <SafeAreaView
+          style={[BaseStyle.safeAreaView]}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Create Service"
+            renderRight={() => {
+              return (
+                <Icon name="times" size={20} color={BaseColor.blackColor} />
+              );
+            }}
+            onPressRight={() => {
+              navigation.goBack();
+            }}
+            style={styles.headerStyle}
+          />
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={dataLoading}
             />
           </View>
-          <View style={styles.inputGroup}>
-            <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-              Description
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.multilineTextInput]}
-              onChangeText={(text) => this.setState({description: text})}
-              autoCorrect={false}
-              placeholder=""
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.titleColor}
-            />
-          </View>
-          <View style={{marginTop: 30}}>
-            <Text title2 bold style={{color: BaseColor.sectionColor}}>
-              Prices
-            </Text>
-            <View style={{}}>
-              <Dropdown
-                label="Duration"
-                data={duration}
-                baseColor={BaseColor.sectionColor}
-                textColor={BaseColor.titleColor}
-                rippleOpacity={0.7}
-                onChangeText={(value) => {
-                  this.setState({
-                    service_duration: value,
-                  });
-                }}
-                value={this.state.service_duration}
-              />
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Normal price
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({price: text})}
-                autoCorrect={false}
-                placeholder="$ 0.00"
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.primaryColor}
-              />
-            </View>
-            {/* <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Discount price
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({service_duration: text})}
-                autoCorrect={false}
-                placeholder="$ 0.00"
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.primaryColor}
-              />
-            </View> */}
-            <View style={[styles.profileItem, {marginTop: 20}]}>
-              <Text body1 style={styles.sectionStyle}>
-                Enable Product
-              </Text>
-              <Switch
-                name="angle-right"
-                size={18}
-                onValueChange={this.toggleProductSwitch}
-                value={this.state.isEnalbeProduct}
-              />
-            </View>
-            <View style={[styles.profileItem, {marginTop: 20}]}>
-              <Text body1 style={styles.sectionStyle}>
-                Featured
-              </Text>
-              <Switch
-                name="angle-right"
-                size={18}
-                onValueChange={this.toggleFeaturedSwitch}
-                value={this.state.isFeatured}
-              />
-            </View>
-            {/* <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Pricing name(optional)
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({id: text})}
-                autoCorrect={false}
-                placeholder="e.g Long hair"
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.primaryColor}
-              />
-            </View>
-            <TouchableOpacity
-              style={[
-                styles.inputGroup,
-                {
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                },
-              ]}
-              onPress={() => navigation.navigate('NewPricingOption')}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>Add another pricing option</Text>
-              <Icon name="plus" size={15} color={BaseColor.sectionColor} />
-            </TouchableOpacity> */}
-          </View>
-          {/* <Text title2 bold style={{marginTop: 30, color: BaseColor.sectionColor}}>
-            Staff Assigned
-          </Text> */}
-          {/* <View style={styles.inputGroup}>
-            <TouchableOpacity
-              style={[
-                styles.inputGroup,
-                {
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingBottom: 10,
-                  borderBottomColor: BaseColor.grayColor,
-                  borderBottomWidth: 1,
-                },
-              ]}
-              onPress={() => navigation.navigate('PickStaff')}>
-              <View>
-                <Text subhead semibold style={{color: BaseColor.sectionColor}}>
-                  Staff
-                </Text>
-                <Text caption2 style={{color: BaseColor.titleColor}}>
-                  2staff assigned
-                </Text>
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Icon
-                  name="angle-right"
-                  size={15}
-                  color={BaseColor.titleColor}
-                />
-              </View>
-            </TouchableOpacity>
-          </View> */}
-          {/* <View style={styles.inputGroup}>
-            <TouchableOpacity
-              style={[
-                styles.inputGroup,
-                {
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingBottom: 10,
-                  borderBottomColor: BaseColor.grayColor,
-                  borderBottomWidth: 1,
-                },
-              ]}
-              onPress={() => navigation.navigate('NewPricingOption')}>
-              <View>
-                <Text body2 semibold style={{color: BaseColor.sectionColor}}>
-                  Online Booking
-                </Text>
-                <Text caption2 style={{color: BaseColor.titleColor}}>
-                  Enabled
-                </Text>
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Icon
-                  name="angle-right"
-                  size={15}
-                  color={BaseColor.titleColor}
-                />
-              </View>
-            </TouchableOpacity>
-          </View> */}
-          {/* <View style={styles.inputGroup}>
-            <TouchableOpacity
-              style={[
-                styles.inputGroup,
-                {
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingBottom: 10,
-                  borderBottomColor: BaseColor.grayColor,
-                  borderBottomWidth: 1,
-                },
-              ]}
-              onPress={() => navigation.navigate('NewPricingOption')}>
-              <View>
-                <Text body2 semibold style={{color: BaseColor.sectionColor}}>
-                  Setting
-                </Text>
-                <Text caption2 style={{color: BaseColor.titleColor}}>
-                  Custom
-                </Text>
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Icon
-                  name="angle-right"
-                  size={15}
-                  color={BaseColor.blackColor}
-                />
-              </View>
-            </TouchableOpacity>
-          </View> */}
-        </ScrollView>
-        <View
-          style={{
-            marginBottom: 40,
-            padding: 20,
-            flex: 1,
-            flexDirection: 'row',
-          }}>
-          <Button
-            style={{flex: 1, marginLeft: 10}}
-            loading={loading}
-            onPress={() => this.onSave()}>
-            Save
-          </Button>
-        </View>
-      </SafeAreaView>
-    );
+        </SafeAreaView>
+      );
+    }
+  }
+
+  render() {
+    return <View style={{flex: 1}}>{this.displayContentView()}</View>;
   }
 }
 

@@ -25,7 +25,8 @@ class StaffProfileDetail extends Component {
   constructor(props) {
     super();
     this.state = {
-      loading: false,
+      deleteLoading: false,
+      saveLoading: false,
       staff_id: '',
       staff_full_name: '',
       staff_gender: '',
@@ -59,58 +60,104 @@ class StaffProfileDetail extends Component {
     });
   }
 
+  checkInput() {
+    const {
+      staff_full_name,
+      staff_title,
+      staff_gender,
+      staff_skill_level,
+      staff_joined_date,
+      staff_status,
+      selectedItems,
+    } = this.state;
+
+    if (staff_full_name.length === 0) {
+      Utils.notifyMessage('Staff Name is required!');
+      return false;
+    }
+    if (staff_title.length === 0) {
+      Utils.notifyMessage('Staff Title is required!');
+      return false;
+    }
+    if (staff_gender.length === 0) {
+      Utils.notifyMessage('Staff gender is required!');
+      return false;
+    }
+    if (selectedItems.length === 0) {
+      Utils.notifyMessage('Please select service categories!');
+      return false;
+    }
+    if (staff_skill_level.length === 0) {
+      Utils.notifyMessage('Skill is required!');
+      return false;
+    }
+    if (staff_joined_date.length === 0) {
+      Utils.notifyMessage('Joined Date is required!');
+      return false;
+    }
+    if (staff_status.length === 0) {
+      Utils.notifyMessage('Joined Date is required!');
+      return false;
+    }
+    return true;
+  }
+
   onSave = () => {
-    // const {
-    //   vendor_stripe_id,
-    //   unique_entity_number,
-    //   contact_number,
-    //   shopTitle,
-    //   location,
-    //   description,
-    //   primary_type,
-    //   secondary_type,
-    //   cancellation_policy,
-    //   terms_and_conditions,
-    //   free_cancellation_hour,
-    // } = this.state;
-    // const {navigation, actions} = this.props;
-
-    // const {auth} = this.props;
-    // const data = {
-    //   token: auth.user.token,
-    //   vendorData: {
-    //     shop_title: shopTitle,
-    //     company_locality: location,
-    //     company_description: description,
-    //     vendor_stripe_id: vendor_stripe_id,
-    //     unique_entity_number: unique_entity_number,
-    //     contact_number: contact_number,
-    //     primary_type: primary_type,
-    //     secondary_type: secondary_type,
-    //     cancellation_policy: cancellation_policy,
-    //     terms_and_conditions: terms_and_conditions,
-    //     free_cancellation_hour: free_cancellation_hour,
-    //   },
-    // };
-
-    // if (auth.user.token !== undefined) {
-    //   myAppointmentsSvc
-    //     .updateProfileData(data)
-    //     .then((response) => {
-    //       const res_profile = response.data;
-    //       if (res_profile.code == 0) {
-    //         Utils.notifyMessage('Business Detail is successfully updated!');
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       Utils.notifyMessage(error);
-    //       console.log('appointment error');
-    //       console.log(error);
-    //     });
-    // }
+    if (this.checkInput()) {
+      this.setState({saveLoading: true});
+      const {
+        staff_id,
+        staff_full_name,
+        staff_title,
+        staff_gender,
+        staff_skill_level,
+        staff_joined_date,
+        staff_status,
+        selectedItems,
+      } = this.state;
+      const {navigation} = this.props;
+      const {auth} = this.props;
+      let customSelectedItems = [];
+      customSelectedItems = selectedItems.map((element) => {
+        return {entity_id: element};
+      });
+      console.log('customSelectedItems', customSelectedItems);
+      const data = {
+        token: auth.user.token,
+        staffInfo: {
+          staff_id: staff_id,
+          staff_full_name: staff_full_name,
+          staff_title: staff_title,
+          staff_gender: staff_gender,
+          staff_skill_level: staff_skill_level,
+          staff_joined_date: staff_joined_date,
+          staff_status: staff_status,
+          product_ids: customSelectedItems,
+        },
+      };
+      console.log('update staff list', data);
+      if (auth.user.token !== undefined) {
+        myAppointmentsSvc
+          .updateStaffList(data)
+          .then((response) => {
+            const res_profile = response.data;
+            if (res_profile.code == 0) {
+              Utils.notifyMessage('Adding Staff is successfully done!');
+              this.setState({saveLoading: false});
+              navigation.goBack();
+            }
+          })
+          .catch((error) => {
+            Utils.notifyMessage(error);
+            console.log('appointment error');
+            console.log(error);
+          });
+      }
+    }
   };
 
   onDelete = () => {
+    this.setState({deleteLoading: true});
     const {staff_id} = this.state;
     const {navigation} = this.props;
 
@@ -125,6 +172,7 @@ class StaffProfileDetail extends Component {
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
+            this.setState({deleteLoading: false});
             Utils.notifyMessage('Staff is successfully removed!');
             navigation.goBack();
           }
@@ -142,6 +190,7 @@ class StaffProfileDetail extends Component {
     let selItems = data.product_ids.map((item, index) => {
       return item.entity_id;
     });
+    console.log('product_ids', data.product_ids);
     const productTypes = this.props.navigation.state.params.productTypes;
     this.setState({
       staff_id: data.staff_id,
@@ -210,7 +259,8 @@ class StaffProfileDetail extends Component {
   render() {
     const {navigation} = this.props;
     const {
-      loading,
+      deleteLoading,
+      saveLoading,
       productTypes,
       staff_full_name,
       staff_title,
@@ -454,13 +504,13 @@ class StaffProfileDetail extends Component {
         <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
           <Button
             style={{flex: 1, marginLeft: 10}}
-            loading={loading}
+            loading={deleteLoading}
             onPress={() => this.onDelete()}>
             DELETE
           </Button>
           <Button
             style={{flex: 1, marginLeft: 10}}
-            loading={loading}
+            loading={saveLoading}
             onPress={() => this.onSave()}>
             UPDATE
           </Button>

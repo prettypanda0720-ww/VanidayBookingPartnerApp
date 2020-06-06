@@ -3,7 +3,13 @@ import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
 import {AuthActions} from '@actions';
 import {bindActionCreators} from 'redux';
-import {View, TextInput, ScrollView, Switch} from 'react-native';
+import {
+  View,
+  TextInput,
+  ScrollView,
+  Switch,
+  ActivityIndicator,
+} from 'react-native';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 
@@ -19,7 +25,9 @@ class EditService extends Component {
     this.state = {
       search: '',
       refreshing: false,
-      loading: false,
+      dataLoading: true,
+      saveloading: false,
+      deleteLoading: false,
       id: '',
       service_name: '',
       sku: '',
@@ -37,6 +45,7 @@ class EditService extends Component {
   }
 
   onDelete = () => {
+    this.setState({deleteLoading: true});
     const {id} = this.state;
     const {navigation} = this.props;
 
@@ -52,6 +61,7 @@ class EditService extends Component {
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
+            this.setState({deleteLoading: false});
             Utils.notifyMessage('Deleting Service is successfully done!');
             navigation.goBack();
           }
@@ -65,7 +75,11 @@ class EditService extends Component {
   };
 
   onSave = () => {
+    console.log('selectedItems', this.state.selectedItems.length);
+    this.checkInput();
+    this.setState({saveLoading: true});
     const {
+      id,
       service_name,
       sku,
       price,
@@ -79,21 +93,29 @@ class EditService extends Component {
     } = this.state;
     const {navigation} = this.props;
 
+    let selItemsStr = '';
+    const count = selectedItems.length;
+    if (count > 0) {
+      selItemsStr = selectedItems[0];
+      for (let index = 1; index < count; index++) {
+        selItemsStr += ',' + selectedItems[index];
+      }
+    }
+
     const {auth} = this.props;
     const data = {
       token: auth.user.token,
       productInfo: {
+        entity_id: id,
         service_name: service_name,
-        sku: sku,
         price: price,
-        category_ids: selectedItems,
+        category_ids: selItemsStr,
+        is_featured: isFeatured ? 1 : 0,
         service_duration: service_duration,
         vendor_sections: isEnalbeProduct ? 1 : 0,
-        is_featured: isFeatured ? 1 : 0,
-        status: isEnalbeProduct ? 1 : 0,
         description: description,
         short_description: short_description,
-        entity_id: '',
+        status: isEnalbeProduct ? 1 : 0,
       },
     };
     console.log('update service list', data);
@@ -103,6 +125,7 @@ class EditService extends Component {
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
+            this.setState({saveLoading: false});
             Utils.notifyMessage('Updating Service is successfully done!');
             navigation.goBack();
           }
@@ -163,10 +186,39 @@ class EditService extends Component {
     this.setState({isFeatured: value});
   };
 
-  render() {
+  checkInput() {
+    const {
+      service_name,
+      sku,
+      selectedItems,
+      price,
+      service_duration,
+    } = this.state;
+
+    if (service_name.length === 0) {
+      Utils.notifyMessage('Service Name is required!');
+      return false;
+    }
+    if (selectedItems.length === 0) {
+      Utils.notifyMessage('Categories is required!');
+      return false;
+    }
+    if (price.length === 0) {
+      Utils.notifyMessage('Price is required!');
+      return false;
+    }
+    if (service_duration.length === 0) {
+      Utils.notifyMessage('Duration is required!');
+      return false;
+    }
+    return true;
+  }
+
+  displayContentView() {
     const {navigation} = this.props;
     const {
       loading,
+      dataLoading,
       subMenuList,
       service_name,
       price,
@@ -174,310 +226,230 @@ class EditService extends Component {
       isFeatured,
     } = this.state;
     let duration = [
-      {value: '30min'},
-      {value: '60min'},
-      {value: '90min'},
-      {value: '120min'},
-      {value: '150min'},
-      {value: '180min'},
-      {value: '210min'},
-      {value: '240min'},
-      {value: '270min'},
+      {value: '30'},
+      {value: '60'},
+      {value: '90'},
+      {value: '120'},
+      {value: '150'},
+      {value: '180'},
+      {value: '210'},
+      {value: '240'},
+      {value: '270'},
     ];
-    console.log('subMenuList', subMenuList);
-    console.log('selectedItems', this.state.selectedItems);
-    return (
-      <SafeAreaView
-        style={[BaseStyle.safeAreaView]}
-        forceInset={{top: 'always'}}>
-        <Header
-          title=""
-          renderRight={() => {
-            return <Icon name="times" size={20} color={BaseColor.blackColor} />;
-          }}
-          onPressRight={() => {
-            navigation.goBack();
-          }}
-        />
-        <ScrollView
-          style={{
-            flexDirection: 'column',
-            paddingLeft: 20,
-            paddingRight: 20,
-            paddingBottom: 60,
-          }}>
-          <Text title2 bold style={{color: BaseColor.sectionColor}}>
-            Edit Service
-          </Text>
-          <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              Service name
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({service_name: text})}
-              autoCorrect={false}
-              placeholder="Service Name"
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.primaryColor}>
-              {service_name}
-            </TextInput>
-          </View>
-          <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              SKU
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({sku: text})}
-              autoCorrect={false}
-              placeholder="SKU"
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-          </View>
-          <SectionedMultiSelect
-            items={subMenuList}
-            uniqueKey="id"
-            subKey="subcategory"
-            selectText="Select Categories..."
-            showDropDowns={true}
-            readOnlyHeadings={false}
-            onSelectedItemsChange={this.onSelectedItemsChange}
-            selectedItems={this.state.selectedItems}
+    if (!dataLoading) {
+      return (
+        <SafeAreaView
+          style={[BaseStyle.safeAreaView]}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Edit Service"
+            renderRight={() => {
+              return (
+                <Icon name="times" size={20} color={BaseColor.blackColor} />
+              );
+            }}
+            onPressRight={() => {
+              navigation.goBack();
+            }}
+            style={styles.headerStyle}
           />
-          <View style={styles.inputGroup}>
-            <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-              Short Description
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({short_description: text})}
-              autoCorrect={false}
-              placeholder=""
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.titleColor}
-            />
-          </View>
-          <View style={styles.inputGroup}>
-            <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-              Description
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.multilineTextInput]}
-              onChangeText={(text) => this.setState({description: text})}
-              autoCorrect={false}
-              placeholder=""
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.titleColor}
-            />
-          </View>
-          <View style={{marginTop: 30}}>
-            <Text title2 bold style={{color: BaseColor.sectionColor}}>
-              Prices
-            </Text>
-            <View style={{}}>
-              <Dropdown
-                label="Duration"
-                data={duration}
-                baseColor={BaseColor.sectionColor}
-                textColor={BaseColor.titleColor}
-                rippleOpacity={0.7}
-                onChangeText={(value) => {
-                  this.setState({
-                    service_duration: value,
-                  });
-                }}
-                value={service_duration + 'min'}
-              />
+          <ScrollView
+            style={{
+              flexDirection: 'column',
+              paddingLeft: 20,
+              paddingRight: 20,
+              paddingBottom: 60,
+            }}>
+            <View style={styles.inputGroup}>
               <Text body2 style={{color: BaseColor.sectionColor}}>
-                Normal price
+                Service name
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({price: text})}
+                onChangeText={(text) => this.setState({service_name: text})}
                 autoCorrect={false}
-                placeholder="$ 0.00"
+                placeholder="Service Name"
                 placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}>
-                {price}
+                {service_name}
               </TextInput>
             </View>
             {/* <View style={styles.inputGroup}>
               <Text body2 style={{color: BaseColor.sectionColor}}>
-                Discount price
+                SKU
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({service_duration: text})}
+                onChangeText={(text) => this.setState({sku: text})}
                 autoCorrect={false}
-                placeholder="$ 0.00"
+                placeholder="SKU"
                 placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View> */}
-            <View style={[styles.profileItem, {marginTop: 20}]}>
-              <Text body1 style={styles.sectionStyle}>
-                Enable Product
-              </Text>
-              <Switch
-                name="angle-right"
-                size={18}
-                onValueChange={this.toggleProductSwitch}
-                value={this.state.isEnalbeProduct}
-              />
-            </View>
-            <View style={[styles.profileItem, {marginTop: 20}]}>
-              <Text body1 style={styles.sectionStyle}>
-                Featured
-              </Text>
-              <Switch
-                name="angle-right"
-                size={18}
-                onValueChange={this.toggleFeaturedSwitch}
-                value={isFeatured == 1 ? true : false}
-              />
-            </View>
-            {/* <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Pricing name(optional)
+            <SectionedMultiSelect
+              items={subMenuList}
+              uniqueKey="id"
+              subKey="subcategory"
+              selectText="Select Categories..."
+              showDropDowns={true}
+              readOnlyHeadings={false}
+              onSelectedItemsChange={this.onSelectedItemsChange}
+              selectedItems={this.state.selectedItems}
+            />
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                Short Description
               </Text>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({id: text})}
+                onChangeText={(text) =>
+                  this.setState({short_description: text})
+                }
                 autoCorrect={false}
-                placeholder="e.g Long hair"
+                placeholder=""
                 placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.primaryColor}
+                selectionColor={BaseColor.titleColor}
               />
             </View>
-            <TouchableOpacity
-              style={[
-                styles.inputGroup,
-                {
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                },
-              ]}
-              onPress={() => navigation.navigate('NewPricingOption')}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>Add another pricing option</Text>
-              <Icon name="plus" size={15} color={BaseColor.sectionColor} />
-            </TouchableOpacity> */}
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                Description
+              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.multilineTextInput]}
+                onChangeText={(text) => this.setState({description: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}
+              />
+            </View>
+            <View style={{marginTop: 30}}>
+              <Text title2 bold style={{color: BaseColor.sectionColor}}>
+                Prices
+              </Text>
+              <View style={{}}>
+                <Dropdown
+                  label="Duration(min)"
+                  data={duration}
+                  baseColor={BaseColor.sectionColor}
+                  textColor={BaseColor.titleColor}
+                  rippleOpacity={0.7}
+                  onChangeText={(value) => {
+                    this.setState({
+                      service_duration: value,
+                    });
+                  }}
+                  value={service_duration + 'min'}
+                />
+                <Text body2 style={{color: BaseColor.sectionColor}}>
+                  Normal price
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) => this.setState({price: text})}
+                  autoCorrect={false}
+                  placeholder="$ 0.00"
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.primaryColor}
+                  keyboardType={'numeric'}>
+                  {price}
+                </TextInput>
+              </View>
+              {/* <View style={styles.inputGroup}>
+                <Text body2 style={{color: BaseColor.sectionColor}}>
+                  Discount price
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) => this.setState({service_duration: text})}
+                  autoCorrect={false}
+                  placeholder="$ 0.00"
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.primaryColor}
+                />
+              </View> */}
+              <View style={[styles.profileItem, {marginTop: 20}]}>
+                <Text body1 style={styles.sectionStyle}>
+                  Enable Product
+                </Text>
+                <Switch
+                  name="angle-right"
+                  size={18}
+                  onValueChange={this.toggleProductSwitch}
+                  value={this.state.isEnalbeProduct}
+                />
+              </View>
+              <View style={[styles.profileItem, {marginTop: 20}]}>
+                <Text body1 style={styles.sectionStyle}>
+                  Featured
+                </Text>
+                <Switch
+                  name="angle-right"
+                  size={18}
+                  onValueChange={this.toggleFeaturedSwitch}
+                  value={isFeatured == 1 ? true : false}
+                />
+              </View>
+            </View>
+          </ScrollView>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={dataLoading}
+            />
           </View>
-          {/* <Text title2 bold style={{marginTop: 30, color: BaseColor.sectionColor}}>
-            Staff Assigned
-          </Text> */}
-          {/* <View style={styles.inputGroup}>
-            <TouchableOpacity
-              style={[
-                styles.inputGroup,
-                {
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingBottom: 10,
-                  borderBottomColor: BaseColor.grayColor,
-                  borderBottomWidth: 1,
-                },
-              ]}
-              onPress={() => navigation.navigate('PickStaff')}>
-              <View>
-                <Text subhead semibold style={{color: BaseColor.sectionColor}}>
-                  Staff
-                </Text>
-                <Text caption2 style={{color: BaseColor.titleColor}}>
-                  2staff assigned
-                </Text>
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Icon
-                  name="angle-right"
-                  size={15}
-                  color={BaseColor.titleColor}
-                />
-              </View>
-            </TouchableOpacity>
-          </View> */}
-          {/* <View style={styles.inputGroup}>
-            <TouchableOpacity
-              style={[
-                styles.inputGroup,
-                {
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingBottom: 10,
-                  borderBottomColor: BaseColor.grayColor,
-                  borderBottomWidth: 1,
-                },
-              ]}
-              onPress={() => navigation.navigate('NewPricingOption')}>
-              <View>
-                <Text body2 semibold style={{color: BaseColor.sectionColor}}>
-                  Online Booking
-                </Text>
-                <Text caption2 style={{color: BaseColor.titleColor}}>
-                  Enabled
-                </Text>
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Icon
-                  name="angle-right"
-                  size={15}
-                  color={BaseColor.titleColor}
-                />
-              </View>
-            </TouchableOpacity>
-          </View> */}
-          {/* <View style={styles.inputGroup}>
-            <TouchableOpacity
-              style={[
-                styles.inputGroup,
-                {
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingBottom: 10,
-                  borderBottomColor: BaseColor.grayColor,
-                  borderBottomWidth: 1,
-                },
-              ]}
-              onPress={() => navigation.navigate('NewPricingOption')}>
-              <View>
-                <Text body2 semibold style={{color: BaseColor.sectionColor}}>
-                  Setting
-                </Text>
-                <Text caption2 style={{color: BaseColor.titleColor}}>
-                  Custom
-                </Text>
-              </View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Icon
-                  name="angle-right"
-                  size={15}
-                  color={BaseColor.blackColor}
-                />
-              </View>
-            </TouchableOpacity>
-          </View> */}
-        </ScrollView>
-        <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
-          <Button
-            style={{flex: 1, marginLeft: 10}}
-            loading={loading}
-            onPress={() => this.onDelete()}>
-            DELETE
-          </Button>
-          <Button
-            style={{flex: 1, marginLeft: 10}}
-            loading={loading}
-            onPress={() => this.onSave()}>
-            SAVE
-          </Button>
-        </View>
-      </SafeAreaView>
-    );
+          <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
+            <Button
+              style={{flex: 1, marginLeft: 10}}
+              loading={this.state.deleteLoading}
+              onPress={() => this.onDelete()}>
+              DELETE
+            </Button>
+            <Button
+              style={{flex: 1, marginLeft: 10}}
+              loading={this.state.saveLoading}
+              onPress={() => this.onSave()}>
+              SAVE
+            </Button>
+          </View>
+        </SafeAreaView>
+      );
+    } else {
+      return (
+        <SafeAreaView
+          style={[BaseStyle.safeAreaView]}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Edit Service"
+            renderRight={() => {
+              return (
+                <Icon name="times" size={20} color={BaseColor.blackColor} />
+              );
+            }}
+            onPressRight={() => {
+              navigation.goBack();
+            }}
+            style={styles.headerStyle}
+          />
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={dataLoading}
+            />
+          </View>
+        </SafeAreaView>
+      );
+    }
+  }
+
+  render() {
+    return <View style={{flex: 1}}>{this.displayContentView()}</View>;
   }
 }
 

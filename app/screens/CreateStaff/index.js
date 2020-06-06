@@ -25,13 +25,15 @@ class CreateStaff extends Component {
   constructor(props) {
     super();
     this.state = {
+      saveLoading: false,
       loading: false,
       staff_id: '',
+      staff_title: '',
       staff_full_name: '',
       staff_gender: '',
       staff_skill_level: '',
-      staff_joined_date: '',
-      staff_status: '',
+      staff_joined_date: this.getCurrentDate(),
+      staff_status: 0,
       productTypes: [],
       selectedItems: [],
       modalCalendarVisible: false,
@@ -59,7 +61,7 @@ class CreateStaff extends Component {
     });
   }
 
-  onSave = () => {
+  checkInput() {
     const {
       staff_full_name,
       staff_title,
@@ -69,37 +71,87 @@ class CreateStaff extends Component {
       staff_status,
       selectedItems,
     } = this.state;
-    const {navigation} = this.props;
 
-    const {auth} = this.props;
-    const data = {
-      token: auth.user.token,
-      staffInfo: {
-        staff_full_name: staff_full_name,
-        staff_title: staff_title,
-        staff_gender: staff_gender,
-        staff_skill_level: staff_skill_level,
-        staff_joined_date: staff_joined_date,
-        staff_status: staff_status,
-        product_ids: selectedItems,
-      },
-    };
-    console.log('create staff list', data);
-    if (auth.user.token !== undefined) {
-      myAppointmentsSvc
-        .createStaffList(data)
-        .then((response) => {
-          const res_profile = response.data;
-          if (res_profile.code == 0) {
-            Utils.notifyMessage('Adding Staff is successfully done!');
-            navigation.goBack();
-          }
-        })
-        .catch((error) => {
-          Utils.notifyMessage(error);
-          console.log('appointment error');
-          console.log(error);
-        });
+    if (staff_full_name.length === 0) {
+      Utils.notifyMessage('Staff Name is required!');
+      return false;
+    }
+    if (staff_title.length === 0) {
+      Utils.notifyMessage('Staff Title is required!');
+      return false;
+    }
+    if (staff_gender.length === 0) {
+      Utils.notifyMessage('Staff gender is required!');
+      return false;
+    }
+    if (selectedItems.length === 0) {
+      Utils.notifyMessage('Please select service categories!');
+      return false;
+    }
+    if (staff_skill_level.length === 0) {
+      Utils.notifyMessage('Skill is required!');
+      return false;
+    }
+    if (staff_joined_date.length === 0) {
+      Utils.notifyMessage('Joined Date is required!');
+      return false;
+    }
+    if (staff_status.length === 0) {
+      Utils.notifyMessage('Joined Date is required!');
+      return false;
+    }
+    return true;
+  }
+
+  onSave = () => {
+    if (this.checkInput()) {
+      this.setState({saveLoading: true});
+      const {
+        staff_full_name,
+        staff_title,
+        staff_gender,
+        staff_skill_level,
+        staff_joined_date,
+        staff_status,
+        selectedItems,
+      } = this.state;
+      const {navigation} = this.props;
+      const {auth} = this.props;
+      let customSelectedItems = [];
+      customSelectedItems = selectedItems.map((element) => {
+        return {entity_id: element};
+      });
+      console.log('customSelectedItems', customSelectedItems);
+      const data = {
+        token: auth.user.token,
+        staffInfo: {
+          staff_full_name: staff_full_name,
+          staff_title: staff_title,
+          staff_gender: staff_gender,
+          staff_skill_level: staff_skill_level,
+          staff_joined_date: staff_joined_date,
+          staff_status: staff_status,
+          product_ids: customSelectedItems,
+        },
+      };
+      console.log('create staff list', data);
+      if (auth.user.token !== undefined) {
+        myAppointmentsSvc
+          .createStaffList(data)
+          .then((response) => {
+            const res_profile = response.data;
+            if (res_profile.code == 0) {
+              Utils.notifyMessage('Adding Staff is successfully done!');
+              this.setState({saveLoading: false});
+              navigation.goBack();
+            }
+          })
+          .catch((error) => {
+            Utils.notifyMessage(error);
+            console.log('appointment error');
+            console.log(error);
+          });
+      }
     }
   };
 
@@ -162,13 +214,18 @@ class CreateStaff extends Component {
 
   onDateApply() {
     let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
-    this.setState({staff_joined_date: shortDate});
+    if (shortDate !== undefined) {
+      this.setState({staff_joined_date: this.getCurrentDate()});
+    } else {
+      this.setState({staff_joined_date: shortDate});
+    }
   }
 
   render() {
     const {navigation} = this.props;
     const {
       loading,
+      saveLoading,
       productTypes,
       staff_full_name,
       staff_title,
@@ -418,7 +475,7 @@ class CreateStaff extends Component {
           </Button>
           <Button
             style={{flex: 1, marginLeft: 10}}
-            loading={loading}
+            loading={saveLoading}
             onPress={() => this.onSave()}>
             Save
           </Button>

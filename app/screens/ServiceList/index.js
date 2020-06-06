@@ -128,7 +128,7 @@ class ServiceList extends Component {
                             style={{
                               justifyContent: 'center',
                               alignItems: 'center',
-                              flex: 1.2,
+                              flex: 1.5,
                             }}>
                             <Text body2 style={{color: BaseColor.titleColor}}>
                               $&nbsp;{item.product_price}

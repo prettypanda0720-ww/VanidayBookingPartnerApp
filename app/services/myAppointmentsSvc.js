@@ -66,6 +66,12 @@ function deleteStaffList(postData) {
   return apiClient_json.post(url, postData);
 }
 
+/* API : Update Staff Member*/
+function updateStaffList(postData) {
+  var url = Api.myVaniMiddleWare.UPDATE_STAFFLIST_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
 /* API : Get Service List*/
 function getServiceList(postData) {
   var url = Api.myVaniMiddleWare.GET_SERVICELIST_DATA_URL;
@@ -114,6 +120,7 @@ export const myAppointmentsSvc = {
   getServiceList,
   deleteStaffList,
   createStaffList,
+  updateStaffList,
   getHomeCategory,
   createServiceList,
   updateOpeningHours,
