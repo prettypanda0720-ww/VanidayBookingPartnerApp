@@ -14,6 +14,7 @@ class EditOpeningHours extends Component {
   constructor(props) {
     super();
     this.state = {
+      saveLoading: false,
       loading: false,
       openingHours: [],
     };
@@ -23,12 +24,42 @@ class EditOpeningHours extends Component {
     this.ActionSheet.show();
   };
 
+  onSave() {
+    this.setState({saveLoading: true});
+    const {auth, navigation} = this.props;
+    const postData = {
+      token: auth.user.token,
+      openingHour: this.state.openingHours,
+    };
+    console.log('updateOpeninghour', postData);
+    if (auth.user.token !== undefined) {
+      myAppointmentsSvc
+        .updateOpeningHour(postData)
+        .then((response) => {
+          const res_profile = response.data;
+          console.log('res_profile', res_profile);
+          if (res_profile.code == 0) {
+            this.setState({saveLoading: false});
+            Utils.notifyMessage('OpeningHours is successfully updated!');
+            navigation.goBack();
+          } else {
+            this.setState({saveLoading: false});
+            Utils.notifyMessage('Updating Openinghours error!');
+          }
+        })
+        .catch((error) => {
+          this.setState({saveLoading: false});
+          Utils.notifyMessage('Error occured while communcating with server');
+          console.log('openinghour error');
+          console.log(error);
+        });
+    }
+  }
+
   componentDidMount() {
     const {auth, navigation} = this.props;
-    // this.focusListener = navigation.addListener('didFocus', () => {
     const data = this.props.navigation.state.params.data;
     this.setState({openingHours: data});
-    // });
   }
 
   chanegWorkingTimes(key, value) {
@@ -43,31 +74,6 @@ class EditOpeningHours extends Component {
       return item;
     });
     this.setState({openingHours: result});
-  }
-
-  onSave() {
-    // const {auth, navigation} = this.props;
-    // const data = {
-    //   token: auth.user.token,
-    //   vendorData: {
-    //     openingHour: this.state.openingHours,
-    //   },
-    // };
-    // if (auth.user.token !== undefined) {
-    //   myAppointmentsSvc
-    //     .updateOpeningHours(data)
-    //     .then((response) => {
-    //       const res_profile = response.data.data;
-    //       if (response.data.data != undefined) {
-    //         Utils.notifyMessage('Openinghours is successfully updated!');
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       Utils.notifyMessage('Error occured while communcating with server');
-    //       console.log('appointment error');
-    //       console.log(error);
-    //     });
-    // }
   }
 
   render() {
@@ -131,7 +137,7 @@ class EditOpeningHours extends Component {
           </Button>
           <Button
             style={{flex: 1, marginLeft: 10}}
-            loading={loading}
+            loading={this.state.saveLoading}
             onPress={() => this.onSave()}>
             SAVE
           </Button>

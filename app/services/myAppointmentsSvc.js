@@ -96,15 +96,26 @@ function deleteServiceList(postData) {
   return apiClient_json.post(url, postData);
 }
 
+/* API : Service Detail*/
+function serviceDetail(postData) {
+  var url = Api.myVaniMiddleWare.SERVICE_DETAIL_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
 /* API : Get Categories for primary_type and secondary type field in Aboutus page*/
 function getHomeCategory() {
   var url = Api.myVaniMiddleWare.GET_HOMECATEGORY_DATA_URL;
   return apiClient.get(url);
 }
 
-function updateOpeningHours() {
+function getOpeningHour(postData) {
+  var url = Api.myVaniMiddleWare.GET_OPENINGHOURS_DATA_URL;
+  return apiClient.post(url, postData);
+}
+
+function updateOpeningHour(postData) {
   var url = Api.myVaniMiddleWare.UPDATE_OPENINGHOURS_DATA_URL;
-  return apiClient.get(url);
+  return apiClient.post(url, postData);
 }
 
 function getSubMenuByMerchant(postData) {
@@ -123,8 +134,10 @@ export const myAppointmentsSvc = {
   updateStaffList,
   getHomeCategory,
   createServiceList,
-  updateOpeningHours,
+  getOpeningHour,
+  updateOpeningHour,
   getSubMenuByMerchant,
   updateServiceList,
   deleteServiceList,
+  serviceDetail,
 };

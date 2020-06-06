@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {View, ScrollView, FlatList, ActivityIndicator} from 'react-native';
-import {BaseStyle, BaseColor} from '@config';
+import {withNavigation} from 'react-navigation';
+import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
+import {bindActionCreators} from 'redux';
 import {Header, SafeAreaView, Icon, Text} from '@components';
+import {connect} from 'react-redux';
+import {myAppointmentsSvc} from '@services';
+import {AuthActions} from '@actions';
 import ActionSheet from 'react-native-actionsheet';
 import styles from './styles';
 
-export default class OpeningHours extends Component {
+class OpeningHours extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -21,9 +26,27 @@ export default class OpeningHours extends Component {
 
   componentDidMount() {
     const {auth, navigation} = this.props;
+    const data = {
+      token: auth.user.token,
+    };
     this.focusListener = navigation.addListener('didFocus', () => {
-      const data = this.props.navigation.state.params.data;
-      this.setState({openingHours: data, dataLoading: false});
+      if (auth.user.token !== undefined) {
+        myAppointmentsSvc
+          .getOpeningHour(data)
+          .then((response) => {
+            const res_profile = response.data;
+            if (res_profile.code == 0) {
+              this.setState({
+                openingHours: res_profile.data,
+                dataLoading: false,
+              });
+            }
+          })
+          .catch((error) => {
+            console.log('openinghour error');
+            console.log(error);
+          });
+      }
     });
   }
 
@@ -115,3 +138,19 @@ export default class OpeningHours extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  };
+};
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(OpeningHours),
+);

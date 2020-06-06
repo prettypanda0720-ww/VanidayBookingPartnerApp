@@ -41,6 +41,7 @@ class EditService extends Component {
       short_description: '',
       subMenuList: [],
       selectedItems: [],
+      selectedItemsStr: '',
     };
   }
 
@@ -143,39 +144,43 @@ class EditService extends Component {
   };
 
   componentDidMount() {
-    const {auth} = this.props;
-    const postData = {
-      token: auth.user.token,
+    const {navigation} = this.props;
+    const sku = this.props.navigation.state.params.sku;
+    const data = {
+      sku: sku,
     };
-    const data = this.props.navigation.state.params.data;
-    console.log('edit service item', data);
-    const items = [];
-    items.push(data.id);
-    this.setState({
-      id: data.id,
-      service_name: data.product_name,
-      price: data.product_price,
-      service_duration: data.service_duration,
-      isFeatured: data.status == 1 ? true : false,
-      // selectedItems: items,
+    this.focusListener = navigation.addListener('didFocus', () => {
+      myAppointmentsSvc
+        .serviceDetail(data)
+        .then((response) => {
+          const res_profile = response.data;
+          console.log('serviceDetail', res_profile);
+          if (res_profile.code == 0) {
+            this.setState({
+              dataLoading: false,
+              id: res_profile.data.id,
+              sku: res_profile.data.sku,
+              service_name: res_profile.data.name,
+              // id: res_profile.data.type_id,
+              price: res_profile.data.price,
+              description: res_profile.data.description,
+              short_description: res_profile.data.short_description,
+              isFeatured: res_profile.data.is_featured == 1 ? true : false,
+              service_duration: res_profile.data.service_duration,
+              selectedItems: res_profile.data.category_ids.map(
+                (item, index) => {
+                  return parseInt(item);
+                },
+              ),
+              vendor_sections: res_profile.data.vendor_sections,
+            });
+          }
+        })
+        .catch((error) => {
+          console.log('service Detail error');
+          console.log(error);
+        });
     });
-    myAppointmentsSvc
-      .getSubMenuByMerchant(postData)
-      .then((response) => {
-        const res_profile = response.data;
-        if (res_profile.code == 0) {
-          console.log('sub menu datalist', res_profile.data);
-          this.setState({
-            subMenuList: res_profile.data,
-            dataLoading: false,
-          });
-        }
-      })
-      .catch((error) => {
-        Utils.notifyMessage(error);
-        console.log('appointment error');
-        console.log(error);
-      });
   }
 
   toggleProductSwitch = (value) => {
@@ -219,12 +224,15 @@ class EditService extends Component {
     const {
       loading,
       dataLoading,
-      subMenuList,
+      // subMenuList,
       service_name,
       price,
       service_duration,
       isFeatured,
+      selectedItems,
     } = this.state;
+
+    const subMenuList = this.props.navigation.state.params.subMenuList;
     let duration = [
       {value: '30'},
       {value: '60'},
@@ -236,6 +244,7 @@ class EditService extends Component {
       {value: '240'},
       {value: '270'},
     ];
+    console.log('submenulist', subMenuList);
     if (!dataLoading) {
       return (
         <SafeAreaView

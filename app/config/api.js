@@ -22,8 +22,10 @@ export const Api = {
     CREATE_SERVICELIST_DATA_URL: '/myvaniday/createService',
     UPDATE_SERVICELIST_DATA_URL: '/myvaniday/updateService',
     DELETE_SERVICELIST_DATA_URL: '/myvaniday/deleteService',
+    SERVICE_DETAIL_DATA_URL: '/myvaniday/serviceDetail',
     GET_HOMECATEGORY_DATA_URL: '/getHomeCategory',
-    UPDATE_OPENINGHOURS_DATA_URL: '/updateOpeningHours',
+    UPDATE_OPENINGHOURS_DATA_URL: '/myvaniday/updateOpeningHour',
+    GET_OPENINGHOURS_DATA_URL: '/myvaniday/getOpeningHour',
     GET_SUBMENU_BY_MERCHANT: '/getMerchantCategory',
   },
 };

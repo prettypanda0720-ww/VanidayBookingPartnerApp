@@ -22,17 +22,46 @@ class ServiceList extends Component {
     this.state = {
       loading: true,
       serviceData: [],
+      subMenuList: [],
     };
   }
 
   componentDidMount() {
     const {auth, navigation} = this.props;
+    const data = {
+      token: auth.user.token,
+    };
     this.focusListener = navigation.addListener('didFocus', () => {
-      // The screen is focused
-      // Call any action
-      const data = this.props.navigation.state.params.data;
-      this.setState({serviceData: data, loading: false});
+      if (auth.user.token !== undefined) {
+        myAppointmentsSvc
+          .getServiceList(data)
+          .then((response) => {
+            const res_profile = response.data;
+            if (res_profile.code == 0) {
+              this.setState({serviceData: res_profile.data, loading: false});
+            }
+          })
+          .catch((error) => {
+            console.log('appointment error');
+            console.log(error);
+          });
+      }
     });
+    myAppointmentsSvc
+      .getSubMenuByMerchant(data)
+      .then((response) => {
+        const res_profile = response.data;
+        if (res_profile.code == 0) {
+          console.log('sub menu datalist', res_profile.data);
+          this.setState({
+            subMenuList: res_profile.data,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log('submenulist error');
+        console.log(error);
+      });
   }
 
   render() {
@@ -106,7 +135,10 @@ class ServiceList extends Component {
                           }}
                           activeOpacity={0.6}
                           onPress={() =>
-                            navigation.navigate('EditService', {data: item})
+                            navigation.navigate('EditService', {
+                              sku: item.sku,
+                              subMenuList: this.state.subMenuList,
+                            })
                           }>
                           <View style={{flexDirection: 'column', flex: 8}}>
                             <Text
