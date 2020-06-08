@@ -51,5 +51,14 @@ export default StyleSheet.create({
   },
   retailWrapper: {
     paddingVertical: 30,
-  }
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: BaseColor.secondBlackColor,
+  },
 });

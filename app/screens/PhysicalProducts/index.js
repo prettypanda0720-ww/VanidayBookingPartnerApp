@@ -6,6 +6,7 @@ import {
   Animated,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {BaseStyle, BaseColor, Images} from '@config';
 import {
@@ -15,13 +16,18 @@ import {
   ProductListItem,
   FilterSort,
 } from '@components';
+import {connect} from 'react-redux';
+import {myAppointmentsSvc} from '@services';
+import {bindActionCreators} from 'redux';
+import {AuthActions} from '@actions';
+import {withNavigation} from 'react-navigation';
 import styles from './styles';
 import * as Utils from '@utils';
 
 // Load sample data
 import {ProductsData} from '@data';
 
-export default class PhysicalProducts extends Component {
+class PhysicalProducts extends Component {
   constructor(props) {
     super(props);
     const scrollAnim = new Animated.Value(0);
@@ -30,7 +36,7 @@ export default class PhysicalProducts extends Component {
     // Temp data define
     this.state = {
       refreshing: false,
-      loading: false,
+      loading: true,
       scrollAnim,
       offsetAnim,
       clampedScroll: Animated.diffClamp(
@@ -46,10 +52,53 @@ export default class PhysicalProducts extends Component {
         40,
       ),
       productsData: ProductsData,
+      subMenuList: [],
     };
 
     this.onFilter = this.onFilter.bind(this);
     this.onChangeSort = this.onChangeSort.bind(this);
+  }
+
+  componentDidMount() {
+    const {auth, navigation} = this.props;
+    const data = {
+      token: auth.user.token,
+    };
+    this.focusListener = navigation.addListener('didFocus', () => {
+      if (auth.user.token !== undefined) {
+        myAppointmentsSvc
+          .getProductList(data)
+          .then((response) => {
+            const res_profile = response.data;
+            if (res_profile.code == 0) {
+              this.setState({productsData: res_profile.data, loading: false});
+            }
+          })
+          .catch((error) => {
+            console.log('appointment error');
+            console.log(error);
+          });
+      }
+    });
+    const postData = {
+      token: auth.user.token,
+    };
+    myAppointmentsSvc
+      .getSubMenuByMerchant(postData)
+      .then((response) => {
+        const res_profile = response.data;
+        if (res_profile.code == 0) {
+          console.log('sub menu datalist', res_profile.data);
+          this.setState({
+            subMenuList: res_profile.data,
+          });
+        }
+      })
+      .catch((error) => {
+        Utils.notifyMessage(error);
+        console.log('appointment error');
+        console.log(error);
+      });
   }
 
   onChangeSort() {}
@@ -71,7 +120,7 @@ export default class PhysicalProducts extends Component {
    * @returns
    */
   renderContent() {
-    const {productsData, refreshing, clampedScroll} = this.state;
+    const {productsData, refreshing, clampedScroll, subMenuList} = this.state;
     const {navigation} = this.props;
     const navbarTranslate = clampedScroll.interpolate({
       inputRange: [0, 40],
@@ -111,31 +160,19 @@ export default class PhysicalProducts extends Component {
           renderItem={({item, index}) => (
             <ProductListItem
               block
-              image={item.image}
-              title={item.title}
-              barcode={item.barcode}
+              image={item.img}
+              title={item.product_name}
               sku={item.sku}
-              brand={item.brand}
-              category={item.category}
-              description={item.description}
-              enableretail={item.enableretail}
-              retailprice={item.retailprice}
-              specialprice={item.specialprice}
-              istax={item.istax}
-              enablecommision={item.enablecommision}
-              enablestock={item.enablestock}
-              supplyprice={item.supplyprice}
-              initialstock={item.initialstock}
-              supplier={item.supplier}
-              reorderpoint={item.reorderpoint}
-              reorderqty={item.reorderqty}
-              rate={item.rate}
-              numReviews={item.numReviews}
+              specialprice={item.product_price}
               style={{
                 marginBottom: 10,
               }}
               onPress={() =>
-                navigation.navigate('PhysicalProductProfile', {data: item})
+                // navigation.navigate('PhysicalProductProfile', {data: item})
+                navigation.navigate('EditProduct', {
+                  sku: item.sku,
+                  subMenuList: subMenuList,
+                })
               }
             />
           )}
@@ -159,32 +196,108 @@ export default class PhysicalProducts extends Component {
     );
   }
 
-  render() {
+  displayContentView() {
+    const {loading} = this.state;
     const {navigation} = this.props;
-    return (
-      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
-        <Header
-          title="Products"
-          renderLeft={() => {
-            return (
-              <Icon name="angle-left" size={20} color={BaseColor.sectionColor} />
-            );
-          }}
-          renderRight={() => {
-            return (
-              <Icon name="search" size={20} color={BaseColor.sectionColor} />
-            );
-          }}
-          onPressLeft={() => {
-            navigation.goBack();
-          }}
-          onPressRight={() => {
-            navigation.navigate('SearchHistory');
-          }}
-          style={styles.headerStyle}
-        />
-        {this.renderContent()}
-      </SafeAreaView>
-    );
+    if (!loading) {
+      return (
+        <SafeAreaView
+          style={BaseStyle.safeAreaView}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Products"
+            renderLeft={() => {
+              return (
+                <Icon
+                  name="angle-left"
+                  size={20}
+                  color={BaseColor.sectionColor}
+                />
+              );
+            }}
+            renderRight={() => {
+              return (
+                <Icon name="search" size={20} color={BaseColor.sectionColor} />
+              );
+            }}
+            onPressLeft={() => {
+              navigation.goBack();
+            }}
+            onPressRight={() => {
+              navigation.navigate('SearchHistory');
+            }}
+            style={styles.headerStyle}
+          />
+          {this.renderContent()}
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={this.state.loading}
+            />
+          </View>
+        </SafeAreaView>
+      );
+    } else {
+      return (
+        <SafeAreaView
+          style={BaseStyle.safeAreaView}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Products"
+            renderLeft={() => {
+              return (
+                <Icon
+                  name="angle-left"
+                  size={20}
+                  color={BaseColor.sectionColor}
+                />
+              );
+            }}
+            renderRight={() => {
+              return (
+                <Icon name="search" size={20} color={BaseColor.sectionColor} />
+              );
+            }}
+            onPressLeft={() => {
+              navigation.goBack();
+            }}
+            onPressRight={() => {
+              navigation.navigate('SearchHistory');
+            }}
+            style={styles.headerStyle}
+          />
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={this.state.loading}
+            />
+          </View>
+        </SafeAreaView>
+      );
+    }
+  }
+
+  render() {
+    return <View style={{flex: 1}}>{this.displayContentView()}</View>;
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  };
+};
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(PhysicalProducts),
+);

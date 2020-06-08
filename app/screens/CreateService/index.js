@@ -352,6 +352,12 @@ class CreateService extends Component {
             }}>
             <Button
               style={{flex: 1, marginLeft: 10}}
+              loading={this.state.deleteLoading}
+              onPress={() => this.goBack()}>
+              Cancel
+            </Button>
+            <Button
+              style={{flex: 1, marginLeft: 10}}
               loading={saveLoading}
               onPress={() => this.onSave()}>
               Save

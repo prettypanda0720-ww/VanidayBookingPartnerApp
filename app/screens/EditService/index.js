@@ -10,8 +10,14 @@ import {
   Switch,
   ActivityIndicator,
 } from 'react-native';
-import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import {Header, SafeAreaView, Icon, Text, Button} from '@components';
+import {
+  Header,
+  SafeAreaView,
+  Icon,
+  Text,
+  Button,
+  SectionedMultiSelect,
+} from '@components';
 
 import {Dropdown} from 'react-native-material-dropdown';
 import {withNavigation} from 'react-navigation';
@@ -305,6 +311,7 @@ class EditService extends Component {
               readOnlyHeadings={false}
               onSelectedItemsChange={this.onSelectedItemsChange}
               selectedItems={this.state.selectedItems}
+              showChips={false}
             />
             <View style={styles.inputGroup}>
               <Text caption3 style={{color: BaseColor.secondBlackColor}}>

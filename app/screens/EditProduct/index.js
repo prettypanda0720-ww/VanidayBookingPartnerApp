@@ -1,13 +1,27 @@
 import React, {Component} from 'react';
-import {View, TextInput, ScrollView, Switch, Image} from 'react-native';
-import {Header, SafeAreaView, Icon, Text, Button} from '@components';
-
-import {Dropdown} from 'react-native-material-dropdown';
-
-import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
-import CheckBox from 'react-native-checkbox';
-import PropTypes from 'prop-types';
+import {
+  Header,
+  SafeAreaView,
+  Icon,
+  Text,
+  Button,
+  SectionedMultiSelect,
+} from '@components';
+import {connect} from 'react-redux';
+import {myAppointmentsSvc} from '@services';
+import {AuthActions} from '@actions';
+import {bindActionCreators} from 'redux';
+// import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import {withNavigation} from 'react-navigation';
 import * as Utils from '@utils';
+import {
+  View,
+  ScrollView,
+  TextInput,
+  Switch,
+  ActivityIndicator,
+} from 'react-native';
+import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import styles from './styles';
 
 class EditProduct extends Component {
@@ -17,12 +31,24 @@ class EditProduct extends Component {
       search: '',
       refreshing: false,
       loading: false,
-      retailReminders: false,
-      stockReminders: false,
-      checked: false,
+      dataLoading: true,
+      saveloading: false,
+      id: '',
+      sku: '',
+      name: '',
+      type_id: '',
+      price: '',
+      description: '',
+      short_description: '',
+      is_featured: '',
+      subMenuList: [],
+      selectedItems: [],
     };
   }
 
+  onSelectedItemsChange = (selectedItems) => {
+    this.setState({selectedItems: selectedItems});
+  };
   /**
    * @description Call when reminder option switch on/off
    */
@@ -33,319 +59,300 @@ class EditProduct extends Component {
   toggleStockSwitch = (value) => {
     this.setState({stockReminders: value});
   };
-  render() {
+
+  componentDidMount() {
     const {navigation} = this.props;
-    const {loading} = this.state;
-    let brands = [{value: 'FINDBYCOVO'}, {value: 'VANIDAY'}];
-    let category = [{value: 'Category1'}, {value: 'Category2'}];
-    const data = this.props.navigation.state.params.data;
-    return (
-      <SafeAreaView
-        style={[BaseStyle.safeAreaView]}
-        forceInset={{top: 'always'}}>
-        <Header
-          title="Edit Product"
-          renderRight={() => {
-            return <Icon name="times" size={20} color={BaseColor.sectionColor} />;
-          }}
-          onPressRight={() => {
+    const sku = this.props.navigation.state.params.sku;
+    const data = {
+      sku: sku,
+    };
+    this.focusListener = navigation.addListener('didFocus', () => {
+      myAppointmentsSvc
+        .productDetail(data)
+        .then((response) => {
+          const res_profile = response.data;
+          if (res_profile.code == 0) {
+            console.log('product detail', res_profile.data);
+            this.setState({
+              id: res_profile.data.id,
+              sku: res_profile.data.sku,
+              name: res_profile.data.name,
+              type_id: res_profile.data.type_id,
+              price: res_profile.data.price,
+              description: res_profile.data.description,
+              short_description: res_profile.data.short_description,
+              is_featured: res_profile.data.is_featured,
+              selectedItems: res_profile.data.category_ids.map(
+                (item, index) => {
+                  console.log(item, index);
+                  return parseInt(item);
+                },
+              ),
+              dataLoading: false,
+            });
+          }
+        })
+        .catch((error) => {
+          Utils.notifyMessage(error);
+          console.log('appointment error');
+          console.log(error);
+        });
+    });
+  }
+
+  checkInput() {
+    const {name, price, selectedItems} = this.state;
+
+    if (name.length === 0) {
+      Utils.notifyMessage('Product Name is required!');
+      return false;
+    }
+    if (selectedItems.length === 0) {
+      Utils.notifyMessage('Categories is required!');
+      return false;
+    }
+    if (price.length === 0) {
+      Utils.notifyMessage('Price is required!');
+      return false;
+    }
+    return true;
+  }
+
+  onDelete = () => {
+    if (!this.checkInput()) {
+      return;
+    }
+    this.setState({deleteLoading: true});
+    const {id, sku} = this.state;
+    const {navigation} = this.props;
+    const {auth} = this.props;
+    const data = {
+      token: auth.user.token,
+      sku: sku,
+      product_id: id,
+    };
+    console.log('delete product list', data);
+    if (auth.user.token !== undefined) {
+      myAppointmentsSvc
+        .deleteProductList(data)
+        .then((response) => {
+          const res_profile = response.data;
+          if (res_profile.code == 0) {
+            Utils.notifyMessage('Deleting Product is successfully done!');
+            this.setState({deleteLoading: false});
             navigation.goBack();
-          }}
-          style={styles.headerStyle}
-        />
-        <ScrollView style={styles.mainWrapper}>
-          <Text title2 bold style={{color: BaseColor.sectionColor}}>
-            Product Details
-          </Text>
-          <Text
-            headline
-            style={{
-              color: BaseColor.sectionColor,
-              paddingVertical: 10,
-            }}>
-            Product Logo
-          </Text>
-          <Image source={data.image} style={styles.blockImage} />
-          <View
-            style={{
-              marginTop: 20,
-              paddingHorizontal: 20,
-              flexDirection: 'row',
-            }}>
+          }
+        })
+        .catch((error) => {
+          Utils.notifyMessage(error);
+          console.log('Deleting product error');
+          console.log(error);
+        });
+    }
+  };
+
+  onSave = () => {
+    if (!this.checkInput()) {
+      return;
+    }
+    this.setState({saveLoading: true});
+    const {name, sku, price, selectedItems, description} = this.state;
+    const {navigation} = this.props;
+    let selItemsStr = '';
+    const count = selectedItems.length;
+    if (count > 0) {
+      selItemsStr = selectedItems[0];
+      for (let index = 1; index < count; index++) {
+        selItemsStr += ',' + selectedItems[index];
+      }
+    }
+    const {auth} = this.props;
+    const data = {
+      token: auth.user.token,
+      sku: sku,
+      productInfo: {
+        product_name: name,
+        price: price,
+        category_ids: selItemsStr,
+        description: description,
+      },
+    };
+    console.log('update product list', data);
+    if (auth.user.token !== undefined) {
+      myAppointmentsSvc
+        .updateProductList(data)
+        .then((response) => {
+          const res_profile = response.data;
+          console.log('update product list data', res_profile);
+          if (res_profile.code == 0) {
+            Utils.notifyMessage('Updating Product is successfully done!');
+            this.setState({saveLoading: false});
+            navigation.goBack();
+          }
+        })
+        .catch((error) => {
+          Utils.notifyMessage(error);
+          console.log('Updating product error');
+          console.log(error);
+        });
+    }
+  };
+
+  displayContentView() {
+    const {navigation} = this.props;
+    const {
+      dataLoading,
+      // subMenuList,
+      deleteLoading,
+      saveLoading,
+      id,
+      sku,
+      name,
+      type_id,
+      price,
+      description,
+      short_description,
+      is_featured,
+    } = this.state;
+    console.log('selectedItems', this.state.selectedItems);
+    const subMenuList = this.props.navigation.state.params.subMenuList;
+    console.log('subMenuList', subMenuList);
+    if (!dataLoading) {
+      return (
+        <SafeAreaView
+          style={[BaseStyle.safeAreaView]}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Edit Product"
+            renderRight={() => {
+              return (
+                <Icon name="times" size={20} color={BaseColor.blackColor} />
+              );
+            }}
+            onPressRight={() => {
+              navigation.goBack();
+            }}
+            style={styles.headerStyle}
+          />
+          <ScrollView style={styles.mainWrapper}>
+            <View style={styles.inputGroup}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
+                Product Name
+              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({name: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.MainPrimaryColor}
+                selectionColor={BaseColor.primaryColor}>
+                {name}
+              </TextInput>
+            </View>
+            <View style={styles.inputGroup}>
+              <Text body2 style={{color: BaseColor.sectionColor}}>
+                Price
+              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({price: text})}
+                autoCorrect={false}
+                placeholder="$0.00"
+                placeholderTextColor={BaseColor.MainPrimaryColor}
+                selectionColor={BaseColor.primaryColor}>
+                {price}
+              </TextInput>
+            </View>
+            <SectionedMultiSelect
+              items={subMenuList}
+              uniqueKey="id"
+              subKey="subcategory"
+              selectText="Select Categories..."
+              showDropDowns={true}
+              readOnlyHeadings={false}
+              loading={false}
+              onSelectedItemsChange={this.onSelectedItemsChange}
+              selectedItems={this.state.selectedItems}
+            />
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                Description
+              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.multilineTextInput]}
+                onChangeText={(text) => this.setState({description: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.MainPrimaryColor}
+                selectionColor={BaseColor.primaryColor}
+                multiline={true}>
+                {description}
+              </TextInput>
+            </View>
+          </ScrollView>
+          <View style={styles.btnWrapper}>
             <Button
-              style={{flex: 1}}
-              loading={loading}
-              onPress={() => navigation.goBack()}>
-              Change image of Product Logo
+              style={{flex: 1, marginLeft: 10}}
+              loading={deleteLoading}
+              onPress={() => this.onDelete()}>
+              Delete
+            </Button>
+            <Button
+              style={{flex: 1, marginLeft: 10}}
+              loading={saveLoading}
+              onPress={() => this.onSave()}>
+              Save
             </Button>
           </View>
-          <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              PRODUCT NAME
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="e.g. Large Shampoo"
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.titleColor}
-            />
-          </View>
-          <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              Barcode (ISBN, UPC, etc.)
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="123 ABC"
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.titleColor}
-            />
-          </View>
-          <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              SKU Stock Keeping Unit
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="e.g. 123ABC"
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.titleColor}
-            />
-          </View>
-          <Dropdown
-            label="BRAND"
-            data={brands}
-            baseColor={BaseColor.sectionColor}
-            textColor={BaseColor.titleColor}
-            rippleOpacity={0.7}
-          />
-          <Dropdown
-            label="Category"
-            data={category}
-            baseColor={BaseColor.sectionColor}
-            textColor={BaseColor.titleColor}
-            rippleOpacity={0.7}
-          />
-          <View style={styles.inputGroup}>
-            <Text caption3 style={{color: BaseColor.sectionColor}}>
-              DESCRIPTION
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.multilineTextInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder=""
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.titleColor}
-              multiline={true}>
-              In Italian, "Covo" means a hiding place. When you come to our
-              salon, you will experience a private and relaxing space and time.
-              All the stylists are experienced Japanese stylists with Japanese
-              quality service. Our location is on the happening Keong Saik road,
-              on the ground floor in a shop house. We try out best to cater
-              damage-free hair using in-house developed chemicals(developed in
-              Tokyo by our owner stylist) for colouring, pem, rebonding and
-              treatment. We also have Keratin treatment for damaged hair as
-              well. For the best result for both hair and scalp, we use
-              carbonated water in the salon. Please come to experience quality
-              technique and service to Covo.
-            </TextInput>
-          </View>
-          <View style={[styles.profileItem, {paddingVertical: 15}]}>
-            <Text body1 style={{color: BaseColor.sectionColor}}>
-              Enable Retail Sales
-            </Text>
-            <Switch
-              name="angle-right"
-              size={18}
-              onValueChange={this.toggleRetailSwitch}
-              value={this.state.retailReminders}
-            />
-          </View>
-          <View>{this.displayRetailView()}</View>
-          <View style={[styles.profileItem, {paddingVertical: 25}]}>
-            <Text body1 style={{color: BaseColor.sectionColor}}>
-              Enable Stock Control
-            </Text>
-            <Switch
-              name="angle-right"
-              size={18}
-              onValueChange={this.toggleStockSwitch}
-              value={this.state.stockReminders}
-            />
-          </View>
-          <View>{this.displayStockView()}</View>
-        </ScrollView>
-        <View style={styles.btnWrapper}>
-          <Button
-            style={{flex: 1, marginLeft: 10}}
-            loading={loading}
-            onPress={() => navigation.goBack()}>
-            DELETE
-          </Button>
-          <Button
-            style={{flex: 1, marginLeft: 10}}
-            loading={loading}
-            onPress={() => navigation.goBack()}>
-            SAVE
-          </Button>
-        </View>
-      </SafeAreaView>
-    );
-  }
-  displayRetailView() {
-    let tax = [{value: 'No tax'}, {value: 'tax'}];
-    if (this.state.retailReminders) {
-      return (
-        <View style={{flexDirection: 'column'}}>
-          <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              RETAIL PRICE
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="0.00"
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.titleColor}
-            />
-          </View>
-          <View style={styles.inputGroup}>
-            <Text body2 style={{color: BaseColor.sectionColor}}>
-              SPECIAL PRICE
-            </Text>
-            <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
-              onChangeText={(text) => this.setState({id: text})}
-              autoCorrect={false}
-              placeholder="0.00"
-              placeholderTextColor={BaseColor.titleColor}
-              selectionColor={BaseColor.titleColor}
-            />
-          </View>
-          <Dropdown
-            label="TAX (included in prices)"
-            baseColor={BaseColor.sectionColor}
-            textColor={BaseColor.titleColor}
-            data={tax}
-            rippleOpacity={0.7}
-          />
-          <View style={styles.inputGroup}>
-            <CheckBox
-              label={'Enable commision'}
-              checked={this.state.checked}
-              onChange={() =>
-                this.setState({
-                  checked: !this.state.checked,
-                })
-              }
-              style={{height: 10}}
-            />
-          </View>
-        </View>
+        </SafeAreaView>
       );
     } else {
       return (
-        <View style={[styles.contentCenter, styles.retailWrapper]}>
-          <Text caption1 semibold>
-            Switch on 'Enable Retail Sales' to sell this product at checkout.
-          </Text>
-        </View>
+        <SafeAreaView
+          style={[BaseStyle.safeAreaView]}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Edit Product"
+            renderRight={() => {
+              return (
+                <Icon name="times" size={20} color={BaseColor.blackColor} />
+              );
+            }}
+            onPressRight={() => {
+              navigation.goBack();
+            }}
+            style={styles.headerStyle}
+          />
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={dataLoading}
+            />
+          </View>
+        </SafeAreaView>
       );
     }
   }
 
-  displayStockView() {
-    let supplier = [{value: 'Select supplier'}];
-    if (this.state.stockReminders) {
-      return (
-        <View style={{flexDirection: 'column'}}>
-          <View
-            style={[
-              styles.inputGroup,
-              {flexDirection: 'row', justifyContent: 'space-between'},
-            ]}>
-            <View style={{flex: 1, flexDirection: 'column', marginRight: 10}}>
-              <Text>SUPPLY PRICE</Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({id: text})}
-                autoCorrect={false}
-                placeholder="$0.00"
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}
-              />
-            </View>
-            <View style={{flex: 1, flexDirection: 'column', marginLeft: 10}}>
-              <Text>INITIAL STOCK</Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({id: text})}
-                autoCorrect={false}
-                placeholder="0"
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}
-              />
-            </View>
-          </View>
-          <Dropdown
-            label="SUPPLIER"
-            data={supplier}
-            baseColor={BaseColor.sectionColor}
-            textColor={BaseColor.titleColor}
-            rippleOpacity={0.7}
-          />
-          <View
-            style={[
-              styles.inputGroup,
-              {flexDirection: 'row', justifyContent: 'space-between'},
-            ]}>
-            <View style={[styles.inputGroup, {flex: 1, marginRight: 10}]}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                REORDER POINT
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({id: text})}
-                autoCorrect={false}
-                placeholder="0"
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}
-              />
-            </View>
-            <View style={[styles.inputGroup, {flex: 1, marginLeft: 10}]}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                REORDER QTY
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({id: text})}
-                autoCorrect={false}
-                placeholder="0"
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}
-              />
-            </View>
-          </View>
-        </View>
-      );
-    } else {
-      return (
-        <View style={[styles.contentCenter, styles.retailWrapper]}>
-          <Text caption1 semibold>
-            Switch on 'Enable Stock Control' inventory levels for this product.
-          </Text>
-        </View>
-      );
-    }
+  render() {
+    return <View style={{flex: 1}}>{this.displayContentView()}</View>;
   }
 }
 
-export default EditProduct;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  };
+};
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(EditProduct),
+);

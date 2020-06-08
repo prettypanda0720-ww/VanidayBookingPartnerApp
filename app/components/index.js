@@ -31,6 +31,7 @@ import VanidayServiceItem from './VanidayServiceItem';
 import BookingHistory from './BookingHistory';
 import Agenda from './agenda';
 import ExpandableItemComponent from './ExpandableItemComponent';
+import SectionedMultiSelect from './SectionedMultiSelect';
 
 export {
   Header,
@@ -66,4 +67,5 @@ export {
   BookingHistory,
   Agenda,
   ExpandableItemComponent,
+  SectionedMultiSelect,
 };

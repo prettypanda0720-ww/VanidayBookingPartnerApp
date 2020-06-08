@@ -1,16 +1,15 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import * as Utils from '@utils';
 import {BaseColor} from '@config';
 
 export default StyleSheet.create({
   textInput: {
     height: 46,
-    backgroundColor: BaseColor.whiteColor,
+    backgroundColor: BaseColor.fieldColor,
     borderRadius: 5,
     padding: 10,
     width: '100%',
-    color: BaseColor.titleColor,
+    color: 'black',
     marginTop: 5,
     borderColor: BaseColor.grayColor,
     borderWidth: 1,
@@ -28,17 +27,16 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 60,
-    marginTop: 20,
   },
   multilineTextInput: {
     height: 200,
-    backgroundColor: BaseColor.whiteColor,
+    backgroundColor: BaseColor.fieldColor,
     borderRadius: 5,
     padding: 10,
     width: '100%',
-    color: BaseColor.titleColor,
+    color: 'black',
     marginTop: 5,
-    borderColor: BaseColor.titleColor,
+    borderColor: BaseColor.grayColor,
     borderWidth: 1,
   },
   profileItem: {
@@ -54,12 +52,10 @@ export default StyleSheet.create({
   retailWrapper: {
     paddingVertical: 30,
   },
-  blockImage: {
-    height: Utils.scaleWithPixel(200),
-    width: '100%',
-    borderWidth: 1,
-    borderColor: BaseColor.grayColor,
-    borderRadius: 0,
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerStyle: {
     borderBottomWidth: 1,

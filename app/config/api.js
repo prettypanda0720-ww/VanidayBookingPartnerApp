@@ -24,8 +24,15 @@ export const Api = {
     DELETE_SERVICELIST_DATA_URL: '/myvaniday/deleteService',
     SERVICE_DETAIL_DATA_URL: '/myvaniday/serviceDetail',
     GET_HOMECATEGORY_DATA_URL: '/getHomeCategory',
+    GET_SUBMENU_BY_MERCHANT: '/getMerchantCategory',
+    // opening hour
     UPDATE_OPENINGHOURS_DATA_URL: '/myvaniday/updateOpeningHour',
     GET_OPENINGHOURS_DATA_URL: '/myvaniday/getOpeningHour',
-    GET_SUBMENU_BY_MERCHANT: '/getMerchantCategory',
+    // product
+    GET_PRODUCTLIST_DATA_URL: '/myvaniday/getProductList',
+    CREATE_PRODUCT_DATA_URL: '/myvaniday/createProduct',
+    DELETE_PRODUCT_DATA_URL: '/myvaniday/deleteProduct',
+    UPDATE_PRODUCT_DATA_URL: '/myvaniday/updateProduct',
+    DETAIL_PRODUCT_DATA_URL: '/myvaniday/productDetail',
   },
 };

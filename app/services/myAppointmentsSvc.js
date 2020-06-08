@@ -123,6 +123,31 @@ function getSubMenuByMerchant(postData) {
   return apiClient_json.post(url, postData);
 }
 
+function getProductList(postData) {
+  var url = Api.myVaniMiddleWare.GET_PRODUCTLIST_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
+function createProductList(postData) {
+  var url = Api.myVaniMiddleWare.CREATE_PRODUCT_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
+function deleteProductList(postData) {
+  var url = Api.myVaniMiddleWare.DELETE_PRODUCT_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
+function updateProductList(postData) {
+  var url = Api.myVaniMiddleWare.UPDATE_PRODUCT_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
+function productDetail(postData) {
+  var url = Api.myVaniMiddleWare.DETAIL_PRODUCT_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
 export const myAppointmentsSvc = {
   fetchOrderByDate,
   fetchProfileData,
@@ -140,4 +165,9 @@ export const myAppointmentsSvc = {
   updateServiceList,
   deleteServiceList,
   serviceDetail,
+  getProductList,
+  createProductList,
+  deleteProductList,
+  updateProductList,
+  productDetail,
 };
