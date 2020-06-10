@@ -49,7 +49,7 @@ class Aboutus extends Component {
       terms_and_conditions,
       free_cancellation_hour,
     } = this.state;
-  
+
     const {auth} = this.props;
     const data = {
       token: auth.user.token,
@@ -74,11 +74,13 @@ class Aboutus extends Component {
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
-            Utils.notifyMessage('Business Detail is successfully updated!');
+            Utils.shortNotifyMessage(
+              'Business Detail is successfully updated!',
+            );
           }
         })
         .catch((error) => {
-          Utils.notifyMessage(error);
+          Utils.shortNotifyMessage(error);
           console.log('appointment error');
           console.log(error);
         });
@@ -115,7 +117,7 @@ class Aboutus extends Component {
         }
       })
       .catch((error) => {
-        Utils.notifyMessage(error);
+        Utils.shortNotifyMessage(error);
         console.log('appointment error');
         console.log(error);
       });
@@ -145,7 +147,7 @@ class Aboutus extends Component {
     }
   }
 
-  render() {
+  displayContentView() {
     const {navigation} = this.props;
     const {
       loading,
@@ -159,263 +161,303 @@ class Aboutus extends Component {
       serviceTypes,
       productTypes,
     } = this.state;
-
-    return (
-      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
-        <Header
-          title="Edit Business Detail"
-          renderLeft={() => {
-            return (
-              <Icon
-                name="angle-left"
-                size={20}
-                color={BaseColor.sectionColor}
-              />
-            );
-          }}
-          onPressLeft={() => {
-            navigation.goBack();
-          }}
-          style={styles.headerStyle}
-        />
-        <ScrollView>
-          <Text headline style={styles.headerTitle}>
-            Featured Image
-          </Text>
-          <View style={styles.wrapper}>
-            <Swiper
-              dotStyle={{
-                backgroundColor: BaseColor.textSecondaryColor,
-              }}
-              activeDotColor={BaseColor.primaryColor}
-              paginationStyle={styles.contentPage}
-              removeClippedSubviews={false}>
-              {photos.map((item, index) => {
-                return (
-                  <View style={styles.slide} key={index}>
-                    <Image
-                      key={index}
-                      source={{uri: item}}
-                      style={styles.blockImage}
-                    />
-                  </View>
-                );
-              })}
-            </Swiper>
+    if (!this.state.dataLoading) {
+      return (
+        <SafeAreaView
+          style={BaseStyle.safeAreaView}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Edit Business Detail"
+            renderLeft={() => {
+              return (
+                <Icon
+                  name="angle-left"
+                  size={20}
+                  color={BaseColor.sectionColor}
+                />
+              );
+            }}
+            onPressLeft={() => {
+              navigation.goBack();
+            }}
+            style={styles.headerStyle}
+          />
+          <ScrollView>
+            <Text headline style={styles.headerTitle}>
+              Featured Image
+            </Text>
+            <View style={styles.wrapper}>
+              <Swiper
+                dotStyle={{
+                  backgroundColor: BaseColor.textSecondaryColor,
+                }}
+                activeDotColor={BaseColor.primaryColor}
+                paginationStyle={styles.contentPage}
+                removeClippedSubviews={false}>
+                {photos.map((item, index) => {
+                  return (
+                    <View style={styles.slide} key={index}>
+                      <Image
+                        key={index}
+                        source={{uri: item}}
+                        style={styles.blockImage}
+                      />
+                    </View>
+                  );
+                })}
+              </Swiper>
+            </View>
+            <View style={styles.changeButton}>
+              <Button
+                style={{flex: 1}}
+                loading={loading}
+                onPress={() => navigation.goBack()}>
+                Upload Business Photo
+              </Button>
+            </View>
+            <View style={{paddingHorizontal: 20}}>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                  Connected Stripe ID
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) =>
+                    this.setState({vendor_stripe_id: text})
+                  }
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
+                  {vendor_stripe_id}
+                </TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                  Shop Title
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) => this.setState({shopTitle: text})}
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
+                  {shopTitle}
+                </TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Dropdown
+                  label="Primary Type"
+                  data={productTypes}
+                  rippleOpacity={0.7}
+                  baseColor={BaseColor.secondBlackColor}
+                  tintColor={BaseColor.blackColor}
+                  style={{color: BaseColor.blackColor}}
+                  onChangeText={(value) => {
+                    this.setState({
+                      primary_type: this.getKeyByValue(value),
+                    });
+                  }}
+                  value={this.getNameByType(this.state.primary_type)}
+                />
+              </View>
+              <View style={styles.inputGroup}>
+                <Dropdown
+                  label="Seconday Type"
+                  data={productTypes}
+                  rippleOpacity={0.7}
+                  baseColor={BaseColor.secondBlackColor}
+                  tintColor={BaseColor.blackColor}
+                  style={{color: BaseColor.blackColor}}
+                  onChangeText={(value) => {
+                    this.setState({
+                      secondary_type: this.getKeyByValue(value),
+                    });
+                  }}
+                  value={this.getNameByType(this.state.secondary_type)}
+                />
+              </View>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                  Free Cancellation Hour
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) =>
+                    this.setState({free_cancellation_hour: text})
+                  }
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
+                  4
+                </TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                  Contact Number
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) => this.setState({contact_number: text})}
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
+                  {contact_number}
+                </TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                  Unique Entity Number
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) =>
+                    this.setState({unique_entity_number: text})
+                  }
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
+                  {unique_entity_number}
+                </TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                  Location
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) => this.setState({location: text})}
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
+                  {location}
+                </TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.titleColor}}>
+                  Description
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.multilineTextInput]}
+                  onChangeText={(text) => this.setState({description: text})}
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.MainPrimaryColor}
+                  selectionColor={BaseColor.primaryColor}
+                  multiline={true}>
+                  {description}
+                </TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                  Country
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) => this.setState({id: text})}
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}
+                  editable={false}>
+                  Singapore
+                </TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                  Cancellation and Rescheduling Policy
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) =>
+                    this.setState({cancellation_policy: text})
+                  }
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}></TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                  Term & Condition
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) =>
+                    this.setState({terms_and_conditions: text})
+                  }
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}></TextInput>
+              </View>
+            </View>
+          </ScrollView>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={this.state.dataLoading}
+            />
           </View>
-          <View style={styles.changeButton}>
+          <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
             <Button
-              style={{flex: 1}}
+              style={{flex: 1, marginLeft: 10}}
               loading={loading}
               onPress={() => navigation.goBack()}>
-              Upload Business Photo
+              CANCEL
+            </Button>
+            <Button
+              style={{flex: 1, marginLeft: 10}}
+              loading={loading}
+              onPress={() => this.onSave()}>
+              SAVE
             </Button>
           </View>
-          <View style={{paddingHorizontal: 20}}>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Connected Stripe ID
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({vendor_stripe_id: text})}
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}>
-                {vendor_stripe_id}
-              </TextInput>
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Shop Title
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({shopTitle: text})}
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}>
-                {shopTitle}
-              </TextInput>
-            </View>
-            <View style={styles.inputGroup}>
-              <Dropdown
-                label="Primary Type"
-                data={productTypes}
-                rippleOpacity={0.7}
-                baseColor={BaseColor.secondBlackColor}
-                tintColor={BaseColor.blackColor}
-                style={{color: BaseColor.blackColor}}
-                onChangeText={(value) => {
-                  this.setState({
-                    primary_type: this.getKeyByValue(value),
-                  });
-                }}
-                value={this.getNameByType(this.state.primary_type)}
-              />
-            </View>
-            <View style={styles.inputGroup}>
-              <Dropdown
-                label="Seconday Type"
-                data={productTypes}
-                rippleOpacity={0.7}
-                baseColor={BaseColor.secondBlackColor}
-                tintColor={BaseColor.blackColor}
-                style={{color: BaseColor.blackColor}}
-                onChangeText={(value) => {
-                  this.setState({
-                    secondary_type: this.getKeyByValue(value),
-                  });
-                }}
-                value={this.getNameByType(this.state.secondary_type)}
-              />
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Free Cancellation Hour
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) =>
-                  this.setState({free_cancellation_hour: text})
-                }
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}>
-                4
-              </TextInput>
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Contact Number
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({contact_number: text})}
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}>
-                {contact_number}
-              </TextInput>
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Unique Entity Number
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) =>
-                  this.setState({unique_entity_number: text})
-                }
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}>
-                {unique_entity_number}
-              </TextInput>
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Location
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({location: text})}
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}>
-                {location}
-              </TextInput>
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.titleColor}}>
-                Description
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.multilineTextInput]}
-                onChangeText={(text) => this.setState({description: text})}
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.MainPrimaryColor}
-                selectionColor={BaseColor.primaryColor}
-                multiline={true}>
-                {description}
-              </TextInput>
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Country
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({id: text})}
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}
-                editable={false}>
-                Singapore
-              </TextInput>
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Cancellation and Rescheduling Policy
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) =>
-                  this.setState({cancellation_policy: text})
-                }
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}></TextInput>
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Term & Condition
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) =>
-                  this.setState({terms_and_conditions: text})
-                }
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}></TextInput>
-            </View>
-          </View>
-        </ScrollView>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator
-            size="large"
-            color={BaseColor.sectionColor}
-            style={styles.loading}
-            animating={this.state.dataLoading}
+        </SafeAreaView>
+      );
+    } else {
+      return (
+        <SafeAreaView
+          style={BaseStyle.safeAreaView}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Edit Business Detail"
+            renderLeft={() => {
+              return (
+                <Icon
+                  name="angle-left"
+                  size={20}
+                  color={BaseColor.sectionColor}
+                />
+              );
+            }}
+            onPressLeft={() => {
+              navigation.goBack();
+            }}
+            style={styles.headerStyle}
           />
-        </View>
-        <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
-          <Button
-            style={{flex: 1, marginLeft: 10}}
-            loading={loading}
-            onPress={() => navigation.goBack()}>
-            CANCEL
-          </Button>
-          <Button
-            style={{flex: 1, marginLeft: 10}}
-            loading={loading}
-            onPress={() => this.onSave()}>
-            SAVE
-          </Button>
-        </View>
-      </SafeAreaView>
-    );
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={this.state.dataLoading}
+            />
+          </View>
+        </SafeAreaView>
+      );
+    }
+  }
+
+  render() {
+    return <View style={{flex: 1}}>{this.displayContentView()}</View>;
   }
 }
 

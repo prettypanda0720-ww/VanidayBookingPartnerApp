@@ -69,12 +69,12 @@ class EditService extends Component {
           const res_profile = response.data;
           if (res_profile.code == 0) {
             this.setState({deleteLoading: false});
-            Utils.notifyMessage('Deleting Service is successfully done!');
+            Utils.shortNotifyMessage('Deleting Service is successfully done!');
             navigation.goBack();
           }
         })
         .catch((error) => {
-          Utils.notifyMessage(error);
+          Utils.shortNotifyMessage(error);
           console.log('appointment error');
           console.log(error);
         });
@@ -133,12 +133,12 @@ class EditService extends Component {
           const res_profile = response.data;
           if (res_profile.code == 0) {
             this.setState({saveLoading: false});
-            Utils.notifyMessage('Updating Service is successfully done!');
+            Utils.shortNotifyMessage('Updating Service is successfully done!');
             navigation.goBack();
           }
         })
         .catch((error) => {
-          Utils.notifyMessage(error);
+          Utils.shortNotifyMessage(error);
           console.log('appointment error');
           console.log(error);
         });
@@ -207,19 +207,19 @@ class EditService extends Component {
     } = this.state;
 
     if (service_name.length === 0) {
-      Utils.notifyMessage('Service Name is required!');
+      Utils.shortNotifyMessage('Service Name is required!');
       return false;
     }
     if (selectedItems.length === 0) {
-      Utils.notifyMessage('Categories is required!');
+      Utils.shortNotifyMessage('Categories is required!');
       return false;
     }
     if (price.length === 0) {
-      Utils.notifyMessage('Price is required!');
+      Utils.shortNotifyMessage('Price is required!');
       return false;
     }
     if (service_duration.length === 0) {
-      Utils.notifyMessage('Duration is required!');
+      Utils.shortNotifyMessage('Duration is required!');
       return false;
     }
     return true;
@@ -306,7 +306,7 @@ class EditService extends Component {
               items={subMenuList}
               uniqueKey="id"
               subKey="subcategory"
-              selectText="Select Categories..."
+              selectText="Select Services..."
               showDropDowns={true}
               readOnlyHeadings={false}
               onSelectedItemsChange={this.onSelectedItemsChange}

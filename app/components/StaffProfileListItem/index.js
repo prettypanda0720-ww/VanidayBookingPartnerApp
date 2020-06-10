@@ -124,7 +124,7 @@ export default class StaffProfileListItem extends Component {
                 {this.getGenderName(staff_gender)}
               </Text>
             </View>
-            <View
+            {/* <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -169,7 +169,7 @@ export default class StaffProfileListItem extends Component {
                 }}>
                 {staff_joined_date}
               </Text>
-            </View>
+            </View> */}
           </View>
           {/* <View
             style={{

@@ -113,9 +113,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: 120,
+    width: 125,
     height: 17,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     backgroundColor: BaseColor.titleColor,
     borderRadius: 5,
   }

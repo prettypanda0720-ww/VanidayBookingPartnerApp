@@ -19,7 +19,7 @@ export default class Sales extends Component {
         <Header title="Sales" style={styles.headerStyle} />
         <View style={styles.contain}>
           <View style={{width: '100%'}}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
                 navigation.navigate('DailySales');
@@ -46,7 +46,7 @@ export default class Sales extends Component {
                   style={{marginLeft: 5, flex: 1}}
                 />
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
@@ -61,9 +61,15 @@ export default class Sales extends Component {
                     style={{marginLeft: 5}}
                   />
                   <View style={styles.summary}>
-                    <Text body1 style={styles.sectionStyle}>Appointments</Text>
-                    <Text caption1 numberOfLines={2} style={[styles.sectionStyle, {marginTop: 4}]}>
-                      List of all appointments booked, with filter and export options
+                    <Text body1 style={styles.sectionStyle}>
+                      Appointments
+                    </Text>
+                    <Text
+                      caption1
+                      numberOfLines={2}
+                      style={[styles.sectionStyle, {marginTop: 4}]}>
+                      List of all appointments booked, with filter and export
+                      options
                     </Text>
                   </View>
                 </View>
@@ -74,7 +80,7 @@ export default class Sales extends Component {
                   style={{marginLeft: 5, flex: 1}}
                 />
               </View>
-            </TouchableOpacity>  
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
@@ -90,7 +96,9 @@ export default class Sales extends Component {
                   />
                   <View style={styles.summary}>
                     <Text body1>Invoices</Text>
-                    <Text caption1 style={[styles.sectionStyle, {marginTop: 4}]}>
+                    <Text
+                      caption1
+                      style={[styles.sectionStyle, {marginTop: 4}]}>
                       List of all sales made, with filter and export options
                     </Text>
                   </View>
@@ -109,7 +117,7 @@ export default class Sales extends Component {
                 navigation.navigate('EcardList');
               }}>
               <View style={styles.saleItemWrapper}>
-                <View style={{flexDirection: 'row',flex: 20}}>
+                <View style={{flexDirection: 'row', flex: 20}}>
                   <Icon
                     name="credit-card"
                     size={25}
@@ -117,8 +125,12 @@ export default class Sales extends Component {
                     style={{marginLeft: 5}}
                   />
                   <View style={styles.summary}>
-                    <Text body1 style={styles.sectionStyle}>Ecards</Text>
-                    <Text caption1 style={[styles.sectionStyle, {marginTop: 4}]}>
+                    <Text body1 style={styles.sectionStyle}>
+                      Ecards
+                    </Text>
+                    <Text
+                      caption1
+                      style={[styles.sectionStyle, {marginTop: 4}]}>
                       List of all ecards issued, with filter and export options
                     </Text>
                   </View>

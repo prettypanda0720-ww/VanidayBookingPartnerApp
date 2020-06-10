@@ -54,21 +54,17 @@ class Clients extends Component {
         forceInset={{top: 'always'}}>
         <Header
           title="Clients"
-          renderRight={() => {
-            return (
-              <Icon
-                name="ellipsis-h"
-                size={20}
-                color={BaseColor.secondBlackColor}
-              />
-            );
-          }}
-          onPressRight={() => {
-            navigation.navigate('Notification');
-          }}
+          // renderRight={() => {
+          //   return (
+          //     <Icon name="bell" size={20} color={BaseColor.secondBlackColor} />
+          //   );
+          // }}
+          // onPressRight={() => {
+          //   navigation.navigate('Notification');
+          // }}
           style={styles.headerStyle}
         />
-        <View style={{padding: 20}}>
+        {/* <View style={{padding: 20}}>
           <View style={styles.searchWrapper}>
             <TouchableOpacity
               onPress={() => {
@@ -102,7 +98,7 @@ class Clients extends Component {
               <Icon name="times" size={18} color={BaseColor.grayColor} />
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
         {this.state.ourTeam.map((item, index) => {
           return (
             <ProfileDescription

@@ -71,14 +71,14 @@ class ServiceList extends Component {
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Services"
-          renderLeft={() => {
-            return (
-              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
-            );
-          }}
-          onPressLeft={() => {
-            navigation.goBack();
-          }}
+          // renderLeft={() => {
+          //   return (
+          //     <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
+          //   );
+          // }}
+          // onPressLeft={() => {
+          //   navigation.goBack();
+          // }}
           style={styles.headerStyle}
         />
         <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>

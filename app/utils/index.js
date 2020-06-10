@@ -1,3 +1,4 @@
+const XDate = require('xdate');
 import {
   NativeModules,
   Platform,
@@ -402,6 +403,7 @@ export function getFormattedShortDate(date) {
 }
 
 export function getFormattedLongDate(date) {
+  const csDate = new Date(date);
   let mlist = [
     'Jan',
     'Feb',
@@ -416,19 +418,35 @@ export function getFormattedLongDate(date) {
     'Nov',
     'Dec',
   ];
+  console.log('getFormattedLongDate', csDate);
 
-  var year = date.getFullYear();
+  var year = csDate.getFullYear();
 
-  var day = date.getDate().toString();
+  var day = csDate.getDate().toString();
   day = day.length > 1 ? day : '0' + day;
 
-  return day + ' ' + mlist[date.getMonth()] + ', ' + year;
+  return day + ' ' + mlist[csDate.getMonth()] + ', ' + year;
 }
 
-export function notifyMessage(msg) {
+export function longNotifyMessage(msg) {
+  if (Platform.OS === 'android') {
+    ToastAndroid.show(msg, ToastAndroid.LONG);
+  } else {
+    AlertIOS.alert(msg);
+  }
+}
+
+export function shortNotifyMessage(msg) {
   if (Platform.OS === 'android') {
     ToastAndroid.show(msg, ToastAndroid.SHORT);
   } else {
     AlertIOS.alert(msg);
   }
+}
+
+export function autoTrackEndTime(startDate, minutes) {
+  console.log('startDate', startDate);
+  let xdate = new XDate(startDate, false).addMinutes(minutes);
+  console.log('xdate.toLocaleTimeString()', xdate.toLocaleTimeString());
+  return xdate.toLocaleTimeString();
 }

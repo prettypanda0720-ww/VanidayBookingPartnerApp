@@ -40,16 +40,18 @@ class EditOpeningHours extends Component {
           console.log('res_profile', res_profile);
           if (res_profile.code == 0) {
             this.setState({saveLoading: false});
-            Utils.notifyMessage('OpeningHours is successfully updated!');
+            Utils.shortNotifyMessage('OpeningHours is successfully updated!');
             navigation.goBack();
           } else {
             this.setState({saveLoading: false});
-            Utils.notifyMessage('Updating Openinghours error!');
+            Utils.shortNotifyMessage('Updating Openinghours error!');
           }
         })
         .catch((error) => {
           this.setState({saveLoading: false});
-          Utils.notifyMessage('Error occured while communcating with server');
+          Utils.shortNotifyMessage(
+            'Error occured while communcating with server',
+          );
           console.log('openinghour error');
           console.log(error);
         });
@@ -112,7 +114,7 @@ class EditOpeningHours extends Component {
                       Working Time
                     </Text>
                     <TextInput
-                      style={[BaseStyle.textInput, styles.textInput, {flex: 2}]}
+                      style={[BaseStyle.textInput, styles.textInput, {flex: 1}]}
                       onChangeText={(text) =>
                         this.chanegWorkingTimes(index, text)
                       }

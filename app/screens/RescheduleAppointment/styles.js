@@ -63,4 +63,29 @@ export default StyleSheet.create({
   customBtn: {
     height: 48,
   },
+  dateInfo: {
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    width: '100%',
+    backgroundColor: BaseColor.fieldColor,
+    // height: 75,
+    justifyContent: 'center',
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  contentModal: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  contentCalendar: {
+    borderRadius: 8,
+    width: '100%',
+    backgroundColor: 'white',
+  },
+  contentActionCalendar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
+  },
 });

@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TextInput} from 'react-native';
+import {View, ScrollView, TextInput, TouchableOpacity} from 'react-native';
 import {Dropdown} from 'react-native-material-dropdown';
+import {Calendar} from 'react-native-calendars';
+import Modal from 'react-native-modal';
 import * as Utils from '@utils';
 import {
   Header,
   SafeAreaView,
   Icon,
   Text,
-  DatePicker,
   BookingHistory,
   Button,
 } from '@components';
 
-import {BaseStyle, BaseColor} from '@config';
+import {BaseStyle, BaseColor, FontFamily} from '@config';
 import {StartTimes} from '@data';
 import styles from './styles';
 
@@ -23,17 +24,81 @@ class RescheduleAppointment extends Component {
       refreshing: false,
       loading: false,
       timeInterval: StartTimes,
+      appointmentDate: '',
+      startTime: '',
+      endTime: '',
+      duration: '',
+      modalCalendarVisible: false,
+      markedDates: {
+        [this.getCurrentDate()]: {selected: true, marked: false},
+      },
     };
+  }
+
+  getCurrentDate() {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    month = month < 10 ? '0' + month : month;
+    date = date < 10 ? '0' + date : date;
+
+    return year + '-' + month + '-' + date;
+  }
+
+  openCalendarModal() {
+    this.setState({
+      modalCalendarVisible: true,
+    });
+  }
+
+  setBookingDate(day) {
+    this.setState({
+      markedDates: {
+        [day.dateString]: {selected: true, marked: false},
+      },
+    });
+    this.markedDates = day.dateString;
+    console.log('marketDates', this.markedDates);
+  }
+
+  onDateApply() {
+    console.log('marketDates-onDateApply()', this.markedDates);
+    if (this.markedDates !== undefined) {
+      let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
+      this.setState({appointmentDate: shortDate});
+    } else {
+      this.setState({appointmentDate: this.getCurrentDate()});
+    }
   }
 
   showActionSheet = () => {
     this.ActionSheet.show();
   };
 
-  render() {
-    const {navigation} = this.props;
+  componentDidMount() {
     const item = this.props.navigation.state.params.bookingData;
-    const {loading, timeInterval} = this.state;
+    this.setState({
+      appointmentDate: item.slotDate,
+      startTime: Utils.getTimeFromDate(item.bookingFrom),
+      endTime: Utils.autoTrackEndTime(
+        item.slotDate + ' ' + Utils.getTimeFromDate(item.bookingFrom),
+        30,
+      ),
+    });
+  }
+
+  render() {
+    const item = this.props.navigation.state.params.bookingData;
+    const {navigation} = this.props;
+    const {
+      loading,
+      timeInterval,
+      modalCalendarVisible,
+      appointmentDate,
+      markedDates,
+    } = this.state;
+
     let status = [
       {value: 'Confirmed'},
       {value: 'Pending'},
@@ -77,7 +142,96 @@ class RescheduleAppointment extends Component {
             <Text headline bold style={{color: BaseColor.sectionColor}}>
               Appointment Date
             </Text>
-            <DatePicker time={item.slotDate} style={{marginTop: 10}} />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 10,
+              }}>
+              {/* <View style={{flex: 1}}>
+                <Text headline style={{color: BaseColor.secondBlackColor}}>
+                  Joined Date
+                </Text>
+              </View> */}
+              <Modal
+                isVisible={modalCalendarVisible}
+                backdropColor="rgba(0, 0, 0, 0.5)"
+                backdropOpacity={1}
+                animationIn="fadeIn"
+                animationInTiming={600}
+                animationOutTiming={600}
+                backdropTransitionInTiming={600}
+                backdropTransitionOutTiming={600}>
+                <View style={styles.contentModal}>
+                  <View style={styles.contentCalendar}>
+                    <Calendar
+                      style={{
+                        borderRadius: 8,
+                      }}
+                      markedDates={markedDates}
+                      current={this.getCurrentDate()}
+                      minDate={this.getCurrentDate()}
+                      maxDate={'2099-12-31'}
+                      onDayPress={(day) => this.setBookingDate(day)}
+                      monthFormat={'MMMM yyyy '}
+                      onMonthChange={(month) => {
+                        console.log('month changed', month);
+                      }}
+                      theme={{
+                        textSectionTitleColor: BaseColor.textPrimaryColor,
+                        selectedDayBackgroundColor: BaseColor.primaryColor,
+                        selectedDayTextColor: '#ffffff',
+                        todayTextColor: BaseColor.primaryColor,
+                        dayTextColor: BaseColor.textPrimaryColor,
+                        textDisabledColor: BaseColor.grayColor,
+                        dotColor: BaseColor.primaryColor,
+                        selectedDotColor: '#ffffff',
+                        arrowColor: BaseColor.primaryColor,
+                        monthTextColor: BaseColor.textPrimaryColor,
+                        textDayFontFamily: FontFamily.default,
+                        textMonthFontFamily: FontFamily.default,
+                        textDayHeaderFontFamily: FontFamily.default,
+                        textMonthFontWeight: 'bold',
+                        textDayFontSize: 14,
+                        textMonthFontSize: 16,
+                        textDayHeaderFontSize: 14,
+                      }}
+                    />
+                    <View style={styles.contentActionCalendar}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({modalCalendarVisible: false});
+                        }}>
+                        <Text body1>Cancel</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({modalCalendarVisible: false});
+                          this.onDateApply();
+                        }}>
+                        <Text body1 primaryColor>
+                          Done
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
+              <TouchableOpacity
+                style={styles.dateInfo}
+                onPress={() => this.openCalendarModal()}>
+                {/* <Text headline light style={{color: BaseColor.sectionColor}}>
+                  Joined Date
+                </Text> */}
+                <Text headline semibold>
+                  {Utils.getFormattedLongDate(
+                    Utils.getDateFromDate(appointmentDate),
+                  )}
+                  {/* {Utils.getDateFromDate(staff_joined_date)} */}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={[styles.inputGroup, styles.rowBetweenAlign]}>
             <View style={{flex: 1, marginRight: 10}}>
@@ -87,7 +241,16 @@ class RescheduleAppointment extends Component {
                 textColor={BaseColor.titleColor}
                 data={timeInterval}
                 rippleOpacity={0.7}
-                value={item.slotTime}
+                value={this.state.startTime}
+                onChangeText={(value) => {
+                  this.setState({startTime: value});
+                  this.setState({
+                    endTime: Utils.autoTrackEndTime(
+                      this.state.appointmentDate + ' ' + this.state.startTime,
+                      30,
+                    ),
+                  });
+                }}
               />
             </View>
             <View style={{flex: 1, marginLeft: 10}}>
@@ -97,7 +260,8 @@ class RescheduleAppointment extends Component {
                 textColor={BaseColor.titleColor}
                 data={timeInterval}
                 rippleOpacity={0.7}
-                value={Utils.getTimeFromDate(item.bookingTo)}
+                // value={Utils.getTimeFromDate(item.bookingTo)}
+                value={this.state.endTime}
               />
             </View>
           </View>

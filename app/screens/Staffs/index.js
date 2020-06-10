@@ -37,7 +37,9 @@ export default class Staffs extends Component {
                 onPress={() => {
                   navigation.navigate('StaffMembers');
                 }}>
-                <Text body1 style={{color: BaseColor.sectionColor}}>Staff Members</Text>
+                <Text body1 style={{color: BaseColor.sectionColor}}>
+                  Staff Members
+                </Text>
                 <Icon
                   name="angle-right"
                   size={18}
@@ -45,32 +47,19 @@ export default class Staffs extends Component {
                   style={{marginLeft: 5}}
                 />
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.profileItem}
-                onPress={() => {
-                  navigation.navigate('OpeningHours');
-                }}>
-                <Text body1 style={{color: BaseColor.sectionColor}}>Opening Hours</Text>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={BaseColor.sectionColor}
-                  style={{marginLeft: 5}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
                   navigation.navigate('ClosedDates');
                 }}>
-                <Text body1 style={{color: BaseColor.sectionColor}}>Closed Dates</Text>
+                <Text body1 style={{color: BaseColor.sectionColor}}>Staff Off Days</Text>
                 <Icon
                   name="angle-right"
                   size={18}
                   color={BaseColor.sectionColor}
                   style={{marginLeft: 5}}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         </ScrollView>

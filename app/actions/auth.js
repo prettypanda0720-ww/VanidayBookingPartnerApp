@@ -97,20 +97,20 @@ export const login = (loginCredential, callback) => (dispatch) => {
 export const logout = (callback) => (dispatch) => {
   dispatch(onLogoutStart());
 
-  UserServices.logout()
-    .then((response) => {
-      // console.log('--------- logout response from auth action', response);
-      if (response.data.success === 1) {
-        dispatch(onLogoutSuccess());
-      } else {
-        dispatch(onLogoutError(response.data.msg));
-      }
-      callback(response.data);
-    })
-    .catch((error) => {
-      dispatch(onLogoutError(error.response));
-      callback(error.response);
-    });
+  // UserServices.logout()
+  //   .then((response) => {
+  // console.log('--------- logout response from auth action', response);
+  // if (response.data.success === 1) {
+  dispatch(onLogoutSuccess());
+  //   } else {
+  //     dispatch(onLogoutError(response.data.msg));
+  //   }
+  callback({code: 0});
+  // })
+  // .catch((error) => {
+  //   dispatch(onLogoutError(error.response));
+  //   callback(error.response);
+  // });
 };
 
 export const register = (body, callback) => (dispatch) => {
@@ -118,12 +118,15 @@ export const register = (body, callback) => (dispatch) => {
 
   UserServices.register(body)
     .then((response) => {
-      // console.log('--------- register response from auth action', response);
-      if (response.data.success === 1) {
-        dispatch(onRegisterSuccess());
-      } else {
-        dispatch(onRegisterError(response.data.msg));
-      }
+      console.log('register response from auth action', response.data);
+      // if (response.data.success === true) {
+      //   const payload = {
+      //     ...response.data.data,
+      //   };
+      //   dispatch(onRegisterSuccess(payload));
+      // } else {
+      //   dispatch(onRegisterError(response.data.msg));
+      // }
       callback(response.data);
     })
     .catch((error) => {

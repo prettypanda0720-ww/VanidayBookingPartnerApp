@@ -8,16 +8,16 @@ import {BaseStyle, BaseColor, FontFamily} from '@config';
 import {withNavigation} from 'react-navigation';
 import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
-import MultiSelect from 'react-native-multiple-select';
 import {
   Header,
   SafeAreaView,
   Icon,
   Text,
   Button,
-  DatePicker,
+  SectionedMultiSelect,
 } from '@components';
 import {Dropdown} from 'react-native-material-dropdown';
+import MultiSelect from 'react-native-multiple-select';
 import * as Utils from '@utils';
 import styles from './styles';
 
@@ -73,31 +73,31 @@ class CreateStaff extends Component {
     } = this.state;
 
     if (staff_full_name.length === 0) {
-      Utils.notifyMessage('Staff Name is required!');
+      Utils.shortNotifyMessage('Staff Name is required!');
       return false;
     }
     if (staff_title.length === 0) {
-      Utils.notifyMessage('Staff Title is required!');
+      Utils.shortNotifyMessage('Staff Title is required!');
       return false;
     }
     if (staff_gender.length === 0) {
-      Utils.notifyMessage('Staff gender is required!');
+      Utils.shortNotifyMessage('Staff gender is required!');
       return false;
     }
     if (selectedItems.length === 0) {
-      Utils.notifyMessage('Please select service categories!');
+      Utils.shortNotifyMessage('Please select service categories!');
       return false;
     }
     if (staff_skill_level.length === 0) {
-      Utils.notifyMessage('Skill is required!');
+      Utils.shortNotifyMessage('Skill is required!');
       return false;
     }
     if (staff_joined_date.length === 0) {
-      Utils.notifyMessage('Joined Date is required!');
+      Utils.shortNotifyMessage('Joined Date is required!');
       return false;
     }
     if (staff_status.length === 0) {
-      Utils.notifyMessage('Joined Date is required!');
+      Utils.shortNotifyMessage('Joined Date is required!');
       return false;
     }
     return true;
@@ -141,13 +141,13 @@ class CreateStaff extends Component {
           .then((response) => {
             const res_profile = response.data;
             if (res_profile.code == 0) {
-              Utils.notifyMessage('Adding Staff is successfully done!');
+              Utils.shortNotifyMessage('Adding Staff is successfully done!');
               this.setState({saveLoading: false});
               navigation.goBack();
             }
           })
           .catch((error) => {
-            Utils.notifyMessage(error);
+            Utils.shortNotifyMessage(error);
             console.log('appointment error');
             console.log(error);
           });
@@ -213,11 +213,11 @@ class CreateStaff extends Component {
   }
 
   onDateApply() {
-    let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
-    if (shortDate !== undefined) {
-      this.setState({staff_joined_date: this.getCurrentDate()});
-    } else {
+    if (this.markedDates !== undefined) {
+      let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
       this.setState({staff_joined_date: shortDate});
+    } else {
+      this.setState({staff_joined_date: this.getCurrentDate()});
     }
   }
 
@@ -242,16 +242,12 @@ class CreateStaff extends Component {
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Add Staff"
-          renderLeft={() => {
+          renderRight={() => {
             return (
-              <Icon
-                name="angle-left"
-                size={20}
-                color={BaseColor.sectionColor}
-              />
+              <Icon name="times" size={20} color={BaseColor.sectionColor} />
             );
           }}
-          onPressLeft={() => {
+          onPressRight={() => {
             navigation.goBack();
           }}
           style={styles.headerStyle}
@@ -331,11 +327,6 @@ class CreateStaff extends Component {
                 justifyContent: 'center',
                 marginTop: 10,
               }}>
-              {/* <View style={{flex: 1}}>
-                <Text headline style={{color: BaseColor.secondBlackColor}}>
-                  Joined Date
-                </Text>
-              </View> */}
               <Modal
                 isVisible={modalCalendarVisible}
                 backdropColor="rgba(0, 0, 0, 0.5)"
@@ -403,11 +394,13 @@ class CreateStaff extends Component {
               <TouchableOpacity
                 style={styles.dateInfo}
                 onPress={() => this.openCalendarModal()}>
-                <Text headline light style={{color: BaseColor.sectionColor}}>
+                {/* <Text headline light style={{color: BaseColor.sectionColor}}>
                   Joined Date
-                </Text>
+                </Text> */}
                 <Text headline semibold>
-                  {Utils.getDateFromDate(staff_joined_date)}
+                  {Utils.getFormattedLongDate(
+                    Utils.getDateFromDate(staff_joined_date),
+                  )}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -425,11 +418,6 @@ class CreateStaff extends Component {
                 });
               }}
             />
-            <Text
-              footnote
-              style={{color: BaseColor.sectionColor, marginTop: 20}}>
-              Product Ids
-            </Text>
             <View style={{flex: 1, marginTop: 10}}>
               <MultiSelect
                 hideTags

@@ -21,7 +21,7 @@ export default StyleSheet.create({
   },
   thumb: {
     width: '100%',
-    height: Utils.scaleWithPixel(200),
+    height: Utils.getHeightDevice() / 4,
     resizeMode: 'stretch',
   },
 });

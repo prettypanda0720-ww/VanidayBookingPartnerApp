@@ -52,23 +52,23 @@ class CreateService extends Component {
     } = this.state;
 
     if (service_name.length === 0) {
-      Utils.notifyMessage('Service Name is required!');
+      Utils.shortNotifyMessage('Service Name is required!');
       return false;
     }
     if (sku.length === 0) {
-      Utils.notifyMessage('SKU is required!');
+      Utils.shortNotifyMessage('SKU is required!');
       return false;
     }
     if (selectedItems.length === 0) {
-      Utils.notifyMessage('Categories is required!');
+      Utils.shortNotifyMessage('Categories is required!');
       return false;
     }
     if (price.length === 0) {
-      Utils.notifyMessage('Price is required!');
+      Utils.shortNotifyMessage('Price is required!');
       return false;
     }
     if (service_duration.length === 0) {
-      Utils.notifyMessage('Duration is required!');
+      Utils.shortNotifyMessage('Duration is required!');
       return false;
     }
     return true;
@@ -124,13 +124,13 @@ class CreateService extends Component {
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
-            Utils.notifyMessage('Creating Service is successfully done!');
+            Utils.shortNotifyMessage('Creating Service is successfully done!');
             this.setState({saveLoading: false});
             navigation.goBack();
           }
         })
         .catch((error) => {
-          Utils.notifyMessage(error);
+          Utils.shortNotifyMessage(error);
           console.log('appointment error');
           console.log(error);
         });
@@ -159,7 +159,7 @@ class CreateService extends Component {
         }
       })
       .catch((error) => {
-        Utils.notifyMessage(error);
+        Utils.shortNotifyMessage(error);
         console.log('appointment error');
         console.log(error);
       });

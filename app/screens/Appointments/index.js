@@ -196,13 +196,13 @@ export default class Appointments extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.right}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.contentRightSecond}
               onPress={() => {
                 this.setState({drawerOpen: true});
               }}>
               <Icon name="sliders-h" size={20} color={BaseColor.blackColor} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         <ScrollView>

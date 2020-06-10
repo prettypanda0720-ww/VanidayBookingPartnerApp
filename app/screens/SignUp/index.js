@@ -1,200 +1,578 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TextInput} from 'react-native';
+import {
+  View,
+  ScrollView,
+  TextInput,
+  Switch,
+  TouchableOpacity,
+} from 'react-native';
 import {BaseStyle, BaseColor, Images} from '@config';
+import ImagePicker from 'react-native-image-picker';
+import {Dropdown} from 'react-native-material-dropdown';
+import {Checkbox} from 'react-native-material-ui';
+
 import {
   Header,
   SafeAreaView,
   Icon,
   Button,
+  Text,
   Image,
   RadioGroup,
 } from '@components';
+import {connect} from 'react-redux';
+import {myAppointmentsSvc} from '@services';
+import {AuthActions} from '@actions';
+import {bindActionCreators} from 'redux';
+import {withNavigation} from 'react-navigation';
+import * as Utils from '@utils';
 import styles from './styles';
 
-export default class SignUp extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      first_name: '',
+      last_name: '',
       email: '',
-      address: '',
+      password: '',
+      confirm_password: '',
+      gender: 0,
+      vendor_type: 0,
+      // Below fields are added in case of salow owner
+      profile_url: '',
+      vendor_title: '',
+      vendor_tel: '',
+      unique_entity_number: '',
+      vendor_address: '',
+      image_name: '',
+      image_base64_content: null,
+      avatarSource: null,
       loading: false,
-      success: {
-        name: true,
-        email: true,
-        address: true
-      }
     };
+    this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
   }
 
-  onSignUp() {
-    const {navigation} = this.props;
-    let {name, email, address, success} = this.state;
+  checkInput() {
+    const {
+      first_name,
+      last_name,
+      email,
+      password,
+      confirm_password,
+      gender,
+      vendor_type,
+      profile_url,
+      vendor_title,
+      vendor_tel,
+      unique_entity_number,
+      vendor_address,
+    } = this.state;
 
-    if (name == '' || email == '' || address == '') {
-      this.setState({
-        success: {
-          ...success,
-          name: name != '' ? true : false,
-          email: email != '' ? true : false,
-          address: address != '' ? true : false
-        }
-      });
-    } else {
-      this.setState(
-        {
-          loading: true
-        },
-        () => {
-          setTimeout(() => {
-            this.setState({
-              loading: false
-            });
-            navigation.navigate('SignIn');
-          }, 500);
-        },
-      );
+    if (first_name.length === 0) {
+      Utils.shortNotifyMessage('First Name is required!');
+      return false;
     }
+    if (last_name.length === 0) {
+      Utils.shortNotifyMessage('Last Name is required!');
+      return false;
+    }
+    if (email.length === 0) {
+      Utils.shortNotifyMessage('Email is required!');
+      return false;
+    } else {
+      if (!this.validateEmail(this.state.email)) {
+        Utils.shortNotifyMessage('Please Correct your email address!');
+        return false;
+      }
+    }
+    if (password.length === 0) {
+      Utils.shortNotifyMessage('Password is required!');
+      return false;
+    } else {
+      if (!this.validatePassword(this.state.password)) {
+        Utils.longNotifyMessage(
+          'The password needs at least 8 characters. Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters.!',
+        );
+        return false;
+      }
+    }
+    if (confirm_password.length === 0) {
+      Utils.shortNotifyMessage('Confirm Password is required!');
+      return false;
+    } else {
+      if (this.state.password !== this.state.confirm_password) {
+        Utils.longNotifyMessage('Confirm password is incorrect!');
+        return false;
+      }
+    }
+    if (vendor_type == 1) {
+      if (profile_url.length === 0) {
+        Utils.shortNotifyMessage('Business Url is required!');
+        return false;
+      }
+      if (vendor_title.length === 0) {
+        Utils.shortNotifyMessage('Business Title is required!');
+        return false;
+      }
+      if (vendor_tel.length === 0) {
+        Utils.shortNotifyMessage('Business Tel is required!');
+        return false;
+      }
+      if (unique_entity_number.length === 0) {
+        Utils.shortNotifyMessage('Business Entity Number is required!');
+        return false;
+      }
+      if (vendor_address.length === 0) {
+        Utils.shortNotifyMessage('Business Address is required!');
+        return false;
+      }
+    }
+    return true;
   }
+
+  onChangedTel(text) {
+    this.setState({
+      vendor_tel: text.replace(/[^0-9]/g, ''),
+    });
+  }
+
+  onChangedEntityNumber(text) {
+    this.setState({
+      unique_entity_number: text.replace(/[^0-9]/g, ''),
+    });
+  }
+
+  selectPhotoTapped() {
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true,
+      },
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        let filepath = {uri: response.uri};
+        // You can also display the image using data:
+        let source = {uri: 'data:image/jpeg;base64,' + response.data};
+
+        this.setState({
+          image_name: response.fileName,
+          avatarSource: source,
+          image_base64_content: response.data,
+        });
+      }
+    });
+  }
+
+  onSave = () => {
+    if (!this.checkInput()) {
+      return;
+    }
+    this.setState({loading: true});
+    const {
+      first_name,
+      last_name,
+      email,
+      password,
+      confirm_password,
+      gender,
+      vendor_type,
+      profile_url,
+      vendor_title,
+      vendor_tel,
+      unique_entity_number,
+      vendor_address,
+      image_name,
+      image_base64_content,
+    } = this.state;
+    const {navigation} = this.props;
+    const {auth, actions} = this.props;
+    let data = {};
+    if (vendor_type == 1) {
+      data = {
+        vendorInfo: {
+          first_name: first_name,
+          last_name: last_name,
+          email: email,
+          password: password,
+          gender: gender,
+          vendor_type: vendor_type,
+          profile_url: profile_url,
+          vendor_title: vendor_title,
+          vendor_tel: vendor_tel,
+          unique_entity_number: unique_entity_number,
+          vendor_address: vendor_address,
+          image_name: image_name,
+          image_base64_content: image_base64_content,
+        },
+      };
+    } else {
+      data = {
+        vendorInfo: {
+          first_name: first_name,
+          last_name: last_name,
+          email: email,
+          password: password,
+          gender: gender,
+          vendor_type: vendor_type,
+        },
+      };
+    }
+
+    console.log('signup info', data);
+    actions.register(data, (response) => {
+      console.log('------- signup response', response);
+      if (response.customer_id !== undefined) {
+        const credential = {
+          email: email,
+          password: password,
+        };
+        actions.login(credential, (response) => {
+          console.log('------- login response', response);
+          if (response.code == 0) {
+            console.log('success');
+            this.setState({loading: false});
+            navigation.navigate('Home');
+          } else {
+            Utils.longNotifyMessage('Register failed!');
+          }
+        });
+      } else {
+        Utils.longNotifyMessage('Register failed!');
+        this.setState({loading: false});
+      }
+    });
+  };
+
+  getGenderName(key) {
+    let name = '';
+    switch (parseInt(key)) {
+      case 0:
+        name = 'Not Specified';
+        break;
+      case 1:
+        name = 'Male';
+        break;
+      case 2:
+        name = 'Female';
+        break;
+    }
+    return name;
+  }
+
+  getGenderKey(value) {
+    let key = '';
+    switch (value) {
+      case 'Male':
+        key = 1;
+        break;
+      case 'Female':
+        key = 2;
+        break;
+      case 'Not Specified':
+        key = 0;
+        break;
+    }
+    return key;
+  }
+
+  toggleSwitch = (value) => {
+    let val = value ? 1 : 0;
+    this.setState({vendor_type: val});
+  };
+
+  validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  };
+
+  validatePassword = (password) => {
+    //strongRegex
+    var strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+    var mediumRegex = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
+    return strongRegex.test(password);
+  };
 
   render() {
     const {navigation} = this.props;
-    let {loading, name, email, address, success} = this.state;
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Sign Up"
           renderLeft={() => {
             return (
-              <Icon
-                name="arrow-left"
-                size={20}
-                color={BaseColor.primaryColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {
-            navigation.goBack();
+            navigation.navigate('SignIn');
           }}
+          onPressRight={() => {}}
+          style={styles.headerStyle}
         />
         <ScrollView>
           <View style={styles.contain}>
-            <Image
-              source={Images.splashlogo}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 40}]}
-              onChangeText={(text) => this.setState({name: text})}
-              autoCorrect={false}
-              placeholder="First Name"
-              placeholderTextColor={
-                success.name
-                  ? BaseColor.MainPrimaryColor
-                  : BaseColor.primaryColor
-              }
-              value={name}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 10}]}
-              onChangeText={(text) => this.setState({name: text})}
-              autoCorrect={false}
-              placeholder="Last Name"
-              placeholderTextColor={
-                success.name
-                  ? BaseColor.MainPrimaryColor
-                  : BaseColor.primaryColor
-              }
-              value={name}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 10}]}
-              onChangeText={(text) => this.setState({email: text})}
-              autoCorrect={false}
-              placeholder="Email"
-              keyboardType="email-address"
-              placeholderTextColor={
-                success.email ? BaseColor.grayColor : BaseColor.primaryColor
-              }
-              value={email}
-            />
-            <RadioGroup />
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 10}]}
-              onChangeText={(text) => this.setState({address: text})}
-              autoCorrect={false}
-              placeholder="Mobile Number"
-              placeholderTextColor={
-                success.address ? BaseColor.grayColor : BaseColor.primaryColor
-              }
-              value={address}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 10}]}
-              onChangeText={(text) => this.setState({address: text})}
-              autoCorrect={false}
-              placeholder="Shop Name"
-              placeholderTextColor={
-                success.address ? BaseColor.grayColor : BaseColor.primaryColor
-              }
-              value={address}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 10}]}
-              onChangeText={(text) => this.setState({address: text})}
-              autoCorrect={false}
-              placeholder="Shop Tel"
-              placeholderTextColor={
-                success.address ? BaseColor.grayColor : BaseColor.primaryColor
-              }
-              value={address}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 10}]}
-              onChangeText={(text) => this.setState({address: text})}
-              autoCorrect={false}
-              placeholder="Shop Email"
-              placeholderTextColor={
-                success.address ? BaseColor.grayColor : BaseColor.primaryColor
-              }
-              value={address}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 10}]}
-              onChangeText={(text) => this.setState({address: text})}
-              autoCorrect={false}
-              placeholder="Shop Address"
-              placeholderTextColor={
-                success.address ? BaseColor.grayColor : BaseColor.primaryColor
-              }
-              value={address}
-            />
-            <TextInput
-              style={[BaseStyle.textInput, {marginTop: 10}]}
-              onChangeText={(text) => this.setState({address: text})}
-              autoCorrect={false}
-              placeholder="Neigherhood"
-              placeholderTextColor={
-                success.address ? BaseColor.grayColor : BaseColor.primaryColor
-              }
-              value={address}
-            />
-            <View style={{width: '100%'}}>
-              <Button
-                full
-                style={{
-                  marginTop: 20,
-                  backgroundColor: BaseColor.secondBlackColor,
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({first_name: text})}
+                autoCorrect={false}
+                placeholder="First Name"
+                placeholderTextColor={BaseColor.MainPrimaryColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({last_name: text})}
+                autoCorrect={false}
+                placeholder="Last Name"
+                placeholderTextColor={BaseColor.MainPrimaryColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({email: text})}
+                autoCorrect={false}
+                placeholder="Email"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={BaseStyle.textInput}
+                onChangeText={(text) => this.setState({password: text})}
+                autoCorrect={false}
+                placeholder="Password"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+                autoCapitalize={'none'}
+                autoCompleteType={'password'}
+                keyboardType={'password-address'}
+                textContentType={'passwordAddress'}
+                secureTextEntry={true}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={BaseStyle.textInput}
+                onChangeText={(text) => this.setState({confirm_password: text})}
+                autoCorrect={false}
+                placeholder="Confirm Password"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+                autoCapitalize={'none'}
+                autoCompleteType={'password'}
+                keyboardType={'password-address'}
+                textContentType={'passwordAddress'}
+                secureTextEntry={true}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Dropdown
+                label="Select a Gender"
+                data={[
+                  {value: 'Not Specified'},
+                  {value: 'Male'},
+                  {value: 'Female'},
+                ]}
+                rippleOpacity={0.7}
+                baseColor={BaseColor.secondBlackColor}
+                tintColor={BaseColor.blackColor}
+                style={{color: BaseColor.blackColor}}
+                value={this.getGenderName(this.state.gender)}
+                onChangeText={(value) => {
+                  this.setState({
+                    gender: this.getGenderKey(value),
+                  });
                 }}
-                loading={loading}
-                onPress={() => this.onSignUp()}>
-                Sign Up
-              </Button>
+              />
+            </View>
+            {/* <RadioGroup /> */}
+            <View style={[styles.profileItem, {paddingVertical: 15}]}>
+              <Text subhead style={{color: BaseColor.titleColor}}>
+                Product Seller
+              </Text>
+              <Switch
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleSwitch}
+                value={this.state.vendor_type == 1 ? true : false}
+              />
+              <Text subhead style={{color: BaseColor.titleColor}}>
+                Salon Owner
+              </Text>
+            </View>
+            <View style={{flexDirection: 'column', width: '100%'}}>
+              {this.displayOwnerView()}
+            </View>
+            <View style={styles.inputGroup}>
+              <Checkbox
+                label="I would like to receive promotions, tips and announcements via email"
+                value="agree"
+                checked={this.state.checked}
+                onCheck={() =>
+                  this.setState({
+                    checked: !this.state.checked,
+                  })
+                }
+              />
             </View>
           </View>
         </ScrollView>
+        <View style={{padding: 20}}>
+          <Button
+            loading={this.state.loading}
+            full
+            onPress={() => this.onSave()}>
+            Sign Up
+          </Button>
+        </View>
       </SafeAreaView>
     );
   }
+
+  displayOwnerView() {
+    if (this.state.vendor_type == 1) {
+      return (
+        <View>
+          <Text headline style={styles.headerTitle}>
+            Featured Image
+          </Text>
+          {/* <View style={styles.wrapper}> */}
+          {/* <Image source={this.state.avatarSource} style={styles.blockImage} />cool */}
+          {/* </View> */}
+          <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+            <View
+              style={[
+                styles.avatar,
+                styles.avatarContainer,
+                {marginBottom: 20},
+              ]}>
+              {this.state.avatarSource === null ? (
+                <Text
+                  style={{
+                    flex: 1,
+                    marginTop: 10,
+                    backgroundColor: BaseColor.MainPrimaryColor,
+                    borderRadius: 8,
+                    paddingVertical: 15,
+                    color: BaseColor.whiteColor,
+                    textAlign: 'center',
+                  }}>
+                  Upload Business Photo
+                </Text>
+              ) : (
+                <Image
+                  source={this.state.avatarSource}
+                  style={styles.blockImage}
+                />
+              )}
+            </View>
+          </TouchableOpacity>
+          <View style={styles.inputGroup}>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.setState({profile_url: text})}
+              autoCorrect={false}
+              placeholder="Business Url"
+              placeholderTextColor={BaseColor.grayColor}
+              selectionColor={BaseColor.primaryColor}
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.setState({vendor_title: text})}
+              autoCorrect={false}
+              placeholder="Business Name"
+              placeholderTextColor={BaseColor.grayColor}
+              selectionColor={BaseColor.primaryColor}
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.onChangedTel(text)}
+              autoCorrect={false}
+              placeholder="Business Tel"
+              placeholderTextColor={BaseColor.grayColor}
+              selectionColor={BaseColor.primaryColor}
+              value={this.state.vendor_tel}
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.onChangedEntityNumber(text)}
+              autoCorrect={false}
+              placeholder="Unique Entity Number"
+              placeholderTextColor={BaseColor.grayColor}
+              selectionColor={BaseColor.primaryColor}
+              value={this.state.unique_entity_number}
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <TextInput
+              style={[BaseStyle.textInput, styles.textInput]}
+              onChangeText={(text) => this.setState({vendor_address: text})}
+              autoCorrect={false}
+              placeholder="Business Address"
+              placeholderTextColor={BaseColor.grayColor}
+              selectionColor={BaseColor.primaryColor}
+            />
+          </View>
+          <Dropdown
+            label="Select your neighbourhood"
+            data={[
+              {value: 'Aljunied'},
+              {value: 'Ang Mo Kio'},
+              {value: 'Balestier'},
+            ]}
+            rippleOpacity={0.7}
+            baseColor={BaseColor.secondBlackColor}
+            tintColor={BaseColor.blackColor}
+            style={{color: BaseColor.blackColor}}
+            // value={this.getGenderName(staff_gender)}
+            onChangeText={(value) => {
+              // this.setState({
+              //   staff_gender: this.getGenderKey(value),
+              // });
+            }}
+          />
+        </View>
+      );
+    }
+  }
 }
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  };
+};
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(SignUp),
+);

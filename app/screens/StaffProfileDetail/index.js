@@ -8,15 +8,8 @@ import {BaseStyle, BaseColor, FontFamily} from '@config';
 import {withNavigation} from 'react-navigation';
 import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
+import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 import MultiSelect from 'react-native-multiple-select';
-import {
-  Header,
-  SafeAreaView,
-  Icon,
-  Text,
-  Button,
-  DatePicker,
-} from '@components';
 import {Dropdown} from 'react-native-material-dropdown';
 import * as Utils from '@utils';
 import styles from './styles';
@@ -30,7 +23,7 @@ class StaffProfileDetail extends Component {
       staff_id: '',
       staff_full_name: '',
       staff_gender: '',
-      staff_skill_level: '',
+      // staff_skill_level: '',
       staff_joined_date: '',
       staff_status: '',
       productTypes: [],
@@ -65,38 +58,38 @@ class StaffProfileDetail extends Component {
       staff_full_name,
       staff_title,
       staff_gender,
-      staff_skill_level,
+      // staff_skill_level,
       staff_joined_date,
       staff_status,
       selectedItems,
     } = this.state;
 
     if (staff_full_name.length === 0) {
-      Utils.notifyMessage('Staff Name is required!');
+      Utils.shortNotifyMessage('Staff Name is required!');
       return false;
     }
     if (staff_title.length === 0) {
-      Utils.notifyMessage('Staff Title is required!');
+      Utils.shortNotifyMessage('Staff Title is required!');
       return false;
     }
     if (staff_gender.length === 0) {
-      Utils.notifyMessage('Staff gender is required!');
+      Utils.shortNotifyMessage('Staff gender is required!');
       return false;
     }
     if (selectedItems.length === 0) {
-      Utils.notifyMessage('Please select service categories!');
+      Utils.shortNotifyMessage('Please select service categories!');
       return false;
     }
-    if (staff_skill_level.length === 0) {
-      Utils.notifyMessage('Skill is required!');
-      return false;
-    }
+    // if (staff_skill_level.length === 0) {
+    //   Utils.shortNotifyMessage('Skill is required!');
+    //   return false;
+    // }
     if (staff_joined_date.length === 0) {
-      Utils.notifyMessage('Joined Date is required!');
+      Utils.shortNotifyMessage('Joined Date is required!');
       return false;
     }
     if (staff_status.length === 0) {
-      Utils.notifyMessage('Joined Date is required!');
+      Utils.shortNotifyMessage('Status is required!');
       return false;
     }
     return true;
@@ -110,7 +103,7 @@ class StaffProfileDetail extends Component {
         staff_full_name,
         staff_title,
         staff_gender,
-        staff_skill_level,
+        // staff_skill_level,
         staff_joined_date,
         staff_status,
         selectedItems,
@@ -129,7 +122,7 @@ class StaffProfileDetail extends Component {
           staff_full_name: staff_full_name,
           staff_title: staff_title,
           staff_gender: staff_gender,
-          staff_skill_level: staff_skill_level,
+          // staff_skill_level: staff_skill_level,
           staff_joined_date: staff_joined_date,
           staff_status: staff_status,
           product_ids: customSelectedItems,
@@ -142,13 +135,13 @@ class StaffProfileDetail extends Component {
           .then((response) => {
             const res_profile = response.data;
             if (res_profile.code == 0) {
-              Utils.notifyMessage('Adding Staff is successfully done!');
+              Utils.shortNotifyMessage('Adding Staff is successfully done!');
               this.setState({saveLoading: false});
               navigation.goBack();
             }
           })
           .catch((error) => {
-            Utils.notifyMessage(error);
+            Utils.shortNotifyMessage(error);
             console.log('appointment error');
             console.log(error);
           });
@@ -173,12 +166,12 @@ class StaffProfileDetail extends Component {
           const res_profile = response.data;
           if (res_profile.code == 0) {
             this.setState({deleteLoading: false});
-            Utils.notifyMessage('Staff is successfully removed!');
+            Utils.shortNotifyMessage('Staff is successfully removed!');
             navigation.goBack();
           }
         })
         .catch((error) => {
-          Utils.notifyMessage(error);
+          Utils.shortNotifyMessage(error);
           console.log('delete staff error!');
           console.log(error);
         });
@@ -187,17 +180,19 @@ class StaffProfileDetail extends Component {
 
   componentDidMount() {
     const data = this.props.navigation.state.params.data;
+    // console.log('data.selItems', data);
     let selItems = data.product_ids.map((item, index) => {
       return item.entity_id;
     });
-    console.log('product_ids', data.product_ids);
+    console.log('data.selItems', selItems);
     const productTypes = this.props.navigation.state.params.productTypes;
+    console.log('productTypes', productTypes);
     this.setState({
       staff_id: data.staff_id,
       staff_full_name: data.staff_full_name,
       staff_title: data.staff_title,
       staff_gender: data.staff_gender,
-      staff_skill_level: data.staff_skill_level,
+      // staff_skill_level: data.staff_skill_level,
       staff_joined_date: data.staff_joined_date,
       staff_status: data.staff_status,
       selectedItems: selItems,
@@ -247,13 +242,18 @@ class StaffProfileDetail extends Component {
         [day.dateString]: {selected: true, marked: false},
       },
     });
-
     this.markedDates = day.dateString;
+    console.log('marketDates', this.markedDates);
   }
 
   onDateApply() {
-    let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
-    this.setState({staff_joined_date: shortDate});
+    console.log('marketDates-onDateApply()', this.markedDates);
+    if (this.markedDates !== undefined) {
+      let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
+      this.setState({staff_joined_date: shortDate});
+    } else {
+      this.setState({staff_joined_date: this.getCurrentDate()});
+    }
   }
 
   render() {
@@ -265,28 +265,24 @@ class StaffProfileDetail extends Component {
       staff_full_name,
       staff_title,
       staff_gender,
-      staff_skill_level,
+      // staff_skill_level,
       staff_joined_date,
       staff_status,
       selectedItems,
       modalCalendarVisible,
       markedDates,
     } = this.state;
-    console.log('selectedItems', selectedItems);
+    // console.log('selectedItems', selectedItems);
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Staff Profile"
-          renderLeft={() => {
+          renderRight={() => {
             return (
-              <Icon
-                name="angle-left"
-                size={20}
-                color={BaseColor.sectionColor}
-              />
+              <Icon name="times" size={20} color={BaseColor.sectionColor} />
             );
           }}
-          onPressLeft={() => {
+          onPressRight={() => {
             navigation.goBack();
           }}
           style={styles.headerStyle}
@@ -339,7 +335,7 @@ class StaffProfileDetail extends Component {
                 });
               }}
             />
-            <Dropdown
+            {/* <Dropdown
               label="Skill Level"
               data={[
                 {value: '1'},
@@ -358,7 +354,7 @@ class StaffProfileDetail extends Component {
                   staff_skill_level: value,
                 });
               }}
-            />
+            /> */}
             <View
               style={{
                 flexDirection: 'row',
@@ -391,7 +387,7 @@ class StaffProfileDetail extends Component {
                       minDate={this.getCurrentDate()}
                       maxDate={'2099-12-31'}
                       onDayPress={(day) => this.setBookingDate(day)}
-                      monthFormat={'yyyy MMMM'}
+                      monthFormat={'MMMM yyyy '}
                       onMonthChange={(month) => {
                         console.log('month changed', month);
                       }}
@@ -438,11 +434,14 @@ class StaffProfileDetail extends Component {
               <TouchableOpacity
                 style={styles.dateInfo}
                 onPress={() => this.openCalendarModal()}>
-                <Text headline light style={{color: BaseColor.sectionColor}}>
+                {/* <Text headline light style={{color: BaseColor.sectionColor}}>
                   Joined Date
-                </Text>
+                </Text> */}
                 <Text headline semibold>
-                  {Utils.getDateFromDate(staff_joined_date)}
+                  {Utils.getFormattedLongDate(
+                    Utils.getDateFromDate(staff_joined_date),
+                  )}
+                  {/* {Utils.getDateFromDate(staff_joined_date)} */}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -460,11 +459,6 @@ class StaffProfileDetail extends Component {
                 });
               }}
             />
-            <Text
-              footnote
-              style={{color: BaseColor.sectionColor, marginTop: 20}}>
-              Product Ids
-            </Text>
             <View style={{flex: 1, marginTop: 10}}>
               <MultiSelect
                 hideTags

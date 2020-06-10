@@ -53,19 +53,19 @@ class CreateProduct extends Component {
     const {product_name, sku, price, selectedItems} = this.state;
 
     if (product_name.length === 0) {
-      Utils.notifyMessage('Product Name is required!');
+      Utils.shortNotifyMessage('Product Name is required!');
       return false;
     }
     if (sku.length === 0) {
-      Utils.notifyMessage('SKU is required!');
+      Utils.shortNotifyMessage('SKU is required!');
       return false;
     }
     if (selectedItems.length === 0) {
-      Utils.notifyMessage('Categories is required!');
+      Utils.shortNotifyMessage('Categories is required!');
       return false;
     }
     if (price.length === 0) {
-      Utils.notifyMessage('Price is required!');
+      Utils.shortNotifyMessage('Price is required!');
       return false;
     }
     return true;
@@ -110,13 +110,13 @@ class CreateProduct extends Component {
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
-            Utils.notifyMessage('Creating Product is successfully done!');
+            Utils.shortNotifyMessage('Creating Product is successfully done!');
             this.setState({saveLoading: false});
             navigation.goBack();
           }
         })
         .catch((error) => {
-          Utils.notifyMessage(error);
+          Utils.shortNotifyMessage(error);
           console.log('creating product error');
           console.log(error);
         });
@@ -125,15 +125,11 @@ class CreateProduct extends Component {
 
   componentDidMount() {
     const {auth} = this.props;
-    const postData = {
-      token: auth.user.token,
-    };
     myAppointmentsSvc
-      .getSubMenuByMerchant(postData)
+      .getProductCategory()
       .then((response) => {
         const res_profile = response.data;
         if (res_profile.code == 0) {
-          console.log('sub menu datalist', res_profile.data);
           this.setState({
             subMenuList: res_profile.data,
             dataLoading: false,
@@ -141,8 +137,7 @@ class CreateProduct extends Component {
         }
       })
       .catch((error) => {
-        Utils.notifyMessage(error);
-        console.log('appointment error');
+        console.log('submenulist error');
         console.log(error);
       });
   }
@@ -212,7 +207,7 @@ class CreateProduct extends Component {
               items={subMenuList}
               uniqueKey="id"
               subKey="subcategory"
-              selectText="Select Categories..."
+              selectText="Select Products..."
               showDropDowns={true}
               readOnlyHeadings={false}
               onSelectedItemsChange={this.onSelectedItemsChange}

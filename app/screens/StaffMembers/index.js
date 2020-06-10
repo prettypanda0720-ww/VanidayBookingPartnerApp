@@ -47,16 +47,16 @@ class StaffMembers extends Component {
             console.log(error);
           });
         myAppointmentsSvc
-          .getServiceList(data)
+          .getAllServiceList(data)
           .then((response) => {
             const res_profile = response.data;
+            console.log('getAllServiceList', response.data);
             if (res_profile.code == 0) {
               this.setState({productTypes: res_profile.data});
-              console.log('productTypes', res_profile.data);
             }
           })
           .catch((error) => {
-            console.log('appointment error');
+            console.log('submenulist error');
             console.log(error);
           });
       }
@@ -87,10 +87,10 @@ class StaffMembers extends Component {
                 staff_id={item.staff_id}
                 staff_full_name={item.staff_full_name}
                 staff_gender={item.staff_gender}
-                staff_skill_level={item.staff_skill_level}
-                staff_joined_date={Utils.getDateFromDate(
-                  item.staff_joined_date,
-                )}
+                // staff_skill_level={item.staff_skill_level}
+                // staff_joined_date={Utils.getDateFromDate(
+                //   item.staff_joined_date,
+                // )}
                 staff_status={item.staff_status}
                 product_ids={item.product_ids}
                 seller_id={item.seller_id}

@@ -93,20 +93,16 @@ class Setting extends Component {
    * @date 2019-08-03
    */
   onLogOut() {
-    this.setState(
-      {
-        loading: true,
-      },
-      () => {
-        this.props.actions.authentication(false, (response) => {
-          if (response.success) {
-            this.props.navigation.navigate('Loading');
-          } else {
-            this.setState({loading: false});
-          }
-        });
-      },
-    );
+    const {actions, navigation} = this.props;
+
+    actions.logout((response) => {
+      console.log('------- logout response', response);
+      if (response.code == 0) {
+        navigation.navigate('Loading');
+      } else {
+        console.log(response.msg);
+      }
+    });
   }
 
   /**
@@ -141,12 +137,12 @@ class Setting extends Component {
           forceInset={{top: 'always'}}>
           <Header
             title="Profile"
-            renderRight={() => {
-              return <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />;
-            }}
-            onPressRight={() => {
-              navigation.navigate('Notification');
-            }}
+            // renderRight={() => {
+            //   return <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />;
+            // }}
+            // onPressRight={() => {
+            //   navigation.navigate('Notification');
+            // }}
             style={styles.headerStyle}
           />
           <ScrollView>
@@ -225,7 +221,7 @@ class Setting extends Component {
                     style={{marginLeft: 5}}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.profileItem}
                   onPress={() => {
                     navigation.navigate('MerchantClosedDates');
@@ -239,7 +235,7 @@ class Setting extends Component {
                     color={'rgba(0,0,0,0.65)'}
                     style={{marginLeft: 5}}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   style={styles.profileItem}
                   onPress={() => {
@@ -255,13 +251,28 @@ class Setting extends Component {
                     style={{marginLeft: 5}}
                   />
                 </TouchableOpacity>
+                {/* <TouchableOpacity
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('VanidayServices');
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Vaniday Services
+                  </Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={'rgba(0,0,0,0.65)'}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   style={styles.profileItem}
                   onPress={() => {
-                    navigation.navigate('ServiceList', {data: serviceList});
+                    navigation.navigate('PhysicalProducts');
                   }}>
                   <Text body1 style={styles.sectionStyle}>
-                    Services
+                    Products
                   </Text>
                   <Icon
                     name="angle-right"
@@ -270,7 +281,7 @@ class Setting extends Component {
                     style={{marginLeft: 5}}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.profileItem}
                   onPress={() => {
                     navigation.navigate('Inventory');
@@ -284,7 +295,7 @@ class Setting extends Component {
                     color={'rgba(0,0,0,0.65)'}
                     style={{marginLeft: 5}}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <View
                   style={styles.profileItem}
                   onPress={() => {
@@ -295,7 +306,7 @@ class Setting extends Component {
                   </Text>
                   <Text subhead>Singapore</Text>
                 </View>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.profileItem}
                   onPress={() => {
                     navigation.navigate('Reports');
@@ -309,7 +320,7 @@ class Setting extends Component {
                     color={'rgba(0,0,0,0.65)'}
                     style={{marginLeft: 5}}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   style={styles.profileItem}
                   onPress={() => {
@@ -325,7 +336,7 @@ class Setting extends Component {
                     style={{marginLeft: 5}}
                   />
                 </TouchableOpacity>
-                <View style={[styles.profileItem, {paddingVertical: 15}]}>
+                {/* <View style={[styles.profileItem, {paddingVertical: 15}]}>
                   <Text body1 style={styles.sectionStyle}>
                     Reminders
                   </Text>
@@ -335,7 +346,7 @@ class Setting extends Component {
                     onValueChange={this.toggleSwitch}
                     value={this.state.reminders}
                   />
-                </View>
+                </View> */}
                 <View style={styles.profileItem}>
                   <Text body1 style={styles.sectionStyle}>
                     App Version
@@ -344,7 +355,7 @@ class Setting extends Component {
                     {BaseSetting.appVersion}
                   </Text>
                 </View>
-                <View style={{width: '100%'}}>
+                {/* <View style={{width: '100%'}}>
                   <TouchableOpacity
                     style={styles.profileItem}
                     onPress={() => {
@@ -360,7 +371,7 @@ class Setting extends Component {
                       style={{marginLeft: 5}}
                     />
                   </TouchableOpacity>
-                </View>
+                </View> */}
               </View>
             </View>
           </ScrollView>

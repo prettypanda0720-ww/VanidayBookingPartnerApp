@@ -7,7 +7,7 @@ const apiClient_json = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-},
+  },
   timeout: 30000,
 });
 
@@ -20,6 +20,21 @@ function login(body) {
   return apiClient_json.post(url, postData);
 }
 
+function register(body) {
+  var url = Api.myVaniMiddleWare.REGISTER_URL;
+  return axios
+    .create({
+      baseURL: 'http://v2.staging.vaniday.com',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      timeout: 30000,
+    })
+    .post(url, body);
+}
+
 export const UserServices = {
   login,
+  register,
 };

@@ -58,7 +58,7 @@ export default class ClosedDates extends Component {
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
-          title="Closed Dates"
+          title="Staff Off Days"
           renderLeft={() => {
             return (
               <Icon

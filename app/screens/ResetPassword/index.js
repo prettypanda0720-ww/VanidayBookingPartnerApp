@@ -1,92 +1,88 @@
-import React, { Component } from "react";
-import { View, ScrollView, TextInput } from "react-native";
-import { BaseStyle, BaseColor, Images } from "@config";
-import { Header, SafeAreaView, Icon, Text, Button, Image } from "@components";
-import styles from "./styles";
+import React, {Component} from 'react';
+import {View, ScrollView, TextInput} from 'react-native';
+import {BaseStyle, BaseColor, Images} from '@config';
+import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
+import styles from './styles';
 
 export default class ResetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      email: '',
       loading: false,
       success: {
-        email: true
-      }
+        email: true,
+      },
     };
   }
 
   onReset() {
-    const { navigation } = this.props;
-    if (this.state.email == "") {
+    const {navigation} = this.props;
+    if (this.state.email == '') {
       this.setState({
         success: {
           ...this.state.success,
-          email: false
-        }
+          email: false,
+        },
       });
       console.log(this.state.success);
     } else {
       this.setState(
         {
-          loading: true
+          loading: true,
         },
         () => {
           setTimeout(() => {
             this.setState({
-              loading: false
+              loading: false,
             });
-            navigation.navigate("ChangePassword");
+            navigation.navigate('ChangePassword');
           }, 500);
-        }
+        },
       );
     }
   }
 
   render() {
-    const { navigation } = this.props;
+    const {navigation} = this.props;
     return (
-      <SafeAreaView
-        style={BaseStyle.safeAreaView}
-        forceInset={{ top: "always" }}
-      >
+      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Reset Password"
           renderLeft={() => {
             return (
               <Icon
-                name="arrow-left"
+                name="angle-left"
                 size={20}
-                color={BaseColor.primaryColor}
+                color={BaseColor.sectionColor}
               />
             );
           }}
           onPressLeft={() => {
-            navigation.goBack();
+            navigation.navigate('SignIn');
           }}
         />
         <ScrollView>
           <View
             style={{
-              alignItems: "center",
+              alignItems: 'center',
               padding: 20,
-              width: "100%"
-            }}
-          >
+              width: '100%',
+            }}>
             <Image
               source={Images.splashlogo}
               style={styles.logo}
               resizeMode="contain"
             />
             <TextInput
-              style={[BaseStyle.textInput, { marginTop: 40 }]}
-              onChangeText={text => this.setState({ email: text })}
+              style={[BaseStyle.textInput, {marginTop: 40}]}
+              onChangeText={(text) => this.setState({email: text})}
               onFocus={() => {
                 this.setState({
                   success: {
                     ...this.state.success,
-                    email: true
-                  }
+                    email: true,
+                  },
                 });
               }}
               autoCorrect={false}
@@ -99,15 +95,17 @@ export default class ResetPassword extends Component {
               value={this.state.email}
               selectionColor={BaseColor.primaryColor}
             />
-            <View style={{ width: "100%" }}>
+            <View style={{width: '100%'}}>
               <Button
                 full
-                style={{ marginTop: 20, backgroundColor: BaseColor.secondBlackColor }}
+                style={{
+                  marginTop: 20,
+                  backgroundColor: BaseColor.secondBlackColor,
+                }}
                 onPress={() => {
                   this.onReset();
                 }}
-                loading={this.state.loading}
-              >
+                loading={this.state.loading}>
                 Reset Password
               </Button>
             </View>

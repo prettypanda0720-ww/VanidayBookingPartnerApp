@@ -13,13 +13,9 @@ import Sales from '@screens/Sales';
 import Setting from '@screens/Setting';
 import PreviewImage from '@screens/PreviewImage';
 /* Stack Screen */
-import Walkthrough from '@screens/Walkthrough';
-import SignUp from '@screens/SignUp';
-import SignIn from '@screens/SignIn';
 import Schedule from '@screens/Schedule';
 import CreateClient from '@screens/CreateClient';
 import ClientProfile from '@screens/ClientProfile';
-import ResetPassword from '@screens/ResetPassword';
 import ChangePassword from '@screens/ChangePassword';
 import ProfileEdit from '@screens/ProfileEdit';
 import Currency from '@screens/Currency';
@@ -132,6 +128,15 @@ const routeConfigs = {
       },
     }),
   },
+  Services: {
+    screen: ServiceList,
+    navigationOptions: ({navigation}) => ({
+      title: 'Services',
+      tabBarIcon: ({focused, tintColor}) => {
+        return <Icon color={tintColor} name="plus-circle" size={20} solid />;
+      },
+    }),
+  },
   Clients: {
     screen: Clients,
     navigationOptions: ({navigation}) => ({
@@ -141,15 +146,15 @@ const routeConfigs = {
       },
     }),
   },
-  Services: {
-    screen: VanidayServices,
-    navigationOptions: ({navigation}) => ({
-      title: 'Services',
-      tabBarIcon: ({focused, tintColor}) => {
-        return <Icon color={tintColor} name="plus-circle" size={20} solid />;
-      },
-    }),
-  },
+  // Services: {
+  //   screen: VanidayServices,
+  //   navigationOptions: ({navigation}) => ({
+  //     title: 'Services',
+  //     tabBarIcon: ({focused, tintColor}) => {
+  //       return <Icon color={tintColor} name="plus-circle" size={20} solid />;
+  //     },
+  //   }),
+  // },
   Setting: {
     screen: Setting,
     navigationOptions: ({navigation}) => ({
@@ -173,9 +178,9 @@ const StackNavigator = createStackNavigator(
     BottomTabNavigator: {
       screen: BottomTabNavigator,
     },
-    SignUp: {
-      screen: SignUp,
-    },
+    // SignUp: {
+    //   screen: SignUp,
+    // },
     // SignIn: {
     //   screen: SignIn,
     // },
@@ -191,9 +196,9 @@ const StackNavigator = createStackNavigator(
     ClientProfile: {
       screen: ClientProfile,
     },
-    ResetPassword: {
-      screen: ResetPassword,
-    },
+    // ResetPassword: {
+    //   screen: ResetPassword,
+    // },
     ChangePassword: {
       screen: ChangePassword,
     },

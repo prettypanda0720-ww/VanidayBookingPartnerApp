@@ -80,23 +80,18 @@ class PhysicalProducts extends Component {
           });
       }
     });
-    const postData = {
-      token: auth.user.token,
-    };
     myAppointmentsSvc
-      .getSubMenuByMerchant(postData)
+      .getProductCategory()
       .then((response) => {
         const res_profile = response.data;
         if (res_profile.code == 0) {
-          console.log('sub menu datalist', res_profile.data);
           this.setState({
             subMenuList: res_profile.data,
           });
         }
       })
       .catch((error) => {
-        Utils.notifyMessage(error);
-        console.log('appointment error');
+        console.log('submenulist error');
         console.log(error);
       });
   }

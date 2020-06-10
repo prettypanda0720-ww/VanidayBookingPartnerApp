@@ -67,9 +67,9 @@ export default StyleSheet.create({
     width: '100%',
     backgroundColor: BaseColor.fieldColor,
     // height: 75,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingVertical: 10,
+    alignItems: 'center',
   },
   contentModal: {
     flex: 1,

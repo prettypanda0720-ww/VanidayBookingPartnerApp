@@ -10,6 +10,7 @@ export const Api = {
     API_BASE: 'http://mapi.vaniday.com/api',
     MEDIA_BASE: 'http://v2.staging.vaniday.com/media/avatar/',
     LOGIN_URL: '/myvaniday/auth',
+    REGISTER_URL: '/rest/V1/vaniday/vendor/create',
     GET_ORDER_URL: '/myvaniday/fetchOrderList',
     GET_PROFILE_DATA_URL: '/myvaniday/vendorDetail',
     UPDATE_PROFILE_DATA_URL: '/myvaniday/vendorProfile',
@@ -25,11 +26,13 @@ export const Api = {
     SERVICE_DETAIL_DATA_URL: '/myvaniday/serviceDetail',
     GET_HOMECATEGORY_DATA_URL: '/getHomeCategory',
     GET_SUBMENU_BY_MERCHANT: '/getMerchantCategory',
+    GET_ALLSERVICELIST_DATA_URL: '/myvaniday/getAllServiceList',
     // opening hour
     UPDATE_OPENINGHOURS_DATA_URL: '/myvaniday/updateOpeningHour',
     GET_OPENINGHOURS_DATA_URL: '/myvaniday/getOpeningHour',
     // product
     GET_PRODUCTLIST_DATA_URL: '/myvaniday/getProductList',
+    GET_PRODUCTCATEGORY_DATA_URL: '/getProductCategory',
     CREATE_PRODUCT_DATA_URL: '/myvaniday/createProduct',
     DELETE_PRODUCT_DATA_URL: '/myvaniday/deleteProduct',
     UPDATE_PRODUCT_DATA_URL: '/myvaniday/updateProduct',

@@ -126,6 +126,9 @@ class OpeningHours extends Component {
           options={['Edit Opening hours', 'Close']}
           cancelButtonIndex={1}
           destructiveButtonIndex={1}
+          tintColor={BaseColor.whiteColor}
+          buttonUnderlayColor={BaseColor.whiteColor}
+          style={{backgroundColor: BaseColor.MainPrimaryColor}}
           onPress={(index) => {
             switch (index) {
               case 0:
