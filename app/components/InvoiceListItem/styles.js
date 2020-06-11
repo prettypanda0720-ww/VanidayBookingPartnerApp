@@ -27,8 +27,8 @@ export default StyleSheet.create({
     backgroundColor: BaseColor.fieldColor,
     // justifyContent: 'space-between',
     justifyContent: 'center',
-    borderBottomRightRadius: 8,
-    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 12,
+    borderBottomLeftRadius: 12,
   },
   mainContent: {
     backgroundColor: BaseColor.fieldColor,/*BaseColor.lightPrimaryColor*/
@@ -40,6 +40,8 @@ export default StyleSheet.create({
     backgroundColor: BaseColor.MainColor /*BaseColor.lightPrimaryColor*/,
     paddingHorizontal: 12,
     paddingVertical: 5,
+    borderBottomRightRadius: 8,
+    borderBottomLeftRadius: 8,
   },
   boxWithShadow: {
     shadowColor: '#000',

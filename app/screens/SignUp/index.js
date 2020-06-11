@@ -6,10 +6,14 @@ import {
   Switch,
   TouchableOpacity,
 } from 'react-native';
-import {BaseStyle, BaseColor, Images} from '@config';
+import Modal from 'react-native-modal';
+import {BaseStyle, BaseColor, FontFamily} from '@config';
+import {Calendar} from 'react-native-calendars';
+import * as Utils from '@utils';
 import ImagePicker from 'react-native-image-picker';
 import {Dropdown} from 'react-native-material-dropdown';
 import {Checkbox} from 'react-native-material-ui';
+import PhoneInput from 'react-native-phone-input';
 
 import {
   Header,
@@ -25,7 +29,6 @@ import {myAppointmentsSvc} from '@services';
 import {AuthActions} from '@actions';
 import {bindActionCreators} from 'redux';
 import {withNavigation} from 'react-navigation';
-import * as Utils from '@utils';
 import styles from './styles';
 
 class SignUp extends Component {
@@ -49,8 +52,50 @@ class SignUp extends Component {
       image_base64_content: null,
       avatarSource: null,
       loading: false,
+      birthday: '',
+      modalCalendarVisible: false,
+      markedDates: {
+        [this.getCurrentDate()]: {selected: true, marked: false},
+      },
     };
     this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
+  }
+
+  getCurrentDate() {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    month = month < 10 ? '0' + month : month;
+    date = date < 10 ? '0' + date : date;
+
+    return year + '-' + month + '-' + date;
+  }
+
+  openCalendarModal() {
+    this.setState({
+      modalCalendarVisible: true,
+    });
+  }
+
+  setBookingDate(day) {
+    this.setState({
+      markedDates: {
+        [day.dateString]: {selected: true, marked: false},
+      },
+    });
+    this.markedDates = day.dateString;
+    console.log('marketDates', this.markedDates);
+  }
+
+  onDateApply() {
+    console.log('marketDates-onDateApply()', this.markedDates);
+    if (this.markedDates !== undefined) {
+      let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
+      this.setState({birthday: shortDate});
+    } else {
+      this.setState({birthday: this.getCurrentDate()});
+    }
   }
 
   checkInput() {
@@ -385,6 +430,107 @@ class SignUp extends Component {
               />
             </View>
             <View style={styles.inputGroup}>
+              <PhoneInput
+                ref={(ref) => {
+                  this.phone = ref;
+                }}
+                style={styles.phoneInputStyle}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({person_address: text})}
+                autoCorrect={false}
+                placeholder="Address"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Modal
+                isVisible={this.state.modalCalendarVisible}
+                backdropColor="rgba(0, 0, 0, 0.5)"
+                backdropOpacity={1}
+                animationIn="fadeIn"
+                animationInTiming={600}
+                animationOutTiming={600}
+                backdropTransitionInTiming={600}
+                backdropTransitionOutTiming={600}>
+                <View style={styles.contentModal}>
+                  <View style={styles.contentCalendar}>
+                    <Calendar
+                      style={{
+                        borderRadius: 8,
+                      }}
+                      markedDates={this.state.markedDates}
+                      current={this.getCurrentDate()}
+                      minDate={this.getCurrentDate()}
+                      maxDate={'2099-12-31'}
+                      onDayPress={(day) => this.setBookingDate(day)}
+                      monthFormat={'MMMM yyyy '}
+                      onMonthChange={(month) => {
+                        console.log('month changed', month);
+                      }}
+                      theme={{
+                        textSectionTitleColor: BaseColor.textPrimaryColor,
+                        selectedDayBackgroundColor: BaseColor.primaryColor,
+                        selectedDayTextColor: '#ffffff',
+                        todayTextColor: BaseColor.primaryColor,
+                        dayTextColor: BaseColor.textPrimaryColor,
+                        textDisabledColor: BaseColor.grayColor,
+                        dotColor: BaseColor.primaryColor,
+                        selectedDotColor: '#ffffff',
+                        arrowColor: BaseColor.primaryColor,
+                        monthTextColor: BaseColor.textPrimaryColor,
+                        textDayFontFamily: FontFamily.default,
+                        textMonthFontFamily: FontFamily.default,
+                        textDayHeaderFontFamily: FontFamily.default,
+                        textMonthFontWeight: 'bold',
+                        textDayFontSize: 14,
+                        textMonthFontSize: 16,
+                        textDayHeaderFontSize: 14,
+                      }}
+                    />
+                    <View style={styles.contentActionCalendar}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({modalCalendarVisible: false});
+                        }}>
+                        <Text body1>Cancel</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({modalCalendarVisible: false});
+                          this.onDateApply();
+                        }}>
+                        <Text body1 primaryColor>
+                          Done
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
+              <TouchableOpacity
+                style={styles.dateInfo}
+                onPress={() => this.openCalendarModal()}>
+                <Text headline light style={{color: BaseColor.sectionColor}}>
+                  Birthday
+                </Text>
+                <Text headline semibold>
+                  {Utils.getFormattedLongDate(
+                    Utils.getDateFromDate(
+                      this.state.birthday == ''
+                        ? this.getCurrentDate()
+                        : this.state.birthday,
+                    ),
+                  )}
+                  {/* {Utils.getDateFromDate(staff_joined_date)} */}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.inputGroup}>
               <Dropdown
                 label="Select a Gender"
                 data={[
@@ -424,7 +570,7 @@ class SignUp extends Component {
             </View>
             <View style={styles.inputGroup}>
               <Checkbox
-                label="I would like to receive promotions, tips and announcements via email"
+                label="I would like to receive promotions, tips and announcements via email and sms."
                 value="agree"
                 checked={this.state.checked}
                 onCheck={() =>

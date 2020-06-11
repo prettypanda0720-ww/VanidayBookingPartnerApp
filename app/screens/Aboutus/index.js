@@ -218,23 +218,7 @@ class Aboutus extends Component {
             <View style={{paddingHorizontal: 20}}>
               <View style={styles.inputGroup}>
                 <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Connected Stripe ID
-                </Text>
-                <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
-                  onChangeText={(text) =>
-                    this.setState({vendor_stripe_id: text})
-                  }
-                  autoCorrect={false}
-                  placeholder=""
-                  placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.titleColor}>
-                  {vendor_stripe_id}
-                </TextInput>
-              </View>
-              <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Shop Title
+                  Business Name
                 </Text>
                 <TextInput
                   style={[BaseStyle.textInput, styles.textInput]}
@@ -296,7 +280,7 @@ class Aboutus extends Component {
               </View>
               <View style={styles.inputGroup}>
                 <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Contact Number
+                  Business Tel
                 </Text>
                 <TextInput
                   style={[BaseStyle.textInput, styles.textInput]}
@@ -326,7 +310,7 @@ class Aboutus extends Component {
               </View>
               <View style={styles.inputGroup}>
                 <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Location
+                  Business Address
                 </Text>
                 <TextInput
                   style={[BaseStyle.textInput, styles.textInput]}
@@ -396,6 +380,20 @@ class Aboutus extends Component {
                   placeholderTextColor={BaseColor.titleColor}
                   selectionColor={BaseColor.titleColor}></TextInput>
               </View>
+            </View>
+            <View style={styles.inputGroup}>
+              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                Connected Stripe ID
+              </Text>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({vendor_stripe_id: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}>
+                {vendor_stripe_id}
+              </TextInput>
             </View>
           </ScrollView>
           <View style={styles.loadingContainer}>

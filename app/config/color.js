@@ -3,38 +3,38 @@
  */
 
 let OrangeColor = {
-  primaryColor: "#E5634D",
-  darkPrimaryColor: "#C31C0D",
-  lightPrimaryColor: "#FF8A65",
-  accentColor: "#4A90A4"
+  primaryColor: '#E5634D',
+  darkPrimaryColor: '#C31C0D',
+  lightPrimaryColor: '#FF8A65',
+  accentColor: '#4A90A4',
 };
 
 let BlueColor = {
-  primaryColor: "#5DADE2",
-  darkPrimaryColor: "#1281ac",
-  lightPrimaryColor: "#68c9ef",
-  accentColor: "#FF8A65"
+  primaryColor: '#5DADE2',
+  darkPrimaryColor: '#1281ac',
+  lightPrimaryColor: '#68c9ef',
+  accentColor: '#FF8A65',
 };
 
 let PinkColor = {
-  primaryColor: "#A569BD",
-  darkPrimaryColor: "#C2185B",
-  lightPrimaryColor: "#F8BBD0",
-  accentColor: "#8BC34A"
+  primaryColor: '#A569BD',
+  darkPrimaryColor: '#C2185B',
+  lightPrimaryColor: '#F8BBD0',
+  accentColor: '#8BC34A',
 };
 
 let GreenColor = {
-  primaryColor: "#58D68D",
-  darkPrimaryColor: "#388E3C",
-  lightPrimaryColor: "#C8E6C9",
-  accentColor: "#607D8B"
+  primaryColor: '#58D68D',
+  darkPrimaryColor: '#388E3C',
+  lightPrimaryColor: '#C8E6C9',
+  accentColor: '#607D8B',
 };
 
 let YellowColor = {
-  primaryColor: "#FDC60A",
-  darkPrimaryColor: "#FFA000",
-  lightPrimaryColor: "#FFECB3",
-  accentColor: "#795548"
+  primaryColor: '#FDC60A',
+  darkPrimaryColor: '#FFA000',
+  lightPrimaryColor: '#FFECB3',
+  accentColor: '#795548',
 };
 
 /**
@@ -65,7 +65,7 @@ let BaseColor = {
     titleColor: 'rgba(75,72,72,0.88)',
     secondBlackColor: '#434343',
     darkcoralColor: '#cd5b45',
-  }
+  },
 };
 
 export {BaseColor, OrangeColor, BlueColor, PinkColor, GreenColor, YellowColor};

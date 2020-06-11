@@ -9,6 +9,7 @@ import {
   ScrollView,
   Switch,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {
   Header,
@@ -51,7 +52,7 @@ class EditService extends Component {
     };
   }
 
-  onDelete = () => {
+  deleteApply() {
     this.setState({deleteLoading: true});
     const {id} = this.state;
     const {navigation} = this.props;
@@ -79,6 +80,29 @@ class EditService extends Component {
           console.log(error);
         });
     }
+  }
+
+  onDelete = () => {
+    Alert.alert(
+      'Delete Service',
+      'Do you really delete service?',
+      [
+        {
+          text: 'Ask me later',
+          onPress: () => console.log('Ask me later pressed'),
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => this.deleteApply(),
+        },
+      ],
+      {cancelable: false},
+    );
   };
 
   onSave = () => {
@@ -388,7 +412,7 @@ class EditService extends Component {
               </View> */}
               <View style={[styles.profileItem, {marginTop: 20}]}>
                 <Text body1 style={styles.sectionStyle}>
-                  Enable Product
+                  Enable Service
                 </Text>
                 <Switch
                   name="angle-right"

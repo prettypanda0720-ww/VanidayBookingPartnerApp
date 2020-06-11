@@ -123,12 +123,12 @@ class OpeningHours extends Component {
         <ActionSheet
           ref={(o) => (this.ActionSheet = o)}
           title={''}
-          options={['Edit Opening hours', 'Close']}
+          options={['Edit Opening hours', 'Exit']}
           cancelButtonIndex={1}
           destructiveButtonIndex={1}
           tintColor={BaseColor.whiteColor}
-          buttonUnderlayColor={BaseColor.whiteColor}
-          style={{backgroundColor: BaseColor.MainPrimaryColor}}
+          // buttonUnderlayColor={BaseColor.grayColor}
+          // style={}
           onPress={(index) => {
             switch (index) {
               case 0:

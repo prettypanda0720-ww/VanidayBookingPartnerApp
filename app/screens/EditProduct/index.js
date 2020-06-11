@@ -20,6 +20,7 @@ import {
   TextInput,
   Switch,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import styles from './styles';
@@ -93,7 +94,7 @@ class EditProduct extends Component {
           }
         })
         .catch((error) => {
-          Utils.notifyMessage(error);
+          Utils.shortNotifyMessage(error);
           console.log('appointment error');
           console.log(error);
         });
@@ -104,24 +105,44 @@ class EditProduct extends Component {
     const {name, price, selectedItems} = this.state;
 
     if (name.length === 0) {
-      Utils.notifyMessage('Product Name is required!');
+      Utils.shortNotifyMessage('Product Name is required!');
       return false;
     }
     if (selectedItems.length === 0) {
-      Utils.notifyMessage('Categories is required!');
+      Utils.shortNotifyMessage('Categories is required!');
       return false;
     }
     if (price.length === 0) {
-      Utils.notifyMessage('Price is required!');
+      Utils.shortNotifyMessage('Price is required!');
       return false;
     }
     return true;
   }
 
   onDelete = () => {
-    if (!this.checkInput()) {
-      return;
-    }
+    Alert.alert(
+      'Delete Product',
+      'Do you really delete product?',
+      [
+        {
+          text: 'Ask me later',
+          onPress: () => console.log('Ask me later pressed'),
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => this.deleteApply(),
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
+  deleteApply() {
     this.setState({deleteLoading: true});
     const {id, sku} = this.state;
     const {navigation} = this.props;
@@ -138,19 +159,19 @@ class EditProduct extends Component {
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
-            Utils.notifyMessage('Deleting Product is successfully done!');
+            Utils.shortNotifyMessage('Deleting Product is successfully done!');
             this.setState({deleteLoading: false});
             navigation.goBack();
           }
         })
         .catch((error) => {
-          Utils.notifyMessage(error);
+          Utils.shortNotifyMessage(error);
           console.log('Deleting product error');
           console.log(error);
         });
     }
-  };
-
+  }
+  
   onSave = () => {
     if (!this.checkInput()) {
       return;
@@ -185,13 +206,13 @@ class EditProduct extends Component {
           const res_profile = response.data;
           console.log('update product list data', res_profile);
           if (res_profile.code == 0) {
-            Utils.notifyMessage('Updating Product is successfully done!');
+            Utils.shortNotifyMessage('Updating Product is successfully done!');
             this.setState({saveLoading: false});
             navigation.goBack();
           }
         })
         .catch((error) => {
-          Utils.notifyMessage(error);
+          Utils.shortNotifyMessage(error);
           console.log('Updating product error');
           console.log(error);
         });
@@ -273,6 +294,7 @@ class EditProduct extends Component {
               loading={false}
               onSelectedItemsChange={this.onSelectedItemsChange}
               selectedItems={this.state.selectedItems}
+              showChips={false}
             />
             <View style={styles.inputGroup}>
               <Text caption3 style={{color: BaseColor.secondBlackColor}}>

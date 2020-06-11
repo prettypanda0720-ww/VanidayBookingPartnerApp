@@ -3,7 +3,13 @@ import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
 import {bindActionCreators} from 'redux';
 import {AuthActions} from '@actions';
-import {View, ScrollView, TextInput, TouchableOpacity} from 'react-native';
+import {
+  View,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {BaseStyle, BaseColor, FontFamily} from '@config';
 import {withNavigation} from 'react-navigation';
 import {Calendar} from 'react-native-calendars';
@@ -150,6 +156,29 @@ class StaffProfileDetail extends Component {
   };
 
   onDelete = () => {
+    Alert.alert(
+      'Delete Staff',
+      'Do you really delete staff?',
+      [
+        {
+          text: 'Ask me later',
+          onPress: () => console.log('Ask me later pressed'),
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => this.deleteApply(),
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
+  deleteApply() {
     this.setState({deleteLoading: true});
     const {staff_id} = this.state;
     const {navigation} = this.props;
@@ -176,7 +205,7 @@ class StaffProfileDetail extends Component {
           console.log(error);
         });
     }
-  };
+  }
 
   componentDidMount() {
     const data = this.props.navigation.state.params.data;

@@ -55,4 +55,38 @@ export default StyleSheet.create({
     width: '100%',
     height: Utils.scaleWithPixel(230),
   },
+  phoneInputStyle: {
+    // borderColor: BaseColor.grayColor,
+    // borderWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    backgroundColor: BaseColor.fieldColor,
+  },
+  dateInfo: {
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    width: '100%',
+    backgroundColor: BaseColor.fieldColor,
+    // height: 75,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  contentModal: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  contentCalendar: {
+    borderRadius: 8,
+    width: '100%',
+    backgroundColor: 'white',
+  },
+  contentActionCalendar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
+  },
 });

@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TextInput, Switch} from 'react-native';
-import {BaseStyle, BaseColor} from '@config';
+import {
+  View,
+  ScrollView,
+  TextInput,
+  Switch,
+  TouchableOpacity,
+} from 'react-native';
+import Modal from 'react-native-modal';
+import {BaseStyle, BaseColor, FontFamily} from '@config';
+import {Calendar} from 'react-native-calendars';
+import * as Utils from '@utils';
 import {
   Image,
   Header,
@@ -12,6 +21,7 @@ import {
 } from '@components';
 import {Checkbox} from 'react-native-material-ui';
 import {Dropdown} from 'react-native-material-dropdown';
+import PhoneInput from 'react-native-phone-input';
 import styles from './styles';
 
 // Load sample data
@@ -30,6 +40,11 @@ export default class ProfileEdit extends Component {
       loading: false,
       isOwner: false,
       checked: false,
+      birthday: '',
+      modalCalendarVisible: false,
+      markedDates: {
+        [this.getCurrentDate()]: {selected: true, marked: false},
+      },
     };
   }
 
@@ -68,6 +83,43 @@ export default class ProfileEdit extends Component {
   toggleSwitch = (value) => {
     this.setState({isOwner: value});
   };
+
+  getCurrentDate() {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    month = month < 10 ? '0' + month : month;
+    date = date < 10 ? '0' + date : date;
+
+    return year + '-' + month + '-' + date;
+  }
+
+  openCalendarModal() {
+    this.setState({
+      modalCalendarVisible: true,
+    });
+  }
+
+  setBookingDate(day) {
+    this.setState({
+      markedDates: {
+        [day.dateString]: {selected: true, marked: false},
+      },
+    });
+    this.markedDates = day.dateString;
+    console.log('marketDates', this.markedDates);
+  }
+
+  onDateApply() {
+    console.log('marketDates-onDateApply()', this.markedDates);
+    if (this.markedDates !== undefined) {
+      let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
+      this.setState({birthday: shortDate});
+    } else {
+      this.setState({birthday: this.getCurrentDate()});
+    }
+  }
 
   render() {
     const {navigation} = this.props;
@@ -149,6 +201,107 @@ export default class ProfileEdit extends Component {
               />
             </View>
             <View style={styles.inputGroup}>
+              <PhoneInput
+                ref={(ref) => {
+                  this.phone = ref;
+                }}
+                style={styles.phoneInputStyle}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({person_address: text})}
+                autoCorrect={false}
+                placeholder="Address"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Modal
+                isVisible={this.state.modalCalendarVisible}
+                backdropColor="rgba(0, 0, 0, 0.5)"
+                backdropOpacity={1}
+                animationIn="fadeIn"
+                animationInTiming={600}
+                animationOutTiming={600}
+                backdropTransitionInTiming={600}
+                backdropTransitionOutTiming={600}>
+                <View style={styles.contentModal}>
+                  <View style={styles.contentCalendar}>
+                    <Calendar
+                      style={{
+                        borderRadius: 8,
+                      }}
+                      markedDates={this.state.markedDates}
+                      current={this.getCurrentDate()}
+                      minDate={this.getCurrentDate()}
+                      maxDate={'2099-12-31'}
+                      onDayPress={(day) => this.setBookingDate(day)}
+                      monthFormat={'MMMM yyyy '}
+                      onMonthChange={(month) => {
+                        console.log('month changed', month);
+                      }}
+                      theme={{
+                        textSectionTitleColor: BaseColor.textPrimaryColor,
+                        selectedDayBackgroundColor: BaseColor.primaryColor,
+                        selectedDayTextColor: '#ffffff',
+                        todayTextColor: BaseColor.primaryColor,
+                        dayTextColor: BaseColor.textPrimaryColor,
+                        textDisabledColor: BaseColor.grayColor,
+                        dotColor: BaseColor.primaryColor,
+                        selectedDotColor: '#ffffff',
+                        arrowColor: BaseColor.primaryColor,
+                        monthTextColor: BaseColor.textPrimaryColor,
+                        textDayFontFamily: FontFamily.default,
+                        textMonthFontFamily: FontFamily.default,
+                        textDayHeaderFontFamily: FontFamily.default,
+                        textMonthFontWeight: 'bold',
+                        textDayFontSize: 14,
+                        textMonthFontSize: 16,
+                        textDayHeaderFontSize: 14,
+                      }}
+                    />
+                    <View style={styles.contentActionCalendar}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({modalCalendarVisible: false});
+                        }}>
+                        <Text body1>Cancel</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({modalCalendarVisible: false});
+                          this.onDateApply();
+                        }}>
+                        <Text body1 primaryColor>
+                          Done
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
+              <TouchableOpacity
+                style={styles.dateInfo}
+                onPress={() => this.openCalendarModal()}>
+                <Text headline light style={{color: BaseColor.sectionColor}}>
+                  Birthday
+                </Text>
+                <Text headline semibold>
+                  {Utils.getFormattedLongDate(
+                    Utils.getDateFromDate(
+                      this.state.birthday == ''
+                        ? this.getCurrentDate()
+                        : this.state.birthday,
+                    ),
+                  )}
+                  {/* {Utils.getDateFromDate(staff_joined_date)} */}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.inputGroup}>
               <Dropdown
                 label="Select a Gender"
                 data={[
@@ -188,7 +341,7 @@ export default class ProfileEdit extends Component {
             </View>
             <View style={styles.inputGroup}>
               <Checkbox
-                label="I would like to receive promotions, tips and announcements via email"
+                label="Subscribed to promotions, tips and announcement on email and sms."
                 value="agree"
                 checked={this.state.checked}
                 onCheck={() =>

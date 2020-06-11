@@ -37,5 +37,8 @@ export const Api = {
     DELETE_PRODUCT_DATA_URL: '/myvaniday/deleteProduct',
     UPDATE_PRODUCT_DATA_URL: '/myvaniday/updateProduct',
     DETAIL_PRODUCT_DATA_URL: '/myvaniday/productDetail',
+    //Daily Sales
+    FETCH_APPOINTMENT_DATA_URL: '/myvaniday/fetchAppointList',
+    FETCH_INVOICE_DATA_URL: '/myvaniday/fetchInvoiceList',
   },
 };

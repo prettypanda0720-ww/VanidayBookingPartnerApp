@@ -1,24 +1,28 @@
+import moment from 'moment';
 import React, {Component} from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {Text} from '@components';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import {FlatList} from 'react-native-gesture-handler';
+import * as Utils from '@utils';
 
 export default class InvoiceListItem extends Component {
   render() {
     const {
       style,
-      refId,
+      // refId,
       clientName,
-      appointmentDate,
+      count,
+      // appointmentDate,
       total,
-      status,
+      // status,
       detail,
-      startTime,
-      endTime,
+      // startTime,
+      // endTime,
       onPress,
     } = this.props;
+    console.log('detail', detail);
     return (
       <TouchableOpacity
         style={[styles.contain, style]}
@@ -26,13 +30,14 @@ export default class InvoiceListItem extends Component {
         activeOpacity={0.9}>
         <View style={styles.nameContent}>
           <Text subhead whiteColor bold>
-            {clientName}&nbsp;:&nbsp;{refId}
+            {clientName}
           </Text>
-          <Text subhead whiteColor bold>
+          {/* <Text subhead whiteColor bold>
             {status}
-          </Text>
+          </Text> */}
         </View>
         <FlatList
+          listKey={moment().valueOf().toString()}
           data={detail}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => {
@@ -57,12 +62,12 @@ export default class InvoiceListItem extends Component {
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    {item.price}
+                    SGD&nbsp;{item.price}
                   </Text>
                 </View>
                 <View style={{flexDirection: 'row'}}>
                   <Text
-                    caption3
+                    caption1
                     style={{
                       flex: 1,
                       textAlign: 'left',
@@ -71,31 +76,62 @@ export default class InvoiceListItem extends Component {
                     {item.staffName}
                   </Text>
                   <Text
-                    caption3
+                    caption1
                     style={{
                       flex: 1,
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    {item.duration}
+                    {item.service_duration} Min
+                  </Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text
+                    caption1
+                    style={{
+                      flex: 1,
+                      textAlign: 'left',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    Status
+                  </Text>
+                  <Text
+                    caption1
+                    style={{
+                      flex: 1,
+                      textAlign: 'right',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    {Utils.capitalize(item.status)}
+                  </Text>
+                </View>
+                <View style={styles.validContent}>
+                  <Text footnote semibold style={{color: 'rgba(0,0,0,0.65)'}}>
+                    {item.slotDate},&nbsp;
+                    {Utils.getTimeFromDate(item.bookingFrom)}&nbsp;to&nbsp;
+                    {Utils.getTimeFromDate(item.bookingTo)}
                   </Text>
                 </View>
               </View>
             );
           }}
         />
-        <View style={[styles.totalContent, {flexDirection: 'row', paddingHorizontal: 10}]}>
+        <View
+          style={[
+            styles.totalContent,
+            {flexDirection: 'row', paddingHorizontal: 10},
+          ]}>
           <View
             style={{
               flex: 1,
               flexDirection: 'row',
               alignItems: 'flex-start',
             }}>
-            <Text headline bold style={{color: 'rgba(0,0,0,0.65)'}}>
+            <Text subhead bold style={{color: 'rgba(0,0,0,0.65)'}}>
               Business:
             </Text>
-            <Text headline semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-              &nbsp;&nbsp;SGD50
+            <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
+              &nbsp;&nbsp;SGD{total}
             </Text>
           </View>
           <View
@@ -105,18 +141,13 @@ export default class InvoiceListItem extends Component {
               justifyContent: 'flex-end',
               alignItems: 'flex-end',
             }}>
-            <Text headline bold style={{color: 'rgba(0,0,0,0.65)'}}>
+            <Text subhead bold style={{color: 'rgba(0,0,0,0.65)'}}>
               Vaniday:
             </Text>
-            <Text headline semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-              &nbsp;&nbsp;SGD50
+            <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
+              &nbsp;&nbsp;SGD{total}
             </Text>
           </View>
-        </View>
-        <View style={styles.validContent}>
-          <Text footnote semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-            {appointmentDate},&nbsp;{startTime}&nbsp;to&nbsp;{endTime}
-          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -125,28 +156,30 @@ export default class InvoiceListItem extends Component {
 
 InvoiceListItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  refId: PropTypes.string,
+  // refId: PropTypes.string,
   clientName: PropTypes.string,
-  serviceName: PropTypes.string,
-  staffName: PropTypes.string,
-  appointmentDate: PropTypes.string,
+  // serviceName: PropTypes.string,
+  // staffName: PropTypes.string,
+  // appointmentDate: PropTypes.string,
   total: PropTypes.string,
-  price: PropTypes.string,
-  startTime: PropTypes.string,
-  endTime: PropTypes.string,
+  count: PropTypes.string,
+  // price: PropTypes.string,
+  // startTime: PropTypes.string,
+  // endTime: PropTypes.string,
   onPress: PropTypes.func,
 };
 
 InvoiceListItem.defaultProps = {
   style: {},
-  refId: '',
+  // refId: '',
   clientName: '',
-  serviceName: '',
-  staffName: '',
-  appointmentDate: '',
+  // serviceName: '',
+  // staffName: '',
+  // appointmentDate: '',
   total: '',
-  price: '',
-  startTime: '',
-  endTime: '',
+  count: PropTypes.string,
+  // price: '',
+  // startTime: '',
+  // endTime: '',
   onPress: () => {},
 };

@@ -158,6 +158,16 @@ function getAllServiceList(postData) {
   return apiClient_json.post(url, postData);
 }
 
+function fetchInvoiceList(postData) {
+  var url = Api.myVaniMiddleWare.FETCH_INVOICE_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
+function fetchAppointmentList(postData) {
+  var url = Api.myVaniMiddleWare.FETCH_APPOINTMENT_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
 export const myAppointmentsSvc = {
   fetchOrderByDate,
   fetchProfileData,
@@ -182,4 +192,6 @@ export const myAppointmentsSvc = {
   productDetail,
   getProductCategory,
   getAllServiceList,
+  fetchInvoiceList,
+  fetchAppointmentList,
 };

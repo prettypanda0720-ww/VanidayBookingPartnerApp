@@ -6,6 +6,7 @@ import {
   Switch,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
@@ -34,6 +35,7 @@ class Setting extends Component {
     this.state = {
       reminders: false,
       dataLoading: true,
+      logoutLoading: false,
       loading: false,
       vendor_stripe_id: '',
       unique_entity_number: '',
@@ -92,18 +94,42 @@ class Setting extends Component {
    * @author Passion UI <passionui.com>
    * @date 2019-08-03
    */
-  onLogOut() {
+  logoutApply() {
     const {actions, navigation} = this.props;
-
+    this.setState({logoutLoading: true});
     actions.logout((response) => {
       console.log('------- logout response', response);
       if (response.code == 0) {
+        this.setState({logoutLoading: false});
         navigation.navigate('Loading');
       } else {
         console.log(response.msg);
       }
     });
   }
+
+  onLogOut = () => {
+    Alert.alert(
+      'Sign Out',
+      'Do you really Sign out?',
+      [
+        {
+          text: 'Ask me later',
+          onPress: () => console.log('Ask me later pressed'),
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => this.logoutApply(),
+        },
+      ],
+      {cancelable: false},
+    );
+  };
 
   /**
    * @description Call when reminder option switch on/off
@@ -376,7 +402,10 @@ class Setting extends Component {
             </View>
           </ScrollView>
           <View style={{padding: 20}}>
-            <Button full loading={loading} onPress={() => this.onLogOut()}>
+            <Button
+              full
+              loading={this.state.logoutLoading}
+              onPress={() => this.onLogOut()}>
               Sign Out
             </Button>
           </View>

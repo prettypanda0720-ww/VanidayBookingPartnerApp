@@ -32,15 +32,19 @@ export default StyleSheet.create({
   },
   mainContent: {
     backgroundColor: BaseColor.fieldColor,
-    paddingHorizontal: 12,
+    // paddingHorizontal: 12,
     paddingVertical: 5,
     flexDirection: 'column',
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
   },
   totalContent: {
     backgroundColor: BaseColor.MainColor /*BaseColor.lightPrimaryColor*/,
     paddingHorizontal: 12,
     paddingVertical: 5,
     flexDirection: 'column',
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
   },
   boxWithShadow: {
     shadowColor: '#000',
@@ -56,7 +60,8 @@ export default StyleSheet.create({
     borderRadius: 10,
   },
   serviceItemWrapper: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'space-between',
-  }
+    paddingHorizontal: 12,
+  },
 });
