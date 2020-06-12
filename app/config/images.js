@@ -37,4 +37,5 @@ export const Images = {
   financing: require('@assets/images/financing.jpg'),
   it: require('@assets/images/it.jpg'),
   design: require('@assets/images/design.jpg'),
+  contactus: require('@assets/images/contactus.png'),
 };

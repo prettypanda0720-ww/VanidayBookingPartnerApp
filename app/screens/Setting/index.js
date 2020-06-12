@@ -350,10 +350,10 @@ class Setting extends Component {
                 <TouchableOpacity
                   style={styles.profileItem}
                   onPress={() => {
-                    navigation.navigate('FAQ');
+                    navigation.navigate('Help');
                   }}>
                   <Text body1 style={styles.sectionStyle}>
-                    FAQ
+                    Help
                   </Text>
                   <Icon
                     name="angle-right"

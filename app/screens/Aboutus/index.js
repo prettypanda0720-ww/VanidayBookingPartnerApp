@@ -8,6 +8,7 @@ import {BaseStyle, BaseColor} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import {primarytypes} from '@data';
 import {Dropdown} from 'react-native-material-dropdown';
+import ImagePicker from 'react-native-image-crop-picker';
 import * as Utils from '@utils';
 import Swiper from 'react-native-swiper';
 import styles from './styles';
@@ -17,6 +18,7 @@ class Aboutus extends Component {
     super();
     this.state = {
       dataLoading: true,
+      upLoading: false,
       loading: false,
       vendor_stripe_id: '',
       unique_entity_number: '',
@@ -30,6 +32,7 @@ class Aboutus extends Component {
       terms_and_conditions: '',
       free_cancellation_hour: '',
       photos: [],
+      carousel: {},
       serviceTypes: [],
       productTypes: [],
     };
@@ -82,6 +85,28 @@ class Aboutus extends Component {
         .catch((error) => {
           Utils.shortNotifyMessage(error);
           console.log('appointment error');
+          console.log(error);
+        });
+    }
+  };
+
+  onPhotoUpdate = () => {
+    const {auth} = this.props;
+    const token = auth.user.token;
+    if (Object.keys(this.state.carousel).length > 0) {
+      this.setState({upLoading: true});
+      myAppointmentsSvc
+        .updateCarousel(token, this.state.carousel)
+        .then((response) => {
+          const res_profile = response.data;
+          if (res_profile.code == 0) {
+            this.setState({upLoading: false});
+            Utils.shortNotifyMessage('Business photos are successfully added!');
+          }
+        })
+        .catch((error) => {
+          Utils.shortNotifyMessage(error);
+          console.log('update photo error');
           console.log(error);
         });
     }
@@ -147,7 +172,61 @@ class Aboutus extends Component {
     }
   }
 
+  takePics = () => {
+    ImagePicker.openPicker({
+      width: 200,
+      height: 200,
+      includeBase64: true,
+      compressImageMaxHeight: 400,
+      compressImageMaxWidth: 400,
+      cropping: true,
+      multiple: true,
+    }).then((response) => {
+      let tempArray = [];
+      this.setState({ImageSource: response});
+      response.forEach((item) => {
+        let filename = item.path.substring(item.path.lastIndexOf('/') + 1);
+        let filepath = item.path;
+        let data = item.data;
+        this.state.photos.push(filepath);
+        tempArray.push({
+          image_name: filename,
+          image_base64_content: data,
+        });
+        let uploadPhotoData = {carousel: tempArray};
+        this.setState({carousel: uploadPhotoData});
+        // console.log('imagpath==========' + item);
+        // console.log('filePath:', item.data);
+        // console.log('fileName:', filename);
+      });
+    });
+  };
+
+  displayPhotoActionView() {
+    if (Object.keys(this.state.carousel).length !== 0) {
+      return (
+        <Button
+          style={{flex: 1}}
+          loading={this.state.upLoading}
+          onPress={() => this.onPhotoUpdate()}>
+          Upload Business Photo
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          style={{flex: 1}}
+          // loading={loading}
+          onPress={() => this.takePics()}>
+          Select Business Photo
+        </Button>
+      );
+    }
+  }
+
   displayContentView() {
+    // console.log('this.state.photos', this.state.photos);
+    // console.log('carousel', this.state.carousel);
     const {navigation} = this.props;
     const {
       loading,
@@ -208,12 +287,7 @@ class Aboutus extends Component {
               </Swiper>
             </View>
             <View style={styles.changeButton}>
-              <Button
-                style={{flex: 1}}
-                loading={loading}
-                onPress={() => navigation.goBack()}>
-                Upload Business Photo
-              </Button>
+              {this.displayPhotoActionView()}
             </View>
             <View style={{paddingHorizontal: 20}}>
               <View style={styles.inputGroup}>
@@ -380,20 +454,22 @@ class Aboutus extends Component {
                   placeholderTextColor={BaseColor.titleColor}
                   selectionColor={BaseColor.titleColor}></TextInput>
               </View>
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Connected Stripe ID
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) => this.setState({vendor_stripe_id: text})}
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}>
-                {vendor_stripe_id}
-              </TextInput>
+              <View style={styles.inputGroup}>
+                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                  Connected Stripe ID
+                </Text>
+                <TextInput
+                  style={[BaseStyle.textInput, styles.textInput]}
+                  onChangeText={(text) =>
+                    this.setState({vendor_stripe_id: text})
+                  }
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
+                  {vendor_stripe_id}
+                </TextInput>
+              </View>
             </View>
           </ScrollView>
           <View style={styles.loadingContainer}>

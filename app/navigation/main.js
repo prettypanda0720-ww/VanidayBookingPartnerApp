@@ -81,6 +81,7 @@ import ManageAppointment from '@screens/ManageAppointment';
 import RescheduleAppointment from '@screens/RescheduleAppointment';
 import ServiceList from '@screens/ServiceList';
 import EditOpeningHours from '@screens/EditOpeningHours';
+import Help from '@screens/Help';
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
   const nextScene = scenes[scenes.length - 1].route.routeName;
@@ -399,6 +400,9 @@ const StackNavigator = createStackNavigator(
     },
     EditOpeningHours: {
       screen: EditOpeningHours,
+    },
+    Help: {
+      screen: Help,
     },
   },
   {

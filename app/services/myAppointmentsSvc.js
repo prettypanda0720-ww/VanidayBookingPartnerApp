@@ -168,6 +168,18 @@ function fetchAppointmentList(postData) {
   return apiClient_json.post(url, postData);
 }
 
+function updateCarousel(token, postData) {
+  const config = {
+    headers: {Authorization: `Bearer ${token}`},
+  };
+
+  return axios.post(
+    'http://v2.staging.vaniday.com/rest/V1/vaniday-vendor/update-carousel',
+    postData,
+    config,
+  );
+}
+
 export const myAppointmentsSvc = {
   fetchOrderByDate,
   fetchProfileData,
@@ -194,4 +206,5 @@ export const myAppointmentsSvc = {
   getAllServiceList,
   fetchInvoiceList,
   fetchAppointmentList,
+  updateCarousel,
 };

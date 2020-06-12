@@ -11,6 +11,7 @@ export const Api = {
     MEDIA_BASE: 'http://v2.staging.vaniday.com/media/avatar/',
     LOGIN_URL: '/myvaniday/auth',
     REGISTER_URL: '/rest/V1/vaniday/vendor/create',
+    UPDATE_CAROUSEL_DATA_URL: '/rest/V1/vaniday-vendor/update-carousel',
     GET_ORDER_URL: '/myvaniday/fetchOrderList',
     GET_PROFILE_DATA_URL: '/myvaniday/vendorDetail',
     UPDATE_PROFILE_DATA_URL: '/myvaniday/vendorProfile',

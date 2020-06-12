@@ -381,7 +381,7 @@ class EditService extends Component {
                       service_duration: value,
                     });
                   }}
-                  value={service_duration + 'min'}
+                  value={service_duration}
                 />
                 <Text body2 style={{color: BaseColor.sectionColor}}>
                   Normal price
