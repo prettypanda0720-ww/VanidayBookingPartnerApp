@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {
   View,
   Animated,
@@ -6,6 +7,8 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
+  FlatList,
 } from 'react-native';
 import {
   Header,
@@ -15,8 +18,14 @@ import {
   ProfilePerformance,
   Text,
   Button,
+  InvoiceListItem,
 } from '@components';
 import {TabView, TabBar} from 'react-native-tab-view';
+import {connect} from 'react-redux';
+import {myAppointmentsSvc} from '@services';
+import {AuthActions} from '@actions';
+import {bindActionCreators} from 'redux';
+import {withNavigation} from 'react-navigation';
 import * as Utils from '@utils';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import styles from './styles';
@@ -33,10 +42,12 @@ class ClientProfile extends Component {
       index: 0,
       routes: [
         {key: 'appointments', title: 'Appointments'},
-        {key: 'products', title: 'Products'},
-        {key: 'invoices', title: 'Invoices'},
+        // {key: 'products', title: 'Products'},
+        // {key: 'invoices', title: 'Invoices'},
       ],
       userData: UserData[0],
+      profileData: {},
+      dataLoading: true,
     };
     this.growAnimated = new Animated.Value(0);
   }
@@ -59,7 +70,7 @@ class ClientProfile extends Component {
         <View
           style={{
             flex: 1,
-            width: Utils.getWidthDevice() / 3,
+            width: Utils.getWidthDevice(),
             alignItems: 'center',
           }}>
           <Text subhead bold={focused} style={{color}}>
@@ -74,148 +85,260 @@ class ClientProfile extends Component {
     switch (route.key) {
       case 'appointments':
         return (
-          <AppointmentsTab jumpTo={jumpTo} navigation={this.props.navigation} />
+          <AppointmentsTab
+            jumpTo={jumpTo}
+            navigation={this.props.navigation}
+            appointmentsData={this.state.profileData.appointments}
+          />
         );
-      case 'products':
-        return (
-          <ProductsTab jumpTo={jumpTo} navigation={this.props.navigation} />
-        );
-      case 'invoices':
-        return (
-          <InvoicesTab jumpTo={jumpTo} navigation={this.props.navigation} />
-        );
+      // case 'products':
+      //   return (
+      //     <ProductsTab jumpTo={jumpTo} navigation={this.props.navigation} />
+      //   );
+      // case 'invoices':
+      //   return (
+      //     <InvoicesTab
+      //       jumpTo={jumpTo}
+      //       navigation={this.props.navigation}
+      //       invoicesData={this.state.profileData.invoices}
+      //     />
+      //   );
     }
   };
 
   render() {
+    return <View style={{flex: 1}}>{this.displayContentView()}</View>;
+  }
+
+  displayContentView() {
     const {navigation} = this.props;
-    const {search, screen, userData} = this.state;
+    const {search, screen, userData, profileData, dataLoading} = this.state;
     const changeScale = this.growAnimated.interpolate({
       inputRange: [0, 1],
       outputRange: [1, 40],
     });
-
-    return (
-      <SafeAreaView
-        style={[BaseStyle.safeAreaView, {flexDirection: 'column'}]}
-        forceInset={{top: 'always'}}>
-        <Header
-          title="Customer"
-          renderLeft={() => {
-            return (
-              <Icon name="angle-left" size={20} color={'rgba(0,0,0,0.65)'} />
-            );
-          }}
-          renderRight={() => {
-            return (
-              <SafeAreaView style={{flexDirection: 'row'}}>
-                <View style={{marginRight: 15}}>
-                  <Icon name="envelope" size={24} color={'rgba(0,0,0,0.65)'} />
-                </View>
-                <View>
-                  <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />
-                </View>
-              </SafeAreaView>
-            );
-          }}
-          onPressLeft={() => {
-            navigation.goBack();
-          }}
-          onPressRight={() => {
-            navigation.navigate('Notification');
-          }}
-          style={styles.headerStyle}
-        />
-        <ScrollView style={{paddingLeft: 20, paddingRight: 20, marginTop: 20}}>
-          <ProfileDetail
-            image={userData.image}
-            textFirst={userData.name}
-            point={userData.point}
-            textSecond={userData.address}
-            textThird={userData.id}
-            styleThumb={{width: 60, height: 60, borderRadius: 30}}
-            onPress={() => navigation.navigate('ProfileExanple')}
+    if (!this.state.dataLoading) {
+      return (
+        <SafeAreaView
+          style={[BaseStyle.safeAreaView, {flexDirection: 'column'}]}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Customer"
+            renderLeft={() => {
+              return (
+                <Icon name="angle-left" size={20} color={'rgba(0,0,0,0.65)'} />
+              );
+            }}
+            // renderRight={() => {
+            //   return (
+            //     <SafeAreaView style={{flexDirection: 'row'}}>
+            //       <View style={{marginRight: 15}}>
+            //         <Icon name="envelope" size={24} color={'rgba(0,0,0,0.65)'} />
+            //       </View>
+            //       <View>
+            //         <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />
+            //       </View>
+            //     </SafeAreaView>
+            //   );
+            // }}
+            onPressLeft={() => {
+              navigation.goBack();
+            }}
+            // onPressRight={() => {
+            //   navigation.navigate('Notification');
+            // }}
+            style={styles.headerStyle}
           />
-          <ProfilePerformance
-            data={userData.performance}
-            style={{marginTop: 20, marginBottom: 10}}
-          />
-          <View style={styles.profileItem}>
-            <Text subhead style={styles.sectionStyle}>
-              Email: river@hotmail.com
-            </Text>
-          </View>
-          <View style={styles.profileItem}>
-            <Text subhead style={styles.sectionStyle}>
-              Handphone: 91234567
-            </Text>
-          </View>
-          <View style={styles.profileItem}>
-            <Text subhead style={styles.sectionStyle}>
-              Gender: Male
-            </Text>
-          </View>
-          <View style={styles.profileItem}>
-            <Text subhead style={styles.sectionStyle}>
-              Subscribed to Marketing: YES
-            </Text>
-          </View>
-          <View style={{width: '100%', marginTop: 15}}>
-            <Button
-              full
-              style={{}}
-              onPress={() => {
-                navigation.goBack();
+          <ScrollView
+            style={{paddingLeft: 20, paddingRight: 20, marginTop: 10}}>
+            <View style={styles.profileItem}>
+              <Text subhead semibold style={styles.sectionStyle}>
+                Name:
+              </Text>
+              <Text subhead style={styles.sectionStyle}>
+                {profileData.customerName}
+              </Text>
+            </View>
+            {/* <ProfilePerformance data={userData.performance} style={{}} /> */}
+            <View style={styles.profileItem}>
+              <Text subhead semibold style={styles.sectionStyle}>
+                Email:
+              </Text>
+              <Text subhead style={styles.sectionStyle}>
+                {profileData.customerEmail}
+              </Text>
+            </View>
+            <View style={styles.profileItem}>
+              <Text subhead semibold style={styles.sectionStyle}>
+                Mobile No:
+              </Text>
+              <Text subhead style={styles.sectionStyle}>
+                {profileData.contactNo}
+              </Text>
+            </View>
+            <View style={styles.profileItem}>
+              <Text subhead semibold style={styles.sectionStyle}>
+                Gender
+              </Text>
+              <Text subhead style={styles.sectionStyle}>
+                {profileData.customerGender == null
+                  ? 'Not Assigned'
+                  : profileData.customerGender}
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'column',
+                paddingHorizontal: 15,
+                borderBottomColor: BaseColor.textSecondaryColor,
+                borderBottomWidth: 1,
+                paddingVertical: 15,
               }}>
-              Chat with customer
-            </Button>
-          </View>
-          <View style={{flexDirection: 'row', marginTop: 15, marginBotton: 10}}>
-            <View
-              style={{flexDirection: 'column', flex: 1, alignItems: 'center'}}>
-              <Text
-                subhead
-                semibold
-                numberOfLines={1}
-                style={styles.sectionStyle}>
-                SGD 0
+              <Text subhead semibold style={styles.sectionStyle}>
+                Address
               </Text>
-              <Text
-                subhead
-                semibold
-                numberOfLines={1}
-                style={styles.sectionStyle}>
-                Total Sales
+              <Text subhead style={styles.sectionStyle}>
+                {profileData.customerAddr}
               </Text>
             </View>
-            <View
-              style={{flexDirection: 'column', flex: 1, alignItems: 'center'}}>
-              <Text
-                subhead
-                semibold
-                numberOfLines={1}
-                style={styles.sectionStyle}>
-                SGD 0
+            <View style={styles.profileItem}>
+              <Text subhead semibold style={styles.sectionStyle}>
+                Subscribed to Marketing
               </Text>
-              <Text
-                subhead
-                semibold
-                numberOfLines={1}
-                style={styles.sectionStyle}>
-                Total Sales
+              <Text subhead style={styles.sectionStyle}>
+                YES
               </Text>
             </View>
-          </View>
-          <TabView
-            lazy
-            navigationState={this.state}
-            renderScene={this._renderScene}
-            renderTabBar={this._renderTabBar}
-            onIndexChange={this._handleIndexChange}
+            {/* <View style={{width: '100%', marginTop: 15}}>
+              <Button
+                full
+                style={{}}
+                onPress={() => {
+                  navigation.goBack();
+                }}>
+                Chat with customer
+              </Button>
+            </View> */}
+            <View
+              style={{flexDirection: 'row', marginTop: 15, marginBotton: 10}}>
+              <View
+                style={{
+                  flexDirection: 'column',
+                  flex: 1,
+                  alignItems: 'center',
+                }}>
+                <Text
+                  subhead
+                  semibold
+                  numberOfLines={1}
+                  style={styles.sectionStyle}>
+                  {profileData.count}
+                </Text>
+                <Text
+                  subhead
+                  semibold
+                  numberOfLines={1}
+                  style={styles.sectionStyle}>
+                  Total Count
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'column',
+                  flex: 1,
+                  alignItems: 'center',
+                }}>
+                <Text
+                  subhead
+                  semibold
+                  numberOfLines={1}
+                  style={styles.sectionStyle}>
+                  SGD {profileData.price}
+                </Text>
+                <Text
+                  subhead
+                  semibold
+                  numberOfLines={1}
+                  style={styles.sectionStyle}>
+                  Total Sales
+                </Text>
+              </View>
+            </View>
+            <TabView
+              lazy
+              navigationState={this.state}
+              renderScene={this._renderScene}
+              renderTabBar={this._renderTabBar}
+              onIndexChange={this._handleIndexChange}
+            />
+          </ScrollView>
+        </SafeAreaView>
+      );
+    } else {
+      return (
+        <SafeAreaView
+          style={[BaseStyle.safeAreaView, {flexDirection: 'column'}]}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Customer"
+            renderLeft={() => {
+              return (
+                <Icon name="angle-left" size={20} color={'rgba(0,0,0,0.65)'} />
+              );
+            }}
+            // renderRight={() => {
+            //   return (
+            //     <SafeAreaView style={{flexDirection: 'row'}}>
+            //       <View style={{marginRight: 15}}>
+            //         <Icon name="envelope" size={24} color={'rgba(0,0,0,0.65)'} />
+            //       </View>
+            //       <View>
+            //         <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />
+            //       </View>
+            //     </SafeAreaView>
+            //   );
+            // }}
+            onPressLeft={() => {
+              navigation.goBack();
+            }}
+            // onPressRight={() => {
+            //   navigation.navigate('Notification');
+            // }}
+            style={styles.headerStyle}
           />
-        </ScrollView>
-      </SafeAreaView>
-    );
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={dataLoading}
+            />
+          </View>
+        </SafeAreaView>
+      );
+    }
+  }
+  componentDidMount() {
+    const {auth} = this.props;
+    const clientId = this.props.navigation.state.params.clientId;
+    const data = {
+      token: auth.user.token,
+      clientId: clientId,
+    };
+    myAppointmentsSvc
+      .fetchClientDetail(data)
+      .then((response) => {
+        const res_profile = response.data;
+        if (res_profile.code == 0) {
+          console.log('product detail', res_profile.data);
+          this.setState({profileData: res_profile.data, dataLoading: false});
+        }
+      })
+      .catch((error) => {
+        Utils.shortNotifyMessage(error);
+        console.log('appointment error');
+        console.log(error);
+      });
   }
 }
 
@@ -243,11 +366,17 @@ class AppointmentsTab extends Component {
   }
 
   render() {
+    const {appointmentsData, navigation} = this.props;
+    console.log('appointmentsTab', appointmentsData);
     return (
       <View style={{padding: 20}}>
-        {this.state.appointments.map((item, index) => {
+        {appointmentsData.map((item, index) => {
+          const startTime = item.bookingFrom;
           return (
-            <View
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ManageAppointment', {bookingData: item})
+              }
               style={{
                 flexDirection: 'column',
                 borderColor: 'black',
@@ -256,27 +385,41 @@ class AppointmentsTab extends Component {
                 paddingBottom: 10,
               }}>
               <View style={{flexDirection: 'row'}}>
-                <Text caption1 semibold>
-                  {item.date}
+                <Text footnote semibold style={{flex: 1}}>
+                  {item.serviceName}
                 </Text>
-                <Text caption1 semibold>
-                  &nbsp;&nbsp;{item.starttime}
+                <Text
+                  footnote
+                  bold
+                  style={{
+                    color: BaseColor.sectionColor,
+                    marginLeft: 10,
+                    flex: 1,
+                    textAlign: 'right',
+                  }}>
+                  {Utils.capitalize(item.status)}
                 </Text>
-                <Text caption1 bold style={{color: BaseColor.sectionColor}}>
-                  &nbsp;&nbsp;STARTED
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}>
+                <Text footnote semibold style={{flex: 1}}>
+                  {Utils.timeToAsianString(startTime)}, {item.service_duration}
+                  Min
+                </Text>
+                <Text footnote semibold style={{flex: 1, textAlign: 'right'}}>
+                  SGD {item.price}
                 </Text>
               </View>
               <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                  paddingRight: 40,
                 }}>
-                <Text overline semibold>
-                  {item.summary}
-                </Text>
-                <Text overline semibold>
-                  {item.totalprice}
+                <Text footnote semibold>
+                  StaffName:{' '}
+                  {item.staffName == null ? 'Not Assigned' : item.staffName}
                 </Text>
                 <Icon
                   name="angle-right"
@@ -285,13 +428,27 @@ class AppointmentsTab extends Component {
                   style={{position: 'absolute', right: 0}}
                 />
               </View>
-            </View>
+            </TouchableOpacity>
           );
         })}
       </View>
     );
   }
 }
+
+AppointmentsTab.propTypes = {
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  jumpTo: PropTypes.object,
+  navigation: PropTypes.object,
+  appointmentsData: PropTypes.array,
+};
+
+AppointmentsTab.defaultProps = {
+  style: {},
+  jumpTo: {},
+  navigation: {},
+  appointmentsData: [],
+};
 
 class ProductsTab extends Component {
   constructor(props) {
@@ -310,10 +467,67 @@ class ProductsTab extends Component {
     return <View style={{padding: 20}} />;
   }
 }
+
+ProductsTab.propTypes = {
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  products: PropTypes.array,
+};
+
+ProductsTab.defaultProps = {
+  style: {},
+  products: [],
+};
+
 class InvoicesTab extends Component {
   render() {
-    return <View style={{marginTop: 20}} />;
+    const {invoicesData} = this.props;
+    return (
+      <FlatList
+        data={invoicesData}
+        keyExtractor={(item, index) => item.id}
+        style={{marginTop: 10}}
+        renderItem={({item, index}) => (
+          <InvoiceListItem
+            // refId={item.invoiceId}
+            clientName={item.customerName}
+            // appointmentDate={item.slotDate}
+            total={item.price}
+            count={item.count}
+            // status={item.status}
+            detail={[item]}
+            // startTime={item.bookingFrom}
+            // endTime={item.bookingTo}
+            style={{paddingVertical: 10, marginHorizontal: 20}}
+            onPress={() => {}}
+          />
+        )}
+      />
+    );
   }
 }
 
-export default ClientProfile;
+InvoicesTab.propTypes = {
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  invoicesData: PropTypes.array,
+};
+
+InvoicesTab.defaultProps = {
+  style: {},
+  invoicesData: [],
+};
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(AuthActions, dispatch),
+  };
+};
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchToProps)(ClientProfile),
+);

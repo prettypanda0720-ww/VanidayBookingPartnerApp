@@ -9,8 +9,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 200,
-    height: 200,
+    width: '70%',
+    height: '70%',
   },
   loadingContainer: {
     position: 'absolute',

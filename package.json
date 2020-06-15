@@ -45,6 +45,7 @@
     "react-native-country-modal": "^0.1.0",
     "react-native-country-picker-modal": "^1.10.0",
     "react-native-datepicker": "^1.7.2",
+    "react-native-draggable-dynamic-flatlist": "^1.0.4",
     "react-native-drawer": "^2.5.1",
     "react-native-elements": "^1.2.7",
     "react-native-fast-image": "^8.1.5",

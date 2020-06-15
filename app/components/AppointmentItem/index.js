@@ -7,19 +7,19 @@ import styles from './styles';
 import {FlatList} from 'react-native-gesture-handler';
 import * as Utils from '@utils';
 
-export default class BookingHistory extends Component {
+export default class AppointmentItem extends Component {
   render() {
     const {
       style,
-      refId,
+      // refId,
       clientName,
-      appointmentDate,
+      // appointmentDate,
       total,
-      status,
+      // status,
       detail,
       count,
-      startTime,
-      endTime,
+      // startTime,
+      // endTime,
       onPress,
     } = this.props;
     return (
@@ -31,9 +31,9 @@ export default class BookingHistory extends Component {
           <Text subhead whiteColor bold>
             {clientName}
           </Text>
-          <Text subhead whiteColor bold>
+          {/* <Text subhead whiteColor bold>
             {status}
-          </Text>
+          </Text> */}
         </View>
         <FlatList
           listKey={moment().valueOf().toString()}
@@ -72,14 +72,14 @@ export default class BookingHistory extends Component {
                       color: 'rgba(0,0,0,0.65)',
                     }}
                     numberOfLines={2}>
-                    Name: {item.serviceName}
+                    {item.serviceName}
                   </Text>
                 </View>
                 <View style={styles.serviceItemWrapper}>
                   <Text
                     caption1
+                    semibold
                     style={{
-                      flex: 1,
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
@@ -104,8 +104,7 @@ export default class BookingHistory extends Component {
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    Staff:{' '}
-                    {item.staffName == null ? 'Not Assigned' : item.staffName}
+                    Staff: {item.staffName == null ? 'Not Assigned' : item.staffName}
                   </Text>
                   <Text
                     caption1
@@ -136,7 +135,7 @@ export default class BookingHistory extends Component {
                       color: 'rgba(0,0,0,0.65)',
                     }}>
                     {/* &nbsp;{Utils.capitalize(item.STATUS)} */}
-                    {Utils.capitalize(item.status)}
+                    {item.status}
                   </Text>
                 </View>
                 <View style={styles.validContent}>
@@ -179,32 +178,32 @@ export default class BookingHistory extends Component {
   }
 }
 
-BookingHistory.propTypes = {
+AppointmentItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  refId: PropTypes.string,
+  // refId: PropTypes.string,
   clientName: PropTypes.string,
-  staffName: PropTypes.string,
+  // staffName: PropTypes.string,
   detail: PropTypes.array,
-  appointmentDate: PropTypes.string,
+  // appointmentDate: PropTypes.string,
   total: PropTypes.string,
   price: PropTypes.string,
   count: '',
-  startTime: PropTypes.string,
-  endTime: PropTypes.string,
+  // startTime: PropTypes.string,
+  // endTime: PropTypes.string,
   onPress: PropTypes.func,
 };
 
-BookingHistory.defaultProps = {
+AppointmentItem.defaultProps = {
   style: {},
-  refId: '',
+  // refId: '',
   clientName: '',
-  staffName: '',
+  // staffName: '',
   detail: [],
-  appointmentDate: '',
+  // appointmentDate: '',
   total: '',
   price: '',
   count: '',
-  startTime: '',
-  endTime: '',
+  // startTime: '',
+  // endTime: '',
   onPress: () => {},
 };

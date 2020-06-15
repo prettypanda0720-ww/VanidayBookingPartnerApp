@@ -6,9 +6,9 @@ const STYLESHEET_ID = 'stylesheet.agenda.list';
 
 export default function styleConstructor(theme = {}) {
   const appStyle = {...defaultStyle, ...theme};
-  return  StyleSheet.create({
+  return StyleSheet.create({
     container: {
-      flexDirection: 'row'
+      flexDirection: 'row',
     },
     // dayNum: {
     //   fontSize: 28,
@@ -16,14 +16,14 @@ export default function styleConstructor(theme = {}) {
     //   fontFamily: appStyle.textDayFontFamily,
     //   color: appStyle.agendaDayNumColor
     // },
-    dayText: {
-      fontSize: 14,
-      fontWeight: appStyle.textDayFontWeight,
-      fontFamily: appStyle.textDayFontFamily,
-      color: appStyle.agendaDayTextColor,
-      backgroundColor: 'rgba(0,0,0,0)',
-      marginTop: -5
-    },
+    // dayText: {
+    //   fontSize: 14,
+    //   fontWeight: appStyle.textDayFontWeight,
+    //   fontFamily: appStyle.textDayFontFamily,
+    //   color: appStyle.agendaDayTextColor,
+    //   backgroundColor: 'rgba(0,0,0,0)',
+    //   marginTop: -5,
+    // },
     // day: {
     //   width: 63,
     //   alignItems: 'center',
@@ -31,13 +31,13 @@ export default function styleConstructor(theme = {}) {
     //   marginTop: 32
     // },
     today: {
-      color: appStyle.agendaTodayColor
+      color: appStyle.agendaTodayColor,
     },
     day: {
       width: 40,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: BaseColor.MainPrimaryColor,
+      backgroundColor: BaseColor.SecondColor,
       borderTopLeftRadius: 5,
       borderBottomLeftRadius: 5,
       borderColor: BaseColor.grayColor,
@@ -57,8 +57,8 @@ export default function styleConstructor(theme = {}) {
       fontFamily: 'System',
       color: BaseColor.whiteColor,
       backgroundColor: 'rgba(0,0,0,0)',
-      marginTop: -5
+      marginTop: -5,
     },
-    ...(theme[STYLESHEET_ID] || {})
+    ...(theme[STYLESHEET_ID] || {}),
   });
 }

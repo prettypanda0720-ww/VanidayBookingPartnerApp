@@ -108,12 +108,12 @@ class Home extends Component<{}> {
       <AppointmentListItem
         refId={item.id}
         acceptedState={item.status}
-        customerName={'Judy T'}
+        customerName={item.customerName}
         name={item.serviceName}
         staffName={item.staffName}
         appointmentDate={item.slotDate}
-        startTime={item.slotTime}
-        endTime={item.bookingTo}
+        startTime={Utils.getTimeFromDate(item.bookingFrom)}
+        endTime={Utils.getTimeFromDate(item.bookingTo)}
         duration={item.service_duration}
         total={item.price}
         day={this.state.day}
@@ -254,6 +254,7 @@ class Home extends Component<{}> {
             textColor: BaseColor.sectionColor,
           }}
           onVisibleMonthsChange={true}
+          // eslint-disable-next-line react/jsx-no-duplicate-props
           onDayPress={this._dayChange}
           onDayChange={this._dayChange}
           // renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
@@ -274,7 +275,7 @@ class Home extends Component<{}> {
   renderEmptyDate() {
     return (
       <View style={styles.emptyDate}>
-        <Text title3 style={{color: BaseColor.sectionColor}}>
+        <Text headline style={{color: BaseColor.sectionColor}}>
           No Upcoming Appointments!
         </Text>
       </View>

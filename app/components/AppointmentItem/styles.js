@@ -33,7 +33,7 @@ export default StyleSheet.create({
   mainContent: {
     backgroundColor: BaseColor.fieldColor,
     // paddingHorizontal: 12,
-    paddingVertical: 5,
+    paddingTop: 5,
     flexDirection: 'column',
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,

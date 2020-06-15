@@ -375,7 +375,7 @@ class SignUp extends Component {
                 onChangeText={(text) => this.setState({first_name: text})}
                 autoCorrect={false}
                 placeholder="First Name"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.SecondColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
@@ -385,7 +385,7 @@ class SignUp extends Component {
                 onChangeText={(text) => this.setState({last_name: text})}
                 autoCorrect={false}
                 placeholder="Last Name"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.SecondColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
@@ -616,7 +616,7 @@ class SignUp extends Component {
                   style={{
                     flex: 1,
                     marginTop: 10,
-                    backgroundColor: BaseColor.MainPrimaryColor,
+                    backgroundColor: BaseColor.SecondColor,
                     borderRadius: 8,
                     paddingVertical: 15,
                     color: BaseColor.whiteColor,

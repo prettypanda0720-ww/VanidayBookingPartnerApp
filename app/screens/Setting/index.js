@@ -111,12 +111,8 @@ class Setting extends Component {
   onLogOut = () => {
     Alert.alert(
       'Sign Out',
-      'Do you really Sign out?',
+      'Do you really want to Sign out?',
       [
-        {
-          text: 'Ask me later',
-          onPress: () => console.log('Ask me later pressed'),
-        },
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
@@ -419,12 +415,12 @@ class Setting extends Component {
           forceInset={{top: 'always'}}>
           <Header
             title="Profile"
-            renderRight={() => {
-              return <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />;
-            }}
-            onPressRight={() => {
-              navigation.navigate('Notification');
-            }}
+            // renderRight={() => {
+            //   return <Icon name="bell" size={24} color={'rgba(0,0,0,0.65)'} />;
+            // }}
+            // onPressRight={() => {
+            //   navigation.navigate('Notification');
+            // }}
             style={styles.headerStyle}
           />
           <View style={styles.loadingContainer}>

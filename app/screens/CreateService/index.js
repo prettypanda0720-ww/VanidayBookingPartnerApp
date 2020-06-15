@@ -16,7 +16,7 @@ import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 import {Dropdown} from 'react-native-material-dropdown';
 import {withNavigation} from 'react-navigation';
 import * as Utils from '@utils';
-import {BaseStyle, BaseColor} from '@config';
+import {BaseStyle, BaseColor, GreenColor} from '@config';
 import styles from './styles';
 
 class CreateService extends Component {
@@ -171,6 +171,52 @@ class CreateService extends Component {
 
   toggleFeaturedSwitch = (value) => {
     this.setState({isFeatured: value});
+  };
+
+  icon = ({name, size = 18, style}) => {
+    let iconComponent;
+    const Search = (
+      <Icon
+        name="search"
+        size={15}
+        color={BaseColor.titleColor}
+        style={{paddingLeft: 10}}
+      />
+    );
+    const Down = (
+      <Icon name="angle-down" size={15} color={BaseColor.titleColor} />
+    );
+    const Up = <Icon name="angle-up" size={15} color={BaseColor.titleColor} />;
+    const Close = <Icon name="times" size={10} color={BaseColor.titleColor} />;
+    const Check = (
+      <Icon name="check" size={10} color={GreenColor.darkPrimaryColor} />
+    );
+    const Cancel = <Icon name="times" size={20} color={BaseColor.whiteColor} />;
+
+    switch (name) {
+      case 'search':
+        iconComponent = Search;
+        break;
+      case 'keyboard-arrow-up':
+        iconComponent = Up;
+        break;
+      case 'keyboard-arrow-down':
+        iconComponent = Down;
+        break;
+      case 'close':
+        iconComponent = Close;
+        break;
+      case 'check':
+        iconComponent = Check;
+        break;
+      case 'cancel':
+        iconComponent = Cancel;
+        break;
+      default:
+        iconComponent = null;
+        break;
+    }
+    return <View style={styles}>{iconComponent}</View>;
   };
 
   displayContentView() {

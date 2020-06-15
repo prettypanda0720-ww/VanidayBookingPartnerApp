@@ -180,6 +180,58 @@ function updateCarousel(token, postData) {
   );
 }
 
+function createProductThumb(token, postData) {
+  // console.log('createProductThumb', token);
+  // console.log('createProductThumb', postData);
+  const config = {
+    headers: {Authorization: `Bearer ${token}`},
+  };
+
+  return axios.post(
+    'http://mapi.vaniday.com/api/myvaniday/createProductThumb',
+    postData,
+    config,
+  );
+}
+
+function updateProductThumb(token, postData) {
+  console.log('updateProductThumb', token);
+  // console.log('updateProductThumb', postData);
+  const config = {
+    headers: {Authorization: `Bearer ${token}`},
+  };
+
+  return axios.post(
+    'http://mapi.vaniday.com/api/myvaniday/updateProductThumb',
+    postData,
+    config,
+  );
+}
+
+function deleteProductThumb(token, postData) {
+  console.log('deleteProductThumb', token);
+  console.log('deleteProductThumb', postData);
+  const config = {
+    headers: {Authorization: `Bearer ${token}`},
+  };
+
+  return axios.post(
+    'http://mapi.vaniday.com/api/myvaniday/deleteProductThumb',
+    postData,
+    config,
+  );
+}
+
+function fetchClientList(postData) {
+  var url = Api.myVaniMiddleWare.FETCH_CLIENTLIST_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
+function fetchClientDetail(postData) {
+  var url = Api.myVaniMiddleWare.FETCH_CLIENTDETAIL_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
 export const myAppointmentsSvc = {
   fetchOrderByDate,
   fetchProfileData,
@@ -207,4 +259,9 @@ export const myAppointmentsSvc = {
   fetchInvoiceList,
   fetchAppointmentList,
   updateCarousel,
+  updateProductThumb,
+  deleteProductThumb,
+  createProductThumb,
+  fetchClientList,
+  fetchClientDetail,
 };

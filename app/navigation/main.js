@@ -100,7 +100,7 @@ const bottomTabNavigatorConfig = {
   tabBarOptions: {
     showIcon: true,
     showLabel: true,
-    activeTintColor: BaseColor.MainPrimaryColor,
+    activeTintColor: BaseColor.SecondColor,
     inactiveTintColor: BaseColor.grayColor,
     style: BaseStyle.tabBar,
     labelStyle: {

@@ -22,7 +22,6 @@ export default class InvoiceListItem extends Component {
       // endTime,
       onPress,
     } = this.props;
-    console.log('detail', detail);
     return (
       <TouchableOpacity
         style={[styles.contain, style]}
@@ -51,8 +50,21 @@ export default class InvoiceListItem extends Component {
                       flex: 1,
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
-                    }}>
+                    }}
+                    numberOfLines={2}>
                     {item.serviceName}
+                  </Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text
+                    caption1
+                    semibold
+                    style={{
+                      flex: 1,
+                      textAlign: 'left',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    Price:
                   </Text>
                   <Text
                     caption1
@@ -73,7 +85,8 @@ export default class InvoiceListItem extends Component {
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    {item.staffName}
+                    Staff:{' '}
+                    {item.staffName == null ? 'Not Assigned' : item.staffName}
                   </Text>
                   <Text
                     caption1
@@ -93,7 +106,7 @@ export default class InvoiceListItem extends Component {
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    Status
+                    Status:
                   </Text>
                   <Text
                     caption1
@@ -131,7 +144,7 @@ export default class InvoiceListItem extends Component {
               Business:
             </Text>
             <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-              &nbsp;&nbsp;SGD{total}
+              &nbsp;&nbsp;SGD{parseFloat(total) / 10}
             </Text>
           </View>
           <View
@@ -145,7 +158,7 @@ export default class InvoiceListItem extends Component {
               Vaniday:
             </Text>
             <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-              &nbsp;&nbsp;SGD{total}
+              &nbsp;&nbsp;SGD{(parseFloat(total) * 9) / 10}
             </Text>
           </View>
         </View>

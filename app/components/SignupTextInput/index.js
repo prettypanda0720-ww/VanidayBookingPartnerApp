@@ -26,7 +26,7 @@ export default class SignupTextInput extends React.Component {
             style={customStyle}
             selectionColor = {'black'}
             underlineColor = {'black'}
-            theme = {{colors: {text: 'green', primary: BaseColor.MainPrimaryColor}}}
+            theme = {{colors: {text: 'green', primary: BaseColor.SecondColor}}}
             onFocus={() => this.setState({ isActive: true, })}
             onBlur={() => this.setState({ isActive: false, })}
             onChangeText={text => this.setState({ text })}

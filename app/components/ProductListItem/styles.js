@@ -104,7 +104,7 @@ export default StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 20,
-    backgroundColor: BaseColor.MainPrimaryColor,
+    backgroundColor: BaseColor.SecondColor,
     borderRadius: 8,
     padding: 5,
   },

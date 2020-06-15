@@ -15,7 +15,7 @@ import {
   Icon,
   Text,
   Button,
-  BookingHistory,
+  AppointmentItem,
 } from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
@@ -71,7 +71,7 @@ class Appointments extends Component {
 
   renderItem(item) {
     return (
-      <BookingHistory
+      <AppointmentItem
         // refId={item.refId}
         clientName={item.customerName}
         // appointmentDate={item.appointmentDate}

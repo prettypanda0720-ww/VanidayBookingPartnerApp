@@ -137,7 +137,8 @@ class Invoices extends Component {
                   Salon:
                 </Text>
                 <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-                  &nbsp;&nbsp;SGD&nbsp;{this.state.invoiceData.totalPrice}
+                  &nbsp;&nbsp;SGD&nbsp;
+                  {(parseFloat(this.state.invoiceData.totalPrice) * 9) / 10}
                 </Text>
               </View>
               <View
@@ -146,7 +147,8 @@ class Invoices extends Component {
                   Vaniday:
                 </Text>
                 <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-                  &nbsp;&nbsp;SGD&nbsp;{this.state.invoiceData.totalPrice}
+                  &nbsp;&nbsp;SGD&nbsp;
+                  {parseFloat(this.state.invoiceData.totalPrice) / 10}
                 </Text>
               </View>
             </View>

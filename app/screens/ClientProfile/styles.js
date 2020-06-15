@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {BaseColor} from '@config';
-import * as Utils from "@utils";
+import * as Utils from '@utils';
 
 const SIZE = 40;
 
@@ -32,23 +32,30 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 15,
     paddingHorizontal: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   tabbar: {
-    backgroundColor: "white",
-    height: 40
+    backgroundColor: 'white',
+    height: 40,
   },
   tab: {
-    width: Utils.getWidthDevice() / 3
+    width: Utils.getWidthDevice(),
   },
   indicator: {
     backgroundColor: BaseColor.primaryColor,
-    height: 1
+    height: 1,
   },
   headerStyle: {
     borderBottomWidth: 1,
     borderBottomColor: BaseColor.secondBlackColor,
   },
   sectionStyle: {
-    color: 'rgba(0,0,0,0.65)'
-  }
+    color: 'rgba(0,0,0,0.65)',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {BaseColor} from '@config';
+import * as Utils from '@utils';
 
 export default StyleSheet.create({
   textInput: {
@@ -60,5 +61,29 @@ export default StyleSheet.create({
   headerStyle: {
     borderBottomWidth: 1,
     borderBottomColor: BaseColor.secondBlackColor,
+  },
+  uploadBtnWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: BaseColor.SecondColor,
+    borderRadius: 8,
+  },
+  uploadBtnStyle: {
+    paddingVertical: 15,
+    color: BaseColor.whiteColor,
+    textAlign: 'center',
+  },
+  blockImage: {
+    marginTop: 10,
+    height: Utils.scaleWithPixel(200),
+    width: '100%',
+    borderWidth: 1,
+    borderColor: BaseColor.grayColor,
+    borderRadius: 0,
+  },
+  sectionStyle: {
+    color: 'rgba(0,0,0,0.65)',
   },
 });

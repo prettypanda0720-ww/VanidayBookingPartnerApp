@@ -41,5 +41,8 @@ export const Api = {
     //Daily Sales
     FETCH_APPOINTMENT_DATA_URL: '/myvaniday/fetchAppointList',
     FETCH_INVOICE_DATA_URL: '/myvaniday/fetchInvoiceList',
+    //Clients
+    FETCH_CLIENTLIST_DATA_URL: '/myvaniday/fetchClientList',
+    FETCH_CLIENTDETAIL_DATA_URL: '/myvaniday/fetchClientDetail',
   },
 };

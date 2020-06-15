@@ -32,6 +32,8 @@ import BookingHistory from './BookingHistory';
 import Agenda from './agenda';
 import ExpandableItemComponent from './ExpandableItemComponent';
 import SectionedMultiSelect from './SectionedMultiSelect';
+import CustomerListItem from './CustomerListItem';
+import AppointmentItem from './AppointmentItem';
 
 export {
   Header,
@@ -68,4 +70,6 @@ export {
   Agenda,
   ExpandableItemComponent,
   SectionedMultiSelect,
+  CustomerListItem,
+  AppointmentItem,
 };

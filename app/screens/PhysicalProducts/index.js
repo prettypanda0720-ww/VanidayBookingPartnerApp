@@ -155,7 +155,11 @@ class PhysicalProducts extends Component {
           renderItem={({item, index}) => (
             <ProductListItem
               block
-              image={item.img}
+              image={
+                item.thumbnail.thumbnail_url !== undefined
+                  ? item.thumbnail.thumbnail_url
+                  : ''
+              }
               title={item.product_name}
               sku={item.sku}
               specialprice={item.product_price}
@@ -165,6 +169,7 @@ class PhysicalProducts extends Component {
               onPress={() =>
                 // navigation.navigate('PhysicalProductProfile', {data: item})
                 navigation.navigate('EditProduct', {
+                  data: item,
                   sku: item.sku,
                   subMenuList: subMenuList,
                 })

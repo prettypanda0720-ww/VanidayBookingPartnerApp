@@ -5,7 +5,7 @@ import { BaseColor, Typography, FontWeight } from "@config";
 export default StyleSheet.create({
   customText: {
       borderColor: 'black',
-      color: BaseColor.MainPrimaryColor,
+      color: BaseColor.SecondColor,
       backgroundColor: 'white',
   }
 });

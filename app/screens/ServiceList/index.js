@@ -114,7 +114,7 @@ class ServiceList extends Component {
                   <View
                     style={{
                       borderLeftWidth: 4,
-                      borderLeftColor: BaseColor.MainPrimaryColor,
+                      borderLeftColor: BaseColor.SecondColor,
                       borderTopWidth: 1,
                       borderTopColor: BaseColor.dividerColor,
                     }}>

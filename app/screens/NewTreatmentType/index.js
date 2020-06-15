@@ -74,7 +74,7 @@ class NewTreatmentType extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="Hair Services"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.SecondColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
@@ -87,7 +87,7 @@ class NewTreatmentType extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="e.g Long hair"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.SecondColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>

@@ -26,16 +26,10 @@ class ManageAppointment extends Component {
   render() {
     const {navigation} = this.props;
     const item = this.props.navigation.state.params.bookingData;
+    console.log('ManageAppointment', item);
     const {loading} = this.state;
     let status = [{value: 'Accept'}, {value: 'Cancel'}, {value: 'No Show'}];
-    const detail = [
-      {
-        serviceName: item.serviceName,
-        staffName: item.staffName,
-        price: item.price,
-        duration: item.service_duration,
-      },
-    ];
+    const detail = [item];
     return (
       <SafeAreaView
         style={[BaseStyle.safeAreaView]}
@@ -75,7 +69,7 @@ class ManageAppointment extends Component {
               </View>
               <BookingHistory
                 refId={item.id}
-                clientName={'Judy T'}
+                clientName={item.customerName}
                 appointmentDate={item.slotDate}
                 total={item.price}
                 status={Utils.capitalize(item.status)}
@@ -95,8 +89,8 @@ class ManageAppointment extends Component {
                   paddingHorizontal: 20,
                   textAlign: 'center',
                 }}>
-                Before you reschedule, please chat or contact customer at
-                96671234
+                Before you reschedule, please chat or contact customer at &nbsp;
+                {item.contactNo}
               </Text>
             </View>
             <View
@@ -125,7 +119,7 @@ class ManageAppointment extends Component {
                     Reschedule
                   </Button>
                 </View>
-                <View style={{flex: 1, marginLeft: 8}}>
+                {/* <View style={{flex: 1, marginLeft: 8}}>
                   <Button
                     full
                     style={[styles.customBtn, {backgroundColor: '#e5ccc2'}]}
@@ -134,7 +128,7 @@ class ManageAppointment extends Component {
                     onPress={() => navigation.goBack()}>
                     Chat
                   </Button>
-                </View>
+                </View> */}
               </View>
               <Button
                 style={[

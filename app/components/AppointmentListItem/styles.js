@@ -131,7 +131,7 @@ export default StyleSheet.create({
     width: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: BaseColor.MainPrimaryColor,
+    backgroundColor: BaseColor.SecondColor,
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
   },

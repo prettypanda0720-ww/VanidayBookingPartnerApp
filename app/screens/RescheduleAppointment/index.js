@@ -105,14 +105,7 @@ class RescheduleAppointment extends Component {
       {value: 'Cancel'},
       {value: 'No Show'},
     ];
-    const detail = [
-      {
-        serviceName: item.serviceName,
-        staffName: item.staffName,
-        price: item.price,
-        duration: item.service_duration,
-      },
-    ];
+    const detail = [item];
     return (
       <SafeAreaView
         style={[BaseStyle.safeAreaView]}
@@ -267,7 +260,7 @@ class RescheduleAppointment extends Component {
           </View>
           <BookingHistory
             refId={item.id}
-            clientName={'Judy T'}
+            clientName={item.customerName}
             appointmentDate={item.slotDate}
             total={item.price}
             status={Utils.capitalize(item.status)}

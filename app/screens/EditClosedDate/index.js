@@ -357,7 +357,7 @@ class EditClosedDate extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="e.g. public holiday"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.SecondColor}
                 selectionColor={BaseColor.primaryColor}>
                 {item.reason}
               </TextInput>

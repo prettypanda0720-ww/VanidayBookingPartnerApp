@@ -68,7 +68,7 @@ export default StyleSheet.create({
     flexDirection: 'column'
   },
   image: {
-    color: BaseColor.MainPrimaryColor,
+    color: BaseColor.SecondColor,
   },
   girdContent: {
     flex: 1,

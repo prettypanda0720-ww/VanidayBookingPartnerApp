@@ -23,7 +23,7 @@ import {
 import {Dropdown} from 'react-native-material-dropdown';
 import {withNavigation} from 'react-navigation';
 import * as Utils from '@utils';
-import {BaseStyle, BaseColor} from '@config';
+import {BaseStyle, BaseColor, GreenColor} from '@config';
 import styles from './styles';
 
 class EditService extends Component {
@@ -39,6 +39,7 @@ class EditService extends Component {
       service_name: '',
       sku: '',
       price: '',
+      special_price: '',
       service_duration: '',
       vendor_sections: '',
       isEnalbeProduct: false,
@@ -50,6 +51,18 @@ class EditService extends Component {
       selectedItems: [],
       selectedItemsStr: '',
     };
+  }
+
+  onChangedPrice(text) {
+    this.setState({
+      price: text.replace(/[^0-9]/g, ''),
+    });
+  }
+
+  onChangedSpecialPrice(text) {
+    this.setState({
+      special_price: text.replace(/[^0-9]/g, ''),
+    });
   }
 
   deleteApply() {
@@ -85,12 +98,8 @@ class EditService extends Component {
   onDelete = () => {
     Alert.alert(
       'Delete Service',
-      'Do you really delete service?',
+      'Do you really want to delete service?',
       [
-        {
-          text: 'Ask me later',
-          onPress: () => console.log('Ask me later pressed'),
-        },
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
@@ -114,6 +123,7 @@ class EditService extends Component {
       service_name,
       sku,
       price,
+      special_price,
       selectedItems,
       service_duration,
       vendor_sections,
@@ -139,11 +149,13 @@ class EditService extends Component {
       productInfo: {
         entity_id: id,
         service_name: service_name,
+        sku: sku,
         price: price,
+        special_price: special_price,
         category_ids: selItemsStr,
         is_featured: isFeatured ? 1 : 0,
         service_duration: service_duration,
-        vendor_sections: isEnalbeProduct ? 1 : 0,
+        vendor_sections: vendor_sections,
         description: description,
         short_description: short_description,
         status: isEnalbeProduct ? 1 : 0,
@@ -193,9 +205,10 @@ class EditService extends Component {
               service_name: res_profile.data.name,
               // id: res_profile.data.type_id,
               price: res_profile.data.price,
+              special_price: res_profile.data.special_price,
               description: res_profile.data.description,
               short_description: res_profile.data.short_description,
-              isFeatured: res_profile.data.is_featured == 1 ? true : false,
+              isFeatured: res_profile.data.featured == 1 ? true : false,
               service_duration: res_profile.data.service_duration,
               selectedItems: res_profile.data.category_ids.map(
                 (item, index) => {
@@ -227,6 +240,7 @@ class EditService extends Component {
       sku,
       selectedItems,
       price,
+      special_price,
       service_duration,
     } = this.state;
 
@@ -242,12 +256,62 @@ class EditService extends Component {
       Utils.shortNotifyMessage('Price is required!');
       return false;
     }
+    if (special_price.length === 0) {
+      Utils.shortNotifyMessage('Special Price is required!');
+      return false;
+    }
     if (service_duration.length === 0) {
       Utils.shortNotifyMessage('Duration is required!');
       return false;
     }
     return true;
   }
+
+  icon = ({name, size = 18, style}) => {
+    let iconComponent;
+    const Search = (
+      <Icon
+        name="search"
+        size={15}
+        color={BaseColor.titleColor}
+        style={{paddingLeft: 10}}
+      />
+    );
+    const Down = (
+      <Icon name="angle-down" size={15} color={BaseColor.titleColor} />
+    );
+    const Up = <Icon name="angle-up" size={15} color={BaseColor.titleColor} />;
+    const Close = <Icon name="times" size={10} color={BaseColor.titleColor} />;
+    const Check = (
+      <Icon name="check" size={10} color={GreenColor.darkPrimaryColor} />
+    );
+    const Cancel = <Icon name="times" size={20} color={BaseColor.whiteColor} />;
+
+    switch (name) {
+      case 'search':
+        iconComponent = Search;
+        break;
+      case 'keyboard-arrow-up':
+        iconComponent = Up;
+        break;
+      case 'keyboard-arrow-down':
+        iconComponent = Down;
+        break;
+      case 'close':
+        iconComponent = Close;
+        break;
+      case 'check':
+        iconComponent = Check;
+        break;
+      case 'cancel':
+        iconComponent = Cancel;
+        break;
+      default:
+        iconComponent = null;
+        break;
+    }
+    return <View style={styles}>{iconComponent}</View>;
+  };
 
   displayContentView() {
     const {navigation} = this.props;
@@ -257,6 +321,7 @@ class EditService extends Component {
       // subMenuList,
       service_name,
       price,
+      special_price,
       service_duration,
       isFeatured,
       selectedItems,
@@ -336,6 +401,12 @@ class EditService extends Component {
               onSelectedItemsChange={this.onSelectedItemsChange}
               selectedItems={this.state.selectedItems}
               showChips={false}
+              showCancelButton={true}
+              styles={{
+                button: {backgroundColor: BaseColor.SecondColor, height: 45},
+                cancelButton: {backgroundColor: BaseColor.grayColor},
+              }}
+              iconRenderer={this.icon}
             />
             <View style={styles.inputGroup}>
               <Text caption3 style={{color: BaseColor.secondBlackColor}}>
@@ -388,28 +459,29 @@ class EditService extends Component {
                 </Text>
                 <TextInput
                   style={[BaseStyle.textInput, styles.textInput]}
-                  onChangeText={(text) => this.setState({price: text})}
+                  onChangeText={(text) => this.onChangedPrice(text)}
                   autoCorrect={false}
                   placeholder="$ 0.00"
                   placeholderTextColor={BaseColor.titleColor}
                   selectionColor={BaseColor.primaryColor}
-                  keyboardType={'numeric'}>
-                  {price}
-                </TextInput>
+                  keyboardType={'numeric'}
+                  value={this.state.price}
+                />
               </View>
-              {/* <View style={styles.inputGroup}>
+              <View style={styles.inputGroup}>
                 <Text body2 style={{color: BaseColor.sectionColor}}>
-                  Discount price
+                  Special price
                 </Text>
                 <TextInput
                   style={[BaseStyle.textInput, styles.textInput]}
-                  onChangeText={(text) => this.setState({service_duration: text})}
+                  onChangeText={(text) => this.onChangedSpecialPrice(text)}
                   autoCorrect={false}
                   placeholder="$ 0.00"
                   placeholderTextColor={BaseColor.titleColor}
                   selectionColor={BaseColor.primaryColor}
+                  value={this.state.special_price}
                 />
-              </View> */}
+              </View>
               <View style={[styles.profileItem, {marginTop: 20}]}>
                 <Text body1 style={styles.sectionStyle}>
                   Enable Service

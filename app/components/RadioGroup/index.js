@@ -25,11 +25,11 @@ export default class RadioGroup extends React.Component {
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
-              color: BaseColor.MainPrimaryColor,
+              color: BaseColor.SecondColor,
             }}>
             <RadioButton
-              uncheckedColor={BaseColor.MainPrimaryColor}
-              color={BaseColor.MainPrimaryColor}
+              uncheckedColor={BaseColor.SecondColor}
+              color={BaseColor.SecondColor}
               value="first"
             />
             <Text style={{color: BaseColor.sectionColor}}>Company</Text>
@@ -42,8 +42,8 @@ export default class RadioGroup extends React.Component {
               alignItems: 'center',
             }}>
             <RadioButton
-              uncheckedColor={BaseColor.MainPrimaryColor}
-              color={BaseColor.MainPrimaryColor}
+              uncheckedColor={BaseColor.SecondColor}
+              color={BaseColor.SecondColor}
               value="second"
             />
             <Text style={{color: BaseColor.sectionColor}}>Freelancer</Text>

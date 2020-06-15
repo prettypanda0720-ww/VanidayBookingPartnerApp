@@ -45,7 +45,14 @@ export default class ProfileEdit extends Component {
       markedDates: {
         [this.getCurrentDate()]: {selected: true, marked: false},
       },
+      mobile_no: '+65',
     };
+  }
+
+  onChangedMobileNo(text) {
+    this.setState({
+      mobile_no: text.replace(/[^0-9]/g, ''),
+    });
   }
 
   getGenderName(key) {
@@ -146,7 +153,7 @@ export default class ProfileEdit extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="First Name"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.SecondColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
@@ -156,7 +163,7 @@ export default class ProfileEdit extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="Last Name"
-                placeholderTextColor={BaseColor.MainPrimaryColor}
+                placeholderTextColor={BaseColor.SecondColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
@@ -201,11 +208,15 @@ export default class ProfileEdit extends Component {
               />
             </View>
             <View style={styles.inputGroup}>
-              <PhoneInput
-                ref={(ref) => {
-                  this.phone = ref;
-                }}
-                style={styles.phoneInputStyle}
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.onChangedMobileNo(text)}
+                autoCorrect={false}
+                placeholder="Mobile No"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+                keyboardType={'numeric'}
+                value={this.state.mobile_no}
               />
             </View>
             <View style={styles.inputGroup}>
@@ -214,6 +225,16 @@ export default class ProfileEdit extends Component {
                 onChangeText={(text) => this.setState({person_address: text})}
                 autoCorrect={false}
                 placeholder="Address"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({postal_code: text})}
+                autoCorrect={false}
+                placeholder="Postal code"
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
               />
@@ -321,23 +342,31 @@ export default class ProfileEdit extends Component {
                 }}
               />
             </View>
-            {/* <RadioGroup /> */}
-            <View style={[styles.profileItem, {paddingVertical: 15}]}>
-              <Text subhead style={{color: BaseColor.titleColor}}>
-                Product Seller
-              </Text>
-              <Switch
-                name="angle-right"
-                size={18}
-                onValueChange={this.toggleSwitch}
-                value={this.state.isOwner}
+            <View
+              style={[
+                styles.inputGroup,
+                {flexDirection: 'row', justifyContent: 'space-between'},
+              ]}>
+              <Checkbox
+                label="Product Seller"
+                value="agree"
+                checked={this.state.checked}
+                onCheck={() =>
+                  this.setState({
+                    checked: !this.state.checked,
+                  })
+                }
               />
-              <Text subhead style={{color: BaseColor.titleColor}}>
-                Salon Owner
-              </Text>
-            </View>
-            <View style={{flexDirection: 'column', width: '100%'}}>
-              {this.displayOwnerView()}
+              <Checkbox
+                label="Salon Owner"
+                value="agree"
+                checked={this.state.checked}
+                onCheck={() =>
+                  this.setState({
+                    checked: !this.state.checked,
+                  })
+                }
+              />
             </View>
             <View style={styles.inputGroup}>
               <Checkbox

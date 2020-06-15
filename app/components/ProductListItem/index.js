@@ -30,7 +30,7 @@ export default class ProductListItem extends Component {
             <Icon
               name="heart"
               size={30}
-              color={BaseColor.MainPrimaryColor}
+              color={BaseColor.SecondColor}
               solid
             />
           </View> */}

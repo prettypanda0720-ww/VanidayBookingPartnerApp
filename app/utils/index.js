@@ -1,4 +1,5 @@
 const XDate = require('xdate');
+import Moment from 'moment';
 import {
   NativeModules,
   Platform,
@@ -367,6 +368,7 @@ export function capitalize(str) {
 }
 
 export function getTimeFromDate(date) {
+  console.log('getTimeFromDate', date);
   const words = date.split(' ');
   const count = words.length;
   if (count > 0) {
@@ -403,7 +405,8 @@ export function getFormattedShortDate(date) {
 }
 
 export function getFormattedLongDate(date) {
-  const csDate = new Date(date);
+  console.log('getFormattedLongDate', date);
+  let csDate = new Date(date);
   let mlist = [
     'Jan',
     'Feb',
@@ -418,7 +421,6 @@ export function getFormattedLongDate(date) {
     'Nov',
     'Dec',
   ];
-  console.log('getFormattedLongDate', csDate);
 
   var year = csDate.getFullYear();
 
@@ -449,4 +451,9 @@ export function autoTrackEndTime(startDate, minutes) {
   let xdate = new XDate(startDate, false).addMinutes(minutes);
   console.log('xdate.toLocaleTimeString()', xdate.toLocaleTimeString());
   return xdate.toLocaleTimeString();
+}
+
+export function timeToAsianString(time) {
+  Moment.locale('en');
+  return Moment(time).format('d MMM Y');
 }

@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { View } from "react-native";
-import { Text } from "@components";
-import styles from "./styles";
-import PropTypes from "prop-types";
+import React, {Component} from 'react';
+import {View} from 'react-native';
+import {Text} from '@components';
+import styles from './styles';
+import PropTypes from 'prop-types';
 
 export default class ProfilePerformance extends Component {
   renderValue(type, value) {
     switch (type) {
-      case "primary":
+      case 'primary':
         return (
           <Text title3 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
             {value}
           </Text>
         );
-      case "small":
+      case 'small':
         return (
           <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
             {value}
@@ -30,13 +30,13 @@ export default class ProfilePerformance extends Component {
 
   renderTitle(type, value) {
     switch (type) {
-      case "primary":
+      case 'primary':
         return (
           <Text body2 grayColor>
             {value}
           </Text>
         );
-      case "small":
+      case 'small':
         return (
           <Text caption1 grayColor>
             {value}
@@ -59,11 +59,11 @@ export default class ProfilePerformance extends Component {
       contentRight,
       data,
       type,
-      flexDirection
+      flexDirection,
     } = this.props;
 
     switch (flexDirection) {
-      case "row":
+      case 'row':
         return (
           <View style={[styles.contain, style]}>
             {data.map((item, index) => {
@@ -85,8 +85,7 @@ export default class ProfilePerformance extends Component {
                 return (
                   <View
                     style={[styles.contentCenter, contentCenter]}
-                    key={index}
-                  >
+                    key={index}>
                     {this.renderValue(type, item.value)}
                     {this.renderTitle(type, item.title)}
                   </View>
@@ -95,9 +94,9 @@ export default class ProfilePerformance extends Component {
             })}
           </View>
         );
-      case "column":
+      case 'column':
         return (
-          <View style={[{ justifyContent: "space-between", flex: 1 }, style]}>
+          <View style={[{justifyContent: 'space-between', flex: 1}, style]}>
             {data.map((item, index) => (
               <View style={styles.itemInfor} key={index}>
                 {this.renderTitle(type, item.title)}
@@ -117,15 +116,15 @@ ProfilePerformance.propTypes = {
   data: PropTypes.array,
   contentLeft: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   contentCenter: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  contentRight: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  contentRight: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 ProfilePerformance.defaultProps = {
-  flexDirection: "row",
-  type: "medium",
+  flexDirection: 'row',
+  type: 'medium',
   style: {},
   data: [],
   contentLeft: {},
   contentCenter: {},
-  contentRight: {}
+  contentRight: {},
 };

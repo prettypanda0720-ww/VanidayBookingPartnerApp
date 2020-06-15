@@ -30,7 +30,7 @@ export default StyleSheet.create({
   img: {
     width: Utils.scaleWithPixel(200),
     height: Utils.scaleWithPixel(200),
-    borderRadius: Utils.scaleWithPixel(200) / 2
+    borderRadius: Utils.scaleWithPixel(200) / 2,
   },
   slide: {
     alignItems: 'center',
@@ -86,8 +86,7 @@ export default StyleSheet.create({
     height: 24,
   },
   logo: {
-    width: '90%',
-    height: Utils.scaleWithPixel(40),
+    width: '100%',
+    height: Utils.scaleWithPixel(35),
   },
 });
-

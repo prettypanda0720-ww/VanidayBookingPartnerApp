@@ -38,21 +38,23 @@ export default class AppointmentListItem extends Component {
       <TouchableOpacity
         // testID={testIDs.agenda.ITEM}
         onPress={onPress}
-        style={styles.serviceItemWrapper}>
+        style={[styles.serviceItemWrapper, style]}>
         <View style={{flexDirection: 'column', padding: 10, flex: 1}}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text
               style={{
                 fontSize: 17,
-                color: BaseColor.MainPrimaryColor,
+                color: BaseColor.SecondColor,
                 fontWeight: 'bold',
               }}>
-              {Utils.capitalize(acceptedState)}
+              {acceptedState !== undefined
+                ? Utils.capitalize(acceptedState)
+                : ''}
             </Text>
             <Text
               style={{
                 fontSize: 17,
-                color: BaseColor.MainPrimaryColor,
+                color: BaseColor.SecondColor,
                 fontWeight: 'bold',
               }}>
               {startTime}
@@ -61,7 +63,7 @@ export default class AppointmentListItem extends Component {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.serviceItemNameStyle}>{customerName}</Text>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text headline bold style={{color: BaseColor.MainPrimaryColor}}>
+              <Text headline bold style={{color: BaseColor.SecondColor}}>
                 ${total}
               </Text>
             </View>
@@ -76,7 +78,7 @@ export default class AppointmentListItem extends Component {
               &nbsp;Min
             </Text>
             <Text style={[styles.serviceItemDateStyle, {fontWeight: 'bold'}]}>
-              {dateutils.getTimeFromDate(endTime)}
+              {endTime}
             </Text>
           </View>
         </View>

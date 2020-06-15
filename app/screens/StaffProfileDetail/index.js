@@ -158,12 +158,8 @@ class StaffProfileDetail extends Component {
   onDelete = () => {
     Alert.alert(
       'Delete Staff',
-      'Do you really delete staff?',
+      'Do you really want to delete staff?',
       [
-        {
-          text: 'Ask me later',
-          onPress: () => console.log('Ask me later pressed'),
-        },
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),

@@ -31,7 +31,6 @@ class CreateStaff extends Component {
       staff_title: '',
       staff_full_name: '',
       staff_gender: '',
-      staff_skill_level: '',
       staff_joined_date: this.getCurrentDate(),
       staff_status: 0,
       productTypes: [],
@@ -66,7 +65,6 @@ class CreateStaff extends Component {
       staff_full_name,
       staff_title,
       staff_gender,
-      staff_skill_level,
       staff_joined_date,
       staff_status,
       selectedItems,
@@ -88,10 +86,6 @@ class CreateStaff extends Component {
       Utils.shortNotifyMessage('Please select service categories!');
       return false;
     }
-    if (staff_skill_level.length === 0) {
-      Utils.shortNotifyMessage('Skill is required!');
-      return false;
-    }
     if (staff_joined_date.length === 0) {
       Utils.shortNotifyMessage('Joined Date is required!');
       return false;
@@ -110,7 +104,6 @@ class CreateStaff extends Component {
         staff_full_name,
         staff_title,
         staff_gender,
-        staff_skill_level,
         staff_joined_date,
         staff_status,
         selectedItems,
@@ -128,7 +121,7 @@ class CreateStaff extends Component {
           staff_full_name: staff_full_name,
           staff_title: staff_title,
           staff_gender: staff_gender,
-          staff_skill_level: staff_skill_level,
+          // staff_skill_level: staff_skill_level,
           staff_joined_date: staff_joined_date,
           staff_status: staff_status,
           product_ids: customSelectedItems,
@@ -230,7 +223,6 @@ class CreateStaff extends Component {
       staff_full_name,
       staff_title,
       staff_gender,
-      staff_skill_level,
       staff_joined_date,
       staff_status,
       selectedItems,
@@ -297,26 +289,6 @@ class CreateStaff extends Component {
               onChangeText={(value) => {
                 this.setState({
                   staff_gender: this.getGenderKey(value),
-                });
-              }}
-            />
-            <Dropdown
-              label="Skill Level"
-              data={[
-                {value: '1'},
-                {value: '2'},
-                {value: '3'},
-                {value: '4'},
-                {value: '5'},
-              ]}
-              rippleOpacity={0.7}
-              baseColor={BaseColor.secondBlackColor}
-              tintColor={BaseColor.blackColor}
-              style={{color: BaseColor.blackColor}}
-              value={staff_skill_level}
-              onChangeText={(value) => {
-                this.setState({
-                  staff_skill_level: value,
                 });
               }}
             />

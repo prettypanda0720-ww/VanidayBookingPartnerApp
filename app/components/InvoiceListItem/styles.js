@@ -14,7 +14,7 @@ export default StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 7,
     borderBottomColor: BaseColor.whiteColor,
-    backgroundColor: BaseColor.MainPrimaryColor,
+    backgroundColor: BaseColor.SecondColor,
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
     flexDirection: 'row',

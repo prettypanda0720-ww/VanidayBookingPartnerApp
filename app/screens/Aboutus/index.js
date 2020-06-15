@@ -405,7 +405,7 @@ class Aboutus extends Component {
                   onChangeText={(text) => this.setState({description: text})}
                   autoCorrect={false}
                   placeholder=""
-                  placeholderTextColor={BaseColor.MainPrimaryColor}
+                  placeholderTextColor={BaseColor.SecondColor}
                   selectionColor={BaseColor.primaryColor}
                   multiline={true}>
                   {description}

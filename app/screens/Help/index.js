@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TouchableOpacity, Image} from 'react-native';
+import {View, ScrollView, TouchableOpacity, Image, Linking} from 'react-native';
 import {BaseStyle, BaseColor, Images} from '@config';
 import {
   SafeAreaView,
@@ -62,7 +62,7 @@ export default class Help extends Component {
               <TouchableOpacity
                 style={[styles.profileItem, {marginTop: 5}]}
                 onPress={() => {
-                  navigation.navigate('');
+                  Linking.openURL('https://chat.vaniday.com.sg');
                 }}>
                 <Text subhead style={{color: BaseColor.titleColor}}>
                   24/7 Live Chat Support
@@ -77,7 +77,7 @@ export default class Help extends Component {
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
-                  navigation.navigate('');
+                  Linking.openURL('contact@vaniday.com.sg');
                 }}>
                 <Text subhead style={{color: BaseColor.titleColor}}>
                   Email: contact@vaniday.com.sg
@@ -92,7 +92,7 @@ export default class Help extends Component {
               <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
-                  navigation.navigate('');
+                  Linking.openURL('www.facebook.com/vaniday.sg');
                 }}>
                 <Text subhead style={{color: BaseColor.titleColor}}>
                   Facebook: www.facebook.com/vaniday.sg
@@ -118,7 +118,7 @@ export default class Help extends Component {
                 questions, or would just like to get to know us better, feel
                 free to contact our customer service team:
               </Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={[styles.profileItem, {marginTop: 5}]}
                 onPress={() => {
                   navigation.navigate('');
@@ -162,7 +162,7 @@ export default class Help extends Component {
                   color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               <Text
                 headline
@@ -190,7 +190,7 @@ export default class Help extends Component {
                 Interested in knowing more about us, our team and our business
                 model?
               </Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.profileItem}
                 onPress={() => {
                   navigation.navigate('');
@@ -204,7 +204,7 @@ export default class Help extends Component {
                   color={'rgba(0,0,0,0.65)'}
                   style={{marginLeft: 5}}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </ScrollView>
         </SafeAreaView>
