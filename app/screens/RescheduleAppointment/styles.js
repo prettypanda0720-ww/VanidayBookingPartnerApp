@@ -57,7 +57,7 @@ export default StyleSheet.create({
     borderBottomColor: BaseColor.secondBlackColor,
   },
   rowBetweenAlign: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   customBtn: {
@@ -87,5 +87,14 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 15,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

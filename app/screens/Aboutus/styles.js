@@ -47,6 +47,8 @@ export default StyleSheet.create({
   wrapper: {
     width: '100%',
     height: Utils.scaleWithPixel(230),
+    borderWidth: 1,
+    borderColor: BaseColor.SecondColor,
   },
   headerTitle: {
     color: BaseColor.secondBlackColor,
@@ -63,7 +65,7 @@ export default StyleSheet.create({
   },
   loadingContainer: {
     position: 'absolute',
-    top: 250,
+    top: 0,
     left: 0,
     right: 0,
     bottom: 0,

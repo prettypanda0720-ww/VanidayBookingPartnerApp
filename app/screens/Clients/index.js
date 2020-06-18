@@ -131,10 +131,10 @@ class Clients extends Component {
                 style={{marginTop: 10}}
                 key={'service' + index}
                 image={item.image}
-                description={item.customerAddr}
+                // description={item.customerAddr}
                 name={item.customerName}
                 subName={item.customerEmail}
-                gender={item.customerGender}
+                // gender={item.customerGender}
                 contactNo={item.contactNo}
                 onPress={() =>
                   navigation.navigate('ClientProfile', {

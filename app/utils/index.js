@@ -367,15 +367,49 @@ export function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function getTimeFromDate(date) {
-  console.log('getTimeFromDate', date);
-  const words = date.split(' ');
-  const count = words.length;
-  if (count > 0) {
-    return words[count - 1];
-  } else {
-    return '';
+export function formatDate(date) {
+  var d = new XDate(date);
+  var hh = d.getHours();
+  var m = d.getMinutes();
+  var s = d.getSeconds();
+  var dd = 'AM';
+  var h = hh;
+  if (h >= 12) {
+    h = hh - 12;
+    dd = 'PM';
   }
+  if (h == 0) {
+    h = 12;
+  }
+  m = m < 10 ? '0' + m : m;
+
+  s = s < 10 ? '0' + s : s;
+
+  /* if you want 2 digit hours:
+  h = h<10?"0"+h:h; */
+
+  var pattern = new RegExp('0?' + hh + ':' + m + ':' + s);
+
+  var replacement = h + ':' + m;
+  /* if you want to add seconds
+  replacement += ":"+s;  */
+  // replacement += ' ' + dd;
+
+  return getTimeFromDate(date.replace(pattern, replacement)) + ' ' + dd;
+}
+
+export function getTimeFromDate(date) {
+  console.log('startDate', date);
+  let xdate = new XDate(date, false);
+  // console.log('xdate.toLocaleTimeString()', xdate.toLocaleTimeString());
+  return xdate.toString('hh:mm');
+}
+
+export function autoTrackEndTime(startDate, minutes) {
+  console.log('startDate', startDate);
+  let xdate = new XDate(startDate, false).addMinutes(minutes);
+  // console.log('xdate.toLocaleTimeString()', xdate.toLocaleTimeString());
+  return xdate.toString('HH:mm');
 }
 
 export function getDateFromDate(date) {
@@ -444,13 +478,6 @@ export function shortNotifyMessage(msg) {
   } else {
     AlertIOS.alert(msg);
   }
-}
-
-export function autoTrackEndTime(startDate, minutes) {
-  console.log('startDate', startDate);
-  let xdate = new XDate(startDate, false).addMinutes(minutes);
-  console.log('xdate.toLocaleTimeString()', xdate.toLocaleTimeString());
-  return xdate.toLocaleTimeString();
 }
 
 export function timeToAsianString(time) {

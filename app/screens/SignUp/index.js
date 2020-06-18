@@ -429,20 +429,23 @@ class SignUp extends Component {
                 secureTextEntry={true}
               />
             </View>
-            <View style={styles.inputGroup}>
-              <PhoneInput
-                ref={(ref) => {
-                  this.phone = ref;
-                }}
-                style={styles.phoneInputStyle}
-              />
-            </View>
+
             <View style={styles.inputGroup}>
               <TextInput
                 style={[BaseStyle.textInput, styles.textInput]}
                 onChangeText={(text) => this.setState({person_address: text})}
                 autoCorrect={false}
                 placeholder="Address"
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <TextInput
+                style={[BaseStyle.textInput, styles.textInput]}
+                onChangeText={(text) => this.setState({phone_no: text})}
+                autoCorrect={false}
+                placeholder="Phone No"
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
               />

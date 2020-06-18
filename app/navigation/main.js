@@ -82,6 +82,8 @@ import RescheduleAppointment from '@screens/RescheduleAppointment';
 import ServiceList from '@screens/ServiceList';
 import EditOpeningHours from '@screens/EditOpeningHours';
 import Help from '@screens/Help';
+import EditAboutusAlbum from '@screens/EditAboutusAlbum';
+import DeleteAboutusAlbum from '@screens/DeleteAboutusAlbum';
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
   const nextScene = scenes[scenes.length - 1].route.routeName;
@@ -403,6 +405,12 @@ const StackNavigator = createStackNavigator(
     },
     Help: {
       screen: Help,
+    },
+    EditAboutusAlbum: {
+      screen: EditAboutusAlbum,
+    },
+    DeleteAboutusAlbum: {
+      screen: DeleteAboutusAlbum,
     },
   },
   {

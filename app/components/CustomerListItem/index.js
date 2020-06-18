@@ -79,17 +79,17 @@ export default class CustomerListItem extends Component {
               style={{color: BaseColor.sectionColor}}>
               Name: {name}
             </Text>
-            <Text
+            {/* <Text
               footnote
               numberOfLines={1}
               style={{color: BaseColor.sectionColor}}>
               Gender: {gender == null ? 'Not Assigned' : gender}
-            </Text>
+            </Text> */}
             <Text
               footnote
               numberOfLines={1}
               style={{color: BaseColor.sectionColor}}>
-              contactNo: {contactNo}
+              Mobile No: {contactNo}
             </Text>
             <View>{this.displaySubNameView(subName)}</View>
             <View>{this.displayDescriptionView(description)}</View>

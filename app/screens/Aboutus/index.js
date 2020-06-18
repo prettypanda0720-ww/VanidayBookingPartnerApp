@@ -3,7 +3,13 @@ import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
 import {bindActionCreators} from 'redux';
 import {AuthActions} from '@actions';
-import {View, ScrollView, TextInput, ActivityIndicator} from 'react-native';
+import {
+  View,
+  ScrollView,
+  TextInput,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import {BaseStyle, BaseColor} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import {primarytypes} from '@data';
@@ -32,6 +38,7 @@ class Aboutus extends Component {
       terms_and_conditions: '',
       free_cancellation_hour: '',
       photos: [],
+      currentPhotoCnt: 0,
       carousel: {},
       serviceTypes: [],
       productTypes: [],
@@ -93,6 +100,7 @@ class Aboutus extends Component {
   onPhotoUpdate = () => {
     const {auth} = this.props;
     const token = auth.user.token;
+    // console.log('this.state.carousel', this.state.carousel);
     if (Object.keys(this.state.carousel).length > 0) {
       this.setState({upLoading: true});
       myAppointmentsSvc
@@ -113,18 +121,43 @@ class Aboutus extends Component {
   };
 
   componentDidMount() {
-    console.log('aboutus', this.props.navigation.state.params.title);
-    this.setState({
-      shopTitle: this.props.navigation.state.params.title,
-      vendor_stripe_id: this.props.navigation.state.params.vendor_stripe_id,
-      unique_entity_number: this.props.navigation.state.params
-        .unique_entity_number,
-      contact_number: this.props.navigation.state.params.contact_number,
-      location: this.props.navigation.state.params.location,
-      description: this.props.navigation.state.params.description,
-      photos: this.props.navigation.state.params.photos,
-      primary_type: this.props.navigation.state.params.vendor_primary_type,
-      secondary_type: this.props.navigation.state.params.vendor_secondary_type,
+    const {auth, navigation} = this.props;
+    const token = auth.user.token;
+    this.focusListener = navigation.addListener('didFocus', () => {
+      // The screen is focused
+      // Call any action
+      myAppointmentsSvc
+        .fetchProfileData(token)
+        .then((response) => {
+          const res_profile = response.data.data;
+          console.log('AboutUS', res_profile);
+          if (response.data.data !== undefined) {
+            let tpPhotos = [];
+            if (res_profile.vendor_carousel !== null) {
+              tpPhotos = JSON.parse(res_profile.vendor_carousel).map(
+                (photo, index) => {
+                  return res_profile.venCarPrefix + photo;
+                },
+              );
+            }
+            this.setState({
+              shopTitle: res_profile.shop_title,
+              vendor_stripe_id: res_profile.vendor_stripe_id,
+              unique_entity_number: res_profile.unique_entity_number,
+              contact_number: res_profile.contact_number,
+              location: res_profile.company_locality,
+              description: res_profile.company_description,
+              photos: tpPhotos,
+              primary_type: res_profile.vendor_primary_type,
+              secondary_type: res_profile.vendor_secondary_type,
+              currentPhotoCnt: res_profile.vendor_carousel.length,
+            });
+          }
+        })
+        .catch((error) => {
+          console.log('appointment error');
+          console.log(error);
+        });
     });
 
     myAppointmentsSvc
@@ -184,21 +217,20 @@ class Aboutus extends Component {
     }).then((response) => {
       let tempArray = [];
       this.setState({ImageSource: response});
-      response.forEach((item) => {
+      response.forEach((item, index) => {
         let filename = item.path.substring(item.path.lastIndexOf('/') + 1);
         let filepath = item.path;
         let data = item.data;
         this.state.photos.push(filepath);
         tempArray.push({
+          position: this.state.currentPhotoCnt + index,
           image_name: filename,
           image_base64_content: data,
         });
-        let uploadPhotoData = {carousel: tempArray};
-        this.setState({carousel: uploadPhotoData});
-        // console.log('imagpath==========' + item);
-        // console.log('filePath:', item.data);
-        // console.log('fileName:', filename);
       });
+      let uploadPhotoData = {carousel: tempArray};
+      this.setState({carousel: uploadPhotoData});
+      // console.log('uploadPhotoData', this.state.carousel);
     });
   };
 
@@ -262,9 +294,46 @@ class Aboutus extends Component {
             style={styles.headerStyle}
           />
           <ScrollView>
-            <Text headline style={styles.headerTitle}>
-              Featured Image
-            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                padding: 20,
+              }}>
+              <Text headline>Featured Image</Text>
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  style={{marginRight: 10}}
+                  onPress={() => navigation.navigate('EditAboutusAlbum')}>
+                  <Icon
+                    name="edit"
+                    size={20}
+                    color={
+                      this.state.deleteFlag
+                        ? BaseColor.SecondColor
+                        : BaseColor.titleColor
+                    }
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{marginLeft: 10}}
+                  onPress={() =>
+                    navigation.navigate('DeleteAboutusAlbum', {
+                      photos: this.state.photos,
+                    })
+                  }>
+                  <Icon
+                    name="trash"
+                    size={20}
+                    color={
+                      this.state.deleteFlag
+                        ? BaseColor.SecondColor
+                        : BaseColor.titleColor
+                    }
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
             <View style={styles.wrapper}>
               <Swiper
                 dotStyle={{
@@ -533,6 +602,29 @@ class Aboutus extends Component {
   render() {
     return <View style={{flex: 1}}>{this.displayContentView()}</View>;
   }
+
+  renderItem = ({item, index, move, moveEnd, isActive}) => {
+    return (
+      <TouchableOpacity
+        style={{
+          height: 100,
+          backgroundColor: isActive ? 'blue' : item.backgroundColor,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        onLongPress={move}
+        onPressOut={moveEnd}>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            color: 'white',
+            fontSize: 32,
+          }}>
+          {item.label}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 }
 
 const mapStateToProps = (state) => {

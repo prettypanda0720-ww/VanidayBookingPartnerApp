@@ -100,7 +100,7 @@ export default StyleSheet.create({
     borderBottomRightRadius: 5,
   },
   serviceItemNameStyle: {
-    fontSize: 14,
+    fontSize: 12,
     color: BaseColor.blackColor,
     marginTop: 5,
     fontWeight: 'bold',

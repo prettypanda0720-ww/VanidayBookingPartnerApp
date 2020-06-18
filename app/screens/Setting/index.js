@@ -61,6 +61,14 @@ class Setting extends Component {
           .then((response) => {
             const res_profile = response.data.data;
             if (response.data.data != undefined) {
+              let tpPhotos = [];
+              if (res_profile.vendor_carousel !== null) {
+                tpPhotos = JSON.parse(res_profile.vendor_carousel).map(
+                  (photo, index) => {
+                    return res_profile.venCarPrefix + photo;
+                  },
+                );
+              }
               this.setState({
                 dataLoading: false,
                 vendor_stripe_id: res_profile.vendor_stripe_id,
@@ -70,11 +78,7 @@ class Setting extends Component {
                 location: res_profile.company_locality,
                 description: res_profile.company_description,
                 rating: res_profile.average_rating,
-                photos: JSON.parse(res_profile.vendor_carousel).map(
-                  (photo, index) => {
-                    return res_profile.venCarPrefix + photo;
-                  },
-                ),
+                photos: tpPhotos,
                 serviceList: res_profile.serviceList,
                 vendor_primary_type: res_profile.vendor_primary_type,
                 vendor_secondary_type: res_profile.vendor_secondary_type,
@@ -187,19 +191,7 @@ class Setting extends Component {
                   width: Utils.scaleWithPixel(135),
                   height: Utils.scaleWithPixel(65),
                 }}
-                onPress={() =>
-                  navigation.navigate('Aboutus', {
-                    vendor_stripe_id: vendor_stripe_id,
-                    unique_entity_number: unique_entity_number,
-                    contact_number: contact_number,
-                    title: shopTitle,
-                    location: location,
-                    description: description,
-                    photos: photos,
-                    vendor_primary_type: vendor_primary_type,
-                    vendor_secondary_type: vendor_secondary_type,
-                  })
-                }
+                onPress={() => navigation.navigate('Aboutus')}
               />
               <View style={styles.contentService}>
                 <Text body2 style={styles.sectionStyle}>

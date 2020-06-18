@@ -97,13 +97,18 @@ class Home extends Component<{}> {
         this.setState({month: this.getMonthName(day.month - 1)});
         this.setState({day: day.day});
         Utils.longNotifyMessage(
-          'To view appointments on another month, please click “Select Month” at the top and choose a date in that month.',
+          'To view appointments for another month, please click “Select Month” at the top and choose a date in that month.',
         );
       }
     }
   }
 
   renderItem(item) {
+    console.log('startTime', item.bookingFrom);
+    // console.log('startTime', Utils.formatDate(item.bookingFrom));
+    // console.log('endTime', item.bookingTo);
+    // console.log('endTime', Utils.formatDate(item.bookingTo));
+    console.log('endTime', Utils.formatDate('2020-06-28 19:30:00'));
     return (
       <AppointmentListItem
         refId={item.id}
@@ -112,8 +117,8 @@ class Home extends Component<{}> {
         name={item.serviceName}
         staffName={item.staffName}
         appointmentDate={item.slotDate}
-        startTime={Utils.getTimeFromDate(item.bookingFrom)}
-        endTime={Utils.getTimeFromDate(item.bookingTo)}
+        startTime={Utils.formatDate(item.bookingFrom)}
+        endTime={Utils.formatDate(item.bookingTo)}
         duration={item.service_duration}
         total={item.price}
         day={this.state.day}
@@ -159,7 +164,7 @@ class Home extends Component<{}> {
                     <Icon name="bookmark" size={30} color={'#fff'} />
                   </View>
                 </TouchableOpacity> */}
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => this.goBybtn('CreateClosedDate')}
                   style={[styles.actionBtnWrapper, {marginBottom: 0}]}>
                   <Text headline bold style={{color: '#fff'}}>
@@ -172,8 +177,8 @@ class Home extends Component<{}> {
                     ]}>
                     <Icon name="clock" size={30} color={'#fff'} />
                   </View>
-                </TouchableOpacity>
-                {/* <TouchableOpacity
+                </TouchableOpacity> */}
+                <TouchableOpacity
                   onPress={() => this.goBybtn('CreateAppointment')}
                   style={styles.actionBtnWrapper}>
                   <Text headline bold style={{color: '#fff'}}>
@@ -186,7 +191,7 @@ class Home extends Component<{}> {
                     ]}>
                     <Icon name="calendar" size={30} color={'#fff'} />
                   </View>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
               </View>
             </View>
           </TouchableOpacity>
@@ -225,7 +230,7 @@ class Home extends Component<{}> {
             return (
               <View style={styles.knobStyle}>
                 <Text caption1 style={{color: BaseColor.whiteColor}}>
-                  Choose Month
+                  Select Month
                 </Text>
                 <Icon
                   name="angle-down"

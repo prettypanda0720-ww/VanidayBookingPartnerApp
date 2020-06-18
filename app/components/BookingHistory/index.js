@@ -22,6 +22,7 @@ export default class BookingHistory extends Component {
       endTime,
       onPress,
     } = this.props;
+    console.log('status', status);
     return (
       <TouchableOpacity
         style={[styles.contain, style]}
@@ -42,7 +43,7 @@ export default class BookingHistory extends Component {
           renderItem={({item}) => {
             return (
               <View style={styles.mainContent}>
-                <View style={styles.serviceItemWrapper}>
+                {/* <View style={styles.serviceItemWrapper}>
                   <Text
                     caption1
                     semibold
@@ -50,7 +51,7 @@ export default class BookingHistory extends Component {
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    InvoiceID:
+                    OrderID:
                   </Text>
                   <Text
                     caption1
@@ -60,9 +61,9 @@ export default class BookingHistory extends Component {
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    &nbsp;#{item.id}
+                    &nbsp;#{refId}
                   </Text>
-                </View>
+                </View> */}
                 <View style={styles.serviceItemWrapper}>
                   <Text
                     caption1
@@ -72,7 +73,7 @@ export default class BookingHistory extends Component {
                       color: 'rgba(0,0,0,0.65)',
                     }}
                     numberOfLines={2}>
-                    Name: {item.serviceName}
+                    Name: {item.name}
                   </Text>
                 </View>
                 <View style={styles.serviceItemWrapper}>
@@ -136,12 +137,12 @@ export default class BookingHistory extends Component {
                       color: 'rgba(0,0,0,0.65)',
                     }}>
                     {/* &nbsp;{Utils.capitalize(item.STATUS)} */}
-                    {Utils.capitalize(item.status)}
+                    {Utils.capitalize(status)}
                   </Text>
                 </View>
                 <View style={styles.validContent}>
                   <Text footnote semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-                    {item.slotDate},&nbsp;
+                    {item.bookingDate},&nbsp;
                     {Utils.getTimeFromDate(item.bookingFrom)}&nbsp;to&nbsp;
                     {Utils.getTimeFromDate(item.bookingTo)}
                   </Text>

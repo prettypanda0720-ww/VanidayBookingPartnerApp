@@ -13,7 +13,6 @@ import {myAppointmentsSvc} from '@services';
 import ImagePicker from 'react-native-image-picker';
 import {AuthActions} from '@actions';
 import {bindActionCreators} from 'redux';
-// import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import {withNavigation} from 'react-navigation';
 import * as Utils from '@utils';
 import {

@@ -61,7 +61,9 @@ export default class AppointmentListItem extends Component {
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.serviceItemNameStyle}>{customerName}</Text>
+            <Text style={[styles.serviceItemNameStyle, {fontSize: 17}]}>
+              {customerName}
+            </Text>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
               <Text headline bold style={{color: BaseColor.SecondColor}}>
                 ${total}

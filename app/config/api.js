@@ -2,13 +2,18 @@
  * Basic Setting Variables Define
  */
 export const Api = {
+  actionMode: {
+    isReal: false,
+  },
   myVaniday: {
-    API_BASE: 'https://production.vaniday.com/',
+    API_BASE: 'http://mapi2.vaniday.com/api',
+    RAW_API_BASE: 'http://production.vaniday.com',
   },
   myVaniMiddleWare: {
-    // API_BASE: 'http://192.168.6.227/api/myvaniday',
     API_BASE: 'http://mapi.vaniday.com/api',
-    MEDIA_BASE: 'http://v2.staging.vaniday.com/media/avatar/',
+    RAW_API_BASE: 'http://v2.staging.vaniday.com',
+  },
+  myVaniContent: {
     LOGIN_URL: '/myvaniday/auth',
     REGISTER_URL: '/rest/V1/vaniday/vendor/create',
     UPDATE_CAROUSEL_DATA_URL: '/rest/V1/vaniday-vendor/update-carousel',
@@ -38,11 +43,23 @@ export const Api = {
     DELETE_PRODUCT_DATA_URL: '/myvaniday/deleteProduct',
     UPDATE_PRODUCT_DATA_URL: '/myvaniday/updateProduct',
     DETAIL_PRODUCT_DATA_URL: '/myvaniday/productDetail',
+    CREATE_PRODUCTHUMB_DATA_URL: '/myvaniday/createProductThumb',
+    DELETE_PRODUCTHUMB_DATA_URL: '/myvaniday/deleteProductThumb',
+    UPDATE_PRODUCTHUMB_DATA_URL: '/myvaniday/updateProductThumb',
     //Daily Sales
     FETCH_APPOINTMENT_DATA_URL: '/myvaniday/fetchAppointList',
     FETCH_INVOICE_DATA_URL: '/myvaniday/fetchInvoiceList',
     //Clients
     FETCH_CLIENTLIST_DATA_URL: '/myvaniday/fetchClientList',
     FETCH_CLIENTDETAIL_DATA_URL: '/myvaniday/fetchClientDetail',
+    //profile
+    DELETE_CAROUSEL_DATA_URL: '/rest/V1/vaniday-vendor/delete-carousel/',
+    CONFIRM_APPOINTMENT_DATA_URL: '/rest/V1/vaniday/vendor-booking/approve/',
+    CANCEL_APPOINTMENT_DATA_URL: '/rest/V1/vaniday/vendor-booking/reject/',
+    RESCHEDULE_APPOINTMENT_DATA_URL:
+      '/rest/V1/vaniday/vendor-booking/reschedule/',
+    GET_ORDERINFO_DATA_URL: '/myvaniday/getOrderItemInfo',
+    UPDATE_CAROUSEL_POSITION_DATA_URL:
+      '/rest/V1/vaniday-vendor/update-carousel-position',
   },
 };
