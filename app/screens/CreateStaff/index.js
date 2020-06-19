@@ -116,7 +116,7 @@ class CreateStaff extends Component {
       });
       console.log('customSelectedItems', customSelectedItems);
       const data = {
-        token: auth.user.token,
+        token: auth.user.data,
         staffInfo: {
           staff_full_name: staff_full_name,
           staff_title: staff_title,
@@ -128,7 +128,7 @@ class CreateStaff extends Component {
         },
       };
       console.log('create staff list', data);
-      if (auth.user.token !== undefined) {
+      if (auth.user.data !== undefined) {
         myAppointmentsSvc
           .createStaffList(data)
           .then((response) => {
@@ -251,7 +251,7 @@ class CreateStaff extends Component {
                 Full Name
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({staff_full_name: text})}
                 autoCorrect={false}
                 placeholder=""
@@ -265,7 +265,7 @@ class CreateStaff extends Component {
                 Title
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({staff_title: text})}
                 autoCorrect={false}
                 placeholder=""

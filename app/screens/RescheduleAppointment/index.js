@@ -103,7 +103,7 @@ class RescheduleAppointment extends Component {
     const quoteItemId = this.props.navigation.state.params.quoteItemId;
     // console.log('2020-06-20 12:10:10', Utils.formatDate('2020-06-20 12:10:10'));
     const {auth, navigation} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     const data = {
       token: token,
       orderId: orderId,
@@ -164,9 +164,9 @@ class RescheduleAppointment extends Component {
         order_item_id: this.state.quoteItemId,
       },
     };
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
-        .rescheduleAppointment(auth.user.token, this.state.orderId, data)
+        .rescheduleAppointment(auth.user.data, this.state.orderId, data)
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
@@ -260,7 +260,7 @@ class RescheduleAppointment extends Component {
                         }}
                         markedDates={markedDates}
                         current={this.getCurrentDate()}
-                        minDate={this.getCurrentDate()}
+                        minDate={'1900-12-31'}
                         maxDate={'2099-12-31'}
                         onDayPress={(day) => this.setBookingDate(day)}
                         monthFormat={'MMMM yyyy '}

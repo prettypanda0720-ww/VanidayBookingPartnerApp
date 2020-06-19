@@ -120,7 +120,7 @@ class CreateProduct extends Component {
 
   createProductPhoto() {
     const {auth, navigation} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     const {id, sku, image_name, image_base64_content, image_type} = this.state;
     const data = {
       thumbInfo: {
@@ -225,12 +225,12 @@ class CreateProduct extends Component {
     const {navigation} = this.props;
     const {auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
       sku: sku,
       product_id: id,
     };
     console.log('delete product list', data);
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
         .deleteProductList(data)
         .then((response) => {
@@ -276,7 +276,7 @@ class CreateProduct extends Component {
     }
     const {auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
       sku: sku,
       productInfo: {
         product_name: name,
@@ -291,7 +291,7 @@ class CreateProduct extends Component {
       },
     };
     console.log('create product list', data);
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
         .createProductList(data)
         .then((response) => {
@@ -413,7 +413,7 @@ class CreateProduct extends Component {
                 Product Name
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({name: text})}
                 autoCorrect={false}
                 placeholder=""
@@ -426,7 +426,7 @@ class CreateProduct extends Component {
                 Price
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.onChangedPrice(text)}
                 autoCorrect={false}
                 placeholder="$0.00"
@@ -440,7 +440,7 @@ class CreateProduct extends Component {
                 Special Price
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.onChangedSpecialPrice(text)}
                 autoCorrect={false}
                 placeholder="$0.00"
@@ -454,7 +454,7 @@ class CreateProduct extends Component {
                 SKU
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({sku: text})}
                 autoCorrect={false}
                 placeholder="$0.00"
@@ -485,7 +485,7 @@ class CreateProduct extends Component {
                 Short Description
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) =>
                   this.setState({short_description: text})
                 }

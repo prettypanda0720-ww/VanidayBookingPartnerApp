@@ -142,7 +142,7 @@ class EditProduct extends Component {
     // this.setState({deleteLoading: true});
     const {thumbnail, sku} = this.state;
     const {auth, navigation} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     const data = {
       sku: sku,
       thumbInfo: {
@@ -168,7 +168,7 @@ class EditProduct extends Component {
 
   createProductPhoto() {
     const {auth, navigation} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     const {id, sku, image_name, image_base64_content, image_type} = this.state;
     const data = {
       thumbInfo: {
@@ -214,7 +214,7 @@ class EditProduct extends Component {
 
   updateProductPhoto() {
     const {auth, navigation} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     const {
       id,
       sku,
@@ -366,12 +366,12 @@ class EditProduct extends Component {
     const {navigation} = this.props;
     const {auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
       sku: sku,
       product_id: id,
     };
     console.log('delete product list', data);
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       this.onDeleteProductPhoto();
       myAppointmentsSvc
         .deleteProductList(data)
@@ -418,7 +418,7 @@ class EditProduct extends Component {
     }
     const {auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
       sku: sku,
       productInfo: {
         product_name: name,
@@ -433,7 +433,7 @@ class EditProduct extends Component {
       },
     };
     console.log('update product list', data);
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
         .updateProductList(data)
         .then((response) => {

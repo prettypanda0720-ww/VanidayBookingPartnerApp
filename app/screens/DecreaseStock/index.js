@@ -64,7 +64,7 @@ class DecreaseStock extends Component {
               Decrease Qty.
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="0"

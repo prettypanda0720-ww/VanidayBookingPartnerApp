@@ -28,11 +28,11 @@ class EditOpeningHours extends Component {
     this.setState({saveLoading: true});
     const {auth, navigation} = this.props;
     const postData = {
-      token: auth.user.token,
+      token: auth.user.data,
       openingHour: this.state.openingHours,
     };
     console.log('updateOpeninghour', postData);
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
         .updateOpeningHour(postData)
         .then((response) => {

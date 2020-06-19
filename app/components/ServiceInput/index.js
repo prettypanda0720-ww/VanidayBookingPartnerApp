@@ -178,7 +178,7 @@ class ServiceInput extends Component {
         </Modal>
         <View style={{marginTop: 10}}>
           <Text
-            style={[BaseStyle.textInput, styles.textInput]}
+            style={BaseStyle.textInput}
             autoCorrect={false}
             placeholder="Service Name"
             placeholderTextColor={BaseColor.titleColor}

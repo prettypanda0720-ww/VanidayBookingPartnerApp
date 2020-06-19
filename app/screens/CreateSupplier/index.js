@@ -71,7 +71,7 @@ class CreateSupplier extends Component {
               Supplier Name
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. L'Oreal"
@@ -102,7 +102,7 @@ class CreateSupplier extends Component {
               First Name
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. John"
@@ -115,7 +115,7 @@ class CreateSupplier extends Component {
               Last Name
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. Doe"
@@ -136,7 +136,7 @@ class CreateSupplier extends Component {
               Email
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="mail@example.com"
@@ -149,7 +149,7 @@ class CreateSupplier extends Component {
               Website
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""
@@ -180,7 +180,7 @@ class CreateSupplier extends Component {
               Neighbourhood
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""
@@ -193,7 +193,7 @@ class CreateSupplier extends Component {
               State
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""
@@ -206,7 +206,7 @@ class CreateSupplier extends Component {
               City
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""
@@ -219,7 +219,7 @@ class CreateSupplier extends Component {
               Zip / Post Code
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder=""

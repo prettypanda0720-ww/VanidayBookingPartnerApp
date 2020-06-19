@@ -12,6 +12,10 @@ export default class Sales extends Component {
     };
   }
 
+  componentDidMount(){
+    console.log('sales is called!');
+  }
+
   render() {
     const {navigation} = this.props;
     return (

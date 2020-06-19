@@ -41,9 +41,9 @@ class ManageAppointment extends Component {
     const {navigation} = this.props;
 
     const {auth} = this.props;
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
-        .confirmAppointment(auth.user.token, this.state.orderId)
+        .confirmAppointment(auth.user.data, this.state.orderId)
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
@@ -68,9 +68,9 @@ class ManageAppointment extends Component {
     const {navigation} = this.props;
 
     const {auth} = this.props;
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
-        .rejectAppointment(auth.user.token, this.state.orderId)
+        .rejectAppointment(auth.user.data, this.state.orderId)
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
@@ -113,7 +113,7 @@ class ManageAppointment extends Component {
     const item = this.props.navigation.state.params.bookingData;
     // this.setState({orderId: item.id});
     const {auth, navigation} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     const data = {
       token: token,
       orderId: item.id,

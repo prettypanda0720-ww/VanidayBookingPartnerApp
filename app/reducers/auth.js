@@ -36,7 +36,7 @@ export default (state = initialState, action = {}) => {
         },
         user: {
           ...state.user,
-          ...action.payload,
+          ...action.payload.data,
         },
       };
     case actionTypes.LOGIN_ERROR:

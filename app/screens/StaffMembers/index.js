@@ -29,10 +29,10 @@ class StaffMembers extends Component {
   componentDidMount() {
     const {auth, navigation} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
     };
     this.focusListener = navigation.addListener('didFocus', () => {
-      if (auth.user.token !== undefined) {
+      if (auth.user.data !== undefined) {
         myAppointmentsSvc
           .getStaffList(data)
           .then((response) => {

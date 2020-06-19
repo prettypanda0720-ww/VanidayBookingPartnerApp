@@ -10,13 +10,19 @@ import {
   Switch,
   ActivityIndicator,
 } from 'react-native';
-import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import {Header, SafeAreaView, Icon, Text, Button} from '@components';
+import {
+  Header,
+  SafeAreaView,
+  Icon,
+  Text,
+  Button,
+  SectionedMultiSelect,
+} from '@components';
 
 import {Dropdown} from 'react-native-material-dropdown';
 import {withNavigation} from 'react-navigation';
 import * as Utils from '@utils';
-import {BaseStyle, BaseColor, GreenColor} from '@config';
+import {BaseStyle, BaseColor, GreenColor, FontFamily} from '@config';
 import styles from './styles';
 
 class CreateService extends Component {
@@ -107,7 +113,7 @@ class CreateService extends Component {
     }
     const {auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
       productInfo: {
         service_name: service_name,
         sku: sku,
@@ -123,7 +129,7 @@ class CreateService extends Component {
       },
     };
     console.log('create service list', data);
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
         .createServiceList(data)
         .then((response) => {
@@ -149,9 +155,9 @@ class CreateService extends Component {
   componentDidMount() {
     const {auth} = this.props;
     const postData = {
-      token: auth.user.token,
+      token: auth.user.data,
     };
-    const token = auth.user.token;
+    const token = auth.user.data;
     myAppointmentsSvc
       .getSubMenuByMerchant(postData)
       .then((response) => {
@@ -294,11 +300,9 @@ class CreateService extends Component {
               paddingBottom: 60,
             }}>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Service name
-              </Text>
+              <Text style={BaseStyle.label}>Service name</Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={[BaseStyle.textInput, {marginTop: 5}]}
                 onChangeText={(text) => this.setState({service_name: text})}
                 autoCorrect={false}
                 placeholder="Service Name"
@@ -311,7 +315,7 @@ class CreateService extends Component {
                 SKU
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({sku: text})}
                 autoCorrect={false}
                 placeholder="SKU"
@@ -330,11 +334,9 @@ class CreateService extends Component {
               selectedItems={this.state.selectedItems}
             />
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Short Description
-              </Text>
+              <Text style={BaseStyle.label}>Short Description</Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={[BaseStyle.textInput, {marginTop: 5}]}
                 onChangeText={(text) =>
                   this.setState({short_description: text})
                 }
@@ -345,9 +347,7 @@ class CreateService extends Component {
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Description
-              </Text>
+              <Text style={BaseStyle.label}>Description</Text>
               <TextInput
                 style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
                 onChangeText={(text) => this.setState({description: text})}
@@ -358,87 +358,104 @@ class CreateService extends Component {
                 multiline={true}
               />
             </View>
-            <View style={{marginTop: 30}}>
-              <Text title2 bold style={{color: BaseColor.sectionColor}}>
-                Prices
-              </Text>
-              <View style={{}}>
-                <Dropdown
-                  label="Duration(min)"
-                  data={duration}
-                  baseColor={BaseColor.sectionColor}
-                  textColor={BaseColor.titleColor}
-                  rippleOpacity={0.7}
-                  onChangeText={(value) => {
-                    this.setState({
-                      service_duration: value,
-                    });
-                  }}
-                  value={this.state.service_duration}
-                />
-                <Text body2 style={{color: BaseColor.sectionColor}}>
-                  Normal price
-                </Text>
-                <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
-                  onChangeText={(text) => this.setState({price: text})}
-                  autoCorrect={false}
-                  placeholder="$ 0.00"
-                  placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.primaryColor}
-                  keyboardType={'numeric'}
-                />
-              </View>
-              <View style={styles.inputGroup}>
-                <Text body2 style={{color: BaseColor.sectionColor}}>
-                  Special price
-                </Text>
-                <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
-                  onChangeText={(text) => this.onChangedSpecialPrice(text)}
-                  autoCorrect={false}
-                  placeholder="$ 0.00"
-                  placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.primaryColor}
-                  value={this.state.special_price}
-                />
-              </View>
-              <View style={[styles.profileItem, {marginTop: 20}]}>
-                <Text body1 style={styles.sectionStyle}>
-                  Enable Product
-                </Text>
-                <Switch
-                  name="angle-right"
-                  size={18}
-                  onValueChange={this.toggleProductSwitch}
-                  value={this.state.isEnalbeProduct}
-                />
-              </View>
-              <View style={[styles.profileItem, {marginTop: 20}]}>
-                <Text body1 style={styles.sectionStyle}>
-                  Featured
-                </Text>
-                <Switch
-                  name="angle-right"
-                  size={18}
-                  onValueChange={this.toggleFeaturedSwitch}
-                  value={this.state.isFeatured}
-                />
-              </View>
-              <Dropdown
-                label="Vendor Sections"
-                data={vendorSectionsDropdownLst}
-                baseColor={BaseColor.sectionColor}
-                textColor={BaseColor.titleColor}
-                rippleOpacity={0.7}
-                onChangeText={(value) => {
-                  this.setState({
-                    vendor_sections: this.getVendorKey(value),
-                  });
-                }}
-                value={this.getVendorName(vendor_sections)}
+            <View style={styles.inputGroup}>
+              <Text style={BaseStyle.label}>Normal price</Text>
+              <TextInput
+                style={[BaseStyle.textInput, {marginTop: 5}]}
+                onChangeText={(text) => this.onChangedPrice(text)}
+                autoCorrect={false}
+                placeholder="$ 0.00"
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.primaryColor}
+                keyboardType={'numeric'}
               />
             </View>
+            <View style={styles.inputGroup}>
+              <Text style={BaseStyle.label}>Special price</Text>
+              <TextInput
+                style={[BaseStyle.textInput, {marginTop: 5}]}
+                onChangeText={(text) => this.onChangedSpecialPrice(text)}
+                autoCorrect={false}
+                placeholder="$ 0.00"
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.primaryColor}
+                value={this.state.special_price}
+              />
+            </View>
+            <Dropdown
+              label="Duration(min)"
+              labelFontSize={15}
+              fontSize={13}
+              labelTextStyle={{marginBottom: 10}}
+              style={{fontFamily: FontFamily.default}}
+              data={duration}
+              baseColor={BaseColor.sectionColor}
+              textColor={BaseColor.titleColor}
+              rippleOpacity={0.7}
+              onChangeText={(value) => {
+                this.setState({
+                  service_duration: value,
+                });
+              }}
+              value={this.state.service_duration}
+            />
+
+            <View style={[styles.profileItem, {marginTop: 5}]}>
+              <Text style={BaseStyle.label}>Enable Service</Text>
+              <Switch
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleProductSwitch}
+                value={this.state.isEnalbeProduct}
+              />
+            </View>
+            <View style={[styles.profileItem, {marginTop: 5}]}>
+              <Text style={BaseStyle.label}>Featured</Text>
+              <Switch
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleFeaturedSwitch}
+                value={this.state.isFeatured}
+              />
+            </View>
+            <Dropdown
+              label="Vendor Sections"
+              labelFontSize={15}
+              fontSize={13}
+              labelTextStyle={{marginBottom: 10}}
+              style={{fontFamily: FontFamily.default}}
+              data={vendorSectionsDropdownLst}
+              baseColor={BaseColor.sectionColor}
+              textColor={BaseColor.titleColor}
+              rippleOpacity={0.7}
+              onChangeText={(value) => {
+                this.setState({
+                  vendor_sections: this.getVendorKey(value),
+                });
+              }}
+              value={this.getVendorName(vendor_sections)}
+            />
+            <SectionedMultiSelect
+              items={subMenuList}
+              uniqueKey="id"
+              subKey="subcategory"
+              selectText="Select Services..."
+              showDropDowns={true}
+              readOnlyHeadings={false}
+              onSelectedItemsChange={this.onSelectedItemsChange}
+              selectedItems={this.state.selectedItems}
+              showChips={false}
+              showCancelButton={true}
+              styles={{
+                selectText: {paddingLeft: 0},
+                button: {backgroundColor: BaseColor.SecondColor, height: 55},
+                cancelButton: {
+                  backgroundColor: BaseColor.grayColor,
+                  height: 55,
+                },
+              }}
+              iconRenderer={this.icon}
+            />
           </ScrollView>
           <View
             style={{

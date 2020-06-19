@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {BaseColor} from './color';
+// import {BaseColor} from './color';
+import {BaseColor, FontFamily} from '@config';
 
 /**
  * Common basic style defines
@@ -22,16 +23,23 @@ export const BaseStyle = StyleSheet.create({
   //   width: '100%',
   //   justifyContent: 'flex-start',
   // },
+  label: {
+    color: BaseColor.secondBlackColor,
+    fontSize: 15,
+    fontFamily: FontFamily.default,
+  },
   textInput: {
     height: 46,
     backgroundColor: BaseColor.fieldColor,
     borderRadius: 5,
     padding: 10,
     width: '100%',
-    color: 'black',
+    color: BaseColor.titleColor,
     marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
+    fontSize: 13,
+    fontFamily: FontFamily.default,
+    // borderColor: BaseColor.grayColor,
+    // borderWidth: 1,
   },
   multilineTextInput: {
     height: 200,

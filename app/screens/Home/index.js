@@ -66,7 +66,7 @@ class Home extends Component<{}> {
       if (month == this.getMonthName(day.month - 1)) {
         const {auth} = this.props;
         myAppointmentsSvc
-          .fetchOrderByDate(auth.user.token, -1, day.dateString)
+          .fetchOrderByDate(auth.user.data, -1, day.dateString)
           .then((response) => {
             // console.log('appointmentsdata');
             // console.log(response.data.data);
@@ -106,11 +106,11 @@ class Home extends Component<{}> {
   }
 
   renderItem(item) {
-    console.log('startTime', item.bookingFrom);
+    // console.log('startTime', item.bookingFrom);
     // console.log('startTime', Utils.formatDate(item.bookingFrom));
     // console.log('endTime', item.bookingTo);
     // console.log('endTime', Utils.formatDate(item.bookingTo));
-    console.log('endTime', Utils.formatDate('2020-06-28 19:30:00'));
+    // console.log('endTime', Utils.formatDate('2020-06-28 19:30:00'));
     return (
       <AppointmentListItem
         refId={item.id}
@@ -260,7 +260,7 @@ class Home extends Component<{}> {
             agendaKnobColor: 'red',
             textColor: BaseColor.sectionColor,
           }}
-          onVisibleMonthsChange={true}
+          onVisibleMonthsChange={false}
           // eslint-disable-next-line react/jsx-no-duplicate-props
           onDayPress={this._dayChange}
           onDayChange={this._dayChange}

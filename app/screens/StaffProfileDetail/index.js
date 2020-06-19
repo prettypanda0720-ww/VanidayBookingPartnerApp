@@ -122,7 +122,7 @@ class StaffProfileDetail extends Component {
       });
       console.log('customSelectedItems', customSelectedItems);
       const data = {
-        token: auth.user.token,
+        token: auth.user.data,
         staffInfo: {
           staff_id: staff_id,
           staff_full_name: staff_full_name,
@@ -135,7 +135,7 @@ class StaffProfileDetail extends Component {
         },
       };
       console.log('update staff list', data);
-      if (auth.user.token !== undefined) {
+      if (auth.user.data !== undefined) {
         myAppointmentsSvc
           .updateStaffList(data)
           .then((response) => {
@@ -181,10 +181,10 @@ class StaffProfileDetail extends Component {
 
     const {auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
       staffId: staff_id,
     };
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
         .deleteStaffList(data)
         .then((response) => {
@@ -319,7 +319,7 @@ class StaffProfileDetail extends Component {
                 Full Name
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({staff_full_name: text})}
                 autoCorrect={false}
                 placeholder=""
@@ -333,7 +333,7 @@ class StaffProfileDetail extends Component {
                 Title
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({staff_title: text})}
                 autoCorrect={false}
                 placeholder=""

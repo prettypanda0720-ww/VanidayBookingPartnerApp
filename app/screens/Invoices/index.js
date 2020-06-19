@@ -32,7 +32,7 @@ class Invoices extends Component {
   componentDidMount() {
     const {navigation, auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
     };
     this.focusListener = navigation.addListener('didFocus', () => {
       myAppointmentsSvc

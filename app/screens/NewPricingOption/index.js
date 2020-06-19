@@ -68,7 +68,7 @@ class NewPricingOption extends Component {
               />
               <Text caption3 style={{color: BaseColor.sectionColor}}>Retail price</Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
@@ -79,7 +79,7 @@ class NewPricingOption extends Component {
             <View style={styles.inputGroup}>
               <Text caption3 style={{color: BaseColor.sectionColor}}>Special price</Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
@@ -90,7 +90,7 @@ class NewPricingOption extends Component {
             <View style={styles.inputGroup}>
               <Text caption3 style={{color: BaseColor.sectionColor}}>Pricing name(optional)</Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="e.g Long hair"

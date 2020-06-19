@@ -62,7 +62,7 @@ class Aboutus extends Component {
 
     const {auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
       vendorData: {
         shop_title: shopTitle,
         company_locality: location,
@@ -78,7 +78,7 @@ class Aboutus extends Component {
       },
     };
     console.log('typedata', data);
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
         .updateProfileData(data)
         .then((response) => {
@@ -99,7 +99,7 @@ class Aboutus extends Component {
 
   onPhotoUpdate = () => {
     const {auth} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     // console.log('this.state.carousel', this.state.carousel);
     if (Object.keys(this.state.carousel).length > 0) {
       this.setState({upLoading: true});
@@ -122,7 +122,7 @@ class Aboutus extends Component {
 
   componentDidMount() {
     const {auth, navigation} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     this.focusListener = navigation.addListener('didFocus', () => {
       // The screen is focused
       // Call any action
@@ -364,7 +364,7 @@ class Aboutus extends Component {
                   Business Name
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({shopTitle: text})}
                   autoCorrect={false}
                   placeholder=""
@@ -410,7 +410,7 @@ class Aboutus extends Component {
                   Free Cancellation Hour
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) =>
                     this.setState({free_cancellation_hour: text})
                   }
@@ -426,7 +426,7 @@ class Aboutus extends Component {
                   Business Tel
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({contact_number: text})}
                   autoCorrect={false}
                   placeholder=""
@@ -440,7 +440,7 @@ class Aboutus extends Component {
                   Unique Entity Number
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) =>
                     this.setState({unique_entity_number: text})
                   }
@@ -456,7 +456,7 @@ class Aboutus extends Component {
                   Business Address
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({location: text})}
                   autoCorrect={false}
                   placeholder=""
@@ -485,7 +485,7 @@ class Aboutus extends Component {
                   Country
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({id: text})}
                   autoCorrect={false}
                   placeholder=""
@@ -500,7 +500,7 @@ class Aboutus extends Component {
                   Cancellation and Rescheduling Policy
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) =>
                     this.setState({cancellation_policy: text})
                   }
@@ -514,7 +514,7 @@ class Aboutus extends Component {
                   Term & Condition
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) =>
                     this.setState({terms_and_conditions: text})
                   }
@@ -528,7 +528,7 @@ class Aboutus extends Component {
                   Connected Stripe ID
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) =>
                     this.setState({vendor_stripe_id: text})
                   }

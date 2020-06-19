@@ -149,7 +149,7 @@ export default class ProfileEdit extends Component {
           <View style={styles.contain}>
             <View style={styles.inputGroup}>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="First Name"
@@ -159,7 +159,7 @@ export default class ProfileEdit extends Component {
             </View>
             <View style={styles.inputGroup}>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="Last Name"
@@ -169,7 +169,7 @@ export default class ProfileEdit extends Component {
             </View>
             <View style={styles.inputGroup}>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="Email"
@@ -209,7 +209,7 @@ export default class ProfileEdit extends Component {
             </View>
             <View style={styles.inputGroup}>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.onChangedMobileNo(text)}
                 autoCorrect={false}
                 placeholder="Mobile No"
@@ -221,7 +221,7 @@ export default class ProfileEdit extends Component {
             </View>
             <View style={styles.inputGroup}>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({person_address: text})}
                 autoCorrect={false}
                 placeholder="Address"
@@ -231,7 +231,7 @@ export default class ProfileEdit extends Component {
             </View>
             <View style={styles.inputGroup}>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({postal_code: text})}
                 autoCorrect={false}
                 placeholder="Postal code"
@@ -411,7 +411,7 @@ export default class ProfileEdit extends Component {
         <View>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Business Url"
@@ -421,7 +421,7 @@ export default class ProfileEdit extends Component {
           </View>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Business Name"
@@ -431,7 +431,7 @@ export default class ProfileEdit extends Component {
           </View>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Business Tel"
@@ -441,7 +441,7 @@ export default class ProfileEdit extends Component {
           </View>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Unique Entity Number"
@@ -451,7 +451,7 @@ export default class ProfileEdit extends Component {
           </View>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Business Address"

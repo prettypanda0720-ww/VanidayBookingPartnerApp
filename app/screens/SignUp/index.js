@@ -7,14 +7,12 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import Modal from 'react-native-modal';
 import {BaseStyle, BaseColor, FontFamily} from '@config';
-import {Calendar} from 'react-native-calendars';
+import DatePicker from 'react-native-datepicker';
 import * as Utils from '@utils';
 import ImagePicker from 'react-native-image-picker';
 import {Dropdown} from 'react-native-material-dropdown';
 import {Checkbox} from 'react-native-material-ui';
-import PhoneInput from 'react-native-phone-input';
 
 import {
   Header,
@@ -23,7 +21,7 @@ import {
   Button,
   Text,
   Image,
-  RadioGroup,
+  BirthdayPicker,
 } from '@components';
 import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
@@ -63,6 +61,7 @@ class SignUp extends Component {
       dataLoading: true,
       neighbourhoodorgLst: [],
       neighbourhoodDropdownLst: [],
+      vendor_area: 1,
     };
     this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
   }
@@ -74,17 +73,13 @@ class SignUp extends Component {
         const res_profile = response.data;
         console.log('neighbourhoodlist', res_profile.data);
         if (res_profile.code == 0) {
-          // let photosDataTmp = [];
-          // if (res_profile.vendor_carousel !== null) {
-          //   photosDataTmp = JSON.parse(res_profile.vendor_carousel).map(
-          //     (photo, index) => ({
-          //       image_index: index,
-          //       image_name: res_profile.venCarPrefix + photo,
-          //     }),
-          //   );
-          // }
           this.setState({
-            neightbourhoodLst: res_profile.data,
+            neighbourhoodLst: res_profile.data,
+            vendorSectionsDropdownLst: res_profile.data.map((item, index) => {
+              return {
+                value: item.area,
+              };
+            }),
             dataLoading: false,
           });
         }
@@ -127,27 +122,27 @@ class SignUp extends Component {
             <View style={styles.contain}>
               <View style={styles.inputGroup}>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({first_name: text})}
                   autoCorrect={false}
                   placeholder="First Name"
-                  placeholderTextColor={BaseColor.SecondColor}
+                  placeholderTextColor={BaseColor.grayColor}
                   selectionColor={BaseColor.primaryColor}
                 />
               </View>
               <View style={styles.inputGroup}>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({last_name: text})}
                   autoCorrect={false}
                   placeholder="Last Name"
-                  placeholderTextColor={BaseColor.SecondColor}
+                  placeholderTextColor={BaseColor.grayColor}
                   selectionColor={BaseColor.primaryColor}
                 />
               </View>
               <View style={styles.inputGroup}>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({email: text})}
                   autoCorrect={false}
                   placeholder="Email"
@@ -190,7 +185,7 @@ class SignUp extends Component {
 
               <View style={styles.inputGroup}>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({person_address: text})}
                   autoCorrect={false}
                   placeholder="Address"
@@ -200,7 +195,7 @@ class SignUp extends Component {
               </View>
               <View style={styles.inputGroup}>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({phone_no: text})}
                   autoCorrect={false}
                   placeholder="Phone No"
@@ -209,87 +204,21 @@ class SignUp extends Component {
                 />
               </View>
               <View style={styles.inputGroup}>
-                <Modal
-                  isVisible={this.state.modalCalendarVisible}
-                  backdropColor="rgba(0, 0, 0, 0.5)"
-                  backdropOpacity={1}
-                  animationIn="fadeIn"
-                  animationInTiming={600}
-                  animationOutTiming={600}
-                  backdropTransitionInTiming={600}
-                  backdropTransitionOutTiming={600}>
-                  <View style={styles.contentModal}>
-                    <View style={styles.contentCalendar}>
-                      <Calendar
-                        style={{
-                          borderRadius: 8,
-                        }}
-                        markedDates={this.state.markedDates}
-                        current={this.getCurrentDate()}
-                        minDate={this.getCurrentDate()}
-                        maxDate={'2099-12-31'}
-                        onDayPress={(day) => this.setBookingDate(day)}
-                        monthFormat={'MMMM yyyy '}
-                        onMonthChange={(month) => {
-                          console.log('month changed', month);
-                        }}
-                        theme={{
-                          textSectionTitleColor: BaseColor.textPrimaryColor,
-                          selectedDayBackgroundColor: BaseColor.primaryColor,
-                          selectedDayTextColor: '#ffffff',
-                          todayTextColor: BaseColor.primaryColor,
-                          dayTextColor: BaseColor.textPrimaryColor,
-                          textDisabledColor: BaseColor.grayColor,
-                          dotColor: BaseColor.primaryColor,
-                          selectedDotColor: '#ffffff',
-                          arrowColor: BaseColor.primaryColor,
-                          monthTextColor: BaseColor.textPrimaryColor,
-                          textDayFontFamily: FontFamily.default,
-                          textMonthFontFamily: FontFamily.default,
-                          textDayHeaderFontFamily: FontFamily.default,
-                          textMonthFontWeight: 'bold',
-                          textDayFontSize: 14,
-                          textMonthFontSize: 16,
-                          textDayHeaderFontSize: 14,
-                        }}
-                      />
-                      <View style={styles.contentActionCalendar}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.setState({modalCalendarVisible: false});
-                          }}>
-                          <Text body1>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.setState({modalCalendarVisible: false});
-                            this.onDateApply();
-                          }}>
-                          <Text body1 primaryColor>
-                            Done
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </View>
-                </Modal>
-                <TouchableOpacity
-                  style={styles.dateInfo}
-                  onPress={() => this.openCalendarModal()}>
-                  <Text headline light style={{color: BaseColor.sectionColor}}>
-                    Birthday
-                  </Text>
-                  <Text headline semibold>
-                    {Utils.getFormattedLongDate(
-                      Utils.getDateFromDate(
-                        this.state.birthday == ''
-                          ? this.getCurrentDate()
-                          : this.state.birthday,
-                      ),
-                    )}
-                    {/* {Utils.getDateFromDate(staff_joined_date)} */}
-                  </Text>
-                </TouchableOpacity>
+                <BirthdayPicker
+                  selectedYear={2018}
+                  selectedMonth={0}
+                  selectedDay={27}
+                  yearsBack={50}
+                  onYearValueChange={(year, i) =>
+                    console.log('Year was changed to: ', year)
+                  }
+                  onMonthValueChange={(month, i) =>
+                    console.log('Month was changed to: ', month)
+                  }
+                  onDayValueChange={(day, i) =>
+                    console.log('Day was changed to: ', day)
+                  }
+                />
               </View>
               <View style={styles.inputGroup}>
                 <Dropdown
@@ -428,7 +357,7 @@ class SignUp extends Component {
           </TouchableOpacity>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({profile_url: text})}
               autoCorrect={false}
               placeholder="Business Url"
@@ -438,7 +367,7 @@ class SignUp extends Component {
           </View>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({vendor_title: text})}
               autoCorrect={false}
               placeholder="Business Name"
@@ -448,7 +377,7 @@ class SignUp extends Component {
           </View>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.onChangedTel(text)}
               autoCorrect={false}
               placeholder="Business Tel"
@@ -459,7 +388,7 @@ class SignUp extends Component {
           </View>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.onChangedEntityNumber(text)}
               autoCorrect={false}
               placeholder="Unique Entity Number"
@@ -470,7 +399,7 @@ class SignUp extends Component {
           </View>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({vendor_address: text})}
               autoCorrect={false}
               placeholder="Business Address"
@@ -480,20 +409,16 @@ class SignUp extends Component {
           </View>
           <Dropdown
             label="Select your neighbourhood"
-            data={[
-              {value: 'Aljunied'},
-              {value: 'Ang Mo Kio'},
-              {value: 'Balestier'},
-            ]}
+            data={this.state.neighbourhoodDropdownLst}
             rippleOpacity={0.7}
             baseColor={BaseColor.secondBlackColor}
             tintColor={BaseColor.blackColor}
             style={{color: BaseColor.blackColor}}
-            // value={this.getGenderName(staff_gender)}
+            value={this.getNeighbourhoodName(this.state.vendor_area)}
             onChangeText={(value) => {
-              // this.setState({
-              //   staff_gender: this.getGenderKey(value),
-              // });
+              this.setState({
+                vendor_area: this.getNeighbourhoodKey(value),
+              });
             }}
           />
         </View>
@@ -510,32 +435,6 @@ class SignUp extends Component {
     date = date < 10 ? '0' + date : date;
 
     return year + '-' + month + '-' + date;
-  }
-
-  openCalendarModal() {
-    this.setState({
-      modalCalendarVisible: true,
-    });
-  }
-
-  setBookingDate(day) {
-    this.setState({
-      markedDates: {
-        [day.dateString]: {selected: true, marked: false},
-      },
-    });
-    this.markedDates = day.dateString;
-    console.log('marketDates', this.markedDates);
-  }
-
-  onDateApply() {
-    console.log('marketDates-onDateApply()', this.markedDates);
-    if (this.markedDates !== undefined) {
-      let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
-      this.setState({birthday: shortDate});
-    } else {
-      this.setState({birthday: this.getCurrentDate()});
-    }
   }
 
   checkInput() {
@@ -680,6 +579,7 @@ class SignUp extends Component {
       profile_url,
       vendor_title,
       vendor_tel,
+      vendor_area,
       unique_entity_number,
       vendor_address,
       image_name,
@@ -705,6 +605,7 @@ class SignUp extends Component {
           vendor_tel: vendor_tel,
           unique_entity_number: unique_entity_number,
           vendor_address: vendor_address,
+          vendor_area: vendor_area,
           image_name: image_name,
           image_base64_content: image_base64_content,
         },
@@ -798,6 +699,29 @@ class SignUp extends Component {
     var mediumRegex = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
     return strongRegex.test(password);
   };
+
+  getNeighbourhoodName(key) {
+    let name = '';
+    console.log('key', key);
+    this.state.neighbourhoodorgLst.forEach((element) => {
+      if (element.directory_id == key) {
+        name = element.area;
+        console.log('name', name);
+      }
+    });
+    return name;
+  }
+
+  getNeighbourhoodKey(value) {
+    let key = 0;
+    this.state.neighbourhoodorgLst.forEach((element) => {
+      if (element.area == value) {
+        key = element.directory_id;
+        console.log('key', key);
+      }
+    });
+    return key;
+  }
 }
 const mapStateToProps = (state) => {
   return {

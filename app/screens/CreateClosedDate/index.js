@@ -88,7 +88,7 @@ class CreateClosedDate extends Component {
                 Description
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="e.g. public holiday"

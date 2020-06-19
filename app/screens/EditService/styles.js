@@ -9,7 +9,7 @@ export default StyleSheet.create({
     width: '100%',
   },
   inputGroup: {
-    marginTop: 15,
+    marginTop: 5,
   },
   profileItem: {
     flexDirection: 'row',

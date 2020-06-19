@@ -23,7 +23,7 @@ import {
 import {Dropdown} from 'react-native-material-dropdown';
 import {withNavigation} from 'react-navigation';
 import * as Utils from '@utils';
-import {BaseStyle, BaseColor, GreenColor} from '@config';
+import {BaseStyle, BaseColor, GreenColor, FontFamily} from '@config';
 import styles from './styles';
 
 class EditService extends Component {
@@ -57,7 +57,7 @@ class EditService extends Component {
 
   componentDidMount() {
     const {navigation, auth} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     const sku = this.props.navigation.state.params.sku;
     const data = {
       sku: sku,
@@ -177,16 +177,15 @@ class EditService extends Component {
           <ScrollView
             style={{
               flexDirection: 'column',
+              paddingTop: 20,
               paddingLeft: 20,
               paddingRight: 20,
               paddingBottom: 60,
             }}>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Service name
-              </Text>
+              <Text style={BaseStyle.label}>Service name</Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={[BaseStyle.textInput, {marginTop: 5}]}
                 onChangeText={(text) => this.setState({service_name: text})}
                 autoCorrect={false}
                 placeholder="Service Name"
@@ -200,7 +199,7 @@ class EditService extends Component {
                 SKU
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={[BaseStyle.textInput, {marginTop: 5}]}
                 onChangeText={(text) => this.setState({sku: text})}
                 autoCorrect={false}
                 placeholder="SKU"
@@ -208,6 +207,110 @@ class EditService extends Component {
                 selectionColor={BaseColor.primaryColor}
               />
             </View> */}
+            <View style={styles.inputGroup}>
+              <Text style={BaseStyle.label}>Short Description</Text>
+              <TextInput
+                style={[BaseStyle.textInput, {marginTop: 5}]}
+                onChangeText={(text) =>
+                  this.setState({short_description: text})
+                }
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}
+                value={short_description}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={BaseStyle.label}>Description</Text>
+              <TextInput
+                style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
+                onChangeText={(text) => this.setState({description: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.titleColor}
+                value={description}
+                multiline={true}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={BaseStyle.label}>Normal price</Text>
+              <TextInput
+                style={[BaseStyle.textInput, {marginTop: 5}]}
+                onChangeText={(text) => this.onChangedPrice(text)}
+                autoCorrect={false}
+                placeholder="$ 0.00"
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.primaryColor}
+                keyboardType={'numeric'}
+                value={price}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={BaseStyle.label}>Special price</Text>
+              <TextInput
+                style={[BaseStyle.textInput, {marginTop: 5}]}
+                onChangeText={(text) => this.onChangedSpecialPrice(text)}
+                autoCorrect={false}
+                placeholder="$ 0.00"
+                placeholderTextColor={BaseColor.titleColor}
+                selectionColor={BaseColor.primaryColor}
+                value={this.state.special_price}
+              />
+            </View>
+            <Dropdown
+              label="Duration(min)"
+              labelFontSize={15}
+              fontSize={13}
+              labelTextStyle={{marginBottom: 10}}
+              style={{fontFamily: FontFamily.default}}
+              data={duration}
+              baseColor={BaseColor.sectionColor}
+              textColor={BaseColor.titleColor}
+              rippleOpacity={0.7}
+              onChangeText={(value) => {
+                this.setState({
+                  service_duration: value,
+                });
+              }}
+              value={service_duration}
+            />
+            <View style={[styles.profileItem, {marginTop: 5}]}>
+              <Text style={BaseStyle.label}>Enable Service</Text>
+              <Switch
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleProductSwitch}
+                value={this.state.isEnalbeProduct}
+              />
+            </View>
+            <View style={[styles.profileItem, {marginTop: 5}]}>
+              <Text style={BaseStyle.label}>Featured</Text>
+              <Switch
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleFeaturedSwitch}
+                value={this.state.isFeatured}
+              />
+            </View>
+            <Dropdown
+              label="Vendor Sections"
+              labelFontSize={15}
+              fontSize={13}
+              labelTextStyle={{marginBottom: 10}}
+              style={{fontFamily: FontFamily.default}}
+              data={vendorSectionsDropdownLst}
+              baseColor={BaseColor.sectionColor}
+              textColor={BaseColor.titleColor}
+              rippleOpacity={0.7}
+              onChangeText={(value) => {
+                this.setState({
+                  vendor_sections: this.getVendorKey(value),
+                });
+              }}
+              value={this.getVendorName(vendor_sections)}
+            />
             <SectionedMultiSelect
               items={subMenuList}
               uniqueKey="id"
@@ -220,124 +323,15 @@ class EditService extends Component {
               showChips={false}
               showCancelButton={true}
               styles={{
-                button: {backgroundColor: BaseColor.SecondColor, height: 45},
-                cancelButton: {backgroundColor: BaseColor.grayColor},
+                selectText: {paddingLeft: 0},
+                button: {backgroundColor: BaseColor.SecondColor, height: 55},
+                cancelButton: {
+                  backgroundColor: BaseColor.grayColor,
+                  height: 55,
+                },
               }}
               iconRenderer={this.icon}
             />
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Short Description
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
-                onChangeText={(text) =>
-                  this.setState({short_description: text})
-                }
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}
-                value={short_description}
-              />
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Description
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
-                onChangeText={(text) => this.setState({description: text})}
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.titleColor}
-                selectionColor={BaseColor.titleColor}
-                value={description}
-                multiline={true}
-              />
-            </View>
-            <View style={{marginTop: 30}}>
-              <Text title2 bold style={{color: BaseColor.sectionColor}}>
-                Prices
-              </Text>
-              <View style={{}}>
-                <Dropdown
-                  label="Duration(min)"
-                  data={duration}
-                  baseColor={BaseColor.sectionColor}
-                  textColor={BaseColor.titleColor}
-                  rippleOpacity={0.7}
-                  onChangeText={(value) => {
-                    this.setState({
-                      service_duration: value,
-                    });
-                  }}
-                  value={service_duration}
-                />
-                <Text body2 style={{color: BaseColor.sectionColor}}>
-                  Normal price
-                </Text>
-                <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
-                  onChangeText={(text) => this.onChangedPrice(text)}
-                  autoCorrect={false}
-                  placeholder="$ 0.00"
-                  placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.primaryColor}
-                  keyboardType={'numeric'}
-                  value={price}
-                />
-              </View>
-              <View style={styles.inputGroup}>
-                <Text body2 style={{color: BaseColor.sectionColor}}>
-                  Special price
-                </Text>
-                <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
-                  onChangeText={(text) => this.onChangedSpecialPrice(text)}
-                  autoCorrect={false}
-                  placeholder="$ 0.00"
-                  placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.primaryColor}
-                  value={this.state.special_price}
-                />
-              </View>
-              <View style={[styles.profileItem, {marginTop: 20}]}>
-                <Text body1 style={styles.sectionStyle}>
-                  Enable Service
-                </Text>
-                <Switch
-                  name="angle-right"
-                  size={18}
-                  onValueChange={this.toggleProductSwitch}
-                  value={this.state.isEnalbeProduct}
-                />
-              </View>
-              <View style={[styles.profileItem, {marginTop: 20}]}>
-                <Text body1 style={styles.sectionStyle}>
-                  Featured
-                </Text>
-                <Switch
-                  name="angle-right"
-                  size={18}
-                  onValueChange={this.toggleFeaturedSwitch}
-                  value={this.state.isFeatured}
-                />
-              </View>
-              <Dropdown
-                label="Vendor Sections"
-                data={vendorSectionsDropdownLst}
-                baseColor={BaseColor.sectionColor}
-                textColor={BaseColor.titleColor}
-                rippleOpacity={0.7}
-                onChangeText={(value) => {
-                  this.setState({
-                    vendor_sections: this.getVendorKey(value),
-                  });
-                }}
-                value={this.getVendorName(vendor_sections)}
-              />
-            </View>
           </ScrollView>
           <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
@@ -472,10 +466,10 @@ class EditService extends Component {
       />
     );
     const Down = (
-      <Icon name="angle-down" size={15} color={BaseColor.titleColor} />
+      <Icon name="angle-down" size={20} color={BaseColor.titleColor} />
     );
-    const Up = <Icon name="angle-up" size={15} color={BaseColor.titleColor} />;
-    const Close = <Icon name="times" size={10} color={BaseColor.titleColor} />;
+    const Up = <Icon name="angle-up" size={20} color={BaseColor.titleColor} />;
+    const Close = <Icon name="times" size={20} color={BaseColor.titleColor} />;
     const Check = (
       <Icon name="check" size={10} color={GreenColor.darkPrimaryColor} />
     );
@@ -526,11 +520,11 @@ class EditService extends Component {
 
     const {auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
       product_id: id,
     };
     console.log('delte service list', data);
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
         .deleteServiceList(data)
         .then((response) => {
@@ -599,7 +593,7 @@ class EditService extends Component {
 
     const {auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
       productInfo: {
         entity_id: id,
         service_name: service_name,
@@ -616,7 +610,7 @@ class EditService extends Component {
       },
     };
     console.log('update service list', data);
-    if (auth.user.token !== undefined) {
+    if (auth.user.data !== undefined) {
       myAppointmentsSvc
         .updateServiceList(data)
         .then((response) => {

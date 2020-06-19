@@ -70,7 +70,7 @@ class NewTreatmentType extends Component {
                 Category name
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="Hair Services"
@@ -83,7 +83,7 @@ class NewTreatmentType extends Component {
                 Category description
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="e.g Long hair"

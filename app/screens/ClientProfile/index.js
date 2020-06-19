@@ -322,7 +322,7 @@ class ClientProfile extends Component {
     const {auth} = this.props;
     const clientId = this.props.navigation.state.params.clientId;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
       clientId: clientId,
     };
     myAppointmentsSvc

@@ -27,17 +27,34 @@ class ServiceList extends Component {
   }
 
   componentDidMount() {
+    console.log('servicelist is called!');
     const {auth, navigation} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
     };
     this.focusListener = navigation.addListener('didFocus', () => {
-      if (auth.user.token !== undefined) {
+      if (auth.user.data !== undefined) {
         this.setState({loading: true});
+        myAppointmentsSvc
+          .getSubMenuByMerchant(data)
+          .then((response) => {
+            const res_profile = response.data;
+            if (res_profile.code == 0) {
+              console.log('sub menu datalist', res_profile.data);
+              this.setState({
+                subMenuList: res_profile.data,
+              });
+            }
+          })
+          .catch((error) => {
+            console.log('submenulist error');
+            console.log(error);
+          });
         myAppointmentsSvc
           .getServiceList(data)
           .then((response) => {
             const res_profile = response.data;
+            console.log('res_profile', res_profile.data);
             if (res_profile.code == 0) {
               this.setState({serviceData: res_profile.data, loading: false});
             }
@@ -48,43 +65,18 @@ class ServiceList extends Component {
           });
       }
     });
-    myAppointmentsSvc
-      .getSubMenuByMerchant(data)
-      .then((response) => {
-        const res_profile = response.data;
-        if (res_profile.code == 0) {
-          console.log('sub menu datalist', res_profile.data);
-          this.setState({
-            subMenuList: res_profile.data,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log('submenulist error');
-        console.log(error);
-      });
   }
 
   displayContentView() {
     const {navigation} = this.props;
     const {serviceData, loading} = this.state;
+    console.log('serviceData', serviceData);
     if (!this.state.loading) {
       return (
         <SafeAreaView
           style={BaseStyle.safeAreaView}
           forceInset={{top: 'always'}}>
-          <Header
-            title="Services"
-            // renderLeft={() => {
-            //   return (
-            //     <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
-            //   );
-            // }}
-            // onPressLeft={() => {
-            //   navigation.goBack();
-            // }}
-            style={BaseStyle.headerStyle}
-          />
+          <Header title="Services" style={BaseStyle.headerStyle} />
           <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
             <ScrollView>
               {serviceData.map((item, index) => {

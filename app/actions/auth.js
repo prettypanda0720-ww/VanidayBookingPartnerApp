@@ -79,14 +79,14 @@ export const login = (loginCredential, callback) => (dispatch) => {
   UserServices.login(loginCredential)
     .then((response) => {
       if (response.data.code === 0) {
-        const payload = {
-          token: response.data.data,
-        };
-        dispatch(onLoginSuccess(payload));
+        // const payload = {
+        //   token: response.data.data,
+        // };
+        dispatch(onLoginSuccess(response));
       } else {
-        dispatch(onLoginError(response.data.message));
+        dispatch(onLoginError(response));
       }
-      callback(response.data);
+      callback(response);
     })
     .catch((error) => {
       dispatch(onLoginError(error.response));

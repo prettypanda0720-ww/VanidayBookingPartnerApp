@@ -66,7 +66,7 @@ class DeleteAboutusAlbum extends Component {
   onDelete() {
     const {isAllChecked, data} = this.state;
     const {auth, navigation} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     if (isAllChecked) {
       this.setState({deleteLoading: true});
       myAppointmentsSvc

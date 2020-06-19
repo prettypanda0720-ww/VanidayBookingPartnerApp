@@ -51,19 +51,21 @@ class Setting extends Component {
   }
 
   componentDidMount() {
+    console.log('setting is called!');
     const {auth, navigation} = this.props;
     this.focusListener = navigation.addListener('didFocus', () => {
       // The screen is focused
       // Call any action
-      if (auth.user.token !== undefined) {
+      if (auth.user.data !== undefined) {
         myAppointmentsSvc
-          .fetchProfileData(auth.user.token)
+          .fetchProfileData(auth.user.data)
           .then((response) => {
-            const res_profile = response.data.data;
-            if (response.data.data != undefined) {
+            const res_profile = response.data;
+            console.log('res_profile.data', res_profile.data);
+            if (res_profile.data !== undefined) {
               let tpPhotos = [];
               if (res_profile.vendor_carousel !== null) {
-                tpPhotos = JSON.parse(res_profile.vendor_carousel).map(
+                tpPhotos = JSON.parse(res_profile.data.vendor_carousel).map(
                   (photo, index) => {
                     return res_profile.venCarPrefix + photo;
                   },
@@ -71,18 +73,18 @@ class Setting extends Component {
               }
               this.setState({
                 dataLoading: false,
-                vendor_stripe_id: res_profile.vendor_stripe_id,
-                unique_entity_number: res_profile.unique_entity_number,
-                contact_number: res_profile.contact_number,
-                shopTitle: res_profile.shop_title,
-                location: res_profile.company_locality,
-                description: res_profile.company_description,
-                rating: res_profile.average_rating,
+                vendor_stripe_id: res_profile.data.vendor_stripe_id,
+                unique_entity_number: res_profile.data.unique_entity_number,
+                contact_number: res_profile.data.contact_number,
+                shopTitle: res_profile.data.shop_title,
+                location: res_profile.data.company_locality,
+                description: res_profile.data.company_description,
+                rating: res_profile.data.average_rating,
                 photos: tpPhotos,
-                serviceList: res_profile.serviceList,
-                vendor_primary_type: res_profile.vendor_primary_type,
-                vendor_secondary_type: res_profile.vendor_secondary_type,
-                openingHours: res_profile.openingHour,
+                serviceList: res_profile.data.serviceList,
+                vendor_primary_type: res_profile.data.vendor_primary_type,
+                vendor_secondary_type: res_profile.data.vendor_secondary_type,
+                openingHours: res_profile.data.openingHour,
               });
             }
           })

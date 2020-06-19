@@ -157,7 +157,7 @@ class OrderDetail extends Component {
             </Text>
           </View>
           <TextInput
-            style={[BaseStyle.textInput, styles.textInput]}
+            style={BaseStyle.textInput}
             onChangeText={(text) => this.setState({id: text})}
             autoCorrect={false}
             placeholder="Service Name"
@@ -173,7 +173,7 @@ class OrderDetail extends Component {
             </Text>
           </View>
           <TextInput
-            style={[BaseStyle.textInput, styles.textInput]}
+            style={BaseStyle.textInput}
             onChangeText={(text) => this.setState({id: text})}
             autoCorrect={false}
             placeholder="Service Name"

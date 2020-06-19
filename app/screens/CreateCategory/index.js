@@ -50,7 +50,7 @@ class CreateCategory extends Component {
               CATEGORY NAME
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. L'Oreal"

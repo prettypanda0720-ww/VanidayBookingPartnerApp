@@ -410,7 +410,7 @@ class CreateAppointment extends Component {
           </Text>
           <View style={styles.inputGroup}>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="Notes visible to staff only"

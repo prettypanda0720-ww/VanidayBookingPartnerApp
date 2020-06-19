@@ -23,7 +23,7 @@ class EditAboutusAlbum extends Component {
 
   componentDidMount() {
     const {auth, navigation} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     this.focusListener = navigation.addListener('didFocus', () => {
       // The screen is focused
       // Call any action
@@ -73,7 +73,7 @@ class EditAboutusAlbum extends Component {
 
   onPhotoUpdate = () => {
     const {auth, navigation} = this.props;
-    const token = auth.user.token;
+    const token = auth.user.data;
     console.log('---------Middle photos data-------------', this.state.data);
     // reset position of images
     let pos = 0;

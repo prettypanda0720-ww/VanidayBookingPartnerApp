@@ -92,7 +92,7 @@ export default class EditEcard extends Component {
                   Pay
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({id: text})}
                   autoCorrect={false}
                   placeholder="200$"
@@ -106,7 +106,7 @@ export default class EditEcard extends Component {
                   Get
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.textInput]}
+                  style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({id: text})}
                   autoCorrect={false}
                   placeholder="240$"

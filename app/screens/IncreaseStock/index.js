@@ -66,7 +66,7 @@ class IncreaseStock extends Component {
               Increase Qty.
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="0"
@@ -79,7 +79,7 @@ class IncreaseStock extends Component {
               Supply Price
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.textInput]}
+              style={BaseStyle.textInput}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="123.00"

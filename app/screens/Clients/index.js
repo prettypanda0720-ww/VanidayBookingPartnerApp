@@ -31,36 +31,6 @@ class Clients extends Component {
       dataLoading: true,
       search: '',
       refreshing: false,
-      ourTeam: [
-        {
-          image: Images.profile2,
-          subName: '',
-          name: 'Kondo Ieyasu',
-          screen: 'ClientProfile',
-          description: 'riverstar1992@gmail.com',
-        },
-        {
-          image: Images.profile3,
-          subName: '',
-          name: 'Yeray Rosales',
-          screen: 'ClientProfile',
-          description: 'riverstar1992@gmail.com',
-        },
-        {
-          image: Images.profile5,
-          subName: '',
-          name: 'Alf Huncoot',
-          screen: 'ClientProfile',
-          description: 'riverstar1992@gmail.com',
-        },
-        {
-          image: Images.profile4,
-          subName: '',
-          name: 'Chioke Okonkwo',
-          screen: 'ClientProfile',
-          description: 'riverstar1992@gmail.com',
-        },
-      ],
       clientList: [],
     };
     this.growAnimated = new Animated.Value(0);
@@ -185,9 +155,10 @@ class Clients extends Component {
   }
 
   componentDidMount() {
+    console.log('clients is called!');
     const {auth} = this.props;
     const data = {
-      token: auth.user.token,
+      token: auth.user.data,
     };
     myAppointmentsSvc
       .fetchClientList(data)

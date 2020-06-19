@@ -45,7 +45,7 @@ class Loading extends Component {
             style={styles.logo}
             resizeMode="contain"
           />
-          <View style={BaseStyle.loadingContainer}>
+          <View style={[BaseStyle.loadingContainer, {top: 250}]}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

@@ -13,7 +13,7 @@ import {BaseStyle, BaseColor, Images} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import AsyncStorage from '@react-native-community/async-storage';
 import styles from './styles';
-import {showMessage} from 'react-native-flash-message';
+import * as Utils from '@utils';
 // import firebaseSvc from '@services/FirebaseSvc';
 
 class SignIn extends Component {
@@ -39,20 +39,12 @@ class SignIn extends Component {
     };
     actions.login(credential, (response) => {
       console.log('------- login response', response);
-      if (response.code == 0) {
-        // showMessage({
-        //   message: response.msg,
-        //   type: 'success',
-        //   icon: 'auto',
-        // });
+      if (response.data.code == 0) {
         console.log('success');
         navigation.navigate('Home');
       } else {
-        showMessage({
-          message: response.msg,
-          type: 'warning',
-          icon: 'auto',
-        });
+        console.log('response.message', response.data.message);
+        Utils.longNotifyMessage(response.data.message);
       }
     });
   };
@@ -61,19 +53,15 @@ class SignIn extends Component {
     const {email, password} = this.state;
 
     if (email.length === 0) {
-      showMessage({
-        message: 'Please input email address',
-        type: 'warning',
-        icon: 'auto',
-      });
+      Utils.shortNotifyMessage('Email is required!');
       return false;
+    } else {
+      if (!this.validateEmail(this.state.email)) {
+        Utils.shortNotifyMessage('Please Correct your email address!');
+        return false;
+      }
     }
     if (password.length === 0) {
-      showMessage({
-        message: 'Please input password',
-        type: 'warning',
-        icon: 'auto',
-      });
       return false;
     }
     return true;
@@ -157,6 +145,11 @@ class SignIn extends Component {
       </SafeAreaView>
     );
   }
+
+  validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  };
 }
 
 const mapStateToProps = (state) => {
