@@ -25,10 +25,7 @@ export default StyleSheet.create({
     borderColor: BaseColor.fieldColor,
     borderBottomWidth: 1,
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
   sectionStyle: {
     color: 'rgba(0,0,0,0.65)',
   },
@@ -43,15 +40,7 @@ export default StyleSheet.create({
     borderColor: BaseColor.grayColor,
     borderWidth: 1,
   },
-  loadingContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   bizProfile: {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',

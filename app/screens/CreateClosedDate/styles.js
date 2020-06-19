@@ -8,17 +8,6 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
-  textInput: {
-    height: 46,
-    backgroundColor: BaseColor.whiteColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: 'black',
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
   inputGroup: {
     marginTop: 20,
   },
@@ -28,11 +17,11 @@ export default StyleSheet.create({
     padding: 10,
   },
   rowBetweenAlign: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   headerStyle: {
     borderBottomColor: BaseColor.secondBlackColor,
     borderBottomWidth: 1,
-  }
+  },
 });

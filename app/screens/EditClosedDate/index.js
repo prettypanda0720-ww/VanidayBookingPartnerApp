@@ -158,7 +158,7 @@ class EditClosedDate extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView
           style={{flexDirection: 'column', padding: 20, paddingBottom: 40}}>

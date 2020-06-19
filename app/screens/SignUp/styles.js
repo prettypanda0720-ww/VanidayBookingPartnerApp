@@ -9,24 +9,12 @@ export default StyleSheet.create({
     padding: 20,
     width: '100%',
   },
-  textInput: {
-    height: 46,
-    backgroundColor: BaseColor.fieldColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: BaseColor.sectionColor,
-    marginBottom: 10,
-  },
   thumb: {
     width: 130,
     height: 60,
     marginBottom: 20,
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
   profileItem: {
     width: '100%',
     flexDirection: 'row',

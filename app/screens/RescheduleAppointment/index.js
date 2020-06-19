@@ -42,7 +42,7 @@ class RescheduleAppointment extends Component {
       endTime: '',
       duration: '',
       orderId: '',
-      orderItemId: '',
+      quoteItemId: '',
       staffId: '',
       modalCalendarVisible: false,
       status: '',
@@ -100,17 +100,17 @@ class RescheduleAppointment extends Component {
 
   componentDidMount() {
     const orderId = this.props.navigation.state.params.orderId;
-    const orderItemId = this.props.navigation.state.params.orderItemId;
+    const quoteItemId = this.props.navigation.state.params.quoteItemId;
     // console.log('2020-06-20 12:10:10', Utils.formatDate('2020-06-20 12:10:10'));
     const {auth, navigation} = this.props;
     const token = auth.user.token;
     const data = {
       token: token,
       orderId: orderId,
-      orderItemId: orderItemId,
+      quoteItemId: quoteItemId,
     };
     console.log('RescheduleAppointment', data);
-    this.setState({orderId: orderId, orderItemId: orderItemId});
+    this.setState({orderId: orderId, quoteItemId: quoteItemId});
     this.focusListener = navigation.addListener('didFocus', () => {
       myAppointmentsSvc
         .getOrderItemInfo(data)
@@ -161,7 +161,7 @@ class RescheduleAppointment extends Component {
           this.state.appointmentDate + ' ' + startTime,
         ),
         staff_id: this.state.staffId,
-        order_item_id: this.state.orderItemId,
+        order_item_id: this.state.quoteItemId,
       },
     };
     if (auth.user.token !== undefined) {
@@ -194,7 +194,7 @@ class RescheduleAppointment extends Component {
       appointmentDate,
       markedDates,
       orderId,
-      orderItemId,
+      quoteItemId,
       customerName,
       status,
       service_duration,
@@ -219,7 +219,7 @@ class RescheduleAppointment extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <ScrollView
             style={{
@@ -433,9 +433,9 @@ class RescheduleAppointment extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

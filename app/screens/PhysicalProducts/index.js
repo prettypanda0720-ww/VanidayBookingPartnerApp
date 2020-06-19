@@ -226,10 +226,10 @@ class PhysicalProducts extends Component {
             onPressRight={() => {
               navigation.navigate('SearchHistory');
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           {this.renderContent()}
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}
@@ -266,9 +266,9 @@ class PhysicalProducts extends Component {
             onPressRight={() => {
               navigation.navigate('SearchHistory');
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

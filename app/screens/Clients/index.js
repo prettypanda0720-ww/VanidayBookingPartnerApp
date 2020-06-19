@@ -88,7 +88,7 @@ class Clients extends Component {
             // onPressRight={() => {
             //   navigation.navigate('Notification');
             // }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           {/* <View style={{padding: 20}}>
             <View style={styles.searchWrapper}>
@@ -169,9 +169,9 @@ class Clients extends Component {
             // onPressRight={() => {
             //   navigation.goBack();
             // }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

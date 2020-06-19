@@ -143,7 +143,7 @@ export default class ProfileEdit extends Component {
             navigation.goBack();
           }}
           onPressRight={() => {}}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView>
           <View style={styles.contain}>

@@ -117,10 +117,11 @@ class ManageAppointment extends Component {
     const data = {
       token: token,
       orderId: item.id,
-      orderItemId: item.item_id,
+      // quoteItemId: item.item_id,
+      quoteItemId: item.quoteItemId,
     };
     console.log('ManageAppointment', data);
-    this.setState({orderId: item.id, orderItemId: item.item_id});
+    this.setState({orderId: item.id, quoteItemId: item.quoteItemId});
     this.focusListener = navigation.addListener('didFocus', () => {
       myAppointmentsSvc
         .getOrderItemInfo(data)
@@ -153,7 +154,7 @@ class ManageAppointment extends Component {
     const {loading} = this.state;
     const {
       orderId,
-      orderItemId,
+      quoteItemId,
       customerName,
       status,
       totalPrice,
@@ -175,7 +176,7 @@ class ManageAppointment extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <View
             style={{
@@ -236,7 +237,7 @@ class ManageAppointment extends Component {
                       onPress={() =>
                         navigation.navigate('RescheduleAppointment', {
                           orderId: orderId,
-                          orderItemId: orderItemId,
+                          quoteItemId: quoteItemId,
                         })
                       }>
                       Reschedule
@@ -299,9 +300,9 @@ class ManageAppointment extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

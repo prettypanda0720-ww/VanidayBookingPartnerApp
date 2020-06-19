@@ -42,7 +42,7 @@ export default class Help extends Component {
             onPressLeft={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <ScrollView style={{marginBottom: 20}}>
             <View style={styles.wrapper}>

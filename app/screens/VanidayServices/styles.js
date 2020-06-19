@@ -7,10 +7,7 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
   inputGroup: {
     marginTop: 15,
   },

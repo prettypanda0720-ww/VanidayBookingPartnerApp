@@ -62,7 +62,7 @@ class CancellationAndPolicy extends Component {
               <TextInput
                 style={[
                   BaseStyle.textInput,
-                  styles.multilineTextInput,
+                  BaseStyle.multilineTextInput,
                   {marginTop: 10},
                 ]}
                 onChangeText={(text) => this.setState({id: text})}

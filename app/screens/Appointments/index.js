@@ -197,7 +197,7 @@ class Appointments extends Component {
             </TouchableOpacity> */}
             </View>
           </View>
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

@@ -38,7 +38,7 @@ export default class VanidayServices extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <ScrollView>
             <TouchableOpacity

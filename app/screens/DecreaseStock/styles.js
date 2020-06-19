@@ -3,17 +3,6 @@ import {StyleSheet} from 'react-native';
 import {BaseColor} from '@config';
 
 export default StyleSheet.create({
-  textInput: {
-    height: 46,
-    backgroundColor: BaseColor.whiteColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: 'black',
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
   inputGroup: {
     marginTop: 15,
   },
@@ -47,8 +36,5 @@ export default StyleSheet.create({
   retailWrapper: {
     paddingVertical: 30,
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
 });

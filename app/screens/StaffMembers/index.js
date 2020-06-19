@@ -78,7 +78,7 @@ class StaffMembers extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView style={styles.membersWrapper}>
           {staffList.map((item, index) => {
@@ -121,7 +121,7 @@ class StaffMembers extends Component {
             <Image style={styles.image} source={Images.icons_create} />
           </TouchableOpacity>
         </View>
-        <View style={styles.loadingContainer}>
+        <View style={BaseStyle.loadingContainer}>
           <ActivityIndicator
             size="large"
             color={BaseColor.sectionColor}

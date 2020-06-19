@@ -74,7 +74,7 @@ class OpeningHours extends Component {
           onPressRight={() => {
             this.showActionSheet();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView>
           <FlatList
@@ -112,7 +112,7 @@ class OpeningHours extends Component {
             )}
           />
         </ScrollView>
-        <View style={styles.loadingContainer}>
+        <View style={BaseStyle.loadingContainer}>
           <ActivityIndicator
             size="large"
             color={BaseColor.sectionColor}

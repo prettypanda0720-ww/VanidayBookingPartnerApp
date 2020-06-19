@@ -22,7 +22,7 @@ export default class Inventory extends Component {
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
         <Header
           title="Vani Mall"
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
           renderLeft={() => {
             return (
               <Icon

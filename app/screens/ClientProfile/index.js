@@ -147,7 +147,7 @@ class ClientProfile extends Component {
             // onPressRight={() => {
             //   navigation.navigate('Notification');
             // }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <ScrollView
             style={{paddingLeft: 20, paddingRight: 20, marginTop: 10}}>
@@ -304,9 +304,9 @@ class ClientProfile extends Component {
             // onPressRight={() => {
             //   navigation.navigate('Notification');
             // }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

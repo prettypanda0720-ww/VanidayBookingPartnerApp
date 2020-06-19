@@ -36,7 +36,7 @@ class EditCategory extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView
           style={{

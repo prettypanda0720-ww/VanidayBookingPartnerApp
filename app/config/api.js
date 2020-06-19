@@ -32,6 +32,7 @@ export const Api = {
     SERVICE_DETAIL_DATA_URL: '/myvaniday/serviceDetail',
     GET_HOMECATEGORY_DATA_URL: '/getHomeCategory',
     GET_SUBMENU_BY_MERCHANT: '/getMerchantCategory',
+    GET_NEIGHTBOURHOODLIST_DATA_URL: '/getNeighbourhoodList',
     GET_ALLSERVICELIST_DATA_URL: '/myvaniday/getAllServiceList',
     // opening hour
     UPDATE_OPENINGHOURS_DATA_URL: '/myvaniday/updateOpeningHour',
@@ -61,5 +62,8 @@ export const Api = {
     GET_ORDERINFO_DATA_URL: '/myvaniday/getOrderItemInfo',
     UPDATE_CAROUSEL_POSITION_DATA_URL:
       '/rest/V1/vaniday-vendor/update-carousel-position',
+    FORGOTPASSWORD_DATA_URL: '/passwordReset',
+    CHANGEPASSWORD_DATA_URL: '/passwordUpdate',
+    VENDORSECTIONS_DATA_URL: '/getSections',
   },
 };

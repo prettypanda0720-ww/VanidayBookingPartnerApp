@@ -71,7 +71,7 @@ export default class ClosedDates extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <View
           style={{

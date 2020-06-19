@@ -7,12 +7,12 @@ import Drawer from 'react-native-drawer';
 import {Icon, AppointmentListItem, Text, Agenda} from '@components';
 // import {Agenda} from 'react-native-calendars';
 import Moment from 'moment';
-import {BaseColor, Images} from '@config';
+import {BaseColor, Images, BaseStyle} from '@config';
 import {myAppointmentsSvc} from '@services';
 import {connect} from 'react-redux';
 import {AuthActions} from '@actions';
 import {bindActionCreators} from 'redux';
-import {withNavigation} from 'react-navigation';
+import {withNavigationFocus} from 'react-navigation';
 import * as Utils from '@utils';
 import store from 'app/store';
 
@@ -96,9 +96,11 @@ class Home extends Component<{}> {
       } else {
         this.setState({month: this.getMonthName(day.month - 1)});
         this.setState({day: day.day});
-        Utils.longNotifyMessage(
-          'To view appointments for another month, please click “Select Month” at the top and choose a date in that month.',
-        );
+        if (this.props.isFocused) {
+          Utils.longNotifyMessage(
+            'To view appointments for another month, please click “Select Month” at the top and choose a date in that month.',
+          );
+        }
       }
     }
   }
@@ -196,7 +198,7 @@ class Home extends Component<{}> {
             </View>
           </TouchableOpacity>
         </Modal>
-        <View style={[styles.mainContainer, styles.headerStyle]}>
+        <View style={[styles.mainContainer, BaseStyle.headerStyle]}>
           <View style={{flex: 1}} />
           <View
             style={[styles.contentCenter, {flex: 10, flexDirection: 'column'}]}>
@@ -361,6 +363,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withNavigation(
+export default withNavigationFocus(
   connect(mapStateToProps, mapDispatchToProps)(Home),
 );

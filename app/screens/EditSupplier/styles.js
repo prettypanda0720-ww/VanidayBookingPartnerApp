@@ -67,8 +67,5 @@ export default StyleSheet.create({
     borderRadius: 5,
     backgroundColor: BaseColor.fieldColor,
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
 });

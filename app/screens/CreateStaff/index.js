@@ -242,7 +242,7 @@ class CreateStaff extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView>
           <View style={{paddingHorizontal: 20, marginTop: 20}}>

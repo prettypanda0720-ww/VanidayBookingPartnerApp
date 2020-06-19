@@ -94,7 +94,7 @@ class EditOpeningHours extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView>
           <FlatList

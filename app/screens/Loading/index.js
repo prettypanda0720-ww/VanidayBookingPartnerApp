@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {AuthActions} from '@actions';
 import {ActivityIndicator, View, StatusBar} from 'react-native';
 import {bindActionCreators} from 'redux';
-import {Images, BaseColor} from '@config';
+import {Images, BaseColor, BaseStyle} from '@config';
 import SplashScreen from 'react-native-splash-screen';
 import {Image} from '@components';
 import styles from './styles';
@@ -45,7 +45,7 @@ class Loading extends Component {
             style={styles.logo}
             resizeMode="contain"
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

@@ -46,10 +46,7 @@ export default StyleSheet.create({
     backgroundColor: BaseColor.primaryColor,
     height: 1,
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
   sectionStyle: {
     color: 'rgba(0,0,0,0.65)',
   },

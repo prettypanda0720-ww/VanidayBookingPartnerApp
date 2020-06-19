@@ -46,7 +46,7 @@ class Financing extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView style={styles.container}>
           <View style={styles.logoWrapper}>

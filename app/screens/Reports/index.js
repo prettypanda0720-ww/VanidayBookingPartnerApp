@@ -116,7 +116,7 @@ export default class Reports extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView>
           <View style={styles.reportWrapper}>

@@ -153,7 +153,7 @@ export default class EcardList extends Component {
           onPressRight={() => {
             navigation.navigate('SearchHistory');
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         {this.renderContent()}
       </SafeAreaView>

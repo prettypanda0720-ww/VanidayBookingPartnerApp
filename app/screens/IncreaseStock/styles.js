@@ -53,8 +53,5 @@ export default StyleSheet.create({
   retailWrapper: {
     paddingVertical: 30,
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
 });

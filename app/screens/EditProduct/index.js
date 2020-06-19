@@ -535,7 +535,7 @@ class EditProduct extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <ScrollView style={styles.mainWrapper}>
             <View
@@ -607,7 +607,7 @@ class EditProduct extends Component {
                 Product Name
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({name: text})}
                 autoCorrect={false}
                 placeholder=""
@@ -621,7 +621,7 @@ class EditProduct extends Component {
                 Price
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.onChangedPrice(text)}
                 autoCorrect={false}
                 placeholder="$0.00"
@@ -635,7 +635,7 @@ class EditProduct extends Component {
                 Special Price
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) => this.onChangedSpecialPrice(text)}
                 autoCorrect={false}
                 placeholder="$0.00"
@@ -649,7 +649,7 @@ class EditProduct extends Component {
                 SKU
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 // onChangeText={(text) => this.setState({special_price: text})}
                 autoCorrect={false}
                 placeholder="$0.00"
@@ -683,7 +683,7 @@ class EditProduct extends Component {
                 Short Description
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.textInput]}
+                style={BaseStyle.textInput}
                 onChangeText={(text) =>
                   this.setState({short_description: text})
                 }
@@ -699,7 +699,7 @@ class EditProduct extends Component {
                 Description
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.multilineTextInput]}
+                style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
                 onChangeText={(text) => this.setState({description: text})}
                 autoCorrect={false}
                 placeholder=""
@@ -763,9 +763,9 @@ class EditProduct extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

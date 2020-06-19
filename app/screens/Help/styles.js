@@ -10,10 +10,7 @@ export default StyleSheet.create({
   contentWrapper: {
     paddingHorizontal: 20,
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
   inputGroup: {
     marginTop: 15,
   },

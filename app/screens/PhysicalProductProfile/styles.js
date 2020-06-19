@@ -4,17 +4,6 @@ import * as Utils from '@utils';
 import {BaseColor} from '@config';
 
 export default StyleSheet.create({
-  textInput: {
-    height: 46,
-    backgroundColor: BaseColor.fieldColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: 'black',
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
   inputGroup: {
     paddingVertical: 20,
     borderBottomWidth: 1,
@@ -67,8 +56,5 @@ export default StyleSheet.create({
   stockHisWrapper: {
     marginTop: 60,
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
 });

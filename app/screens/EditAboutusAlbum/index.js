@@ -130,7 +130,7 @@ class EditAboutusAlbum extends Component {
             onPressLeft={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <Text subhead style={{padding: 10}}>
             if you wanna to change photo's order, please drag and drop photo.
@@ -177,9 +177,9 @@ class EditAboutusAlbum extends Component {
             onPressLeft={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

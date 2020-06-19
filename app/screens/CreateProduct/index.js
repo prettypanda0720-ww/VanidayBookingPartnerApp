@@ -387,7 +387,7 @@ class CreateProduct extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <ScrollView style={styles.mainWrapper}>
             <Text headline style={[styles.headerTitle, {marginTop: 20}]}>
@@ -500,7 +500,7 @@ class CreateProduct extends Component {
                 Description
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.multilineTextInput]}
+                style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
                 onChangeText={(text) => this.setState({description: text})}
                 autoCorrect={false}
                 placeholder=""
@@ -563,9 +563,9 @@ class CreateProduct extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

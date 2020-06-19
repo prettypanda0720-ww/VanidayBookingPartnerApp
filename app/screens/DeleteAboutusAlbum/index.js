@@ -178,7 +178,7 @@ class DeleteAboutusAlbum extends Component {
           // onPressRight={() => {
           //   navigation.goBack();
           // }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <View style={styles.profileItem}>
           <Text caption1 style={{flex: 10}}>

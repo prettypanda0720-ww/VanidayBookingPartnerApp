@@ -59,7 +59,7 @@ export default class EditEcard extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView>
           <Text
@@ -133,7 +133,7 @@ export default class EditEcard extends Component {
                 Terms
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.multilineTextInput]}
+                style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""
@@ -158,7 +158,7 @@ export default class EditEcard extends Component {
                 About
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.multilineTextInput]}
+                style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""
@@ -183,7 +183,7 @@ export default class EditEcard extends Component {
                 How does eCard Works
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.multilineTextInput]}
+                style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder=""

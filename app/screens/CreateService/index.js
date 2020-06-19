@@ -30,8 +30,9 @@ class CreateService extends Component {
       service_name: '',
       sku: '',
       price: '',
+      special_price: '',
       service_duration: '',
-      vendor_sections: '',
+      vendor_sections: 0,
       isEnalbeProduct: false,
       isFeatured: false,
       index: 0,
@@ -39,6 +40,8 @@ class CreateService extends Component {
       short_description: '',
       subMenuList: [],
       selectedItems: [],
+      vendorSectionsLst: [],
+      vendorSectionsDropdownLst: [],
     };
   }
 
@@ -84,6 +87,7 @@ class CreateService extends Component {
       service_name,
       sku,
       price,
+      special_price,
       selectedItems,
       service_duration,
       vendor_sections,
@@ -108,11 +112,12 @@ class CreateService extends Component {
         service_name: service_name,
         sku: sku,
         price: price,
+        speical_price: special_price,
         category_ids: selItemsStr,
         service_duration: service_duration,
-        vendor_sections: isEnalbeProduct ? 1 : 0,
+        vendor_sections: vendor_sections,
         is_featured: isFeatured ? 1 : 0,
-        // status: isEnalbeProduct ? 1 : 0,
+        status: isEnalbeProduct ? 1 : 2,
         description: description,
         short_description: short_description,
       },
@@ -146,6 +151,7 @@ class CreateService extends Component {
     const postData = {
       token: auth.user.token,
     };
+    const token = auth.user.token;
     myAppointmentsSvc
       .getSubMenuByMerchant(postData)
       .then((response) => {
@@ -154,13 +160,36 @@ class CreateService extends Component {
           console.log('sub menu datalist', res_profile.data);
           this.setState({
             subMenuList: res_profile.data,
-            dataLoading: false,
           });
         }
       })
       .catch((error) => {
         Utils.shortNotifyMessage(error);
         console.log('appointment error');
+        console.log(error);
+      });
+    const sectionsData = {
+      token: token,
+    };
+    myAppointmentsSvc
+      .getVendorSections(sectionsData)
+      .then((response) => {
+        const res_profile = response.data;
+        console.log('serviceDetail', res_profile);
+        if (res_profile.code == 0) {
+          this.setState({
+            dataLoading: false,
+            vendorSectionsLst: res_profile.data,
+            vendorSectionsDropdownLst: res_profile.data.map((item, index) => {
+              return {
+                value: item.sectionName,
+              };
+            }),
+          });
+        }
+      })
+      .catch((error) => {
+        console.log('service Detail error');
         console.log(error);
       });
   }
@@ -221,7 +250,14 @@ class CreateService extends Component {
 
   displayContentView() {
     const {navigation} = this.props;
-    const {loading, dataLoading, saveLoading, subMenuList} = this.state;
+    const {
+      loading,
+      dataLoading,
+      saveLoading,
+      subMenuList,
+      vendor_sections,
+      vendorSectionsDropdownLst,
+    } = this.state;
     let duration = [
       {value: '30'},
       {value: '60'},
@@ -248,7 +284,7 @@ class CreateService extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <ScrollView
             style={{
@@ -313,12 +349,13 @@ class CreateService extends Component {
                 Description
               </Text>
               <TextInput
-                style={[BaseStyle.textInput, styles.multilineTextInput]}
+                style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
                 onChangeText={(text) => this.setState({description: text})}
                 autoCorrect={false}
                 placeholder=""
                 placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.titleColor}
+                multiline={true}
               />
             </View>
             <View style={{marginTop: 30}}>
@@ -352,19 +389,20 @@ class CreateService extends Component {
                   keyboardType={'numeric'}
                 />
               </View>
-              {/* <View style={styles.inputGroup}>
+              <View style={styles.inputGroup}>
                 <Text body2 style={{color: BaseColor.sectionColor}}>
-                  Discount price
+                  Special price
                 </Text>
                 <TextInput
                   style={[BaseStyle.textInput, styles.textInput]}
-                  onChangeText={(text) => this.setState({service_duration: text})}
+                  onChangeText={(text) => this.onChangedSpecialPrice(text)}
                   autoCorrect={false}
                   placeholder="$ 0.00"
                   placeholderTextColor={BaseColor.titleColor}
                   selectionColor={BaseColor.primaryColor}
+                  value={this.state.special_price}
                 />
-              </View> */}
+              </View>
               <View style={[styles.profileItem, {marginTop: 20}]}>
                 <Text body1 style={styles.sectionStyle}>
                   Enable Product
@@ -387,6 +425,19 @@ class CreateService extends Component {
                   value={this.state.isFeatured}
                 />
               </View>
+              <Dropdown
+                label="Vendor Sections"
+                data={vendorSectionsDropdownLst}
+                baseColor={BaseColor.sectionColor}
+                textColor={BaseColor.titleColor}
+                rippleOpacity={0.7}
+                onChangeText={(value) => {
+                  this.setState({
+                    vendor_sections: this.getVendorKey(value),
+                  });
+                }}
+                value={this.getVendorName(vendor_sections)}
+              />
             </View>
           </ScrollView>
           <View
@@ -427,9 +478,9 @@ class CreateService extends Component {
             onPressRight={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}
@@ -444,6 +495,35 @@ class CreateService extends Component {
 
   render() {
     return <View style={{flex: 1}}>{this.displayContentView()}</View>;
+  }
+
+  getVendorName(key) {
+    let name = '';
+    console.log('key', key);
+    this.state.vendorSectionsLst.forEach((element) => {
+      if (element.sectionId == key) {
+        name = element.sectionName;
+        console.log('name', name);
+      }
+    });
+    return name;
+  }
+
+  getVendorKey(value) {
+    let key = 0;
+    this.state.vendorSectionsLst.forEach((element) => {
+      if (element.sectionName == value) {
+        key = element.sectionId;
+        console.log('key', key);
+      }
+    });
+    return key;
+  }
+
+  onChangedSpecialPrice(text) {
+    this.setState({
+      special_price: text.replace(/[^0-9]/g, ''),
+    });
   }
 }
 

@@ -16,7 +16,7 @@ export default class Sales extends Component {
     const {navigation} = this.props;
     return (
       <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
-        <Header title="Sales" style={styles.headerStyle} />
+        <Header title="Sales" style={BaseStyle.headerStyle} />
         <View style={styles.contain}>
           <View style={{width: '100%'}}>
             {/* <TouchableOpacity

@@ -20,7 +20,7 @@ class ServiceList extends Component {
   constructor(props) {
     super();
     this.state = {
-      loading: true,
+      loading: false,
       serviceData: [],
       subMenuList: [],
     };
@@ -33,6 +33,7 @@ class ServiceList extends Component {
     };
     this.focusListener = navigation.addListener('didFocus', () => {
       if (auth.user.token !== undefined) {
+        this.setState({loading: true});
         myAppointmentsSvc
           .getServiceList(data)
           .then((response) => {
@@ -64,117 +65,140 @@ class ServiceList extends Component {
       });
   }
 
-  render() {
+  displayContentView() {
     const {navigation} = this.props;
     const {serviceData, loading} = this.state;
-    return (
-      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
-        <Header
-          title="Services"
-          // renderLeft={() => {
-          //   return (
-          //     <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
-          //   );
-          // }}
-          // onPressLeft={() => {
-          //   navigation.goBack();
-          // }}
-          style={styles.headerStyle}
-        />
-        <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
-          <ScrollView>
-            {serviceData.map((item, index) => {
-              return (
-                <View style={{flexDirection: 'column'}}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      marginTop: 10,
-                      marginBottom: 10,
-                      paddingLeft: 20,
-                      paddingRight: 20,
-                    }}>
-                    <Text
-                      body1
-                      semibold
-                      style={{color: BaseColor.sectionColor}}>
-                      {item.sectionName}
-                      {/* &nbsp;({item.totalCount}) */}
-                    </Text>
+    if (!this.state.loading) {
+      return (
+        <SafeAreaView
+          style={BaseStyle.safeAreaView}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Services"
+            // renderLeft={() => {
+            //   return (
+            //     <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
+            //   );
+            // }}
+            // onPressLeft={() => {
+            //   navigation.goBack();
+            // }}
+            style={BaseStyle.headerStyle}
+          />
+          <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
+            <ScrollView>
+              {serviceData.map((item, index) => {
+                return (
+                  <View style={{flexDirection: 'column'}}>
                     <View
-                      style={{justifyContent: 'center', alignItems: 'center'}}>
-                      <Icon
-                        name="ellipsis-h"
-                        size={15}
-                        color={BaseColor.sectionColor}
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginTop: 10,
+                        marginBottom: 10,
+                        paddingLeft: 20,
+                        paddingRight: 20,
+                      }}>
+                      <Text
+                        body1
+                        semibold
+                        style={{color: BaseColor.sectionColor}}>
+                        {item.sectionName}
+                        {/* &nbsp;({item.totalCount}) */}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        borderLeftWidth: 4,
+                        borderLeftColor: BaseColor.SecondColor,
+                        borderTopWidth: 1,
+                        borderTopColor: BaseColor.dividerColor,
+                      }}>
+                      <FlatList
+                        data={item.dataList}
+                        keyExtractor={(item, index) => item.id}
+                        renderItem={({item}) => (
+                          <TouchableOpacity
+                            style={{
+                              paddingTop: 10,
+                              paddingBottom: 10,
+                              paddingLeft: 20,
+                              paddingRight: 20,
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                              borderBottomWidth: 1,
+                              borderBottomColor: BaseColor.dividerColor,
+                            }}
+                            activeOpacity={0.6}
+                            onPress={() =>
+                              navigation.navigate('EditService', {
+                                sku: item.sku,
+                                subMenuList: this.state.subMenuList,
+                              })
+                            }>
+                            <View style={{flexDirection: 'column', flex: 8}}>
+                              <Text
+                                subhead
+                                numberOfLines={3}
+                                style={{color: BaseColor.titleColor}}>
+                                {item.product_name}
+                              </Text>
+                              <Text
+                                caption1
+                                style={{
+                                  marginTop: 5,
+                                  color: BaseColor.titleColor,
+                                }}>
+                                {item.service_duration}&nbsp;Min
+                              </Text>
+                            </View>
+                            <View
+                              style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                flex: 1.5,
+                              }}>
+                              <Text body2 style={{color: BaseColor.titleColor}}>
+                                $&nbsp;{item.product_price}
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+                        )}
                       />
                     </View>
                   </View>
-                  <View
-                    style={{
-                      borderLeftWidth: 4,
-                      borderLeftColor: BaseColor.SecondColor,
-                      borderTopWidth: 1,
-                      borderTopColor: BaseColor.dividerColor,
-                    }}>
-                    <FlatList
-                      data={item.dataList}
-                      keyExtractor={(item, index) => item.id}
-                      renderItem={({item}) => (
-                        <TouchableOpacity
-                          style={{
-                            paddingTop: 10,
-                            paddingBottom: 10,
-                            paddingLeft: 20,
-                            paddingRight: 20,
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            borderBottomWidth: 1,
-                            borderBottomColor: BaseColor.dividerColor,
-                          }}
-                          activeOpacity={0.6}
-                          onPress={() =>
-                            navigation.navigate('EditService', {
-                              sku: item.sku,
-                              subMenuList: this.state.subMenuList,
-                            })
-                          }>
-                          <View style={{flexDirection: 'column', flex: 8}}>
-                            <Text
-                              subhead
-                              numberOfLines={3}
-                              style={{color: BaseColor.titleColor}}>
-                              {item.product_name}
-                            </Text>
-                            <Text
-                              caption1
-                              style={{
-                                marginTop: 5,
-                                color: BaseColor.titleColor,
-                              }}>
-                              {item.service_duration}&nbsp;Min
-                            </Text>
-                          </View>
-                          <View
-                            style={{
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              flex: 1.5,
-                            }}>
-                            <Text body2 style={{color: BaseColor.titleColor}}>
-                              $&nbsp;{item.product_price}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      )}
-                    />
-                  </View>
-                </View>
-              );
-            })}
-          </ScrollView>
-          <View style={styles.loadingContainer}>
+                );
+              })}
+            </ScrollView>
+          </SafeAreaView>
+          <View style={styles.floatingBtn}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('CreateService')}
+              style={styles.button}
+              activeOpacity={0.8}>
+              <Image style={styles.image} source={Images.icons_create} />
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      );
+    } else {
+      return (
+        <SafeAreaView
+          style={BaseStyle.safeAreaView}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Services"
+            // renderLeft={() => {
+            //   return (
+            //     <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
+            //   );
+            // }}
+            // onPressLeft={() => {
+            //   navigation.goBack();
+            // }}
+            style={BaseStyle.headerStyle}
+          />
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}
@@ -183,16 +207,12 @@ class ServiceList extends Component {
             />
           </View>
         </SafeAreaView>
-        <View style={styles.floatingBtn}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('CreateService')}
-            style={styles.button}
-            activeOpacity={0.8}>
-            <Image style={styles.image} source={Images.icons_create} />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    );
+      );
+    }
+  }
+
+  render() {
+    return <View style={{flex: 1}}>{this.displayContentView()}</View>;
   }
 }
 

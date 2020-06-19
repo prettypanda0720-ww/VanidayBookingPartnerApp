@@ -53,7 +53,7 @@ class CreateSupplier extends Component {
           onPressRight={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView
           style={{
@@ -84,7 +84,7 @@ class CreateSupplier extends Component {
               Supplier Description
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.multilineTextInput]}
+              style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. Local provider of hair products"
@@ -165,7 +165,7 @@ class CreateSupplier extends Component {
               Street
             </Text>
             <TextInput
-              style={[BaseStyle.textInput, styles.multilineTextInput]}
+              style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
               onChangeText={(text) => this.setState({id: text})}
               autoCorrect={false}
               placeholder="e.g. 12Main Street"

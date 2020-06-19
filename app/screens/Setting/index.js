@@ -169,7 +169,7 @@ class Setting extends Component {
             // onPressRight={() => {
             //   navigation.navigate('Notification');
             // }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <ScrollView>
             <View style={styles.contain}>
@@ -413,9 +413,9 @@ class Setting extends Component {
             // onPressRight={() => {
             //   navigation.navigate('Notification');
             // }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

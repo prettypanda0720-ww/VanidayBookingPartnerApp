@@ -399,14 +399,14 @@ export function formatDate(date) {
 }
 
 export function getTimeFromDate(date) {
-  console.log('startDate', date);
+  // console.log('startDate', date);
   let xdate = new XDate(date, false);
   // console.log('xdate.toLocaleTimeString()', xdate.toLocaleTimeString());
   return xdate.toString('hh:mm');
 }
 
 export function autoTrackEndTime(startDate, minutes) {
-  console.log('startDate', startDate);
+  // console.log('startDate', startDate);
   let xdate = new XDate(startDate, false).addMinutes(minutes);
   // console.log('xdate.toLocaleTimeString()', xdate.toLocaleTimeString());
   return xdate.toString('HH:mm');
@@ -439,7 +439,7 @@ export function getFormattedShortDate(date) {
 }
 
 export function getFormattedLongDate(date) {
-  console.log('getFormattedLongDate', date);
+  // console.log('getFormattedLongDate', date);
   let csDate = new Date(date);
   let mlist = [
     'Jan',

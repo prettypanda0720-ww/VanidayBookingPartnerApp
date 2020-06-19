@@ -9,17 +9,6 @@ export default StyleSheet.create({
     padding: 20,
     width: '100%',
   },
-  textInput: {
-    flex: 2,
-    height: 46,
-    backgroundColor: BaseColor.fieldColor,
-    borderRadius: 5,
-    padding: 10,
-    color: BaseColor.titleColor,
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
   inputGroup: {
     paddingVertical: 20,
     borderBottomColor: BaseColor.grayColor,
@@ -75,8 +64,8 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
   },
   contentButtonBottom: {
-    backgroundColor: BaseColor.secondBlackColor, 
+    backgroundColor: BaseColor.secondBlackColor,
     flexDirection: 'row',
     height: Utils.scaleWithPixel(60),
-  }
+  },
 });

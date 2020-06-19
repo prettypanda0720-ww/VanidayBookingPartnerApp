@@ -16,28 +16,6 @@ export default StyleSheet.create({
   inputGroup: {
     marginTop: 15,
   },
-  textInput: {
-    height: 46,
-    backgroundColor: BaseColor.whiteColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: BaseColor.titleColor,
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
-  multilineTextInput: {
-    height: 200,
-    backgroundColor: BaseColor.whiteColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: BaseColor.titleColor,
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
   contentPage: {
     bottom: 0,
   },
@@ -57,10 +35,7 @@ export default StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 20,
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
   dateInfo: {
     borderRadius: 8,
     paddingHorizontal: 10,

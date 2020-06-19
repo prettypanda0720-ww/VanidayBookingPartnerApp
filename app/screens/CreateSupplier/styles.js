@@ -8,17 +8,6 @@ export default StyleSheet.create({
     padding: 20,
     width: '100%',
   },
-  textInput: {
-    height: 46,
-    backgroundColor: BaseColor.fieldColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: 'black',
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
   inputGroup: {
     marginTop: 15,
   },
@@ -60,8 +49,5 @@ export default StyleSheet.create({
     borderRadius: 5,
     backgroundColor: BaseColor.fieldColor,
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
 });

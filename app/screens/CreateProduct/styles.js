@@ -4,17 +4,6 @@ import {BaseColor} from '@config';
 import * as Utils from '@utils';
 
 export default StyleSheet.create({
-  textInput: {
-    height: 46,
-    backgroundColor: BaseColor.fieldColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: 'black',
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
   inputGroup: {
     marginTop: 15,
   },
@@ -58,10 +47,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  headerStyle: {
-    borderBottomWidth: 1,
-    borderBottomColor: BaseColor.secondBlackColor,
-  },
+  
   uploadBtnWrapper: {
     flex: 1,
     flexDirection: 'row',

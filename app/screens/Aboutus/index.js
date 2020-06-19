@@ -291,7 +291,7 @@ class Aboutus extends Component {
             onPressLeft={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
           <ScrollView>
             <View
@@ -470,7 +470,7 @@ class Aboutus extends Component {
                   Description
                 </Text>
                 <TextInput
-                  style={[BaseStyle.textInput, styles.multilineTextInput]}
+                  style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
                   onChangeText={(text) => this.setState({description: text})}
                   autoCorrect={false}
                   placeholder=""
@@ -541,7 +541,7 @@ class Aboutus extends Component {
               </View>
             </View>
           </ScrollView>
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}
@@ -584,9 +584,9 @@ class Aboutus extends Component {
             onPressLeft={() => {
               navigation.goBack();
             }}
-            style={styles.headerStyle}
+            style={BaseStyle.headerStyle}
           />
-          <View style={styles.loadingContainer}>
+          <View style={BaseStyle.loadingContainer}>
             <ActivityIndicator
               size="large"
               color={BaseColor.sectionColor}

@@ -110,6 +110,11 @@ function getHomeCategory() {
   return apiClient.get(url);
 }
 
+function getNeighbourhoodList() {
+  var url = Api.myVaniContent.GET_NEIGHTBOURHOODLIST_DATA_URL;
+  return apiClient.get(url);
+}
+
 function getOpeningHour(postData) {
   var url = Api.myVaniContent.GET_OPENINGHOURS_DATA_URL;
   return apiClient.post(url, postData);
@@ -355,6 +360,20 @@ function getOrderItemInfo(postData) {
   return apiClient_json.post(url, postData);
 }
 
+function forgotPassword(postData) {
+  var url = Api.myVaniContent.FORGOTPASSWORD_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
+function changePassword(postData) {
+  var url = Api.myVaniContent.CHANGEPASSWORD_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
+
+function getVendorSections(postData) {
+  var url = Api.myVaniContent.VENDORSECTIONS_DATA_URL;
+  return apiClient_json.post(url, postData);
+}
 export const myAppointmentsSvc = {
   fetchOrderByDate,
   fetchProfileData,
@@ -394,4 +413,8 @@ export const myAppointmentsSvc = {
   deleteCarouselById,
   getOrderItemInfo,
   updateCarouselPosition,
+  getNeighbourhoodList,
+  forgotPassword,
+  changePassword,
+  getVendorSections,
 };

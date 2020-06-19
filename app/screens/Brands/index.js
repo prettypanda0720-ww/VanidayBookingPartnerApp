@@ -68,7 +68,7 @@ class Brands extends Component {
           onPressLeft={() => {
             navigation.goBack();
           }}
-          style={styles.headerStyle}
+          style={BaseStyle.headerStyle}
         />
         <View style={{padding: 20}}>
           <View style={styles.searchWrapper}>
