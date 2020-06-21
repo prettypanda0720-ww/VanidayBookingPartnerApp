@@ -34,6 +34,7 @@ import ExpandableItemComponent from './ExpandableItemComponent';
 import SectionedMultiSelect from './SectionedMultiSelect';
 import CustomerListItem from './CustomerListItem';
 import AppointmentItem from './AppointmentItem';
+import BirthdayPicker from './BirthdayPicker';
 
 export {
   Header,
@@ -72,4 +73,5 @@ export {
   SectionedMultiSelect,
   CustomerListItem,
   AppointmentItem,
+  BirthdayPicker,
 };

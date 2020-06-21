@@ -23,7 +23,7 @@ export const Api = {
     GET_STAFFLIST_DATA_URL: '/myvaniday/getStaffList',
     DELETE_STAFFLIST_DATA_URL: '/myvaniday/deleteStaffList',
     CREATE_STAFFLIST_DATA_URL: '/myvaniday/createStaffList',
-    UPDATE_STAFFLIST_DATA_URL: '/myvaniday/createStaffList',
+    UPDATE_STAFFLIST_DATA_URL: '/myvaniday/updateStaffList',
     // services
     GET_SERVICELIST_DATA_URL: '/myvaniday/getServiceList',
     CREATE_SERVICELIST_DATA_URL: '/myvaniday/createService',

@@ -19,17 +19,6 @@ export default StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 60,
   },
-  multilineTextInput: {
-    height: 200,
-    backgroundColor: BaseColor.fieldColor,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    color: 'black',
-    marginTop: 5,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
-  },
   profileItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -48,7 +37,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  
+
   uploadBtnWrapper: {
     flex: 1,
     flexDirection: 'row',
@@ -70,8 +59,8 @@ export default StyleSheet.create({
   },
   imageWrapper: {
     borderWidth: 1,
-    borderColor: BaseColor.SecondColor,
-    marginBottom: 15,
+    borderColor: BaseColor.grayColor,
+    // paddingVertical: 5,
   },
   sectionStyle: {
     color: 'rgba(0,0,0,0.65)',

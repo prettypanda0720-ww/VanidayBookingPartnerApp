@@ -319,50 +319,34 @@ class ClientProfile extends Component {
     }
   }
   componentDidMount() {
-    const {auth} = this.props;
+    const {auth, navigation} = this.props;
     const clientId = this.props.navigation.state.params.clientId;
     const data = {
       token: auth.user.data,
       clientId: clientId,
     };
-    myAppointmentsSvc
-      .fetchClientDetail(data)
-      .then((response) => {
-        const res_profile = response.data;
-        if (res_profile.code == 0) {
-          console.log('product detail', res_profile.data);
-          this.setState({profileData: res_profile.data, dataLoading: false});
-        }
-      })
-      .catch((error) => {
-        Utils.shortNotifyMessage(error);
-        console.log('appointment error');
-        console.log(error);
-      });
+    this.focusListener = navigation.addListener('didFocus', () => {
+      myAppointmentsSvc
+        .fetchClientDetail(data)
+        .then((response) => {
+          const res_profile = response.data;
+          if (res_profile.code == 0) {
+            console.log('product detail', res_profile.data);
+            this.setState({profileData: res_profile.data, dataLoading: false});
+          }
+        })
+        .catch((error) => {
+          Utils.shortNotifyMessage('Some errors occured during communication.');
+          this.setState({dataLoading: false});
+        });
+    });
   }
 }
 
 class AppointmentsTab extends Component {
   constructor(props) {
     super();
-    this.state = {
-      appointments: [
-        {
-          date: 'Mar 19',
-          title: 'Gel Express Mani',
-          summary: '1h 30min with Judy',
-          starttime: 'Fri 11:00',
-          totalprice: 'SGD 0',
-        },
-        {
-          date: 'Mar 19',
-          title: 'Gel Express Mani',
-          summary: '1h 30min with Judy',
-          starttime: 'Fri 11:00',
-          totalprice: 'SGD 0',
-        },
-      ],
-    };
+    this.state = {};
   }
 
   render() {

@@ -35,10 +35,10 @@ class EditAboutusAlbum extends Component {
           if (response.data.data !== undefined) {
             let photosDataTmp = [];
             if (res_profile.vendor_carousel !== null) {
-              photosDataTmp = JSON.parse(res_profile.vendor_carousel).map(
+              photosDataTmp = res_profile.vendor_carousel.map(
                 (photo, index) => ({
-                  image_index: index,
-                  image_name: res_profile.venCarPrefix + photo,
+                  image_index: photo.image_index,
+                  image_name: res_profile.venCarPrefix + photo.image_name,
                 }),
               );
             }
@@ -146,7 +146,7 @@ class EditAboutusAlbum extends Component {
             <Button
               style={{flex: 1, marginLeft: 10}}
               loading={this.state.deleteLoading}
-              onPress={() => this.onDelete()}>
+              onPress={() => navigation.goBack()}>
               Cancel
             </Button>
             <Button

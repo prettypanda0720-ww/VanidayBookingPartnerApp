@@ -63,8 +63,8 @@ class Appointments extends Component {
           }
         })
         .catch((error) => {
-          console.log('service Detail error');
-          console.log(error);
+          dataLoading: false,
+          Utils.longNotifyMessage('Some errors occured during communication');
         });
     });
   }
@@ -115,7 +115,7 @@ class Appointments extends Component {
               <Text headline2 style={{margin: 0, padding: 0}}>
                 Appointments
               </Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.dateRange}
                 onPress={() => this.goBybtn('SelectPeriod')}>
                 <Text caption1 style={{color: BaseColor.grayColor}}>
@@ -127,7 +127,7 @@ class Appointments extends Component {
                   color={BaseColor.grayColor}
                   style={{marginLeft: 10}}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.right}>
               {/* <TouchableOpacity
@@ -173,7 +173,7 @@ class Appointments extends Component {
               <Text headline2 style={{margin: 0, padding: 0}}>
                 Appointments
               </Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.dateRange}
                 onPress={() => this.goBybtn('SelectPeriod')}>
                 <Text caption1 style={{color: BaseColor.grayColor}}>
@@ -185,7 +185,7 @@ class Appointments extends Component {
                   color={BaseColor.grayColor}
                   style={{marginLeft: 10}}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.right}>
               {/* <TouchableOpacity

@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TextInput} from 'react-native';
+import {View, ScrollView, TextInput, Alert} from 'react-native';
 import {BaseStyle, BaseColor, Images} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
+import {myAppointmentsSvc} from '@services';
+import * as Utils from '@utils';
 import styles from './styles';
 
 export default class ResetPassword extends Component {
@@ -27,19 +29,30 @@ export default class ResetPassword extends Component {
       });
       console.log(this.state.success);
     } else {
-      this.setState(
-        {
-          loading: true,
-        },
-        () => {
-          setTimeout(() => {
-            this.setState({
-              loading: false,
-            });
-            navigation.navigate('ChangePassword');
-          }, 500);
-        },
-      );
+      let data = {
+        email: this.state.email,
+      };
+      this.setState({loading: true});
+      myAppointmentsSvc
+        .forgotPassword(data)
+        .then((response) => {
+          const res = response.data;
+          console.log('forgotPassword', res);
+          if (res.code == 0) {
+            Alert.alert('Success', res.message);
+          } else {
+            // Alert.alert('Error', res.message);
+            // Utils.longNotifyMessgae(
+            //   'Some errors occured during communication!',
+            // );
+          }
+          this.setState({loading: false});
+        })
+        .catch((error) => {
+          // Utils.longNotifyMessgae('Some errors occured during communication!');
+          // Alert('UnKnown error');
+          this.setState({loading: false});
+        });
     }
   }
 

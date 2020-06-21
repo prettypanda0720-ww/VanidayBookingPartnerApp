@@ -602,86 +602,57 @@ class EditProduct extends Component {
                 ) : null}
               </TouchableOpacity>
             </View>
-            <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Product Name
-              </Text>
+            <View style={[styles.inputGroup, {marginTop: 20}]}>
+              <Text style={BaseStyle.label}>Product Name</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({name: text})}
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}>
                 {name}
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Price
-              </Text>
+              <Text style={BaseStyle.label}>Price</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.onChangedPrice(text)}
                 autoCorrect={false}
                 placeholder="$0.00"
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
-                value={this.state.price}
+                value={this.state.price.toString()}
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Special Price
-              </Text>
+              <Text style={BaseStyle.label}>Special Price</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.onChangedSpecialPrice(text)}
                 autoCorrect={false}
                 placeholder="$0.00"
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 value={this.state.special_price}
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                SKU
-              </Text>
+              <Text style={BaseStyle.label}>SKU</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 // onChangeText={(text) => this.setState({special_price: text})}
                 autoCorrect={false}
                 placeholder="$0.00"
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 editable={false}>
                 {sku}
               </TextInput>
             </View>
-            <SectionedMultiSelect
-              items={subMenuList}
-              uniqueKey="id"
-              subKey="subcategory"
-              selectText="Select Categories..."
-              showDropDowns={true}
-              readOnlyHeadings={false}
-              loading={false}
-              onSelectedItemsChange={this.onSelectedItemsChange}
-              selectedItems={this.state.selectedItems}
-              showChips={false}
-              // showRemoveAll={false}
-              showCancelButton={true}
-              styles={{
-                button: {backgroundColor: BaseColor.SecondColor, height: 45},
-                cancelButton: {backgroundColor: BaseColor.grayColor},
-              }}
-              iconRenderer={this.icon}
-            />
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Short Description
-              </Text>
+              <Text style={BaseStyle.label}>Short Description</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) =>
@@ -689,27 +660,25 @@ class EditProduct extends Component {
                 }
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}>
                 {short_description}
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Description
-              </Text>
+              <Text style={BaseStyle.label}>Description</Text>
               <TextInput
                 style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
                 onChangeText={(text) => this.setState({description: text})}
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 multiline={true}>
                 {description}
               </TextInput>
             </View>
-            <View style={[styles.profileItem, {marginTop: 20}]}>
+            <View style={styles.profileItem}>
               <Text body1 style={styles.sectionStyle}>
                 Enable Service
               </Text>
@@ -731,6 +700,28 @@ class EditProduct extends Component {
                 value={is_featured == 1 ? true : false}
               />
             </View>
+            <SectionedMultiSelect
+              items={subMenuList}
+              uniqueKey="id"
+              subKey="subcategory"
+              selectText="Select Categories..."
+              showDropDowns={true}
+              readOnlyHeadings={false}
+              loading={false}
+              onSelectedItemsChange={this.onSelectedItemsChange}
+              selectedItems={this.state.selectedItems}
+              showChips={false}
+              // showRemoveAll={false}
+              showCancelButton={true}
+              styles={{
+                button: {backgroundColor: BaseColor.SecondColor, height: 55},
+                cancelButton: {
+                  backgroundColor: BaseColor.grayColor,
+                  height: 55,
+                },
+              }}
+              iconRenderer={this.icon}
+            />
           </ScrollView>
           <View style={styles.btnWrapper}>
             <Button

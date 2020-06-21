@@ -5,7 +5,7 @@ import * as Utils from '@utils';
 
 export default StyleSheet.create({
   inputGroup: {
-    marginTop: 15,
+    marginTop: 5,
   },
   btnWrapper: {
     marginBottom: 0,
@@ -33,7 +33,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 20,
+    marginTop: 10,
   },
   contentCenter: {
     justifyContent: 'center',

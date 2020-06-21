@@ -28,6 +28,7 @@ export default StyleSheet.create({
   },
   summary: {
     flexDirection: 'column',
+    flex: 11,
     marginLeft: 5,
     marginRight: 15,
     marginTop: -3,

@@ -12,7 +12,7 @@ export default class Sales extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     console.log('sales is called!');
   }
 
@@ -57,25 +57,17 @@ export default class Sales extends Component {
                 navigation.navigate('Appointments');
               }}>
               <View style={styles.saleItemWrapper}>
-                <View style={{flexDirection: 'row', flex: 20}}>
-                  <Icon
-                    name="calendar"
-                    size={25}
-                    color={'rgba(0,0,0,0.65)'}
-                    style={{marginLeft: 5}}
-                  />
-                  <View style={styles.summary}>
-                    <Text body1 style={styles.sectionStyle}>
-                      Appointments
-                    </Text>
-                    <Text
-                      caption1
-                      numberOfLines={2}
-                      style={[styles.sectionStyle, {marginTop: 4}]}>
-                      List of all appointments booked, with filter and export
-                      options
-                    </Text>
-                  </View>
+                <View style={styles.summary}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Appointments
+                  </Text>
+                  <Text
+                    caption1
+                    numberOfLines={2}
+                    style={[styles.sectionStyle, {marginTop: 4}]}>
+                    List of all appointments booked, with filter and export
+                    options
+                  </Text>
                 </View>
                 <Icon
                   name="angle-right"
@@ -91,21 +83,14 @@ export default class Sales extends Component {
                 navigation.navigate('Invoices');
               }}>
               <View style={styles.saleItemWrapper}>
-                <View style={{flexDirection: 'row', flex: 20}}>
-                  <Icon
-                    name="receipt"
-                    size={25}
-                    color={'rgba(0,0,0,0.65)'}
-                    style={{marginLeft: 5}}
-                  />
-                  <View style={styles.summary}>
-                    <Text body1>Invoices</Text>
-                    <Text
-                      caption1
-                      style={[styles.sectionStyle, {marginTop: 4}]}>
-                      List of all sales made, with filter and export options
-                    </Text>
-                  </View>
+                <View style={styles.summary}>
+                  <Text body1>Invoices</Text>
+                  <Text
+                    caption1
+                    numberOfLines={2}
+                    style={[styles.sectionStyle, {marginTop: 4}]}>
+                    List of all sales made, with filter and export options
+                  </Text>
                 </View>
                 <Icon
                   name="angle-right"
@@ -115,38 +100,28 @@ export default class Sales extends Component {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.profileItem}
               onPress={() => {
                 navigation.navigate('EcardList');
               }}>
               <View style={styles.saleItemWrapper}>
-                <View style={{flexDirection: 'row', flex: 20}}>
-                  <Icon
-                    name="credit-card"
-                    size={25}
-                    color={'rgba(0,0,0,0.65)'}
-                    style={{marginLeft: 5}}
-                  />
-                  <View style={styles.summary}>
-                    <Text body1 style={styles.sectionStyle}>
-                      Ecards
-                    </Text>
-                    <Text
-                      caption1
-                      style={[styles.sectionStyle, {marginTop: 4}]}>
-                      List of all ecards issued, with filter and export options
-                    </Text>
-                  </View>
+                <View style={styles.summary}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Ecards
+                  </Text>
+                  <Text caption1 style={[styles.sectionStyle, {marginTop: 4}]}>
+                    List of all ecards issued, with filter and export options
+                  </Text>
                 </View>
-                <Icon
-                  name="angle-right"
-                  size={18}
-                  color={'rgba(0,0,0,0.65)'}
-                  style={{marginLeft: 5, flex: 1}}
-                />
               </View>
-            </TouchableOpacity>
+              <Icon
+                name="angle-right"
+                size={18}
+                color={'rgba(0,0,0,0.65)'}
+                style={{marginLeft: 5, flex: 1}}
+              />
+            </TouchableOpacity> */}
           </View>
         </View>
       </SafeAreaView>

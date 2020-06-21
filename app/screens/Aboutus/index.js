@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import {BaseStyle, BaseColor} from '@config';
+import {BaseStyle, BaseColor, FontFamily} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import {primarytypes} from '@data';
 import {Dropdown} from 'react-native-material-dropdown';
@@ -134,11 +134,9 @@ class Aboutus extends Component {
           if (response.data.data !== undefined) {
             let tpPhotos = [];
             if (res_profile.vendor_carousel !== null) {
-              tpPhotos = JSON.parse(res_profile.vendor_carousel).map(
-                (photo, index) => {
-                  return res_profile.venCarPrefix + photo;
-                },
-              );
+              tpPhotos = res_profile.vendor_carousel.map((photo, index) => {
+                return res_profile.venCarPrefix + photo.image_name;
+              });
             }
             this.setState({
               shopTitle: res_profile.shop_title,
@@ -150,12 +148,16 @@ class Aboutus extends Component {
               photos: tpPhotos,
               primary_type: res_profile.vendor_primary_type,
               secondary_type: res_profile.vendor_secondary_type,
-              currentPhotoCnt: res_profile.vendor_carousel.length,
+              currentPhotoCnt:
+                res_profile.vendor_carousel !== null
+                  ? res_profile.vendor_carousel.length
+                  : 0,
             });
           }
         })
         .catch((error) => {
-          console.log('appointment error');
+          this.setState({dataLoading: false});
+          console.log('Some mistakes occured during communication.');
           console.log(error);
         });
     });
@@ -334,35 +336,13 @@ class Aboutus extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={styles.wrapper}>
-              <Swiper
-                dotStyle={{
-                  backgroundColor: BaseColor.textSecondaryColor,
-                }}
-                activeDotColor={BaseColor.primaryColor}
-                paginationStyle={styles.contentPage}
-                removeClippedSubviews={false}>
-                {photos.map((item, index) => {
-                  return (
-                    <View style={styles.slide} key={index}>
-                      <Image
-                        key={index}
-                        source={{uri: item}}
-                        style={styles.blockImage}
-                      />
-                    </View>
-                  );
-                })}
-              </Swiper>
-            </View>
+            <View style={styles.wrapper}>{this.displayPhotoView()}</View>
             <View style={styles.changeButton}>
               {this.displayPhotoActionView()}
             </View>
-            <View style={{paddingHorizontal: 20}}>
+            <View style={{paddingHorizontal: 20, marginTop: 20}}>
               <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Business Name
-                </Text>
+                <Text style={BaseStyle.label}>Business Name</Text>
                 <TextInput
                   style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({shopTitle: text})}
@@ -374,57 +354,7 @@ class Aboutus extends Component {
                 </TextInput>
               </View>
               <View style={styles.inputGroup}>
-                <Dropdown
-                  label="Primary Type"
-                  data={productTypes}
-                  rippleOpacity={0.7}
-                  baseColor={BaseColor.secondBlackColor}
-                  tintColor={BaseColor.blackColor}
-                  style={{color: BaseColor.blackColor}}
-                  onChangeText={(value) => {
-                    this.setState({
-                      primary_type: this.getKeyByValue(value),
-                    });
-                  }}
-                  value={this.getNameByType(this.state.primary_type)}
-                />
-              </View>
-              <View style={styles.inputGroup}>
-                <Dropdown
-                  label="Seconday Type"
-                  data={productTypes}
-                  rippleOpacity={0.7}
-                  baseColor={BaseColor.secondBlackColor}
-                  tintColor={BaseColor.blackColor}
-                  style={{color: BaseColor.blackColor}}
-                  onChangeText={(value) => {
-                    this.setState({
-                      secondary_type: this.getKeyByValue(value),
-                    });
-                  }}
-                  value={this.getNameByType(this.state.secondary_type)}
-                />
-              </View>
-              <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Free Cancellation Hour
-                </Text>
-                <TextInput
-                  style={BaseStyle.textInput}
-                  onChangeText={(text) =>
-                    this.setState({free_cancellation_hour: text})
-                  }
-                  autoCorrect={false}
-                  placeholder=""
-                  placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.titleColor}>
-                  4
-                </TextInput>
-              </View>
-              <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Business Tel
-                </Text>
+                <Text style={BaseStyle.label}>Business Tel</Text>
                 <TextInput
                   style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({contact_number: text})}
@@ -436,9 +366,19 @@ class Aboutus extends Component {
                 </TextInput>
               </View>
               <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Unique Entity Number
-                </Text>
+                <Text style={BaseStyle.label}>Business Address</Text>
+                <TextInput
+                  style={BaseStyle.textInput}
+                  onChangeText={(text) => this.setState({location: text})}
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
+                  {location}
+                </TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Text style={BaseStyle.label}>Unique Entity Number</Text>
                 <TextInput
                   style={BaseStyle.textInput}
                   onChangeText={(text) =>
@@ -452,23 +392,22 @@ class Aboutus extends Component {
                 </TextInput>
               </View>
               <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Business Address
-                </Text>
+                <Text style={BaseStyle.label}>Free Cancellation Hour</Text>
                 <TextInput
                   style={BaseStyle.textInput}
-                  onChangeText={(text) => this.setState({location: text})}
+                  onChangeText={(text) =>
+                    this.setState({free_cancellation_hour: text})
+                  }
                   autoCorrect={false}
                   placeholder=""
                   placeholderTextColor={BaseColor.titleColor}
                   selectionColor={BaseColor.titleColor}>
-                  {location}
+                  4
                 </TextInput>
               </View>
+
               <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.titleColor}}>
-                  Description
-                </Text>
+                <Text style={BaseStyle.label}>Description</Text>
                 <TextInput
                   style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
                   onChangeText={(text) => this.setState({description: text})}
@@ -481,9 +420,7 @@ class Aboutus extends Component {
                 </TextInput>
               </View>
               <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Country
-                </Text>
+                <Text style={BaseStyle.label}>Country</Text>
                 <TextInput
                   style={BaseStyle.textInput}
                   onChangeText={(text) => this.setState({id: text})}
@@ -496,7 +433,7 @@ class Aboutus extends Component {
                 </TextInput>
               </View>
               <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
+                <Text style={BaseStyle.label}>
                   Cancellation and Rescheduling Policy
                 </Text>
                 <TextInput
@@ -507,12 +444,12 @@ class Aboutus extends Component {
                   autoCorrect={false}
                   placeholder=""
                   placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.titleColor}></TextInput>
+                  selectionColor={BaseColor.titleColor}
+                  value={this.state.cancellation_policy}
+                />
               </View>
               <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Term & Condition
-                </Text>
+                <Text style={BaseStyle.label}>Term & Condition</Text>
                 <TextInput
                   style={BaseStyle.textInput}
                   onChangeText={(text) =>
@@ -521,12 +458,12 @@ class Aboutus extends Component {
                   autoCorrect={false}
                   placeholder=""
                   placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.titleColor}></TextInput>
+                  selectionColor={BaseColor.titleColor}
+                  value={this.state.terms_and_conditions}
+                />
               </View>
               <View style={styles.inputGroup}>
-                <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                  Connected Stripe ID
-                </Text>
+                <Text style={BaseStyle.label}>Connected Stripe ID</Text>
                 <TextInput
                   style={BaseStyle.textInput}
                   onChangeText={(text) =>
@@ -539,6 +476,41 @@ class Aboutus extends Component {
                   {vendor_stripe_id}
                 </TextInput>
               </View>
+              <Dropdown
+                label="Primary Type"
+                labelFontSize={15}
+                fontSize={13}
+                labelTextStyle={{marginBottom: 10}}
+                style={{fontFamily: FontFamily.default}}
+                data={productTypes}
+                rippleOpacity={0.7}
+                baseColor={BaseColor.secondBlackColor}
+                tintColor={BaseColor.blackColor}
+                onChangeText={(value) => {
+                  this.setState({
+                    primary_type: this.getKeyByValue(value),
+                  });
+                }}
+                value={this.getNameByType(this.state.primary_type)}
+              />
+
+              <Dropdown
+                label="Seconday Type"
+                labelFontSize={15}
+                fontSize={13}
+                labelTextStyle={{marginBottom: 10}}
+                style={{fontFamily: FontFamily.default}}
+                data={productTypes}
+                rippleOpacity={0.7}
+                baseColor={BaseColor.secondBlackColor}
+                tintColor={BaseColor.blackColor}
+                onChangeText={(value) => {
+                  this.setState({
+                    secondary_type: this.getKeyByValue(value),
+                  });
+                }}
+                value={this.getNameByType(this.state.secondary_type)}
+              />
             </View>
           </ScrollView>
           <View style={BaseStyle.loadingContainer}>
@@ -595,6 +567,34 @@ class Aboutus extends Component {
             />
           </View>
         </SafeAreaView>
+      );
+    }
+  }
+
+  displayPhotoView() {
+    if (this.state.currentPhotoCnt == 0) {
+      return <View style={styles.blockImage} />;
+    } else {
+      return (
+        <Swiper
+          dotStyle={{
+            backgroundColor: BaseColor.textSecondaryColor,
+          }}
+          activeDotColor={BaseColor.primaryColor}
+          paginationStyle={styles.contentPage}
+          removeClippedSubviews={false}>
+          {this.state.photos.map((item, index) => {
+            return (
+              <View style={styles.slide} key={index}>
+                <Image
+                  key={index}
+                  source={{uri: item}}
+                  style={styles.blockImage}
+                />
+              </View>
+            );
+          })}
+        </Swiper>
       );
     }
   }

@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import {Calendar} from 'react-native-calendars';
+import Modal from 'react-native-modal';
 import {BaseStyle, BaseColor, FontFamily} from '@config';
 import DatePicker from 'react-native-datepicker';
 import * as Utils from '@utils';
@@ -41,7 +43,7 @@ class SignUp extends Component {
       confirm_password: '',
       gender: 0,
       address: '',
-      phone_no: '',
+      phone_no: '+65',
       birthday: '',
       vendor_type: 0,
       // Below fields are added in case of salow owner
@@ -59,11 +61,50 @@ class SignUp extends Component {
         [this.getCurrentDate()]: {selected: true, marked: false},
       },
       dataLoading: true,
-      neighbourhoodorgLst: [],
+      neighbourhoodLst: [],
       neighbourhoodDropdownLst: [],
       vendor_area: 1,
+      appointmentDate: this.getCurrentDate(),
     };
     this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
+  }
+
+  getCurrentDate() {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+
+    month = month < 10 ? '0' + month : month;
+    date = date < 10 ? '0' + date : date;
+
+    return year + '-' + month + '-' + date;
+  }
+
+  openCalendarModal() {
+    this.setState({
+      modalCalendarVisible: true,
+    });
+  }
+
+  setBookingDate(day) {
+    this.setState({
+      markedDates: {
+        [day.dateString]: {selected: true, marked: false},
+      },
+    });
+    this.markedDates = day.dateString;
+    this.setState({appointmentDate: day.dateString});
+    console.log('marketDates', this.markedDates);
+  }
+
+  onDateApply() {
+    console.log('marketDates-onDateApply()', this.markedDates);
+    if (this.markedDates !== undefined) {
+      let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
+      this.setState({appointmentDate: shortDate});
+    } else {
+      this.setState({appointmentDate: this.getCurrentDate()});
+    }
   }
 
   componentDidMount() {
@@ -75,7 +116,7 @@ class SignUp extends Component {
         if (res_profile.code == 0) {
           this.setState({
             neighbourhoodLst: res_profile.data,
-            vendorSectionsDropdownLst: res_profile.data.map((item, index) => {
+            neighbourhoodDropdownLst: res_profile.data.map((item, index) => {
               return {
                 value: item.area,
               };
@@ -186,7 +227,7 @@ class SignUp extends Component {
               <View style={styles.inputGroup}>
                 <TextInput
                   style={BaseStyle.textInput}
-                  onChangeText={(text) => this.setState({person_address: text})}
+                  onChangeText={(text) => this.setState({address: text})}
                   autoCorrect={false}
                   placeholder="Address"
                   placeholderTextColor={BaseColor.grayColor}
@@ -196,33 +237,116 @@ class SignUp extends Component {
               <View style={styles.inputGroup}>
                 <TextInput
                   style={BaseStyle.textInput}
-                  onChangeText={(text) => this.setState({phone_no: text})}
+                  onChangeText={(text) =>
+                    this.setState({phone_no: '+65' + text})
+                  }
                   autoCorrect={false}
                   placeholder="Phone No"
                   placeholderTextColor={BaseColor.grayColor}
                   selectionColor={BaseColor.primaryColor}
                 />
               </View>
-              <View style={styles.inputGroup}>
-                <BirthdayPicker
-                  selectedYear={2018}
-                  selectedMonth={0}
-                  selectedDay={27}
-                  yearsBack={50}
-                  onYearValueChange={(year, i) =>
-                    console.log('Year was changed to: ', year)
-                  }
-                  onMonthValueChange={(month, i) =>
-                    console.log('Month was changed to: ', month)
-                  }
-                  onDayValueChange={(day, i) =>
-                    console.log('Day was changed to: ', day)
-                  }
-                />
+              <View
+                style={[styles.inputGroup, {flex: 1, flexDirection: 'column'}]}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 10,
+                  }}>
+                  {/* <View style={{flex: 1}}>
+                  <Text headline style={{color: BaseColor.secondBlackColor}}>
+                    Joined Date
+                  </Text>
+                </View> */}
+                  <Modal
+                    isVisible={this.state.modalCalendarVisible}
+                    backdropColor="rgba(0, 0, 0, 0.5)"
+                    backdropOpacity={1}
+                    animationIn="fadeIn"
+                    animationInTiming={600}
+                    animationOutTiming={600}
+                    backdropTransitionInTiming={600}
+                    backdropTransitionOutTiming={600}>
+                    <View style={styles.contentModal}>
+                      <View style={styles.contentCalendar}>
+                        <Calendar
+                          style={{
+                            borderRadius: 8,
+                          }}
+                          markedDates={this.state.markedDates}
+                          current={this.state.appointmentDate}
+                          minDate={'1900-12-31'}
+                          maxDate={'2099-12-31'}
+                          onDayPress={(day) => this.setBookingDate(day)}
+                          monthFormat={'MMMM yyyy '}
+                          onMonthChange={(month) => {
+                            console.log('month changed', month);
+                          }}
+                          theme={{
+                            textSectionTitleColor: BaseColor.textPrimaryColor,
+                            selectedDayBackgroundColor: BaseColor.primaryColor,
+                            selectedDayTextColor: '#ffffff',
+                            todayTextColor: BaseColor.primaryColor,
+                            dayTextColor: BaseColor.textPrimaryColor,
+                            textDisabledColor: BaseColor.grayColor,
+                            dotColor: BaseColor.primaryColor,
+                            selectedDotColor: '#ffffff',
+                            arrowColor: BaseColor.primaryColor,
+                            monthTextColor: BaseColor.textPrimaryColor,
+                            textDayFontFamily: FontFamily.default,
+                            textMonthFontFamily: FontFamily.default,
+                            textDayHeaderFontFamily: FontFamily.default,
+                            textMonthFontWeight: 'bold',
+                            textDayFontSize: 14,
+                            textMonthFontSize: 16,
+                            textDayHeaderFontSize: 14,
+                          }}
+                        />
+                        <View style={styles.contentActionCalendar}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              this.setState({modalCalendarVisible: false});
+                            }}>
+                            <Text body1>Cancel</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              this.setState({modalCalendarVisible: false});
+                              this.onDateApply();
+                            }}>
+                            <Text body1 primaryColor>
+                              Done
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  </Modal>
+                  <TouchableOpacity
+                    style={styles.dateInfo}
+                    onPress={() => this.openCalendarModal()}>
+                    <Text
+                      headline
+                      light
+                      style={{color: BaseColor.sectionColor}}>
+                      Birthday
+                    </Text>
+                    <Text headline semibold>
+                      {Utils.getFormattedLongDate(this.state.appointmentDate)}
+                      {/* {detail.bookingDate} */}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
               <View style={styles.inputGroup}>
                 <Dropdown
                   label="Select a Gender"
+                  labelFontSize={15}
+                  fontSize={13}
+                  labelTextStyle={{marginBottom: 10}}
+                  style={{fontFamily: FontFamily.default}}
                   data={[
                     {value: 'Not Specified'},
                     {value: 'Male'},
@@ -231,7 +355,6 @@ class SignUp extends Component {
                   rippleOpacity={0.7}
                   baseColor={BaseColor.secondBlackColor}
                   tintColor={BaseColor.blackColor}
-                  style={{color: BaseColor.blackColor}}
                   value={this.getGenderName(this.state.gender)}
                   onChangeText={(value) => {
                     this.setState({
@@ -263,6 +386,7 @@ class SignUp extends Component {
                   label="I would like to receive promotions, tips and announcements via email and sms."
                   value="agree"
                   checked={this.state.checked}
+                  style={{color: BaseColor.SecondColor}}
                   onCheck={() =>
                     this.setState({
                       checked: !this.state.checked,
@@ -409,11 +533,14 @@ class SignUp extends Component {
           </View>
           <Dropdown
             label="Select your neighbourhood"
+            labelFontSize={15}
+            fontSize={13}
+            labelTextStyle={{marginBottom: 10}}
+            style={{fontFamily: FontFamily.default}}
             data={this.state.neighbourhoodDropdownLst}
             rippleOpacity={0.7}
             baseColor={BaseColor.secondBlackColor}
             tintColor={BaseColor.blackColor}
-            style={{color: BaseColor.blackColor}}
             value={this.getNeighbourhoodName(this.state.vendor_area)}
             onChangeText={(value) => {
               this.setState({
@@ -424,17 +551,6 @@ class SignUp extends Component {
         </View>
       );
     }
-  }
-
-  getCurrentDate() {
-    var date = new Date().getDate();
-    var month = new Date().getMonth() + 1;
-    var year = new Date().getFullYear();
-
-    month = month < 10 ? '0' + month : month;
-    date = date < 10 ? '0' + date : date;
-
-    return year + '-' + month + '-' + date;
   }
 
   checkInput() {
@@ -595,9 +711,9 @@ class SignUp extends Component {
           last_name: last_name,
           email: email,
           password: password,
-          address: address,
-          phone_no: phone_no,
-          birthday: birthday,
+          // address: address,
+          // phone_no: phone_no,
+          // birthday: birthday,
           gender: gender,
           vendor_type: vendor_type,
           profile_url: profile_url,
@@ -703,7 +819,7 @@ class SignUp extends Component {
   getNeighbourhoodName(key) {
     let name = '';
     console.log('key', key);
-    this.state.neighbourhoodorgLst.forEach((element) => {
+    this.state.neighbourhoodLst.forEach((element) => {
       if (element.directory_id == key) {
         name = element.area;
         console.log('name', name);
@@ -713,8 +829,8 @@ class SignUp extends Component {
   }
 
   getNeighbourhoodKey(value) {
-    let key = 0;
-    this.state.neighbourhoodorgLst.forEach((element) => {
+    let key = 1;
+    this.state.neighbourhoodLst.forEach((element) => {
       if (element.area == value) {
         key = element.directory_id;
         console.log('key', key);

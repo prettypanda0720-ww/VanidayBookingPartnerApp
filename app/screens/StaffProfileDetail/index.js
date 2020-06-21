@@ -118,7 +118,7 @@ class StaffProfileDetail extends Component {
       const {auth} = this.props;
       let customSelectedItems = [];
       customSelectedItems = selectedItems.map((element) => {
-        return {entity_id: element};
+        return element;
       });
       console.log('customSelectedItems', customSelectedItems);
       const data = {
@@ -141,15 +141,14 @@ class StaffProfileDetail extends Component {
           .then((response) => {
             const res_profile = response.data;
             if (res_profile.code == 0) {
-              Utils.shortNotifyMessage('Adding Staff is successfully done!');
+              Utils.shortNotifyMessage('Staff updating is successfully done!');
               this.setState({saveLoading: false});
               navigation.goBack();
             }
           })
           .catch((error) => {
-            Utils.shortNotifyMessage(error);
-            console.log('appointment error');
-            console.log(error);
+            Utils.shortNotifyMessage(error.message);
+            this.setState({saveLoading: false});
           });
       }
     }
@@ -266,6 +265,7 @@ class StaffProfileDetail extends Component {
       markedDates: {
         [day.dateString]: {selected: true, marked: false},
       },
+      staff_joined_date: day.dateString,
     });
     this.markedDates = day.dateString;
     console.log('marketDates', this.markedDates);
@@ -315,9 +315,7 @@ class StaffProfileDetail extends Component {
         <ScrollView>
           <View style={{paddingHorizontal: 20, marginTop: 20}}>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Full Name
-              </Text>
+              <Text style={BaseStyle.label}>Full Name</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({staff_full_name: text})}
@@ -329,9 +327,7 @@ class StaffProfileDetail extends Component {
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Title
-              </Text>
+              <Text style={BaseStyle.label}>Title</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({staff_title: text})}
@@ -344,6 +340,10 @@ class StaffProfileDetail extends Component {
             </View>
             <Dropdown
               label="Gender"
+              labelFontSize={15}
+              fontSize={13}
+              labelTextStyle={{marginBottom: 10}}
+              style={{fontFamily: FontFamily.default}}
               data={[
                 {value: 'Not Specified'},
                 {value: 'Male'},
@@ -352,7 +352,6 @@ class StaffProfileDetail extends Component {
               rippleOpacity={0.7}
               baseColor={BaseColor.secondBlackColor}
               tintColor={BaseColor.blackColor}
-              style={{color: BaseColor.blackColor}}
               value={this.getGenderName(staff_gender)}
               onChangeText={(value) => {
                 this.setState({
@@ -408,8 +407,8 @@ class StaffProfileDetail extends Component {
                         borderRadius: 8,
                       }}
                       markedDates={markedDates}
-                      current={this.getCurrentDate()}
-                      minDate={this.getCurrentDate()}
+                      current={this.state.staff_joined_date}
+                      minDate={'1900-12-31'}
                       maxDate={'2099-12-31'}
                       onDayPress={(day) => this.setBookingDate(day)}
                       monthFormat={'MMMM yyyy '}
@@ -472,11 +471,14 @@ class StaffProfileDetail extends Component {
             </View>
             <Dropdown
               label="Status"
+              labelFontSize={15}
+              fontSize={13}
+              labelTextStyle={{marginBottom: 10}}
+              style={{fontFamily: FontFamily.default}}
               data={[{value: 'Inactive'}, {value: 'Active'}]}
               rippleOpacity={0.7}
               baseColor={BaseColor.secondBlackColor}
               tintColor={BaseColor.blackColor}
-              style={{color: BaseColor.blackColor}}
               value={staff_status == 0 ? 'Inactive' : 'Active'}
               onChangeText={(value) => {
                 this.setState({
@@ -503,11 +505,15 @@ class StaffProfileDetail extends Component {
                 tagTextColor={BaseColor.titleColor}
                 selectedItemTextColor={BaseColor.titleColor}
                 selectedItemIconColor={BaseColor.titleColor}
-                itemTextColor="#000"
                 displayKey="product_name"
                 searchInputStyle={{color: BaseColor.titleColor}}
                 submitButtonColor={BaseColor.titleColor}
                 submitButtonText="Submit"
+                fontFamily={FontFamily.default}
+                fontSize={15}
+                itemFontFamily={FontFamily.default}
+                itemFontSize={13}
+                itemTextColor={BaseColor.secondBlackColor}
               />
               <View>
                 {/* {this.multiselect

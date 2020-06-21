@@ -502,9 +502,9 @@ class EditService extends Component {
   };
 
   onChangedPrice(text) {
-    // this.setState({
-    //   price: text.replace(/[^0-9]/g, ''),
-    // });
+    this.setState({
+      price: text.replace(/[^0-9]/g, ''),
+    });
   }
 
   onChangedSpecialPrice(text) {

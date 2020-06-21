@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   contain: {flexDirection: 'row', flex: 1},
   contentLeft: {
-    flex: 4,
+    flex: 11,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',

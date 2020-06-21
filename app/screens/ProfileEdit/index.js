@@ -113,6 +113,7 @@ export default class ProfileEdit extends Component {
       markedDates: {
         [day.dateString]: {selected: true, marked: false},
       },
+      birthday: day.dateString,
     });
     this.markedDates = day.dateString;
     console.log('marketDates', this.markedDates);
@@ -153,7 +154,7 @@ export default class ProfileEdit extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="First Name"
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
@@ -163,7 +164,7 @@ export default class ProfileEdit extends Component {
                 onChangeText={(text) => this.setState({id: text})}
                 autoCorrect={false}
                 placeholder="Last Name"
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
@@ -256,8 +257,8 @@ export default class ProfileEdit extends Component {
                         borderRadius: 8,
                       }}
                       markedDates={this.state.markedDates}
-                      current={this.getCurrentDate()}
-                      minDate={this.getCurrentDate()}
+                      current={this.state.birthday}
+                      minDate={'1900-12-31'}
                       maxDate={'2099-12-31'}
                       onDayPress={(day) => this.setBookingDate(day)}
                       monthFormat={'MMMM yyyy '}
@@ -325,6 +326,10 @@ export default class ProfileEdit extends Component {
             <View style={styles.inputGroup}>
               <Dropdown
                 label="Select a Gender"
+                labelFontSize={15}
+                fontSize={13}
+                labelTextStyle={{marginBottom: 10}}
+                style={{fontFamily: FontFamily.default}}
                 data={[
                   {value: 'Not Specified'},
                   {value: 'Male'},
@@ -333,7 +338,6 @@ export default class ProfileEdit extends Component {
                 rippleOpacity={0.7}
                 baseColor={BaseColor.secondBlackColor}
                 tintColor={BaseColor.blackColor}
-                style={{color: BaseColor.blackColor}}
                 // value={this.getGenderName(staff_gender)}
                 onChangeText={(value) => {
                   this.setState({
@@ -350,20 +354,20 @@ export default class ProfileEdit extends Component {
               <Checkbox
                 label="Product Seller"
                 value="agree"
-                checked={this.state.checked}
+                checked={!this.state.isOwner}
                 onCheck={() =>
                   this.setState({
-                    checked: !this.state.checked,
+                    isOwner: !this.state.isOwner,
                   })
                 }
               />
               <Checkbox
                 label="Salon Owner"
                 value="agree"
-                checked={this.state.checked}
+                checked={this.state.isOwner}
                 onCheck={() =>
                   this.setState({
-                    checked: !this.state.checked,
+                    isOwner: !this.state.isOwner,
                   })
                 }
               />

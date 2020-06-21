@@ -43,8 +43,7 @@ class StaffMembers extends Component {
             }
           })
           .catch((error) => {
-            console.log('appointment error');
-            console.log(error);
+            this.setState({loading: false});
           });
         myAppointmentsSvc
           .getAllServiceList(data)
@@ -56,8 +55,7 @@ class StaffMembers extends Component {
             }
           })
           .catch((error) => {
-            console.log('submenulist error');
-            console.log(error);
+            this.setState({loading: false});
           });
       }
     });

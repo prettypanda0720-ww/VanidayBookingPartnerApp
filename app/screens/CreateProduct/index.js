@@ -408,58 +408,94 @@ class CreateProduct extends Component {
                 <Text style={styles.uploadBtnStyle}>Select Product Photo</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Product Name
-              </Text>
+            <View style={[styles.inputGroup, {marginTop: 20}]}>
+              <Text style={BaseStyle.label}>Product Name</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({name: text})}
                 autoCorrect={false}
                 placeholder=""
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Price
-              </Text>
+              <Text style={BaseStyle.label}>Price</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.onChangedPrice(text)}
                 autoCorrect={false}
                 placeholder="$0.00"
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 value={this.state.price}
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Special Price
-              </Text>
+              <Text style={BaseStyle.label}>Special Price</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.onChangedSpecialPrice(text)}
                 autoCorrect={false}
                 placeholder="$0.00"
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 value={this.state.special_price}
               />
             </View>
             <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                SKU
-              </Text>
+              <Text style={BaseStyle.label}>SKU</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({sku: text})}
                 autoCorrect={false}
                 placeholder="$0.00"
-                placeholderTextColor={BaseColor.SecondColor}
+                placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={BaseStyle.label}>Short Description</Text>
+              <TextInput
+                style={BaseStyle.textInput}
+                onChangeText={(text) =>
+                  this.setState({short_description: text})
+                }
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={BaseStyle.label}>Description</Text>
+              <TextInput
+                style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
+                onChangeText={(text) => this.setState({description: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+                multiline={true}
+              />
+            </View>
+            <View style={styles.profileItem}>
+              <Text style={BaseStyle.label}>Enable Service</Text>
+              <Switch
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleProductSwitch}
+                value={this.state.status}
+              />
+            </View>
+            <View style={styles.profileItem}>
+              <Text style={BaseStyle.label}>Is Featured</Text>
+              <Switch
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleFeaturedSwitch}
+                value={this.state.is_featured == 1 ? true : false}
               />
             </View>
             <SectionedMultiSelect
@@ -475,62 +511,14 @@ class CreateProduct extends Component {
               showChips={false}
               showCancelButton={true}
               styles={{
-                button: {backgroundColor: BaseColor.SecondColor, height: 45},
-                cancelButton: {backgroundColor: BaseColor.grayColor},
+                button: {backgroundColor: BaseColor.SecondColor, height: 55},
+                cancelButton: {
+                  backgroundColor: BaseColor.grayColor,
+                  height: 55,
+                },
               }}
               iconRenderer={this.icon}
             />
-            <View style={styles.inputGroup}>
-              <Text body2 style={{color: BaseColor.sectionColor}}>
-                Short Description
-              </Text>
-              <TextInput
-                style={BaseStyle.textInput}
-                onChangeText={(text) =>
-                  this.setState({short_description: text})
-                }
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.SecondColor}
-                selectionColor={BaseColor.primaryColor}
-              />
-            </View>
-            <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Description
-              </Text>
-              <TextInput
-                style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
-                onChangeText={(text) => this.setState({description: text})}
-                autoCorrect={false}
-                placeholder=""
-                placeholderTextColor={BaseColor.SecondColor}
-                selectionColor={BaseColor.primaryColor}
-                multiline={true}
-              />
-            </View>
-            <View style={[styles.profileItem, {marginTop: 20}]}>
-              <Text body1 style={styles.sectionStyle}>
-                Enable Service
-              </Text>
-              <Switch
-                name="angle-right"
-                size={18}
-                onValueChange={this.toggleProductSwitch}
-                value={this.state.status}
-              />
-            </View>
-            <View style={styles.profileItem}>
-              <Text body1 style={styles.sectionStyle}>
-                Is Featured
-              </Text>
-              <Switch
-                name="angle-right"
-                size={18}
-                onValueChange={this.toggleFeaturedSwitch}
-                value={this.state.is_featured == 1 ? true : false}
-              />
-            </View>
           </ScrollView>
           <View style={styles.btnWrapper}>
             <Button

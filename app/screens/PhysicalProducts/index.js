@@ -76,7 +76,7 @@ class PhysicalProducts extends Component {
           })
           .catch((error) => {
             console.log('appointment error');
-            console.log(error);
+            // console.log(error);
           });
       }
     });
@@ -126,7 +126,7 @@ class PhysicalProducts extends Component {
       <View style={{flex: 1}}>
         <Animated.FlatList
           contentContainerStyle={{
-            paddingTop: 50,
+            paddingTop: 20,
             paddingBottom: 20,
           }}
           refreshControl={
@@ -163,9 +163,10 @@ class PhysicalProducts extends Component {
               title={item.product_name}
               sku={item.sku}
               specialprice={item.product_price}
-              style={{
-                marginBottom: 10,
-              }}
+              // style={{
+              //   borderWidth: 1,
+              //   borderColor: BaseColor.grayColor,
+              // }}
               onPress={() =>
                 // navigation.navigate('PhysicalProductProfile', {data: item})
                 navigation.navigate('EditProduct', {
@@ -177,13 +178,13 @@ class PhysicalProducts extends Component {
             />
           )}
         />
-        <Animated.View
+        {/* <Animated.View
           style={[styles.navbar, {transform: [{translateY: navbarTranslate}]}]}>
           <FilterSort
             onChangeSort={this.onChangeSort}
             onFilter={this.onFilter}
           />
-        </Animated.View>
+        </Animated.View> */}
         <View style={styles.floatingBtn}>
           <TouchableOpacity
             onPress={() => navigation.navigate('CreateProduct')}
@@ -215,16 +216,8 @@ class PhysicalProducts extends Component {
                 />
               );
             }}
-            renderRight={() => {
-              return (
-                <Icon name="search" size={20} color={BaseColor.sectionColor} />
-              );
-            }}
             onPressLeft={() => {
               navigation.goBack();
-            }}
-            onPressRight={() => {
-              navigation.navigate('SearchHistory');
             }}
             style={BaseStyle.headerStyle}
           />
@@ -255,16 +248,8 @@ class PhysicalProducts extends Component {
                 />
               );
             }}
-            renderRight={() => {
-              return (
-                <Icon name="search" size={20} color={BaseColor.sectionColor} />
-              );
-            }}
             onPressLeft={() => {
               navigation.goBack();
-            }}
-            onPressRight={() => {
-              navigation.navigate('SearchHistory');
             }}
             style={BaseStyle.headerStyle}
           />

@@ -181,8 +181,8 @@ class DeleteAboutusAlbum extends Component {
           style={BaseStyle.headerStyle}
         />
         <View style={styles.profileItem}>
-          <Text caption1 style={{flex: 10}}>
-            if you wanna to delete all photos, please check this
+          <Text body1 style={{flex: 10}}>
+            Check all
           </Text>
           <Checkbox
             label=""

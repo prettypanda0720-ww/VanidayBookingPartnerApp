@@ -81,6 +81,7 @@ class RescheduleAppointment extends Component {
       },
     });
     this.markedDates = day.dateString;
+    this.setState({appointmentDate: day.dateString});
     console.log('marketDates', this.markedDates);
   }
 
@@ -259,7 +260,7 @@ class RescheduleAppointment extends Component {
                           borderRadius: 8,
                         }}
                         markedDates={markedDates}
-                        current={this.getCurrentDate()}
+                        current={this.state.appointmentDate}
                         minDate={'1900-12-31'}
                         maxDate={'2099-12-31'}
                         onDayPress={(day) => this.setBookingDate(day)}

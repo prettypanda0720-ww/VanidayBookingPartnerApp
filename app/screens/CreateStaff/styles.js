@@ -14,7 +14,7 @@ export default StyleSheet.create({
     borderRadius: 0,
   },
   inputGroup: {
-    marginTop: 15,
+    marginTop: 5,
   },
   contentPage: {
     bottom: 0,

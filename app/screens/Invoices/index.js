@@ -78,7 +78,7 @@ class Invoices extends Component {
             </TouchableOpacity>
             <View style={styles.contentCenter}>
               <Text headline>Invoices</Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.dateRange}
                 onPress={() => this.goBybtn('SelectPeriod')}>
                 <Text footnote style={{color: 'rgba(0,0,0,0.65)'}}>
@@ -90,7 +90,7 @@ class Invoices extends Component {
                   color={BaseColor.blackColor}
                   style={{marginLeft: 10}}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.right}>
               <TouchableOpacity
@@ -177,7 +177,7 @@ class Invoices extends Component {
             </TouchableOpacity>
             <View style={styles.contentCenter}>
               <Text headline>Invoices</Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.dateRange}
                 onPress={() => this.goBybtn('SelectPeriod')}>
                 <Text footnote style={{color: 'rgba(0,0,0,0.65)'}}>
@@ -189,7 +189,7 @@ class Invoices extends Component {
                   color={BaseColor.blackColor}
                   style={{marginLeft: 10}}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.right}>
               <TouchableOpacity

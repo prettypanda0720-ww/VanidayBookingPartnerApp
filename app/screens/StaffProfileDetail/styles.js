@@ -14,7 +14,7 @@ export default StyleSheet.create({
     borderRadius: 0,
   },
   inputGroup: {
-    marginTop: 15,
+    marginTop: 5,
   },
   contentPage: {
     bottom: 0,
@@ -35,7 +35,7 @@ export default StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 20,
   },
-  
+
   dateInfo: {
     borderRadius: 8,
     paddingHorizontal: 10,

@@ -33,6 +33,7 @@ class ManageAppointment extends Component {
       totalPrice: '',
       contactNo: '',
       detail: [],
+      orderState: '',
     };
   }
 
@@ -111,6 +112,8 @@ class ManageAppointment extends Component {
 
   componentDidMount() {
     const item = this.props.navigation.state.params.bookingData;
+    console.log(item);
+    this.setState({orderState: item.state});
     // this.setState({orderId: item.id});
     const {auth, navigation} = this.props;
     const token = auth.user.data;
@@ -128,7 +131,7 @@ class ManageAppointment extends Component {
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
-            console.log('getOrderItemInfo', res_profile.data.status);
+            console.log('getOrderItemInfo', res_profile.data);
             this.setState({
               status: res_profile.data.status,
               customerName: res_profile.data.customerName,
@@ -158,6 +161,7 @@ class ManageAppointment extends Component {
       customerName,
       status,
       totalPrice,
+      orderState,
       contactNo,
       detail,
     } = this.state;
@@ -216,71 +220,7 @@ class ManageAppointment extends Component {
                   {contactNo}
                 </Text>
               </View>
-              <View
-                style={[
-                  styles.inputGroup,
-                  {
-                    justifyContent: 'flex-end',
-                    flexDirection: 'column',
-                    paddingHorizontal: 20,
-                    paddingVertical: 20,
-                    backgroundColor: '#e5e5e5',
-                  },
-                ]}>
-                <View style={{flexDirection: 'row'}}>
-                  <View style={{flex: 1}}>
-                    <Button
-                      full
-                      style={[styles.customBtn, {backgroundColor: '#e5ccc2'}]}
-                      styleText={styles.btnTextStyle1}
-                      loading={loading}
-                      onPress={() =>
-                        navigation.navigate('RescheduleAppointment', {
-                          orderId: orderId,
-                          quoteItemId: quoteItemId,
-                        })
-                      }>
-                      Reschedule
-                    </Button>
-                  </View>
-                  {/* <View style={{flex: 1, marginLeft: 8}}>
-                    <Button
-                      full
-                      style={[styles.customBtn, {backgroundColor: '#e5ccc2'}]}
-                      styleText={styles.btnTextStyle1}
-                      loading={loading}
-                      onPress={() => navigation.goBack()}>
-                      Chat
-                    </Button>
-                  </View> */}
-                </View>
-                <Button
-                  style={[
-                    styles.customBtn,
-                    {
-                      paddingVertical: 10,
-                      marginTop: 15,
-                    },
-                  ]}
-                  styleText={{fontSize: 15}}
-                  loading={this.state.confirmLoading}
-                  onPress={() => this.onConfirmAppointment()}>
-                  Confirm
-                </Button>
-                <Button
-                  style={[
-                    styles.customBtn,
-                    {
-                      backgroundColor: '#bfbfbf',
-                      marginTop: 15,
-                    },
-                  ]}
-                  styleText={{fontSize: 15}}
-                  loading={this.state.rejectLoading}
-                  onPress={() => this.showCancelAlertDlg()}>
-                  Cancel
-                </Button>
-              </View>
+              <View>{this.displayActionBtnGroup()}</View>
             </View>
           </View>
         </SafeAreaView>
@@ -317,6 +257,67 @@ class ManageAppointment extends Component {
 
   render() {
     return <View style={{flex: 1}}>{this.displayContentView()}</View>;
+  }
+
+  displayActionBtnGroup() {
+    const {navigation} = this.props;
+    const {loading} = this.state;
+    const {orderId, quoteItemId} = this.state;
+    if (this.state.orderState == 'new') {
+      return (
+        <View
+          style={[
+            styles.inputGroup,
+            {
+              justifyContent: 'flex-end',
+              flexDirection: 'column',
+              paddingHorizontal: 20,
+              paddingVertical: 20,
+              backgroundColor: '#e5e5e5',
+            },
+          ]}>
+          <Button
+            full
+            style={[styles.customBtn, {backgroundColor: '#e5ccc2'}]}
+            styleText={styles.btnTextStyle1}
+            loading={loading}
+            onPress={() =>
+              navigation.navigate('RescheduleAppointment', {
+                orderId: orderId,
+                quoteItemId: quoteItemId,
+              })
+            }>
+            Reschedule
+          </Button>
+          <Button
+            style={[
+              styles.customBtn,
+              {
+                paddingVertical: 10,
+                marginTop: 15,
+              },
+            ]}
+            styleText={{fontSize: 15}}
+            loading={this.state.confirmLoading}
+            onPress={() => this.onConfirmAppointment()}>
+            Confirm
+          </Button>
+          <Button
+            style={[
+              styles.customBtn,
+              {
+                backgroundColor: '#bfbfbf',
+                marginTop: 15,
+              },
+            ]}
+            styleText={{fontSize: 15}}
+            loading={this.state.rejectLoading}
+            onPress={() => this.showCancelAlertDlg()}>
+            Cancel
+          </Button>
+        </View>
+      );
+    }
   }
 }
 

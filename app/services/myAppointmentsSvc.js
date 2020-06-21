@@ -2,177 +2,240 @@ import axios from 'axios';
 import store from 'app/store';
 import {Api} from '@config';
 
-const apiClient_json = axios.create({
-  baseURL: Api.myVaniMiddleWare.API_BASE,
-  // baseURL: Api.myVaniday.API_BASE,
+const normalConfig = {
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
   timeout: 30000,
-});
+};
 
-const apiClient = axios.create({
-  baseURL: Api.myVaniMiddleWare.API_BASE,
-  // baseURL: Api.myVaniday.API_BASE,
-  timeout: 30000,
-});
+// const apiClient = axios.create({
+//   baseURL: Api.myVaniMiddleWare.API_BASE,
+//   // baseURL: Api.myVaniday.API_BASE,
+//   timeout: 30000,
+// });
+
 /* API : Get Appointments*/
 function fetchOrderByDate(token, staffId, currentDate) {
-  var url = Api.myVaniContent.GET_ORDER_URL;
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_ORDER_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.GET_ORDER_URL;
   var postData = {
     token: token,
     staffId: -1,
     bookingDate: currentDate,
   };
-  console.log('orders');
-  console.log(postData);
-  // apiClient_json.defaults.headers.common.token = token;
-  return apiClient_json.post(url, postData);
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Get Business Profile*/
 function fetchProfileData(token, staffId, currentDate) {
-  var url = Api.myVaniContent.GET_PROFILE_DATA_URL;
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_PROFILE_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.GET_PROFILE_DATA_URL;
   var postData = {
     token: token,
   };
-  console.log('profiledata');
-  console.log(postData);
-  return apiClient_json.post(url, postData);
+  console.log('profiledata', postData);
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Update Business Profile*/
 function updateProfileData(postData) {
-  var url = Api.myVaniContent.UPDATE_PROFILE_DATA_URL;
-  console.log('updateprofiledata');
-  console.log(postData);
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.UPDATE_PROFILE_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.UPDATE_PROFILE_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Get Staff Members List*/
 function getStaffList(postData) {
-  var url = Api.myVaniContent.GET_STAFFLIST_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_STAFFLIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.GET_STAFFLIST_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Create Staff Member*/
 function createStaffList(postData) {
-  var url = Api.myVaniContent.CREATE_STAFFLIST_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.CREATE_STAFFLIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.CREATE_STAFFLIST_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Delete Staff Member*/
 function deleteStaffList(postData) {
-  var url = Api.myVaniContent.DELETE_STAFFLIST_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.DELETE_STAFFLIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.DELETE_STAFFLIST_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Update Staff Member*/
 function updateStaffList(postData) {
-  var url = Api.myVaniContent.UPDATE_STAFFLIST_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.UPDATE_STAFFLIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.UPDATE_STAFFLIST_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Get Service List*/
 function getServiceList(postData) {
-  var url = Api.myVaniContent.GET_SERVICELIST_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_SERVICELIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.GET_SERVICELIST_DATA_URL;
+  console.log(url, postData);
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Create Service*/
 function createServiceList(postData) {
-  var url = Api.myVaniContent.CREATE_SERVICELIST_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.CREATE_SERVICELIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.CREATE_SERVICELIST_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Update Service*/
 function updateServiceList(postData) {
-  var url = Api.myVaniContent.UPDATE_SERVICELIST_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.UPDATE_SERVICELIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.UPDATE_SERVICELIST_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Delete Service*/
 function deleteServiceList(postData) {
-  var url = Api.myVaniContent.DELETE_SERVICELIST_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.DELETE_SERVICELIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.DELETE_SERVICELIST_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Service Detail*/
 function serviceDetail(postData) {
-  var url = Api.myVaniContent.SERVICE_DETAIL_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.SERVICE_DETAIL_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.SERVICE_DETAIL_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 /* API : Get Categories for primary_type and secondary type field in Aboutus page*/
 function getHomeCategory() {
-  var url = Api.myVaniContent.GET_HOMECATEGORY_DATA_URL;
-  return apiClient.get(url);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_HOMECATEGORY_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.GET_HOMECATEGORY_DATA_URL;
+  return axios.get(url);
 }
 
 function getNeighbourhoodList() {
-  var url = Api.myVaniContent.GET_NEIGHTBOURHOODLIST_DATA_URL;
-  return apiClient.get(url);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_NEIGHTBOURHOODLIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.GET_NEIGHTBOURHOODLIST_DATA_URL;
+  return axios.get(url);
 }
 
 function getOpeningHour(postData) {
-  var url = Api.myVaniContent.GET_OPENINGHOURS_DATA_URL;
-  return apiClient.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_OPENINGHOURS_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.GET_OPENINGHOURS_DATA_URL;
+  return axios.post(url, postData);
 }
 
 function updateOpeningHour(postData) {
-  var url = Api.myVaniContent.UPDATE_OPENINGHOURS_DATA_URL;
-  return apiClient.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.UPDATE_OPENINGHOURS_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.UPDATE_OPENINGHOURS_DATA_URL;
+  return axios.post(url, postData);
 }
 
 function getSubMenuByMerchant(postData) {
-  var url = Api.myVaniContent.GET_SUBMENU_BY_MERCHANT;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_SUBMENU_BY_MERCHANT
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.GET_SUBMENU_BY_MERCHANT;
+
+  return axios.post(url, postData, normalConfig);
 }
 
 function getProductList(postData) {
-  var url = Api.myVaniContent.GET_PRODUCTLIST_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_PRODUCTLIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.GET_PRODUCTLIST_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 function createProductList(postData) {
-  var url = Api.myVaniContent.CREATE_PRODUCT_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.CREATE_PRODUCT_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.CREATE_PRODUCT_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 function deleteProductList(postData) {
-  var url = Api.myVaniContent.DELETE_PRODUCT_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.DELETE_PRODUCT_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.DELETE_PRODUCT_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 function updateProductList(postData) {
-  var url = Api.myVaniContent.UPDATE_PRODUCT_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.UPDATE_PRODUCT_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.UPDATE_PRODUCT_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 function productDetail(postData) {
-  var url = Api.myVaniContent.DETAIL_PRODUCT_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.DETAIL_PRODUCT_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.DETAIL_PRODUCT_DATA_URL;
+
+  return axios.post(url, postData, normalConfig);
 }
 
 function getProductCategory(postData) {
-  var url = Api.myVaniContent.GET_PRODUCTCATEGORY_DATA_URL;
-  return apiClient.get(url);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_PRODUCTCATEGORY_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.GET_PRODUCTCATEGORY_DATA_URL;
+  return axios.get(url);
 }
 
 function getAllServiceList(postData) {
-  var url = Api.myVaniContent.GET_ALLSERVICELIST_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_ALLSERVICELIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.GET_ALLSERVICELIST_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 function fetchInvoiceList(postData) {
-  var url = Api.myVaniContent.FETCH_INVOICE_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.FETCH_INVOICE_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.FETCH_INVOICE_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 function fetchAppointmentList(postData) {
-  var url = Api.myVaniContent.FETCH_APPOINTMENT_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.FETCH_APPOINTMENT_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.FETCH_APPOINTMENT_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 function updateCarousel(token, postData) {
@@ -184,12 +247,7 @@ function updateCarousel(token, postData) {
     : Api.myVaniMiddleWare.RAW_API_BASE +
       Api.myVaniContent.UPDATE_CAROUSEL_DATA_URL;
   console.log('updateCarousel', url);
-  return axios.post(
-    url,
-    // 'http://v2.staging.vaniday.com/rest/V1/vaniday-vendor/update-carousel',
-    postData,
-    config,
-  );
+  return axios.post(url, postData, config);
 }
 
 function updateCarouselPosition(token, postData) {
@@ -207,12 +265,7 @@ function updateCarouselPosition(token, postData) {
     : Api.myVaniMiddleWare.RAW_API_BASE +
       Api.myVaniContent.UPDATE_CAROUSEL_POSITION_DATA_URL;
   console.log('updateCarousel', url);
-  return axios.post(
-    url,
-    // 'http://v2.staging.vaniday.com/rest/V1/vaniday-vendor/update-carousel',
-    postData,
-    config,
-  );
+  return axios.post(url, postData, config);
 }
 
 function deleteCarouselAll(token) {
@@ -340,40 +393,75 @@ function deleteProductThumb(token, postData) {
 }
 
 function fetchClientList(postData) {
-  // var url = Api.myVaniContent.FETCH_CLIENTLIST_DATA_URL;
-  var url = Api.myVaniContent.FETCH_CLIENTLIST_DATA_URL;
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.FETCH_CLIENTLIST_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.FETCH_CLIENTLIST_DATA_URL;
   console.log('fetchClientList', url);
-  return apiClient_json.post(url, postData);
+  return axios.post(url, postData, normalConfig);
 }
 
 function fetchClientDetail(postData) {
-  var url = Api.myVaniContent.FETCH_CLIENTDETAIL_DATA_URL;
-  console.log('fetchClientDetail', url);
-  console.log('fetchClientDetail', postData);
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.FETCH_CLIENTDETAIL_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE +
+      Api.myVaniContent.FETCH_CLIENTDETAIL_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 function getOrderItemInfo(postData) {
-  var url = Api.myVaniContent.GET_ORDERINFO_DATA_URL;
-  console.log('getOrderItemInfo', url);
-  console.log('getOrderItemInfo', postData);
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.GET_ORDERINFO_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.GET_ORDERINFO_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 function forgotPassword(postData) {
+  // const apiClient = axios.create({
+  //   baseURL: Api.myVaniMiddleWare.API_BASE,
+  //   // baseURL: Api.myVaniday.API_BASE,
+  //   timeout: 30000,
+  // });
+  var baseUrl = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE
+    : Api.myVaniMiddleWare.API_BASE;
   var url = Api.myVaniContent.FORGOTPASSWORD_DATA_URL;
-  return apiClient_json.post(url, postData);
+  axios
+    .create({
+      baseURL: baseUrl,
+      timeout: 30000,
+    })
+    .post(url, postData);
+
+  // var url = Api.actionMode.isReal
+  //   ? Api.myVaniday.API_BASE + Api.myVaniContent.FORGOTPASSWORD_DATA_URL
+  //   : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.FORGOTPASSWORD_DATA_URL;
+  // console.log(url, postData);
+  // return axios.create
+  //   .post(url, postData)
+  //   .then((response) => {
+  //     const res = response.data;
+  //     console.log('forgotPassword', res);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
 }
 
 function changePassword(postData) {
-  var url = Api.myVaniContent.CHANGEPASSWORD_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.CHANGEPASSWORD_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.CHANGEPASSWORD_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
 
 function getVendorSections(postData) {
-  var url = Api.myVaniContent.VENDORSECTIONS_DATA_URL;
-  return apiClient_json.post(url, postData);
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.VENDORSECTIONS_DATA_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.VENDORSECTIONS_DATA_URL;
+  return axios.post(url, postData, normalConfig);
 }
+
 export const myAppointmentsSvc = {
   fetchOrderByDate,
   fetchProfileData,

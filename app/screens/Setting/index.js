@@ -64,8 +64,8 @@ class Setting extends Component {
             console.log('res_profile.data', res_profile.data);
             if (res_profile.data !== undefined) {
               let tpPhotos = [];
-              if (res_profile.vendor_carousel !== null) {
-                tpPhotos = JSON.parse(res_profile.data.vendor_carousel).map(
+              if (res_profile.data.vendor_carousel !== null) {
+                tpPhotos = res_profile.data.vendor_carousel.map(
                   (photo, index) => {
                     return res_profile.venCarPrefix + photo;
                   },
@@ -89,7 +89,8 @@ class Setting extends Component {
             }
           })
           .catch((error) => {
-            console.log('appointment error');
+            this.setState({dataLoading: false});
+            Utils.longNotifyMessage('Errors!');
             console.log(error);
           });
       }
@@ -289,6 +290,21 @@ class Setting extends Component {
                   }}>
                   <Text body1 style={styles.sectionStyle}>
                     Products
+                  </Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={'rgba(0,0,0,0.65)'}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.profileItem}
+                  onPress={() => {
+                    navigation.navigate('ChangePassword');
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Change Password
                   </Text>
                   <Icon
                     name="angle-right"

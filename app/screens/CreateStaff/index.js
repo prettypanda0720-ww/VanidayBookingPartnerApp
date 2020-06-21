@@ -142,7 +142,7 @@ class CreateStaff extends Component {
           .catch((error) => {
             Utils.shortNotifyMessage(error);
             console.log('appointment error');
-            console.log(error);
+            // console.log(error);
           });
       }
     }
@@ -198,8 +198,9 @@ class CreateStaff extends Component {
   setBookingDate(day) {
     this.setState({
       markedDates: {
-        [day.dateString]: {selected: true, marked: false},
+        [day.dateString]: {selected: true, marked: true},
       },
+      staff_joined_date: day.dateString,
     });
 
     this.markedDates = day.dateString;
@@ -247,9 +248,7 @@ class CreateStaff extends Component {
         <ScrollView>
           <View style={{paddingHorizontal: 20, marginTop: 20}}>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Full Name
-              </Text>
+              <Text style={BaseStyle.label}>Full Name</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({staff_full_name: text})}
@@ -261,9 +260,7 @@ class CreateStaff extends Component {
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
-              <Text caption3 style={{color: BaseColor.secondBlackColor}}>
-                Title
-              </Text>
+              <Text style={BaseStyle.label}>Title</Text>
               <TextInput
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({staff_title: text})}
@@ -281,10 +278,13 @@ class CreateStaff extends Component {
                 {value: 'Male'},
                 {value: 'Female'},
               ]}
+              labelFontSize={15}
+              fontSize={13}
+              labelTextStyle={{marginBottom: 10}}
+              style={{fontFamily: FontFamily.default}}
               rippleOpacity={0.7}
               baseColor={BaseColor.secondBlackColor}
               tintColor={BaseColor.blackColor}
-              style={{color: BaseColor.blackColor}}
               value={this.getGenderName(staff_gender)}
               onChangeText={(value) => {
                 this.setState({
@@ -315,8 +315,8 @@ class CreateStaff extends Component {
                         borderRadius: 8,
                       }}
                       markedDates={markedDates}
-                      current={this.getCurrentDate()}
-                      minDate={this.getCurrentDate()}
+                      current={this.state.staff_joined_date}
+                      minDate={'1900-12-31'}
                       maxDate={'2099-12-31'}
                       onDayPress={(day) => this.setBookingDate(day)}
                       monthFormat={'yyyy MMMM'}
@@ -378,11 +378,14 @@ class CreateStaff extends Component {
             </View>
             <Dropdown
               label="Status"
+              labelFontSize={15}
+              fontSize={13}
+              labelTextStyle={{marginBottom: 10}}
+              style={{fontFamily: FontFamily.default}}
               data={[{value: 'Inactive'}, {value: 'Active'}]}
               rippleOpacity={0.7}
               baseColor={BaseColor.secondBlackColor}
               tintColor={BaseColor.blackColor}
-              style={{color: BaseColor.blackColor}}
               value={staff_status == 0 ? 'Inactive' : 'Active'}
               onChangeText={(value) => {
                 this.setState({

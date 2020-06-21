@@ -295,6 +295,7 @@ class CreateService extends Component {
           <ScrollView
             style={{
               flexDirection: 'column',
+              paddingTop: 20,
               paddingLeft: 20,
               paddingRight: 20,
               paddingBottom: 60,
@@ -323,16 +324,6 @@ class CreateService extends Component {
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
-            <SectionedMultiSelect
-              items={subMenuList}
-              uniqueKey="id"
-              subKey="subcategory"
-              selectText="Select Categories..."
-              showDropDowns={true}
-              readOnlyHeadings={false}
-              onSelectedItemsChange={this.onSelectedItemsChange}
-              selectedItems={this.state.selectedItems}
-            />
             <View style={styles.inputGroup}>
               <Text style={BaseStyle.label}>Short Description</Text>
               <TextInput
@@ -368,6 +359,7 @@ class CreateService extends Component {
                 placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
                 keyboardType={'numeric'}
+                value={this.state.price}
               />
             </View>
             <View style={styles.inputGroup}>
@@ -535,6 +527,12 @@ class CreateService extends Component {
       }
     });
     return key;
+  }
+
+  onChangedPrice(text) {
+    this.setState({
+      price: text.replace(/[^0-9]/g, ''),
+    });
   }
 
   onChangedSpecialPrice(text) {

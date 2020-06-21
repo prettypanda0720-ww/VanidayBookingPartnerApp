@@ -4,5 +4,5 @@
 export const BaseSetting = {
   name: 'vanidayPartnerApp',
   displayName: 'myVaniday',
-  appVersion: '1.0.5',
+  appVersion: '1.0.0',
 };

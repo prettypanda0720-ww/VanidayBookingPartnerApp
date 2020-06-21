@@ -50,7 +50,7 @@ export default class AppointmentItem extends Component {
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    InvoiceID:
+                    OrderID:
                   </Text>
                   <Text
                     caption1

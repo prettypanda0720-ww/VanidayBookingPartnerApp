@@ -170,9 +170,8 @@ class Clients extends Component {
         }
       })
       .catch((error) => {
-        Utils.shortNotifyMessage(error);
-        console.log('appointment error');
-        console.log(error);
+        this.setState({dataLoading: false});
+        Utils.shortNotifyMessage('Some errors occured during communication');
       });
   }
 }
