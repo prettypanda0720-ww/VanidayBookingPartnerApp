@@ -24,9 +24,6 @@ import {withNavigation} from 'react-navigation';
 import styles from './styles';
 import * as Utils from '@utils';
 
-// Load sample data
-import {ProductsData} from '@data';
-
 class PhysicalProducts extends Component {
   constructor(props) {
     super(props);
@@ -51,7 +48,7 @@ class PhysicalProducts extends Component {
         0,
         40,
       ),
-      productsData: ProductsData,
+      productsData: [],
       subMenuList: [],
     };
 

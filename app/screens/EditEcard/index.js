@@ -21,9 +21,6 @@ import {
 import styles from './styles';
 import {Dropdown} from 'react-native-material-dropdown';
 
-// Load sample data
-import {ShopsData} from '@data';
-
 export default class EditEcard extends Component {
   constructor(props) {
     super();

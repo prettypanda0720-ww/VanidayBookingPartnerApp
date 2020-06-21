@@ -327,13 +327,8 @@ class SignUp extends Component {
                   <TouchableOpacity
                     style={styles.dateInfo}
                     onPress={() => this.openCalendarModal()}>
-                    <Text
-                      headline
-                      light
-                      style={{color: BaseColor.sectionColor}}>
-                      Birthday
-                    </Text>
-                    <Text headline semibold>
+                    <Text style={BaseStyle.label}>Birthday</Text>
+                    <Text style={BaseStyle.label}>
                       {Utils.getFormattedLongDate(this.state.appointmentDate)}
                       {/* {detail.bookingDate} */}
                     </Text>

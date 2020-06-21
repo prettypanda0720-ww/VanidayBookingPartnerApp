@@ -70,7 +70,11 @@ class ServiceInput extends Component {
                 title=""
                 renderRight={() => {
                   return (
-                    <Icon name="times" size={20} color={BaseColor.sectionColor} />
+                    <Icon
+                      name="times"
+                      size={20}
+                      color={BaseColor.sectionColor}
+                    />
                   );
                 }}
                 onPressRight={() => this.hideModal()}
@@ -140,7 +144,10 @@ class ServiceInput extends Component {
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({item}) => (
                     <View style={{flexDirection: 'column', marginTop: 20}}>
-                      <Text headline bold style={{color: BaseColor.sectionColor}}>
+                      <Text
+                        headline
+                        bold
+                        style={{color: BaseColor.sectionColor}}>
                         {item.title}&nbsp;({item.totalCount})
                       </Text>
                       <FlatList

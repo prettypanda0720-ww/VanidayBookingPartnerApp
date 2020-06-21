@@ -30,9 +30,6 @@ import * as Utils from '@utils';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import styles from './styles';
 
-// Load sample data
-import {UserData} from '@data';
-
 class ClientProfile extends Component {
   constructor(props) {
     super(props);
@@ -45,7 +42,6 @@ class ClientProfile extends Component {
         // {key: 'products', title: 'Products'},
         // {key: 'invoices', title: 'Invoices'},
       ],
-      userData: UserData[0],
       profileData: {},
       dataLoading: true,
     };

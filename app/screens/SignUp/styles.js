@@ -61,8 +61,8 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 10,
     alignItems: 'center',
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
+    // borderColor: BaseColor.grayColor,
+    // borderWidth: 1,
   },
   contentModal: {
     flex: 1,

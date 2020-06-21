@@ -4,9 +4,6 @@ import {BaseStyle, BaseColor, BaseSetting} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 import styles from './styles';
 
-// Load sample data
-import {ShopsData} from '@data';
-
 export default class Inventory extends Component {
   constructor(props) {
     super();

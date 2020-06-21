@@ -12,8 +12,6 @@ import {
 import styles from './styles';
 
 // Load sample data
-import {ShopsData} from '@data';
-
 export default class ClosedDates extends Component {
   constructor(props) {
     super();
@@ -61,11 +59,7 @@ export default class ClosedDates extends Component {
           title="Staff Off Days"
           renderLeft={() => {
             return (
-              <Icon
-                name="angle-left"
-                size={20}
-                color={BaseColor.blackColor}
-              />
+              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
             );
           }}
           onPressLeft={() => {

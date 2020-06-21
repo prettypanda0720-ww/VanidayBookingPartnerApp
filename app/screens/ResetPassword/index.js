@@ -36,22 +36,18 @@ export default class ResetPassword extends Component {
       myAppointmentsSvc
         .forgotPassword(data)
         .then((response) => {
-          const res = response.data;
-          console.log('forgotPassword', res);
-          if (res.code == 0) {
-            Alert.alert('Success', res.message);
-          } else {
-            // Alert.alert('Error', res.message);
-            // Utils.longNotifyMessgae(
-            //   'Some errors occured during communication!',
-            // );
+          const res_profile = response.data;
+          console.log('ResetPassword', res_profile.data);
+          if (res_profile.code == 0) {
+            this.setState({
+              dataLoading: false,
+            });
           }
-          this.setState({loading: false});
         })
         .catch((error) => {
-          // Utils.longNotifyMessgae('Some errors occured during communication!');
-          // Alert('UnKnown error');
-          this.setState({loading: false});
+          this.setState({
+            dataLoading: false,
+          });
         });
     }
   }

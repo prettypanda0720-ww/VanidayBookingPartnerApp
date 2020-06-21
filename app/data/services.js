@@ -19,8 +19,8 @@ const ServiceData = [
         duration: '2h 30min',
         summary:
           'Enjoy skilled hair cut & covo original Argan oil colour with deep conditioning hair treatment!',
-      }
-    ]
+      },
+    ],
   },
   {
     id: '2',
@@ -41,7 +41,7 @@ const ServiceData = [
         duration: '1h',
         summary: '',
       },
-    ]
+    ],
   },
   {
     id: '3',
@@ -81,7 +81,7 @@ const ServiceData = [
         summary:
           'Enjoy skilled hair cut & covo original Argan oil colour with deep conditioning hair treatment!',
       },
-    ]
+    ],
   },
   {
     id: '4',
@@ -116,7 +116,7 @@ const ServiceData = [
         duration: '1h',
         summary: '',
       },
-    ]
+    ],
   },
 ];
 

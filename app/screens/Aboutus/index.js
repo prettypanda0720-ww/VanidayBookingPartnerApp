@@ -10,9 +10,8 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import {BaseStyle, BaseColor, FontFamily} from '@config';
+import {BaseStyle, BaseColor, FontFamily, Strings} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
-import {primarytypes} from '@data';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-crop-picker';
 import * as Utils from '@utils';
@@ -77,30 +76,26 @@ class Aboutus extends Component {
         vendor_secondary_type: secondary_type,
       },
     };
-    console.log('typedata', data);
-    if (auth.user.data !== undefined) {
-      myAppointmentsSvc
-        .updateProfileData(data)
-        .then((response) => {
-          const res_profile = response.data;
-          if (res_profile.code == 0) {
-            Utils.shortNotifyMessage(
-              'Business Detail is successfully updated!',
-            );
-          }
-        })
-        .catch((error) => {
-          Utils.shortNotifyMessage(error);
-          console.log('appointment error');
-          console.log(error);
-        });
-    }
+
+    this.setState({loading: true});
+    myAppointmentsSvc
+      .updateProfileData(data)
+      .then((response) => {
+        const res_profile = response.data;
+        if (res_profile.code == 0) {
+          this.setState({loading: false});
+          Utils.shortNotifyMessage(Strings.update_profile_success);
+        }
+      })
+      .catch((error) => {
+        this.setState({loading: false});
+        Utils.shortNotifyMessage(Strings.update_profile_fail);
+      });
   };
 
   onPhotoUpdate = () => {
     const {auth} = this.props;
     const token = auth.user.data;
-    // console.log('this.state.carousel', this.state.carousel);
     if (Object.keys(this.state.carousel).length > 0) {
       this.setState({upLoading: true});
       myAppointmentsSvc
@@ -134,9 +129,11 @@ class Aboutus extends Component {
           if (response.data.data !== undefined) {
             let tpPhotos = [];
             if (res_profile.vendor_carousel !== null) {
-              tpPhotos = res_profile.vendor_carousel.map((photo, index) => {
-                return res_profile.venCarPrefix + photo.image_name;
-              });
+              tpPhotos = res_profile.vendor_carousel
+                .split(',')
+                .map((photo, index) => {
+                  return res_profile.venCarPrefix + photo.image_name;
+                });
             }
             this.setState({
               shopTitle: res_profile.shop_title,
@@ -431,22 +428,6 @@ class Aboutus extends Component {
                   editable={false}>
                   Singapore
                 </TextInput>
-              </View>
-              <View style={styles.inputGroup}>
-                <Text style={BaseStyle.label}>
-                  Cancellation and Rescheduling Policy
-                </Text>
-                <TextInput
-                  style={BaseStyle.textInput}
-                  onChangeText={(text) =>
-                    this.setState({cancellation_policy: text})
-                  }
-                  autoCorrect={false}
-                  placeholder=""
-                  placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.titleColor}
-                  value={this.state.cancellation_policy}
-                />
               </View>
               <View style={styles.inputGroup}>
                 <Text style={BaseStyle.label}>Term & Condition</Text>

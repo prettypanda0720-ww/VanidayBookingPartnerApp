@@ -10,33 +10,21 @@ import Modal from 'react-native-modal';
 import {BaseStyle, BaseColor, FontFamily} from '@config';
 import {Calendar} from 'react-native-calendars';
 import * as Utils from '@utils';
-import {
-  Image,
-  Header,
-  SafeAreaView,
-  Icon,
-  Button,
-  RadioGroup,
-  Text,
-} from '@components';
+import {Image, Header, SafeAreaView, Icon, Button, Text} from '@components';
 import {Checkbox} from 'react-native-material-ui';
 import {Dropdown} from 'react-native-material-dropdown';
-import PhoneInput from 'react-native-phone-input';
 import styles from './styles';
-
-// Load sample data
-import {ShopsData} from '@data';
 
 export default class ProfileEdit extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      id: ShopsData[0].id,
-      name: ShopsData[0].name,
-      email: ShopsData[0].email,
-      address: ShopsData[0].address,
-      image: ShopsData[0].image,
+      id: '',
+      name: '',
+      email: '',
+      address: '',
+      image: '',
       loading: false,
       isOwner: false,
       checked: false,

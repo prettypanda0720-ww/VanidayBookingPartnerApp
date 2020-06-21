@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {View, ScrollView, Alert, ActivityIndicator} from 'react-native';
-import {Dropdown} from 'react-native-material-dropdown';
+import {View, Alert, ActivityIndicator} from 'react-native';
 import {myAppointmentsSvc} from '@services';
 import {connect} from 'react-redux';
 import {AuthActions} from '@actions';
@@ -114,13 +113,11 @@ class ManageAppointment extends Component {
     const item = this.props.navigation.state.params.bookingData;
     console.log(item);
     this.setState({orderState: item.state});
-    // this.setState({orderId: item.id});
     const {auth, navigation} = this.props;
     const token = auth.user.data;
     const data = {
       token: token,
       orderId: item.id,
-      // quoteItemId: item.item_id,
       quoteItemId: item.quoteItemId,
     };
     console.log('ManageAppointment', data);
@@ -152,8 +149,6 @@ class ManageAppointment extends Component {
 
   displayContentView() {
     const {navigation} = this.props;
-    // const item = this.props.navigation.state.params.bookingData;
-    // console.log('ManageAppointment', item);
     const {loading} = this.state;
     const {
       orderId,

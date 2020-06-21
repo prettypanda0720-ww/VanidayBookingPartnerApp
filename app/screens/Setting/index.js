@@ -20,14 +20,10 @@ import {
   Text,
   Button,
   ProfileDetail,
-  ProfilePerformance,
 } from '@components';
 import styles from './styles';
 import * as Utils from '@utils';
 import {withNavigation} from 'react-navigation';
-import {Api} from '@config';
-// Load sample data
-import {ShopsData} from '@data';
 
 class Setting extends Component {
   constructor(props) {
@@ -65,11 +61,11 @@ class Setting extends Component {
             if (res_profile.data !== undefined) {
               let tpPhotos = [];
               if (res_profile.data.vendor_carousel !== null) {
-                tpPhotos = res_profile.data.vendor_carousel.map(
-                  (photo, index) => {
+                tpPhotos = res_profile.data.vendor_carousel
+                  .split(',')
+                  .map((photo, index) => {
                     return res_profile.venCarPrefix + photo;
-                  },
-                );
+                  });
               }
               this.setState({
                 dataLoading: false,

@@ -10,6 +10,7 @@ import {BaseSetting} from './setting';
 import {Images} from './images';
 import {BaseStyle} from './theme';
 import {Api} from './api';
+import {Strings} from './strings';
 
 export {
   BaseColor,
@@ -24,4 +25,5 @@ export {
   BaseSetting,
   Images,
   BaseStyle,
+  Strings,
 };
