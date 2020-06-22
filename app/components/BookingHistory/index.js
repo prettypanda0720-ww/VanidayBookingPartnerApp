@@ -33,7 +33,7 @@ export default class BookingHistory extends Component {
             {clientName}
           </Text>
           <Text subhead whiteColor bold>
-            {status}
+            {Utils.capitalize(status)}
           </Text>
         </View>
         <FlatList

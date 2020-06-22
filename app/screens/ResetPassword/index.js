@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, ScrollView, TextInput, Alert} from 'react-native';
-import {BaseStyle, BaseColor, Images} from '@config';
+import {BaseStyle, BaseColor, Images, Strings} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import {myAppointmentsSvc} from '@services';
 import * as Utils from '@utils';
@@ -37,16 +37,23 @@ export default class ResetPassword extends Component {
         .forgotPassword(data)
         .then((response) => {
           const res_profile = response.data;
-          console.log('ResetPassword', res_profile.data);
+          console.log('ResetPassword', res_profile);
           if (res_profile.code == 0) {
+            Utils.shortNotifyMessage(res_profile.message);
             this.setState({
-              dataLoading: false,
+              loading: false,
+            });
+          } else {
+            Utils.shortNotifyMessage(res_profile.message);
+            this.setState({
+              loading: false,
             });
           }
         })
         .catch((error) => {
+          Utils.shortNotifyMessage(Strings.reset_password);
           this.setState({
-            dataLoading: false,
+            loading: false,
           });
         });
     }
@@ -70,6 +77,7 @@ export default class ResetPassword extends Component {
           onPressLeft={() => {
             navigation.navigate('SignIn');
           }}
+          style={BaseStyle.headerStyle}
         />
         <ScrollView>
           <View

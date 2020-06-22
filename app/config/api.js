@@ -3,7 +3,7 @@
  */
 export const Api = {
   actionMode: {
-    isReal: false,
+    isReal: true,
   },
   myVaniday: {
     API_BASE: 'http://mapi2.vaniday.com/api',
@@ -15,7 +15,8 @@ export const Api = {
   },
   myVaniContent: {
     LOGIN_URL: '/myvaniday/auth',
-    REGISTER_URL: '/rest/V1/vaniday/vendor/create',
+    REGISTER_URL: '/myvaniday/signUp',
+    REGISTER_CUSTOMER_URL: '/signUp',
     GET_PERSONALPROFILE_DATA_URL: '/myvaniday/fetchPersonalProfile',
     UPDATE_PERSONALPROFILE_DATA_URL: '/myvaniday/updatePersonalProfile',
     UPDATE_CAROUSEL_DATA_URL: '/rest/V1/vaniday-vendor/update-carousel',

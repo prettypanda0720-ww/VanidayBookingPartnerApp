@@ -58,12 +58,12 @@ class Home extends Component<{}> {
   }
 
   loadItems(day) {
-    console.log('loaditems day', day);
     const {month} = this.state;
     if (day !== undefined) {
       console.log('initialmonth', month);
-      console.log('loading month', this.getMonthName(day.month - 1));
       if (month == this.getMonthName(day.month - 1)) {
+        console.log('loading month', this.getMonthName(day.month - 1));
+        console.log('loaditems day', day);
         const {auth} = this.props;
         myAppointmentsSvc
           .fetchOrderByDate(auth.user.data, -1, day.dateString)
@@ -94,8 +94,8 @@ class Home extends Component<{}> {
           });
         }
       } else {
-        this.setState({month: this.getMonthName(day.month - 1)});
-        this.setState({day: day.day});
+        // this.setState({month: this.getMonthName(day.month - 1)});
+        // this.setState({day: day.day});
         if (this.props.isFocused) {
           Utils.longNotifyMessage(
             'To view appointments for another month, please click “Select Month” at the top and choose a date in that month.',

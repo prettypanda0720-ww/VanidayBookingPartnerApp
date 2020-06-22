@@ -312,16 +312,17 @@ function forgotPassword(postData) {
   //   timeout: 30000,
   // });
   var url = Api.myVaniContent.FORGOTPASSWORD_DATA_URL;
-  axios
-    .create({
-      baseURL: baseUrl,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      timeout: 30000,
-    })
-    .post(url, postData);
+  return apiClient.post(url, postData);
+  // return axios
+  //   .create({
+  //     baseURL: baseUrl,
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     timeout: 30000,
+  //   })
+  //   .post(url, postData);
 
   // var url = Api.actionMode.isReal
   //   ? Api.myVaniday.API_BASE + Api.myVaniContent.FORGOTPASSWORD_DATA_URL

@@ -61,7 +61,8 @@ class Setting extends Component {
             if (res_profile.data !== undefined) {
               let tpPhotos = [];
               if (res_profile.data.vendor_carousel !== null) {
-                tpPhotos = JSON.parse(res_profile.data.vendor_carousel).map(
+                // tpPhotos = JSON.parse(res_profile.data.vendor_carousel).map(
+                tpPhotos = res_profile.data.vendor_carousel.map(
                   (photo, index) => {
                     return res_profile.venCarPrefix + photo;
                   },
@@ -198,6 +199,27 @@ class Setting extends Component {
                 </Text>
               </View>
               <View style={{width: '100%'}}>
+                <TouchableOpacity
+                  style={[
+                    styles.profileItem,
+                    {
+                      borderColor: BaseColor.textSecondaryColor,
+                      borderTopWidth: 1,
+                    },
+                  ]}
+                  onPress={() => {
+                    navigation.navigate('BusinessPhotos');
+                  }}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Business Photos
+                  </Text>
+                  <Icon
+                    name="angle-right"
+                    size={18}
+                    color={'rgba(0,0,0,0.65)'}
+                    style={{marginLeft: 5}}
+                  />
+                </TouchableOpacity>
                 <TouchableOpacity
                   style={[
                     styles.profileItem,

@@ -13,7 +13,7 @@ import {
 import {BaseStyle, BaseColor, FontFamily, Strings} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import {Dropdown} from 'react-native-material-dropdown';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-picker';
 import FastImage from 'react-native-fast-image';
 import * as Utils from '@utils';
 import Swiper from 'react-native-swiper';
@@ -42,6 +42,13 @@ class Aboutus extends Component {
       carousel: {},
       serviceTypes: [],
       productTypes: [],
+      image_name: '',
+      image_base64_content: null,
+      avatarSource: null,
+      vendor_area: 1,
+      neighbourhoodLst: [],
+      neighbourhoodDropdownLst: [],
+      logo_pic: '',
     };
   }
 
@@ -58,12 +65,15 @@ class Aboutus extends Component {
       cancellation_policy,
       terms_and_conditions,
       free_cancellation_hour,
+      vendor_area,
+      image_name,
+      image_base64_content,
     } = this.state;
 
     const {auth} = this.props;
     const data = {
       token: auth.user.data,
-      vendorData: {
+      vendorInfo: {
         shop_title: shopTitle,
         company_locality: location,
         company_description: description,
@@ -72,9 +82,14 @@ class Aboutus extends Component {
         contact_number: contact_number,
         return_policy: cancellation_policy,
         privacy_policy: terms_and_conditions,
+        vendor_area: vendor_area,
         vendor_free_cancellation_hour: 4,
-        vendor_primary_type: primary_type,
-        vendor_secondary_type: secondary_type,
+        // vendor_zipcode: vendor_zipcode,
+        // vendor_area: vendor_area,
+        // vendor_primary_type: primary_type,
+        // vendor_secondary_type: secondary_type,
+        image_name: image_name,
+        image_base64_content: image_base64_content,
       },
     };
 
@@ -94,27 +109,38 @@ class Aboutus extends Component {
       });
   };
 
-  onPhotoUpdate = () => {
-    const {auth} = this.props;
-    const token = auth.user.data;
-    if (Object.keys(this.state.carousel).length > 0) {
-      this.setState({upLoading: true});
-      myAppointmentsSvc
-        .updateCarousel(token, this.state.carousel)
-        .then((response) => {
-          const res_profile = response.data;
-          if (res_profile.code == 0) {
-            this.setState({upLoading: false});
-            Utils.shortNotifyMessage('Business photos are successfully added!');
-          }
-        })
-        .catch((error) => {
-          Utils.shortNotifyMessage(error);
-          console.log('update photo error');
-          console.log(error);
+  selectPhotoTapped() {
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true,
+      },
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        let filepath = {uri: response.uri};
+        // You can also display the image using data:
+        let source = {uri: 'data:image/jpeg;base64,' + response.data};
+
+        this.setState({
+          image_name: response.fileName,
+          avatarSource: source,
+          image_base64_content: response.data,
         });
-    }
-  };
+      }
+    });
+  }
 
   componentDidMount() {
     const {auth, navigation} = this.props;
@@ -128,14 +154,6 @@ class Aboutus extends Component {
           const res_profile = response.data.data;
           console.log('AboutUS', res_profile);
           if (response.data.data !== undefined) {
-            let tpPhotos = [];
-            if (res_profile.vendor_carousel !== null) {
-              tpPhotos = JSON.parse(res_profile.vendor_carousel).map(
-                (photo, index) => {
-                  return res_profile.venCarPrefix + photo.image_name;
-                },
-              );
-            }
             this.setState({
               shopTitle: res_profile.shop_title,
               vendor_stripe_id: res_profile.vendor_stripe_id,
@@ -143,21 +161,40 @@ class Aboutus extends Component {
               contact_number: res_profile.contact_number,
               location: res_profile.company_locality,
               description: res_profile.company_description,
-              photos: tpPhotos,
               primary_type: res_profile.vendor_primary_type,
               secondary_type: res_profile.vendor_secondary_type,
-              currentPhotoCnt:
-                res_profile.vendor_carousel !== null
-                  ? res_profile.vendor_carousel.length
-                  : 0,
+              logo_pic: res_profile.logo_pic,
+              // dataLoading: false,
             });
           }
         })
         .catch((error) => {
-          this.setState({dataLoading: false});
+          // this.setState({dataLoading: false});
           console.log('Some mistakes occured during communication.');
           console.log(error);
         });
+      // myAppointmentsSvc
+      //   .getNeighbourhoodList()
+      //   .then((response) => {
+      //     const res_profile = response.data;
+      //     console.log('neighbourhoodlist', res_profile.data);
+      //     if (res_profile.code == 0) {
+      //       this.setState({
+      //         neighbourhoodLst: res_profile.data,
+      //         neighbourhoodDropdownLst: res_profile.data.map((item, index) => {
+      //           return {
+      //             value: item.area,
+      //           };
+      //         }),
+      //         dataLoading: false,
+      //       });
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     this.setState({dataLoading: false});
+      //     console.log('appointment error');
+      //     console.log(error);
+      //   });
     });
 
     myAppointmentsSvc
@@ -175,6 +212,7 @@ class Aboutus extends Component {
         }
       })
       .catch((error) => {
+        this.setState({dataLoading: false});
         Utils.shortNotifyMessage(error);
         console.log('appointment error');
         console.log(error);
@@ -205,60 +243,7 @@ class Aboutus extends Component {
     }
   }
 
-  takePics = () => {
-    ImagePicker.openPicker({
-      width: 200,
-      height: 200,
-      includeBase64: true,
-      compressImageMaxHeight: 400,
-      compressImageMaxWidth: 400,
-      cropping: true,
-      multiple: true,
-    }).then((response) => {
-      let tempArray = [];
-      this.setState({ImageSource: response});
-      response.forEach((item, index) => {
-        let filename = item.path.substring(item.path.lastIndexOf('/') + 1);
-        let filepath = item.path;
-        let data = item.data;
-        this.state.photos.push(filepath);
-        tempArray.push({
-          position: this.state.currentPhotoCnt + index,
-          image_name: filename,
-          image_base64_content: data,
-        });
-      });
-      let uploadPhotoData = {carousel: tempArray};
-      this.setState({carousel: uploadPhotoData});
-      // console.log('uploadPhotoData', this.state.carousel);
-    });
-  };
-
-  displayPhotoActionView() {
-    if (Object.keys(this.state.carousel).length !== 0) {
-      return (
-        <Button
-          style={{flex: 1}}
-          loading={this.state.upLoading}
-          onPress={() => this.onPhotoUpdate()}>
-          Upload Business Photo
-        </Button>
-      );
-    } else {
-      return (
-        <Button
-          style={{flex: 1}}
-          // loading={loading}
-          onPress={() => this.takePics()}>
-          Select Business Photo
-        </Button>
-      );
-    }
-  }
-
   displayContentView() {
-    // console.log('this.state.photos', this.state.photos);
-    // console.log('carousel', this.state.carousel);
     const {navigation} = this.props;
     const {
       loading,
@@ -271,6 +256,7 @@ class Aboutus extends Component {
       photos,
       serviceTypes,
       productTypes,
+      logo_pic,
     } = this.state;
     if (!this.state.dataLoading) {
       return (
@@ -294,51 +280,23 @@ class Aboutus extends Component {
             style={BaseStyle.headerStyle}
           />
           <ScrollView>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                padding: 20,
-              }}>
-              <Text headline>Featured Image</Text>
-              <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity
-                  style={{marginRight: 10}}
-                  onPress={() => navigation.navigate('EditAboutusAlbum')}>
-                  <Icon
-                    name="edit"
-                    size={20}
-                    color={
-                      this.state.deleteFlag
-                        ? BaseColor.SecondColor
-                        : BaseColor.titleColor
-                    }
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{marginLeft: 10}}
-                  onPress={() =>
-                    navigation.navigate('DeleteAboutusAlbum', {
-                      photos: this.state.photos,
-                    })
-                  }>
-                  <Icon
-                    name="trash"
-                    size={20}
-                    color={
-                      this.state.deleteFlag
-                        ? BaseColor.SecondColor
-                        : BaseColor.titleColor
-                    }
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.wrapper}>{this.displayPhotoView()}</View>
-            <View style={styles.changeButton}>
-              {this.displayPhotoActionView()}
-            </View>
             <View style={{paddingHorizontal: 20, marginTop: 20}}>
+              <Text style={BaseStyle.label}>Featured Image</Text>
+              <TouchableOpacity
+                style={{alignItems: 'center', paddingVertical: 5}}
+                onPress={this.selectPhotoTapped.bind(this)}>
+                {this.state.avatarSource === null ? (
+                  <FastImage
+                    source={{uri: logo_pic}}
+                    style={styles.blockImage}
+                  />
+                ) : (
+                  <Image
+                    source={this.state.avatarSource}
+                    style={styles.blockImage}
+                  />
+                )}
+              </TouchableOpacity>
               <View style={styles.inputGroup}>
                 <Text style={BaseStyle.label}>Business Name</Text>
                 <TextInput
@@ -431,7 +389,7 @@ class Aboutus extends Component {
                 </TextInput>
               </View>
               <View style={styles.inputGroup}>
-                <Text style={BaseStyle.label}>Term & Condition</Text>
+                <Text style={BaseStyle.label}>Term and Condition</Text>
                 <TextInput
                   style={BaseStyle.textInput}
                   onChangeText={(text) =>
@@ -454,7 +412,8 @@ class Aboutus extends Component {
                   autoCorrect={false}
                   placeholder=""
                   placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.titleColor}>
+                  selectionColor={BaseColor.titleColor}
+                  editable={false}>
                   {vendor_stripe_id}
                 </TextInput>
               </View>
@@ -493,6 +452,23 @@ class Aboutus extends Component {
                 }}
                 value={this.getNameByType(this.state.secondary_type)}
               />
+              {/* <Dropdown
+                label="Select your neighbourhood"
+                labelFontSize={15}
+                fontSize={13}
+                labelTextStyle={{marginBottom: 10}}
+                style={{fontFamily: FontFamily.default}}
+                data={this.state.neighbourhoodDropdownLst}
+                rippleOpacity={0.7}
+                baseColor={BaseColor.secondBlackColor}
+                tintColor={BaseColor.blackColor}
+                value={this.getNeighbourhoodName(this.state.vendor_area)}
+                onChangeText={(value) => {
+                  this.setState({
+                    vendor_area: this.getNeighbourhoodKey(value),
+                  });
+                }}
+              /> */}
             </View>
           </ScrollView>
           <View style={BaseStyle.loadingContainer}>
@@ -506,7 +482,6 @@ class Aboutus extends Component {
           <View style={{marginBottom: 0, padding: 20, flexDirection: 'row'}}>
             <Button
               style={{flex: 1, marginLeft: 10}}
-              loading={loading}
               onPress={() => navigation.goBack()}>
               CANCEL
             </Button>
@@ -553,33 +528,27 @@ class Aboutus extends Component {
     }
   }
 
-  displayPhotoView() {
-    if (this.state.currentPhotoCnt == 0) {
-      return <View style={styles.blockImage} />;
-    } else {
-      return (
-        <Swiper
-          dotStyle={{
-            backgroundColor: BaseColor.textSecondaryColor,
-          }}
-          activeDotColor={BaseColor.primaryColor}
-          paginationStyle={styles.contentPage}
-          removeClippedSubviews={false}>
-          {this.state.photos.map((item, index) => {
-            return (
-              <View style={styles.slide} key={index}>
-                <FastImage
-                  style={styles.blockImage}
-                  source={{
-                    uri: item,
-                  }}
-                />
-              </View>
-            );
-          })}
-        </Swiper>
-      );
-    }
+  getNeighbourhoodName(key) {
+    let name = '';
+    console.log('key', key);
+    this.state.neighbourhoodLst.forEach((element) => {
+      if (element.directory_id == key) {
+        name = element.area;
+        console.log('name', name);
+      }
+    });
+    return name;
+  }
+
+  getNeighbourhoodKey(value) {
+    let key = 1;
+    this.state.neighbourhoodLst.forEach((element) => {
+      if (element.area == value) {
+        key = element.directory_id;
+        console.log('key', key);
+      }
+    });
+    return key;
   }
 
   render() {

@@ -84,6 +84,7 @@ import EditOpeningHours from '@screens/EditOpeningHours';
 import Help from '@screens/Help';
 import EditAboutusAlbum from '@screens/EditAboutusAlbum';
 import DeleteAboutusAlbum from '@screens/DeleteAboutusAlbum';
+import BusinessPhotos from '@screens/BusinessPhotos';
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
   const nextScene = scenes[scenes.length - 1].route.routeName;
@@ -411,6 +412,9 @@ const StackNavigator = createStackNavigator(
     },
     DeleteAboutusAlbum: {
       screen: DeleteAboutusAlbum,
+    },
+    BusinessPhotos: {
+      screen: BusinessPhotos,
     },
   },
   {

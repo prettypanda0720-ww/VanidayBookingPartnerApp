@@ -210,9 +210,9 @@ class ManageAppointment extends Component {
                     paddingHorizontal: 20,
                     textAlign: 'center',
                   }}>
-                  Before you reschedule, please chat or contact customer at
-                  &nbsp;
-                  {contactNo}
+                  Please contact customer at &nbsp;
+                  {contactNo}&nbsp;if you need to reschedule or cancel
+                  appointment.
                 </Text>
               </View>
               <View>{this.displayActionBtnGroup()}</View>

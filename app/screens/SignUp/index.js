@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
-import {BaseStyle, BaseColor, FontFamily} from '@config';
+import {BaseStyle, BaseColor, FontFamily, Strings} from '@config';
 import DatePicker from 'react-native-datepicker';
 import * as Utils from '@utils';
 import ImagePicker from 'react-native-image-picker';
@@ -43,9 +43,9 @@ class SignUp extends Component {
       confirm_password: '',
       gender: 0,
       address: '',
-      phone_no: '+65',
+      phone_number: '',
       birthday: '',
-      vendor_type: 0,
+      vendor_type: 1,
       // Below fields are added in case of salow owner
       profile_url: '',
       vendor_title: '',
@@ -65,6 +65,7 @@ class SignUp extends Component {
       neighbourhoodDropdownLst: [],
       vendor_area: 1,
       appointmentDate: this.getCurrentDate(),
+      is_subscribed: 0,
     };
     this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
   }
@@ -93,7 +94,7 @@ class SignUp extends Component {
       },
     });
     this.markedDates = day.dateString;
-    this.setState({appointmentDate: day.dateString});
+    this.setState({birthday: day.dateString});
     console.log('marketDates', this.markedDates);
   }
 
@@ -223,26 +224,14 @@ class SignUp extends Component {
                   secureTextEntry={true}
                 />
               </View>
-
               <View style={styles.inputGroup}>
                 <TextInput
                   style={BaseStyle.textInput}
-                  onChangeText={(text) => this.setState({address: text})}
+                  onChangeText={(text) => this.setState({phone_number: text})}
                   autoCorrect={false}
-                  placeholder="Address"
+                  placeholder="Phone Number"
                   placeholderTextColor={BaseColor.grayColor}
-                  selectionColor={BaseColor.primaryColor}
-                />
-              </View>
-              <View style={styles.inputGroup}>
-                <TextInput
-                  style={BaseStyle.textInput}
-                  onChangeText={(text) =>
-                    this.setState({phone_no: '+65' + text})
-                  }
-                  autoCorrect={false}
-                  placeholder="Phone No"
-                  placeholderTextColor={BaseColor.grayColor}
+                  keyboardType={'numeric'}
                   selectionColor={BaseColor.primaryColor}
                 />
               </View>
@@ -276,7 +265,7 @@ class SignUp extends Component {
                             borderRadius: 8,
                           }}
                           markedDates={this.state.markedDates}
-                          current={this.state.appointmentDate}
+                          current={this.state.birthday}
                           minDate={'1900-12-31'}
                           maxDate={'2099-12-31'}
                           onDayPress={(day) => this.setBookingDate(day)}
@@ -329,8 +318,11 @@ class SignUp extends Component {
                     onPress={() => this.openCalendarModal()}>
                     <Text style={BaseStyle.label}>Birthday</Text>
                     <Text style={BaseStyle.label}>
-                      {Utils.getFormattedLongDate(this.state.appointmentDate)}
-                      {/* {detail.bookingDate} */}
+                      {this.state.birthday == ''
+                        ? this.state.birthday
+                        : Utils.getFormattedLongDate(
+                            Utils.getDateFromDate(this.state.birthday),
+                          )}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -360,18 +352,20 @@ class SignUp extends Component {
               </View>
               {/* <RadioGroup /> */}
               <View style={[styles.profileItem, {paddingVertical: 15}]}>
-                <Text subhead style={{color: BaseColor.titleColor}}>
-                  Product Seller
-                </Text>
-                <Switch
-                  name="angle-right"
-                  size={18}
-                  onValueChange={this.toggleSwitch}
-                  value={this.state.vendor_type == 1 ? true : false}
+                <Checkbox
+                  label="Product Seller"
+                  value="agree"
+                  checked={false}
+                  style={{color: BaseColor.SecondColor}}
+                  onCheck={() => {}}
                 />
-                <Text subhead style={{color: BaseColor.titleColor}}>
-                  Salon Owner
-                </Text>
+                <Checkbox
+                  label="Salon Owner"
+                  value="agree"
+                  checked={true}
+                  style={{color: BaseColor.SecondColor}}
+                  onCheck={() => {}}
+                />
               </View>
               <View style={{flexDirection: 'column', width: '100%'}}>
                 {this.displayOwnerView()}
@@ -380,11 +374,11 @@ class SignUp extends Component {
                 <Checkbox
                   label="I would like to receive promotions, tips and announcements via email and sms."
                   value="agree"
-                  checked={this.state.checked}
+                  checked={this.state.is_subscribed == 1 ? true : false}
                   style={{color: BaseColor.SecondColor}}
                   onCheck={() =>
                     this.setState({
-                      checked: !this.state.checked,
+                      is_subscribed: this.state.is_subscribed == 1 ? 0 : 1,
                     })
                   }
                 />
@@ -440,12 +434,7 @@ class SignUp extends Component {
     if (this.state.vendor_type == 1) {
       return (
         <View>
-          <Text headline style={styles.headerTitle}>
-            Featured Image
-          </Text>
-          {/* <View style={styles.wrapper}> */}
-          {/* <Image source={this.state.avatarSource} style={styles.blockImage} />cool */}
-          {/* </View> */}
+          <Text style={BaseStyle.label}>Featured Image</Text>
           <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
             <View
               style={[
@@ -502,6 +491,7 @@ class SignUp extends Component {
               placeholder="Business Tel"
               placeholderTextColor={BaseColor.grayColor}
               selectionColor={BaseColor.primaryColor}
+              keyboardType={'numeric'}
               value={this.state.vendor_tel}
             />
           </View>
@@ -513,6 +503,7 @@ class SignUp extends Component {
               placeholder="Unique Entity Number"
               placeholderTextColor={BaseColor.grayColor}
               selectionColor={BaseColor.primaryColor}
+              keyboardType={'numeric'}
               value={this.state.unique_entity_number}
             />
           </View>
@@ -681,12 +672,10 @@ class SignUp extends Component {
       last_name,
       email,
       password,
-      confirm_password,
       gender,
-      address,
-      phone_no,
-      birthday,
       vendor_type,
+      phone_number,
+      birthday,
       profile_url,
       vendor_title,
       vendor_tel,
@@ -695,6 +684,7 @@ class SignUp extends Component {
       vendor_address,
       image_name,
       image_base64_content,
+      is_subscribed,
     } = this.state;
     const {navigation} = this.props;
     const {auth, actions} = this.props;
@@ -706,9 +696,8 @@ class SignUp extends Component {
           last_name: last_name,
           email: email,
           password: password,
-          // address: address,
-          // phone_no: phone_no,
-          // birthday: birthday,
+          phone_number: phone_number,
+          birthday: birthday,
           gender: gender,
           vendor_type: vendor_type,
           profile_url: profile_url,
@@ -717,49 +706,72 @@ class SignUp extends Component {
           unique_entity_number: unique_entity_number,
           vendor_address: vendor_address,
           vendor_area: vendor_area,
+          is_subscribed: is_subscribed,
           image_name: image_name,
           image_base64_content: image_base64_content,
         },
       };
+      console.log('vendor signup info', data);
+      actions.register(data, (response) => {
+        console.log('------- signup response', response);
+        if (response.code == 0) {
+          const credential = {
+            email: email,
+            password: password,
+          };
+          actions.login(credential, (response) => {
+            console.log('------- login response', response);
+            if (response.data.code == 0) {
+              console.log('success');
+              this.setState({loading: false});
+              navigation.navigate('Home');
+            } else {
+              Utils.longNotifyMessage('Register failed!');
+            }
+          });
+        } else {
+          Utils.longNotifyMessage('Register failed!');
+          this.setState({loading: false});
+        }
+      });
     } else {
       data = {
-        vendorInfo: {
+        customer: {
           first_name: first_name,
           last_name: last_name,
           email: email,
-          password: password,
-          address: address,
-          phone_no: phone_no,
+          phone_number: phone_number,
           birthday: birthday,
           gender: gender,
-          vendor_type: vendor_type,
+          is_subscribed: is_subscribed,
+          // vendor_type: vendor_type,
         },
+        password: password,
       };
+      console.log('customer signup info', data);
+      actions.registerCustomer(data, (response) => {
+        console.log('------- signup response', response);
+        if (response.code == 0) {
+          Utils.longNotifyMessage(Strings.customer_register_success);
+          // const credential = {
+          //   email: email,
+          //   password: password,
+          // };
+          // actions.login(credential, (response) => {
+          //   console.log('------- login response', response);
+          //   if (response.code == 0) {
+          //     this.setState({loading: false});
+          //     navigation.navigate('Home');
+          //   } else {
+          //     Utils.longNotifyMessage(response.message);
+          //   }
+          // });
+        } else if (response.code == -1) {
+          Utils.longNotifyMessage(response.message);
+          this.setState({loading: false});
+        }
+      });
     }
-
-    console.log('signup info', data);
-    actions.register(data, (response) => {
-      console.log('------- signup response', response);
-      if (response.customer_id !== undefined) {
-        const credential = {
-          email: email,
-          password: password,
-        };
-        actions.login(credential, (response) => {
-          console.log('------- login response', response);
-          if (response.code == 0) {
-            console.log('success');
-            this.setState({loading: false});
-            navigation.navigate('Home');
-          } else {
-            Utils.longNotifyMessage('Register failed!');
-          }
-        });
-      } else {
-        Utils.longNotifyMessage('Register failed!');
-        this.setState({loading: false});
-      }
-    });
   };
 
   getGenderName(key) {
@@ -806,9 +818,9 @@ class SignUp extends Component {
 
   validatePassword = (password) => {
     //strongRegex
-    var strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+    // var strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
     var mediumRegex = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
-    return strongRegex.test(password);
+    return mediumRegex.test(password);
   };
 
   getNeighbourhoodName(key) {

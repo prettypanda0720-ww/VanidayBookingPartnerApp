@@ -23,12 +23,20 @@ function login(body) {
 
 function register(body) {
   var url = Api.actionMode.isReal
-    ? Api.myVaniday.RAW_API_BASE + Api.myVaniContent.REGISTER_URL
-    : Api.myVaniMiddleWare.RAW_API_BASE + Api.myVaniContent.REGISTER_URL;
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.REGISTER_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.REGISTER_URL;
+  return axios.post(url, body, normalConfig);
+}
+
+function registerCustomer(body) {
+  var url = Api.actionMode.isReal
+    ? Api.myVaniday.API_BASE + Api.myVaniContent.REGISTER_CUSTOMER_URL
+    : Api.myVaniMiddleWare.API_BASE + Api.myVaniContent.REGISTER_CUSTOMER_URL;
   return axios.post(url, body, normalConfig);
 }
 
 export const UserServices = {
   login,
   register,
+  registerCustomer,
 };
