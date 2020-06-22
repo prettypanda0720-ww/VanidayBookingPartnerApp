@@ -61,11 +61,11 @@ class Setting extends Component {
             if (res_profile.data !== undefined) {
               let tpPhotos = [];
               if (res_profile.data.vendor_carousel !== null) {
-                tpPhotos = res_profile.data.vendor_carousel
-                  .split(',')
-                  .map((photo, index) => {
+                tpPhotos = JSON.parse(res_profile.data.vendor_carousel).map(
+                  (photo, index) => {
                     return res_profile.venCarPrefix + photo;
-                  });
+                  },
+                );
               }
               this.setState({
                 dataLoading: false,

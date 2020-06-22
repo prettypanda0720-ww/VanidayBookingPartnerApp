@@ -16,6 +16,8 @@ export const Api = {
   myVaniContent: {
     LOGIN_URL: '/myvaniday/auth',
     REGISTER_URL: '/rest/V1/vaniday/vendor/create',
+    GET_PERSONALPROFILE_DATA_URL: '/myvaniday/fetchPersonalProfile',
+    UPDATE_PERSONALPROFILE_DATA_URL: '/myvaniday/updatePersonalProfile',
     UPDATE_CAROUSEL_DATA_URL: '/rest/V1/vaniday-vendor/update-carousel',
     GET_ORDER_URL: '/myvaniday/fetchOrderList',
     GET_PROFILE_DATA_URL: '/myvaniday/vendorDetail',

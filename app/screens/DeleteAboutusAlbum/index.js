@@ -8,6 +8,7 @@ import {myAppointmentsSvc} from '@services';
 import {AuthActions} from '@actions';
 import {bindActionCreators} from 'redux';
 import {withNavigation} from 'react-navigation';
+import FastImage from 'react-native-fast-image';
 import * as Utils from '@utils';
 import styles from './styles';
 
@@ -131,10 +132,10 @@ class DeleteAboutusAlbum extends Component {
           justifyContent: 'space-between',
           paddingHorizontal: 10,
         }}>
-        <Image
+        <FastImage
           key={index}
-          source={{uri: item.label}}
           style={styles.blockImage}
+          source={{uri: item.label}}
         />
         <Checkbox
           label=""

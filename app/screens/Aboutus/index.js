@@ -14,6 +14,7 @@ import {BaseStyle, BaseColor, FontFamily, Strings} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import {Dropdown} from 'react-native-material-dropdown';
 import ImagePicker from 'react-native-image-crop-picker';
+import FastImage from 'react-native-fast-image';
 import * as Utils from '@utils';
 import Swiper from 'react-native-swiper';
 import styles from './styles';
@@ -129,11 +130,11 @@ class Aboutus extends Component {
           if (response.data.data !== undefined) {
             let tpPhotos = [];
             if (res_profile.vendor_carousel !== null) {
-              tpPhotos = res_profile.vendor_carousel
-                .split(',')
-                .map((photo, index) => {
+              tpPhotos = JSON.parse(res_profile.vendor_carousel).map(
+                (photo, index) => {
                   return res_profile.venCarPrefix + photo.image_name;
-                });
+                },
+              );
             }
             this.setState({
               shopTitle: res_profile.shop_title,
@@ -567,10 +568,11 @@ class Aboutus extends Component {
           {this.state.photos.map((item, index) => {
             return (
               <View style={styles.slide} key={index}>
-                <Image
-                  key={index}
-                  source={{uri: item}}
+                <FastImage
                   style={styles.blockImage}
+                  source={{
+                    uri: item,
+                  }}
                 />
               </View>
             );

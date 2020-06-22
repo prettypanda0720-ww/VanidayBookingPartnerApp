@@ -7,6 +7,7 @@ import {AuthActions} from '@actions';
 import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 import {View, TouchableOpacity, Image, ActivityIndicator} from 'react-native';
 import DraggableFlatList from 'react-native-draggable-dynamic-flatlist';
+import FastImage from 'react-native-fast-image';
 import {withNavigation} from 'react-navigation';
 import {BaseStyle, BaseColor} from '@config';
 import * as Utils from '@utils';
@@ -35,7 +36,7 @@ class EditAboutusAlbum extends Component {
           if (response.data.data !== undefined) {
             let photosDataTmp = [];
             if (res_profile.vendor_carousel !== null) {
-              photosDataTmp = res_profile.vendor_carousel.map(
+              photosDataTmp = JSON.parse(res_profile.vendor_carousel).map(
                 (photo, index) => ({
                   image_index: photo.image_index,
                   image_name: res_profile.venCarPrefix + photo.image_name,
@@ -56,16 +57,16 @@ class EditAboutusAlbum extends Component {
   }
 
   renderItem = ({item, index, move, moveEnd, isActive}) => {
-    // console.log('item.image_name', item.image_name);
+    console.log('item.image_name', item.image_name);
     return (
       <TouchableOpacity
         style={styles.imageWrapper}
         onLongPress={move}
         onPressOut={moveEnd}>
-        <Image
+        <FastImage
           key={index}
-          source={{uri: item.image_name}}
           style={styles.blockImage}
+          source={{uri: item.image_name}}
         />
       </TouchableOpacity>
     );

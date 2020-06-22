@@ -295,6 +295,16 @@ function getOrderItemInfo(postData) {
   return apiClient.post(url, postData);
 }
 
+function fetchPersonalProfile(postData) {
+  var url = Api.myVaniContent.GET_PERSONALPROFILE_DATA_URL;
+  return apiClient.post(url, postData);
+}
+
+function updatePersonalProfile(postData) {
+  var url = Api.myVaniContent.UPDATE_PERSONALPROFILE_DATA_URL;
+  return apiClient.post(url, postData);
+}
+
 function forgotPassword(postData) {
   // const apiClient = axios.create({
   //   baseURL: Api.myVaniMiddleWare.API_BASE,
@@ -381,4 +391,6 @@ export const myAppointmentsSvc = {
   forgotPassword,
   changePassword,
   getVendorSections,
+  fetchPersonalProfile,
+  updatePersonalProfile,
 };
