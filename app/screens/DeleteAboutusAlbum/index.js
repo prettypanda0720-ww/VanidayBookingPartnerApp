@@ -43,7 +43,7 @@ class DeleteAboutusAlbum extends Component {
     let dataTmp = this.state.data.map((d, index) => {
       return {
         ...d,
-        checked: !d.checked,
+        checked: !isAllChecked,
       };
     });
     this.setState({data: dataTmp, isAllChecked: !isAllChecked});

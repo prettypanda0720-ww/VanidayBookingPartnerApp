@@ -12,7 +12,13 @@ import {
   ScrollView,
 } from 'react-native';
 import {BaseStyle, BaseColor, Images} from '@config';
-import {Header, SafeAreaView, Icon, StaffProfileListItem} from '@components';
+import {
+  Header,
+  SafeAreaView,
+  Icon,
+  StaffProfileListItem,
+  Text,
+} from '@components';
 import * as Utils from '@utils';
 import styles from './styles';
 
@@ -61,74 +67,152 @@ class StaffMembers extends Component {
     });
   }
 
-  render() {
+  displayContentView() {
     const {navigation} = this.props;
     const {loading, staffList, productTypes} = this.state;
-    return (
-      <SafeAreaView style={BaseStyle.safeAreaView} forceInset={{top: 'always'}}>
-        <Header
-          title="Staff Members"
-          renderLeft={() => {
-            return (
-              <Icon name="angle-left" size={20} color={BaseColor.blackColor} />
-            );
-          }}
-          onPressLeft={() => {
-            navigation.goBack();
-          }}
-          style={BaseStyle.headerStyle}
-        />
-        <ScrollView style={styles.membersWrapper}>
-          {staffList.map((item, index) => {
-            return (
-              <StaffProfileListItem
-                staff_id={item.staff_id}
-                staff_full_name={item.staff_full_name}
-                staff_gender={item.staff_gender}
-                // staff_skill_level={item.staff_skill_level}
-                // staff_joined_date={Utils.getDateFromDate(
-                //   item.staff_joined_date,
-                // )}
-                staff_status={item.staff_status}
-                product_ids={item.product_ids}
-                seller_id={item.seller_id}
-                create_at={item.create_at}
-                updated_at={item.updated_at}
-                staff_title={item.staff_title}
-                style={styles.memberItemWrapper}
-                styleThumb={styles.staffThumb}
+    if (loading) {
+      return (
+        <SafeAreaView
+          style={BaseStyle.safeAreaView}
+          forceInset={{top: 'always'}}>
+          <Header
+            title="Staff Members"
+            renderLeft={() => {
+              return (
+                <Icon
+                  name="angle-left"
+                  size={20}
+                  color={BaseColor.blackColor}
+                />
+              );
+            }}
+            onPressLeft={() => {
+              navigation.goBack();
+            }}
+            style={BaseStyle.headerStyle}
+          />
+          <View style={BaseStyle.loadingContainer}>
+            <ActivityIndicator
+              size="large"
+              color={BaseColor.sectionColor}
+              style={styles.loading}
+              animating={this.state.loading}
+            />
+          </View>
+        </SafeAreaView>
+      );
+    } else {
+      if (staffList.length > 0) {
+        return (
+          <SafeAreaView
+            style={BaseStyle.safeAreaView}
+            forceInset={{top: 'always'}}>
+            <Header
+              title="Staff Members"
+              renderLeft={() => {
+                return (
+                  <Icon
+                    name="angle-left"
+                    size={20}
+                    color={BaseColor.blackColor}
+                  />
+                );
+              }}
+              onPressLeft={() => {
+                navigation.goBack();
+              }}
+              style={BaseStyle.headerStyle}
+            />
+            <ScrollView style={styles.membersWrapper}>
+              {staffList.map((item, index) => {
+                return (
+                  <StaffProfileListItem
+                    staff_id={item.staff_id}
+                    staff_full_name={item.staff_full_name}
+                    staff_gender={item.staff_gender}
+                    // staff_skill_level={item.staff_skill_level}
+                    // staff_joined_date={Utils.getDateFromDate(
+                    //   item.staff_joined_date,
+                    // )}
+                    staff_status={item.staff_status}
+                    product_ids={item.product_ids}
+                    seller_id={item.seller_id}
+                    create_at={item.create_at}
+                    updated_at={item.updated_at}
+                    staff_title={item.staff_title}
+                    style={styles.memberItemWrapper}
+                    styleThumb={styles.staffThumb}
+                    onPress={() =>
+                      navigation.navigate('StaffProfileDetail', {
+                        data: item,
+                        productTypes: productTypes,
+                      })
+                    }
+                  />
+                );
+              })}
+            </ScrollView>
+            <View style={styles.floatingBtn}>
+              <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('StaffProfileDetail', {
-                    data: item,
+                  navigation.navigate('CreateStaff', {
                     productTypes: productTypes,
                   })
                 }
-              />
-            );
-          })}
-        </ScrollView>
-        <View style={styles.floatingBtn}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('CreateStaff', {
-                productTypes: productTypes,
-              })
-            }
-            style={styles.button}
-            activeOpacity={0.8}>
-            <Image style={styles.image} source={Images.icons_create} />
-          </TouchableOpacity>
-        </View>
-        <View style={BaseStyle.loadingContainer}>
-          <ActivityIndicator
-            size="large"
-            color={BaseColor.sectionColor}
-            style={styles.loading}
-            animating={this.state.loading}
-          />
-        </View>
-      </SafeAreaView>
-    );
+                style={styles.button}
+                activeOpacity={0.8}>
+                <Image style={styles.image} source={Images.icons_create} />
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        );
+      } else {
+        return (
+          <SafeAreaView
+            style={[BaseStyle.safeAreaView, {flexDirection: 'column'}]}
+            forceInset={{top: 'always'}}>
+            <Header
+              title="Staff Members"
+              renderLeft={() => {
+                return (
+                  <Icon
+                    name="angle-left"
+                    size={20}
+                    color={BaseColor.blackColor}
+                  />
+                );
+              }}
+              onPressLeft={() => {
+                navigation.goBack();
+              }}
+              style={BaseStyle.headerStyle}
+            />
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text title3 style={{color: BaseColor.sectionColor}}>
+                There are no staffs to show.
+              </Text>
+              <View style={styles.floatingBtn}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('CreateStaff', {
+                      productTypes: productTypes,
+                    })
+                  }
+                  style={styles.button}
+                  activeOpacity={0.8}>
+                  <Image style={styles.image} source={Images.icons_create} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </SafeAreaView>
+        );
+      }
+    }
+  }
+
+  render() {
+    return <View style={{flex: 1}}>{this.displayContentView()}</View>;
   }
 }
 

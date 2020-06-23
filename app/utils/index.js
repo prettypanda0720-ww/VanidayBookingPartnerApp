@@ -461,7 +461,7 @@ export function getFormattedLongDate(date) {
   var day = csDate.getDate().toString();
   day = day.length > 1 ? day : '0' + day;
 
-  return day + ' ' + mlist[csDate.getMonth()] + ', ' + year;
+  return day + ' ' + mlist[csDate.getMonth()] + ' ' + year;
 }
 
 export function longNotifyMessage(msg) {

@@ -64,7 +64,7 @@ class Appointments extends Component {
         })
         .catch((error) => {
           dataLoading: false,
-          Utils.longNotifyMessage('Some errors occured during communication');
+            Utils.longNotifyMessage('Some errors occured during communication');
         });
     });
   }
@@ -91,64 +91,96 @@ class Appointments extends Component {
 
   displayContentView() {
     const {appointmentList} = this.state;
+    const {navigation} = this.props;
     if (!this.state.dataLoading) {
-      return (
-        <SafeAreaView
-          style={BaseStyle.safeAreaView}
-          forceInset={{top: 'always'}}>
-          <View style={[styles.contain, styles.borderBottom]}>
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                alignItems: 'flex-start',
-                justifyContent: 'center',
-              }}
-              onPress={() => this.goBybtn('goback')}>
-              <Icon
-                name="angle-left"
-                size={20}
-                color={BaseColor.blackColor}
-                style={{marginLeft: 20}}
-              />
-            </TouchableOpacity>
-            <View style={styles.contentCenter}>
-              <Text headline2 style={{margin: 0, padding: 0}}>
-                Appointments
-              </Text>
-              {/* <TouchableOpacity
-                style={styles.dateRange}
-                onPress={() => this.goBybtn('SelectPeriod')}>
-                <Text caption1 style={{color: BaseColor.grayColor}}>
-                  Month to Date
-                </Text>
+      if (appointmentList.length > 0) {
+        return (
+          <SafeAreaView
+            style={BaseStyle.safeAreaView}
+            forceInset={{top: 'always'}}>
+            <View style={[styles.contain, styles.borderBottom]}>
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                }}
+                onPress={() => this.goBybtn('goback')}>
                 <Icon
-                  name="angle-down"
+                  name="angle-left"
                   size={20}
-                  color={BaseColor.grayColor}
-                  style={{marginLeft: 10}}
+                  color={BaseColor.blackColor}
+                  style={{marginLeft: 20}}
                 />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
+              <View style={styles.contentCenter}>
+                <Text headline2 style={{margin: 0, padding: 0}}>
+                  Appointments
+                </Text>
+                {/* <TouchableOpacity
+                  style={styles.dateRange}
+                  onPress={() => this.goBybtn('SelectPeriod')}>
+                  <Text caption1 style={{color: BaseColor.grayColor}}>
+                    Month to Date
+                  </Text>
+                  <Icon
+                    name="angle-down"
+                    size={20}
+                    color={BaseColor.grayColor}
+                    style={{marginLeft: 10}}
+                  />
+                </TouchableOpacity> */}
+              </View>
+              <View style={styles.right}>
+                {/* <TouchableOpacity
+                  style={styles.contentRightSecond}
+                  onPress={() => {
+                    this.setState({drawerOpen: true});
+                  }}>
+                  <Icon name="sliders-h" size={20} color={BaseColor.blackColor} />
+                </TouchableOpacity> */}
+              </View>
             </View>
-            <View style={styles.right}>
-              {/* <TouchableOpacity
-                style={styles.contentRightSecond}
-                onPress={() => {
-                  this.setState({drawerOpen: true});
-                }}>
-                <Icon name="sliders-h" size={20} color={BaseColor.blackColor} />
-              </TouchableOpacity> */}
-            </View>
-          </View>
-          <ScrollView>
-            <FlatList
-              data={appointmentList}
-              keyExtractor={(item, index) => item.id}
-              style={{marginTop: 20}}
-              renderItem={({item}) => this.renderItem(item)}
+            <ScrollView>
+              <FlatList
+                data={appointmentList}
+                keyExtractor={(item, index) => item.id}
+                style={{marginTop: 20}}
+                renderItem={({item}) => this.renderItem(item)}
+              />
+            </ScrollView>
+          </SafeAreaView>
+        );
+      } else {
+        return (
+          <SafeAreaView
+            style={[BaseStyle.safeAreaView, {flexDirection: 'column'}]}
+            forceInset={{top: 'always'}}>
+            <Header
+              title="Appointments"
+              renderLeft={() => {
+                return (
+                  <Icon
+                    name="angle-left"
+                    size={20}
+                    color={BaseColor.blackColor}
+                  />
+                );
+              }}
+              onPressLeft={() => {
+                navigation.goBack();
+              }}
+              style={BaseStyle.headerStyle}
             />
-          </ScrollView>
-        </SafeAreaView>
-      );
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text title3 style={{color: BaseColor.sectionColor}}>
+                There are no appointments to show.
+              </Text>
+            </View>
+          </SafeAreaView>
+        );
+      }
     } else {
       return (
         <SafeAreaView
