@@ -3,8 +3,6 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Switch,
-  FlatList,
   ActivityIndicator,
   Alert,
 } from 'react-native';
@@ -40,7 +38,6 @@ class Setting extends Component {
       location: '',
       description: '',
       rating: '',
-      photos: [],
       serviceList: [],
       openingHours: '',
     };
@@ -59,17 +56,7 @@ class Setting extends Component {
             const res_profile = response.data;
             console.log('res_profile.data', res_profile.data);
             if (res_profile.data !== undefined) {
-              let tpPhotos = [];
-              if (res_profile.data.vendor_carousel !== null) {
-                // tpPhotos = JSON.parse(res_profile.data.vendor_carousel).map(
-                tpPhotos = res_profile.data.vendor_carousel.map(
-                  (photo, index) => {
-                    return res_profile.venCarPrefix + photo;
-                  },
-                );
-              }
               this.setState({
-                dataLoading: false,
                 vendor_stripe_id: res_profile.data.vendor_stripe_id,
                 unique_entity_number: res_profile.data.unique_entity_number,
                 contact_number: res_profile.data.contact_number,
@@ -77,17 +64,17 @@ class Setting extends Component {
                 location: res_profile.data.company_locality,
                 description: res_profile.data.company_description,
                 rating: res_profile.data.average_rating,
-                photos: tpPhotos,
                 serviceList: res_profile.data.serviceList,
                 vendor_primary_type: res_profile.data.vendor_primary_type,
                 vendor_secondary_type: res_profile.data.vendor_secondary_type,
                 openingHours: res_profile.data.openingHour,
+                dataLoading: false,
               });
             }
           })
           .catch((error) => {
             this.setState({dataLoading: false});
-            Utils.longNotifyMessage('Errors!');
+            Utils.longNotifyMessage('Server Errors!');
             console.log(error);
           });
       }
@@ -102,7 +89,6 @@ class Setting extends Component {
     const {actions, navigation} = this.props;
     this.setState({logoutLoading: true});
     actions.logout((response) => {
-      console.log('------- logout response', response);
       if (response.code == 0) {
         this.setState({logoutLoading: false});
         navigation.navigate('Loading');

@@ -372,7 +372,7 @@ class EditProduct extends Component {
     };
     console.log('delete product list', data);
     if (auth.user.data !== undefined) {
-      this.onDeleteProductPhoto();
+      // this.onDeleteProductPhoto();
       myAppointmentsSvc
         .deleteProductList(data)
         .then((response) => {
@@ -380,7 +380,7 @@ class EditProduct extends Component {
           if (res_profile.code == 0) {
             Utils.shortNotifyMessage('Deleting Product is successfully done!');
             this.setState({deleteLoading: false});
-            // navigation.goBack();
+            navigation.goBack();
           }
         })
         .catch((error) => {
@@ -624,6 +624,7 @@ class EditProduct extends Component {
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 value={this.state.price.toString()}
+                keyboardType={'numeric'}
               />
             </View>
             <View style={styles.inputGroup}>
@@ -636,6 +637,7 @@ class EditProduct extends Component {
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 value={this.state.special_price}
+                keyboardType={'numeric'}
               />
             </View>
             <View style={styles.inputGroup}>

@@ -10,7 +10,7 @@ export default StyleSheet.create({
   contentWrapper: {
     paddingHorizontal: 20,
   },
-  
+
   inputGroup: {
     marginTop: 15,
   },
@@ -21,7 +21,7 @@ export default StyleSheet.create({
   },
   thumb: {
     width: '100%',
-    height: Utils.getHeightDevice() / 5,
+    height: Utils.getHeightDevice() / 3.5,
     resizeMode: 'stretch',
   },
   profileItem: {
@@ -35,5 +35,5 @@ export default StyleSheet.create({
   },
   sectionStyle: {
     paddingHorizontal: 20,
-  }
+  },
 });

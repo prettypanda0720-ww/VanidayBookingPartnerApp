@@ -131,16 +131,7 @@ class CreateProduct extends Component {
       },
       sku: sku,
     };
-    const tpdata = {
-      thumbInfo: {
-        position: 1,
-        type: image_type,
-        // base64_encoded_data: image_base64_content,
-        name: image_name,
-      },
-      sku: sku,
-    };
-    console.log('createProductPhoto is called!', tpdata);
+    console.log('createProductPhoto is called!', data);
     this.setState({updatePhotoLoading: true});
     myAppointmentsSvc
       .createProductThumb(token, data)
@@ -198,55 +189,6 @@ class CreateProduct extends Component {
       return false;
     }
     return true;
-  }
-
-  onDelete = () => {
-    Alert.alert(
-      'Delete Product',
-      'Do you really want to delete product?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => this.deleteApply(),
-        },
-      ],
-      {cancelable: false},
-    );
-  };
-
-  deleteApply() {
-    this.setState({deleteLoading: true});
-    const {id, sku} = this.state;
-    const {navigation} = this.props;
-    const {auth} = this.props;
-    const data = {
-      token: auth.user.data,
-      sku: sku,
-      product_id: id,
-    };
-    console.log('delete product list', data);
-    if (auth.user.data !== undefined) {
-      myAppointmentsSvc
-        .deleteProductList(data)
-        .then((response) => {
-          const res_profile = response.data;
-          if (res_profile.code == 0) {
-            Utils.shortNotifyMessage('Deleting Product is successfully done!');
-            this.setState({deleteLoading: false});
-            navigation.goBack();
-          }
-        })
-        .catch((error) => {
-          Utils.shortNotifyMessage(error);
-          console.log('Deleting product error');
-          console.log(error);
-        });
-    }
   }
 
   onSave = () => {
@@ -429,6 +371,7 @@ class CreateProduct extends Component {
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 value={this.state.price}
+                keyboardType={'numeric'}
               />
             </View>
             <View style={styles.inputGroup}>
@@ -441,6 +384,7 @@ class CreateProduct extends Component {
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 value={this.state.special_price}
+                keyboardType={'numeric'}
               />
             </View>
             <View style={styles.inputGroup}>
@@ -521,12 +465,6 @@ class CreateProduct extends Component {
             />
           </ScrollView>
           <View style={styles.btnWrapper}>
-            <Button
-              style={{flex: 1, marginLeft: 10}}
-              loading={deleteLoading}
-              onPress={() => this.onDelete()}>
-              Delete
-            </Button>
             <Button
               style={{flex: 1, marginLeft: 10}}
               loading={saveLoading}

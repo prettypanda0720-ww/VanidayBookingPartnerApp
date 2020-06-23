@@ -708,21 +708,19 @@ class SignUp extends Component {
           vendor_area: vendor_area,
           is_subscribed: is_subscribed,
           image_name: image_name,
+          customer_become_seller: false,
           image_base64_content: image_base64_content,
         },
       };
       console.log('vendor signup info', data);
       actions.register(data, (response) => {
-        console.log('------- signup response', response);
         if (response.code == 0) {
           const credential = {
             email: email,
             password: password,
           };
           actions.login(credential, (response) => {
-            console.log('------- login response', response);
             if (response.data.code == 0) {
-              console.log('success');
               this.setState({loading: false});
               navigation.navigate('Home');
             } else {

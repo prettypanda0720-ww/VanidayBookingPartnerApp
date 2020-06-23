@@ -39,25 +39,43 @@ export default class ResetPassword extends Component {
           const res_profile = response.data;
           console.log('ResetPassword', res_profile);
           if (res_profile.code == 0) {
-            Utils.shortNotifyMessage(res_profile.message);
+            let msg =
+              'If there is an account associated with ' +
+              this.state.email +
+              ', you will receive an email with a link to reset your password.';
+            this.onMsgShow(msg);
             this.setState({
               loading: false,
             });
           } else {
-            Utils.shortNotifyMessage(res_profile.message);
+            this.onMsgShow(res_profile.message);
             this.setState({
               loading: false,
             });
           }
         })
         .catch((error) => {
-          Utils.shortNotifyMessage(Strings.reset_password);
+          this.onMsgShow(Strings.reset_password);
           this.setState({
             loading: false,
           });
         });
     }
   }
+
+  onMsgShow = (msg) => {
+    Alert.alert(
+      'Notification',
+      msg,
+      [
+        {
+          text: 'OK',
+          onPress: () => {},
+        },
+      ],
+      {cancelable: false},
+    );
+  };
 
   render() {
     const {navigation} = this.props;

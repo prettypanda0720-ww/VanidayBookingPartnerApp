@@ -267,14 +267,14 @@ class Home extends Component<{}> {
           // renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
           // hideExtraDays={false}
         />
-        <View style={styles.floatingBtn}>
+        {/* <View style={styles.floatingBtn}>
           <TouchableOpacity
             onPress={() => this.showModal()}
             style={[styles.button, {backgroundColor: BaseColor.whiteColor}]}
             activeOpacity={0.8}>
             <Image style={styles.image} source={Images.icons_create} />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </SafeAreaView>
     );
   }

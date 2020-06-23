@@ -82,11 +82,9 @@ class BusinessPhotos extends Component {
           if (response.data.data !== undefined) {
             let tpPhotos = [];
             if (res_profile.vendor_carousel !== null) {
-              tpPhotos = JSON.parse(res_profile.vendor_carousel).map(
-                (photo, index) => {
-                  return res_profile.venCarPrefix + photo.image_name;
-                },
-              );
+              tpPhotos = res_profile.vendor_carousel.map((photo, index) => {
+                return res_profile.venCarPrefix + photo.image_name;
+              });
             }
             this.setState({
               photos: tpPhotos,
@@ -274,6 +272,7 @@ class BusinessPhotos extends Component {
   }
 
   displayPhotoView() {
+    console.log(this.state.photos, 'this.state.photos');
     if (this.state.currentPhotoCnt == 0) {
       return <View style={styles.blockImage} />;
     } else {
@@ -292,7 +291,10 @@ class BusinessPhotos extends Component {
                   style={styles.blockImage}
                   source={{
                     uri: item,
+                    priority: FastImage.priority.low,
+                    cache: FastImage.cacheControl.immutable,
                   }}
+                  resizeMode={FastImage.resizeMode.stretch}
                 />
               </View>
             );

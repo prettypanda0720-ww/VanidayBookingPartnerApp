@@ -120,7 +120,7 @@ export default class InvoiceListItem extends Component {
                 </View>
                 <View style={styles.validContent}>
                   <Text footnote semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-                    {item.slotDate},&nbsp;
+                    {Utils.getFormattedLongDate(item.slotDate)},&nbsp;
                     {Utils.getTimeFromDate(item.bookingFrom)}&nbsp;to&nbsp;
                     {Utils.getTimeFromDate(item.bookingTo)}
                   </Text>

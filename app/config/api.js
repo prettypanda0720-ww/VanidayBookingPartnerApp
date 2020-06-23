@@ -33,7 +33,7 @@ export const Api = {
     UPDATE_SERVICELIST_DATA_URL: '/myvaniday/updateService',
     DELETE_SERVICELIST_DATA_URL: '/myvaniday/deleteService',
     SERVICE_DETAIL_DATA_URL: '/myvaniday/serviceDetail',
-    GET_HOMECATEGORY_DATA_URL: '/getHomeCategory',
+    GET_HOMECATEGORY_DATA_URL: '/myvaniday/getAllCategory',
     GET_SUBMENU_BY_MERCHANT: '/getMerchantCategory',
     GET_NEIGHTBOURHOODLIST_DATA_URL: '/getNeighbourhoodList',
     GET_ALLSERVICELIST_DATA_URL: '/myvaniday/getAllServiceList',

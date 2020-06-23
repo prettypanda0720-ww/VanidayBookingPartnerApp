@@ -35,17 +35,18 @@ class Aboutus extends Component {
       primary_type: '',
       secondary_type: '',
       cancellation_policy: '',
-      terms_and_conditions: '',
-      free_cancellation_hour: '',
+      privacy_policy: '',
+      vendor_free_cancellation_hour: '',
       photos: [],
       currentPhotoCnt: 0,
       carousel: {},
       serviceTypes: [],
       productTypes: [],
-      image_name: '',
+      image_name: null,
       image_base64_content: null,
       avatarSource: null,
       vendor_area: 1,
+      vendor_zipcode: '',
       neighbourhoodLst: [],
       neighbourhoodDropdownLst: [],
       logo_pic: '',
@@ -63,36 +64,58 @@ class Aboutus extends Component {
       primary_type,
       secondary_type,
       cancellation_policy,
-      terms_and_conditions,
-      free_cancellation_hour,
+      vendor_free_cancellation_hour,
+      vendor_zipcode,
+      privacy_policy,
       vendor_area,
       image_name,
       image_base64_content,
     } = this.state;
 
-    const {auth} = this.props;
-    const data = {
-      token: auth.user.data,
-      vendorInfo: {
-        shop_title: shopTitle,
-        company_locality: location,
-        company_description: description,
-        vendor_stripe_id: vendor_stripe_id,
-        unique_entity_number: unique_entity_number,
-        contact_number: contact_number,
-        return_policy: cancellation_policy,
-        privacy_policy: terms_and_conditions,
-        vendor_area: vendor_area,
-        vendor_free_cancellation_hour: 4,
-        // vendor_zipcode: vendor_zipcode,
-        // vendor_area: vendor_area,
-        // vendor_primary_type: primary_type,
-        // vendor_secondary_type: secondary_type,
-        image_name: image_name,
-        image_base64_content: image_base64_content,
-      },
-    };
-
+    const {auth, navigation} = this.props;
+    let data;
+    if (image_name == null || image_name == '') {
+      data = {
+        token: auth.user.data,
+        vendorInfo: {
+          shop_title: shopTitle,
+          company_locality: location,
+          company_description: description,
+          vendor_stripe_id: vendor_stripe_id,
+          unique_entity_number: unique_entity_number,
+          contact_number: contact_number,
+          return_policy: cancellation_policy,
+          privacy_policy: privacy_policy,
+          vendor_area: vendor_area,
+          vendor_free_cancellation_hour: vendor_free_cancellation_hour,
+          vendor_zipcode: vendor_zipcode,
+          vendor_primary_type: primary_type,
+          vendor_secondary_type: secondary_type,
+        },
+      };
+    } else {
+      data = {
+        token: auth.user.data,
+        vendorInfo: {
+          shop_title: shopTitle,
+          company_locality: location,
+          company_description: description,
+          vendor_stripe_id: vendor_stripe_id,
+          unique_entity_number: unique_entity_number,
+          contact_number: contact_number,
+          return_policy: cancellation_policy,
+          privacy_policy: privacy_policy,
+          vendor_area: vendor_area,
+          vendor_free_cancellation_hour: vendor_free_cancellation_hour,
+          vendor_zipcode: vendor_zipcode,
+          vendor_primary_type: primary_type,
+          vendor_secondary_type: secondary_type,
+          image_name: image_name,
+          image_base64_content: image_base64_content,
+        },
+      };
+    }
+    console.log('updateVendorProfile', data);
     this.setState({loading: true});
     myAppointmentsSvc
       .updateProfileData(data)
@@ -101,6 +124,7 @@ class Aboutus extends Component {
         if (res_profile.code == 0) {
           this.setState({loading: false});
           Utils.shortNotifyMessage(Strings.update_profile_success);
+          navigation.goBack();
         }
       })
       .catch((error) => {
@@ -164,37 +188,43 @@ class Aboutus extends Component {
               primary_type: res_profile.vendor_primary_type,
               secondary_type: res_profile.vendor_secondary_type,
               logo_pic: res_profile.logo_pic,
+              vendor_zipcode: res_profile.vendor_zipcode,
+              vendor_area: res_profile.vendor_area,
+              privacy_policy: res_profile.privacy_policy,
+              vendor_free_cancellation_hour:
+                res_profile.vendor_free_cancellation_hour !== null
+                  ? res_profile.vendor_free_cancellation_hour.toString()
+                  : '0',
               // dataLoading: false,
             });
           }
         })
         .catch((error) => {
-          // this.setState({dataLoading: false});
+          this.setState({dataLoading: false});
           console.log('Some mistakes occured during communication.');
           console.log(error);
         });
-      // myAppointmentsSvc
-      //   .getNeighbourhoodList()
-      //   .then((response) => {
-      //     const res_profile = response.data;
-      //     console.log('neighbourhoodlist', res_profile.data);
-      //     if (res_profile.code == 0) {
-      //       this.setState({
-      //         neighbourhoodLst: res_profile.data,
-      //         neighbourhoodDropdownLst: res_profile.data.map((item, index) => {
-      //           return {
-      //             value: item.area,
-      //           };
-      //         }),
-      //         dataLoading: false,
-      //       });
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     this.setState({dataLoading: false});
-      //     console.log('appointment error');
-      //     console.log(error);
-      //   });
+      myAppointmentsSvc
+        .getNeighbourhoodList()
+        .then((response) => {
+          const res_profile = response.data;
+          console.log('neighbourhoodlist', res_profile.data);
+          if (res_profile.code == 0) {
+            this.setState({
+              neighbourhoodLst: res_profile.data,
+              neighbourhoodDropdownLst: res_profile.data.map((item, index) => {
+                return {
+                  value: item.area,
+                };
+              }),
+            });
+          }
+        })
+        .catch((error) => {
+          this.setState({dataLoading: false});
+          console.log('appointment error');
+          console.log(error);
+        });
     });
 
     myAppointmentsSvc
@@ -237,7 +267,6 @@ class Aboutus extends Component {
     for (var i = 0; i < count; i++) {
       if (value == this.state.serviceTypes[i].name) {
         key = this.state.serviceTypes[i].id;
-        console.log(value, key);
         return key;
       }
     }
@@ -255,9 +284,14 @@ class Aboutus extends Component {
       description,
       photos,
       serviceTypes,
+      privacy_policy,
+      vendor_free_cancellation_hour,
+      vendor_area,
+      vendor_zipcode,
       productTypes,
       logo_pic,
     } = this.state;
+    console.log(this.getNameByType(this.state.primary_type));
     if (!this.state.dataLoading) {
       return (
         <SafeAreaView
@@ -352,14 +386,14 @@ class Aboutus extends Component {
                 <TextInput
                   style={BaseStyle.textInput}
                   onChangeText={(text) =>
-                    this.setState({free_cancellation_hour: text})
+                    this.setState({vendor_free_cancellation_hour: text})
                   }
                   autoCorrect={false}
                   placeholder=""
                   placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.titleColor}>
-                  4
-                </TextInput>
+                  selectionColor={BaseColor.titleColor}
+                  value={vendor_free_cancellation_hour}
+                />
               </View>
 
               <View style={styles.inputGroup}>
@@ -389,17 +423,16 @@ class Aboutus extends Component {
                 </TextInput>
               </View>
               <View style={styles.inputGroup}>
-                <Text style={BaseStyle.label}>Term and Condition</Text>
+                <Text style={BaseStyle.label}>Terms and Conditions</Text>
                 <TextInput
-                  style={BaseStyle.textInput}
-                  onChangeText={(text) =>
-                    this.setState({terms_and_conditions: text})
-                  }
+                  style={[BaseStyle.textInput, BaseStyle.multilineTextInput]}
+                  onChangeText={(text) => this.setState({privacy_policy: text})}
                   autoCorrect={false}
                   placeholder=""
                   placeholderTextColor={BaseColor.titleColor}
                   selectionColor={BaseColor.titleColor}
-                  value={this.state.terms_and_conditions}
+                  value={privacy_policy}
+                  multiline={true}
                 />
               </View>
               <View style={styles.inputGroup}>
@@ -415,6 +448,18 @@ class Aboutus extends Component {
                   selectionColor={BaseColor.titleColor}
                   editable={false}>
                   {vendor_stripe_id}
+                </TextInput>
+              </View>
+              <View style={styles.inputGroup}>
+                <Text style={BaseStyle.label}>Postal Code</Text>
+                <TextInput
+                  style={BaseStyle.textInput}
+                  onChangeText={(text) => this.setState({vendor_zipcode: text})}
+                  autoCorrect={false}
+                  placeholder=""
+                  placeholderTextColor={BaseColor.titleColor}
+                  selectionColor={BaseColor.titleColor}>
+                  {vendor_zipcode}
                 </TextInput>
               </View>
               <Dropdown
@@ -452,7 +497,7 @@ class Aboutus extends Component {
                 }}
                 value={this.getNameByType(this.state.secondary_type)}
               />
-              {/* <Dropdown
+              <Dropdown
                 label="Select your neighbourhood"
                 labelFontSize={15}
                 fontSize={13}
@@ -462,13 +507,13 @@ class Aboutus extends Component {
                 rippleOpacity={0.7}
                 baseColor={BaseColor.secondBlackColor}
                 tintColor={BaseColor.blackColor}
-                value={this.getNeighbourhoodName(this.state.vendor_area)}
+                value={this.getNeighbourhoodName(vendor_area)}
                 onChangeText={(value) => {
                   this.setState({
                     vendor_area: this.getNeighbourhoodKey(value),
                   });
                 }}
-              /> */}
+              />
             </View>
           </ScrollView>
           <View style={BaseStyle.loadingContainer}>

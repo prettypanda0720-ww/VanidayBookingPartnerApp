@@ -135,6 +135,17 @@ export const register = (body, callback) => (dispatch) => {
     });
 };
 
+export const registerCustomer = (body, callback) => (dispatch) => {
+  UserServices.registerCustomer(body)
+    .then((response) => {
+      callback(response.data);
+    })
+    .catch((error) => {
+      // dispatch(onRegisterError(error.response));
+      callback(error.response);
+    });
+};
+
 export const saveProfileImage = (profile_image, callback) => (dispatch) => {
   dispatch(onProfileImage(profile_image));
 };

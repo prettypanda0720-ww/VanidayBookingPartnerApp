@@ -120,7 +120,7 @@ export default class BookingHistory extends Component {
                 </View>
                 <View style={styles.validContent}>
                   <Text footnote semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-                    {item.bookingDate},&nbsp;
+                    {Utils.getFormattedLongDate(item.bookingDate)},&nbsp;
                     {Utils.formatDate(item.bookingFrom)}&nbsp;to&nbsp;
                     {Utils.formatDate(item.bookingTo)}
                   </Text>

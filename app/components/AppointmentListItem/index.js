@@ -43,7 +43,7 @@ export default class AppointmentListItem extends Component {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: 16,
                 color: BaseColor.SecondColor,
                 fontWeight: 'bold',
               }}>
@@ -53,7 +53,7 @@ export default class AppointmentListItem extends Component {
             </Text>
             <Text
               style={{
-                fontSize: 17,
+                fontSize: 16,
                 color: BaseColor.SecondColor,
                 fontWeight: 'bold',
               }}>
@@ -61,11 +61,11 @@ export default class AppointmentListItem extends Component {
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={[styles.serviceItemNameStyle, {fontSize: 17}]}>
+            <Text style={[styles.serviceItemNameStyle, {fontSize: 16}]}>
               {customerName}
             </Text>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Text headline bold style={{color: BaseColor.SecondColor}}>
+              <Text bold style={{fontSize: 16, color: BaseColor.SecondColor}}>
                 ${total}
               </Text>
             </View>

@@ -15,6 +15,7 @@ import {
   Icon,
   ProductListItem,
   FilterSort,
+  Text,
 } from '@components';
 import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
@@ -121,75 +122,87 @@ class PhysicalProducts extends Component {
     });
     return (
       <View style={{flex: 1}}>
-        <Animated.FlatList
-          contentContainerStyle={{
-            paddingTop: 20,
-            paddingBottom: 20,
-          }}
-          refreshControl={
-            <RefreshControl
-              colors={[BaseColor.primaryColor]}
-              tintColor={BaseColor.primaryColor}
-              refreshing={refreshing}
-              onRefresh={() => {}}
-            />
-          }
-          scrollEventThrottle={1}
-          onScroll={Animated.event(
-            [
-              {
-                nativeEvent: {
-                  contentOffset: {
-                    y: this.state.scrollAnim,
+        {productsData.length > 0 ? (
+          <View style={{flex: 1}}>
+            <Animated.FlatList
+              contentContainerStyle={{
+                paddingTop: 20,
+                paddingBottom: 20,
+              }}
+              refreshControl={
+                <RefreshControl
+                  colors={[BaseColor.primaryColor]}
+                  tintColor={BaseColor.primaryColor}
+                  refreshing={refreshing}
+                  onRefresh={() => {}}
+                />
+              }
+              scrollEventThrottle={1}
+              onScroll={Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: {
+                        y: this.state.scrollAnim,
+                      },
+                    },
                   },
-                },
-              },
-            ],
-            {useNativeDriver: true},
-          )}
-          data={productsData}
-          keyExtractor={(item, index) => item.id}
-          renderItem={({item, index}) => (
-            <ProductListItem
-              block
-              image={
-                item.thumbnail.thumbnail_url !== undefined
-                  ? item.thumbnail.thumbnail_url
-                  : ''
-              }
-              title={item.product_name}
-              sku={item.sku}
-              specialprice={item.product_price}
-              // style={{
-              //   borderWidth: 1,
-              //   borderColor: BaseColor.grayColor,
-              // }}
-              onPress={() =>
-                // navigation.navigate('PhysicalProductProfile', {data: item})
-                navigation.navigate('EditProduct', {
-                  data: item,
-                  sku: item.sku,
-                  subMenuList: subMenuList,
-                })
-              }
+                ],
+                {useNativeDriver: true},
+              )}
+              data={productsData}
+              keyExtractor={(item, index) => item.id}
+              renderItem={({item, index}) => (
+                <ProductListItem
+                  block
+                  image={
+                    item.thumbnail.thumbnail_url !== undefined
+                      ? item.thumbnail.thumbnail_url
+                      : ''
+                  }
+                  title={item.product_name}
+                  sku={item.sku}
+                  specialprice={item.product_price}
+                  // style={{
+                  //   borderWidth: 1,
+                  //   borderColor: BaseColor.grayColor,
+                  // }}
+                  onPress={() =>
+                    // navigation.navigate('PhysicalProductProfile', {data: item})
+                    navigation.navigate('EditProduct', {
+                      data: item,
+                      sku: item.sku,
+                      subMenuList: subMenuList,
+                    })
+                  }
+                />
+              )}
             />
-          )}
-        />
-        {/* <Animated.View
-          style={[styles.navbar, {transform: [{translateY: navbarTranslate}]}]}>
-          <FilterSort
-            onChangeSort={this.onChangeSort}
-            onFilter={this.onFilter}
-          />
-        </Animated.View> */}
-        <View style={styles.floatingBtn}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('CreateProduct')}
-            style={styles.button}
-            activeOpacity={0.8}>
-            <Image style={styles.image} source={Images.icons_create} />
-          </TouchableOpacity>
-        </View>
+            <View style={styles.floatingBtn}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('CreateProduct')}
+                style={styles.button}
+                activeOpacity={0.8}>
+                <Image style={styles.image} source={Images.icons_create} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text title3 style={{color: BaseColor.sectionColor}}>
+              There are no items to show.
+            </Text>
+            <View style={styles.floatingBtn}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('CreateProduct')}
+                style={styles.button}
+                activeOpacity={0.8}>
+                <Image style={styles.image} source={Images.icons_create} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
       </View>
     );
   }
