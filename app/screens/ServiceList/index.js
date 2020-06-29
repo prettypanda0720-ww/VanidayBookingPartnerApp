@@ -10,6 +10,7 @@ import {
 import {withNavigation} from 'react-navigation';
 import {BaseStyle, BaseColor, BaseSetting, Images} from '@config';
 import {Header, SafeAreaView, Icon, Text} from '@components';
+import Accordion from 'react-native-collapsible/Accordion';
 import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
 import {bindActionCreators} from 'redux';
@@ -23,6 +24,7 @@ class ServiceList extends Component {
       loading: false,
       serviceData: [],
       subMenuList: [],
+      activeSections: [],
     };
   }
 
@@ -56,7 +58,11 @@ class ServiceList extends Component {
             const res_profile = response.data;
             console.log('res_profile', res_profile.data);
             if (res_profile.code == 0) {
-              this.setState({serviceData: res_profile.data, loading: false});
+              this.setState({
+                serviceData: res_profile.data,
+                loading: false,
+                // activeSections: res_profile.data[0],
+              });
             }
           })
           .catch((error) => {
@@ -80,90 +86,16 @@ class ServiceList extends Component {
             <Header title="Services" style={BaseStyle.headerStyle} />
             <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
               <ScrollView>
-                {serviceData.map((item, index) => {
-                  return (
-                    <View style={{flexDirection: 'column'}}>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          marginTop: 10,
-                          marginBottom: 10,
-                          paddingLeft: 20,
-                          paddingRight: 20,
-                        }}>
-                        <Text
-                          body1
-                          semibold
-                          style={{color: BaseColor.sectionColor}}>
-                          {item.sectionName}
-                          {/* &nbsp;({item.totalCount}) */}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          borderLeftWidth: 4,
-                          borderLeftColor: BaseColor.SecondColor,
-                          borderTopWidth: 1,
-                          borderTopColor: BaseColor.dividerColor,
-                        }}>
-                        <FlatList
-                          data={item.dataList}
-                          keyExtractor={(item, index) => item.id}
-                          renderItem={({item}) => (
-                            <TouchableOpacity
-                              style={{
-                                paddingTop: 10,
-                                paddingBottom: 10,
-                                paddingLeft: 20,
-                                paddingRight: 20,
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                borderBottomWidth: 1,
-                                borderBottomColor: BaseColor.dividerColor,
-                              }}
-                              activeOpacity={0.6}
-                              onPress={() =>
-                                navigation.navigate('EditService', {
-                                  sku: item.sku,
-                                  subMenuList: this.state.subMenuList,
-                                })
-                              }>
-                              <View style={{flexDirection: 'column', flex: 8}}>
-                                <Text
-                                  subhead
-                                  numberOfLines={3}
-                                  style={{color: BaseColor.titleColor}}>
-                                  {item.product_name}
-                                </Text>
-                                <Text
-                                  caption1
-                                  style={{
-                                    marginTop: 5,
-                                    color: BaseColor.titleColor,
-                                  }}>
-                                  {item.service_duration}&nbsp;Min
-                                </Text>
-                              </View>
-                              <View
-                                style={{
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                  flex: 1.5,
-                                }}>
-                                <Text
-                                  body2
-                                  style={{color: BaseColor.titleColor}}>
-                                  $&nbsp;{item.product_price}
-                                </Text>
-                              </View>
-                            </TouchableOpacity>
-                          )}
-                        />
-                      </View>
-                    </View>
-                  );
-                })}
+                <Accordion
+                  sections={serviceData}
+                  activeSections={this.state.activeSections}
+                  underlayColor={BaseColor.fieldColor}
+                  renderSectionTitle={this._renderSectionTitle}
+                  renderHeader={this._renderHeader}
+                  renderContent={this._renderContent}
+                  onChange={this._updateSections}
+                  expandMultiple={true}
+                />
               </ScrollView>
             </SafeAreaView>
             <View style={styles.floatingBtn}>
@@ -232,6 +164,83 @@ class ServiceList extends Component {
   render() {
     return <View style={{flex: 1}}>{this.displayContentView()}</View>;
   }
+
+  _renderSectionTitle = (section) => {};
+
+  _renderHeader = (section) => {
+    let serviceCnt = '';
+    this.state.serviceData.forEach((item) => {
+      console.log('asdf' + item.sectionName, section.sectionName);
+      if (item.sectionName == section.sectionName) {
+        serviceCnt = item.dataList.length;
+        return;
+      }
+    });
+
+    return (
+      <Text body1 semibold style={styles.header}>
+        {section.sectionName}&nbsp;({serviceCnt})
+      </Text>
+    );
+  };
+
+  _renderContent = (section) => {
+    const {navigation} = this.props;
+    return (
+      <View
+        style={{
+          borderTopWidth: 1,
+          borderTopColor: BaseColor.dividerColor,
+        }}>
+        <FlatList
+          data={section.dataList}
+          keyExtractor={(item, index) => item.id}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={item.status == 1 ? styles.enableItem : styles.disableItem}
+              activeOpacity={0.6}
+              onPress={() =>
+                navigation.navigate('EditService', {
+                  sku: item.sku,
+                  subMenuList: this.state.subMenuList,
+                })
+              }>
+              <View style={{flexDirection: 'column', flex: 8}}>
+                <Text
+                  subhead
+                  numberOfLines={3}
+                  style={{color: BaseColor.titleColor}}>
+                  {item.product_name}
+                </Text>
+                <Text
+                  caption1
+                  style={{
+                    marginTop: 5,
+                    color: BaseColor.titleColor,
+                  }}>
+                  {item.service_duration}&nbsp;Min
+                </Text>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1.5,
+                }}>
+                <Text body2 style={{color: BaseColor.titleColor}}>
+                  $&nbsp;{item.product_price}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
+    );
+  };
+
+  _updateSections = (activeSections) => {
+    this.setState({activeSections});
+  };
 }
 
 const mapStateToProps = (state) => {

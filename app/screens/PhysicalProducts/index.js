@@ -154,6 +154,7 @@ class PhysicalProducts extends Component {
               keyExtractor={(item, index) => item.id}
               renderItem={({item, index}) => (
                 <ProductListItem
+                  style={{marginBottom: 20}}
                   block
                   image={
                     item.thumbnail.thumbnail_url !== undefined

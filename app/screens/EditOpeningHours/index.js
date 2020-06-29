@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {View, ScrollView, FlatList, TextInput} from 'react-native';
-import {BaseStyle, BaseColor} from '@config';
+import {BaseStyle, BaseColor, FontFamily} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button} from '@components';
 import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
 import {bindActionCreators} from 'redux';
 import {AuthActions} from '@actions';
 import {withNavigation} from 'react-navigation';
+import {CheckBox} from 'react-native-elements';
 import * as Utils from '@utils';
 import styles from './styles';
 
@@ -27,9 +28,22 @@ class EditOpeningHours extends Component {
   onSave() {
     this.setState({saveLoading: true});
     const {auth, navigation} = this.props;
+    let newOpeningHours = this.state.openingHours.map((item, index) => {
+      if (item.checked == true) {
+        return {
+          hours: '',
+          weekName: item.weekName,
+        };
+      } else {
+        return {
+          hours: item.hours,
+          weekName: item.weekName,
+        };
+      }
+    });
     const postData = {
       token: auth.user.data,
-      openingHour: this.state.openingHours,
+      openingHour: newOpeningHours,
     };
     console.log('updateOpeninghour', postData);
     if (auth.user.data !== undefined) {
@@ -61,7 +75,15 @@ class EditOpeningHours extends Component {
   componentDidMount() {
     const {auth, navigation} = this.props;
     const data = this.props.navigation.state.params.data;
-    this.setState({openingHours: data});
+    let newArray = [];
+    newArray = data.map((item, index) => {
+      return {
+        checked: item.hours === '' ? true : false,
+        ...item,
+      };
+    });
+    this.setState({openingHours: newArray});
+    console.log('openinghours', newArray);
   }
 
   chanegWorkingTimes(key, value) {
@@ -76,6 +98,22 @@ class EditOpeningHours extends Component {
       return item;
     });
     this.setState({openingHours: result});
+  }
+
+  applyCheckedStatus(weekName) {
+    let dataTmp = this.state.openingHours.map((item, index) => {
+      if (weekName === item.weekName) {
+        return {
+          ...item,
+          checked: !item.checked,
+        };
+      } else {
+        return item;
+      }
+    });
+    console.log(weekName);
+    console.log(dataTmp);
+    this.setState({openingHours: dataTmp});
   }
 
   render() {
@@ -102,9 +140,39 @@ class EditOpeningHours extends Component {
             keyExtractor={(item, index) => item.id}
             renderItem={({item, index}) => (
               <View style={styles.itemWrapper}>
-                <Text bold style={{color: BaseColor.SecondColor, fontSize: 18}}>
-                  {item.weekName}
-                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    bold
+                    style={{
+                      color: BaseColor.SecondColor,
+                      fontSize: 18,
+                      flex: 2,
+                    }}>
+                    {item.weekName}
+                  </Text>
+                  <CheckBox
+                    center
+                    title="Closed"
+                    iconLeft
+                    containerStyle={{
+                      backgroundColor: BaseColor.whiteColor,
+                      borderColor: BaseColor.whiteColor,
+                    }}
+                    checkedColor={BaseColor.SecondColor}
+                    uncheckedColor={BaseColor.grayColor}
+                    checked={item.checked}
+                    fontFamily={FontFamily.default}
+                    textStyle={{fontWeight: 'normal', fontSize: 15}}
+                    onPress={() => {
+                      this.applyCheckedStatus(item.weekName);
+                    }}
+                  />
+                </View>
                 <View style={{flexDirection: 'column'}}>
                   <View style={styles.workingTimeWrapper}>
                     <Text
@@ -114,14 +182,19 @@ class EditOpeningHours extends Component {
                       Working Time
                     </Text>
                     <TextInput
-                      style={[BaseStyle.textInput, styles.textInput, {flex: 1}]}
+                      style={[
+                        !item.checked
+                          ? styles.enableTextInput
+                          : styles.disableTextInput,
+                      ]}
                       onChangeText={(text) =>
                         this.chanegWorkingTimes(index, text)
                       }
                       autoCorrect={false}
                       placeholder=""
                       placeholderTextColor={BaseColor.titleColor}
-                      selectionColor={BaseColor.titleColor}>
+                      selectionColor={BaseColor.titleColor}
+                      editable={!item.checked}>
                       {item.hours}
                     </TextInput>
                   </View>
@@ -135,13 +208,13 @@ class EditOpeningHours extends Component {
             style={{flex: 1, marginLeft: 10}}
             loading={loading}
             onPress={() => navigation.goBack()}>
-            CANCEL
+            Cancel
           </Button>
           <Button
             style={{flex: 1, marginLeft: 10}}
             loading={this.state.saveLoading}
             onPress={() => this.onSave()}>
-            SAVE
+            Save
           </Button>
         </View>
       </SafeAreaView>

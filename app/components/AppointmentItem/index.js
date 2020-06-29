@@ -60,7 +60,7 @@ export default class AppointmentItem extends Component {
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    &nbsp;#{item.id}
+                    &nbsp;#{item.incrementId}
                   </Text>
                 </View>
                 <View style={styles.serviceItemWrapper}>
@@ -93,7 +93,7 @@ export default class AppointmentItem extends Component {
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    SGD&nbsp;{item.price}
+                    SGD&nbsp;{Utils.to2DigitDeciaml(item.price)}
                   </Text>
                 </View>
                 <View style={styles.serviceItemWrapper}>
@@ -135,14 +135,14 @@ export default class AppointmentItem extends Component {
                       color: 'rgba(0,0,0,0.65)',
                     }}>
                     {/* &nbsp;{Utils.capitalize(item.STATUS)} */}
-                    {item.status}
+                    {item.amastyStatus}
                   </Text>
                 </View>
                 <View style={styles.validContent}>
                   <Text footnote semibold style={{color: 'rgba(0,0,0,0.65)'}}>
                     {Utils.getFormattedLongDate(item.slotDate)},&nbsp;
-                    {Utils.getTimeFromDate(item.bookingFrom)}&nbsp;to&nbsp;
-                    {Utils.getTimeFromDate(item.bookingTo)}
+                    {Utils.formatDate(item.bookingFrom)}&nbsp;to&nbsp;
+                    {Utils.formatDate(item.bookingTo)}
                   </Text>
                 </View>
                 <View style={styles.totalContent}>
@@ -165,7 +165,7 @@ export default class AppointmentItem extends Component {
                         textAlign: 'right',
                         color: 'rgba(0,0,0,0.65)',
                       }}>
-                      SGD{item.price}
+                      SGD{Utils.to2DigitDeciaml(item.price)}
                     </Text>
                   </View>
                 </View>

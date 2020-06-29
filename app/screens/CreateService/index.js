@@ -118,7 +118,7 @@ class CreateService extends Component {
         service_name: service_name,
         sku: sku,
         price: price,
-        speical_price: special_price,
+        special_price: special_price,
         category_ids: selItemsStr,
         service_duration: service_duration,
         vendor_sections: vendor_sections,
@@ -181,7 +181,7 @@ class CreateService extends Component {
       .getVendorSections(sectionsData)
       .then((response) => {
         const res_profile = response.data;
-        console.log('serviceDetail', res_profile);
+        // console.log('serviceDetail', res_profile);
         if (res_profile.code == 0) {
           this.setState({
             dataLoading: false,
@@ -353,7 +353,8 @@ class CreateService extends Component {
               <Text style={BaseStyle.label}>Normal price</Text>
               <TextInput
                 style={[BaseStyle.textInput, {marginTop: 5}]}
-                onChangeText={(text) => this.onChangedPrice(text)}
+                // onChangeText={(text) => this.onChangedPrice(text)}
+                onChangeText={(text) => this.setState({price: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
                 placeholderTextColor={BaseColor.titleColor}
@@ -366,7 +367,8 @@ class CreateService extends Component {
               <Text style={BaseStyle.label}>Special price</Text>
               <TextInput
                 style={[BaseStyle.textInput, {marginTop: 5}]}
-                onChangeText={(text) => this.onChangedSpecialPrice(text)}
+                // onChangeText={(text) => this.onChangedSpecialPrice(text)}
+                onChangeText={(text) => this.setState({special_price: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
                 placeholderTextColor={BaseColor.titleColor}
@@ -391,27 +393,49 @@ class CreateService extends Component {
               }}
               value={this.state.service_duration}
             />
-
             <View style={[styles.profileItem, {marginTop: 5}]}>
-              <Text style={BaseStyle.label}>Enable Service</Text>
+              <Text style={BaseStyle.label}>Publish Service</Text>
               <Switch
                 name="angle-right"
                 size={18}
+                trackColor={{
+                  false: BaseColor.grayColor,
+                  true: BaseColor.MainColor,
+                }}
+                thumbColor={
+                  this.state.isEnalbeProduct ? BaseColor.SecondColor : '#f4f3f4'
+                }
+                ios_backgroundColor="#3e3e3e"
                 onValueChange={this.toggleProductSwitch}
                 value={this.state.isEnalbeProduct}
               />
             </View>
+            <Text caption1 style={{marginTop: 10, color: BaseColor.grayColor}}>
+              Select "Featured" to display this service under "Recommended for
+              You" category.
+            </Text>
             <View style={[styles.profileItem, {marginTop: 5}]}>
               <Text style={BaseStyle.label}>Featured</Text>
               <Switch
+                trackColor={{
+                  false: BaseColor.grayColor,
+                  true: BaseColor.MainColor,
+                }}
+                thumbColor={
+                  this.state.isFeatured ? BaseColor.SecondColor : '#f4f3f4'
+                }
+                ios_backgroundColor="#3e3e3e"
                 name="angle-right"
                 size={18}
                 onValueChange={this.toggleFeaturedSwitch}
                 value={this.state.isFeatured}
               />
             </View>
+            <Text caption1 style={{marginTop: 10, color: BaseColor.grayColor}}>
+              Select 2 main categories to feature your business
+            </Text>
             <Dropdown
-              label="Vendor Sections"
+              label="Business Category"
               labelFontSize={15}
               fontSize={13}
               labelTextStyle={{marginBottom: 10}}

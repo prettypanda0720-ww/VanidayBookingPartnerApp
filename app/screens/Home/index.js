@@ -22,7 +22,6 @@ class Home extends Component<{}> {
     this.state = {
       drawerOpen: null,
       myVanidayHomeData: {},
-      numStaffs: 5,
       showMode: -1 /* if showMode = -1, show all staffs's appointment list, if showMode = nth, show nth-staffs's appointment list, */,
       currentDate: this.getCurrentDate(),
       month: this.getCurrentMonth(),
@@ -31,7 +30,26 @@ class Home extends Component<{}> {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const {auth, navigation} = this.props;
+    this.focusListener = navigation.addListener('didFocus', () => {
+      if (auth.user.data !== undefined) {
+        myAppointmentsSvc
+          .fetchOrderByDate(auth.user.data, -1, this.state.currentDate)
+          .then((response) => {
+            this.state.myVanidayHomeData[this.state.currentDate] = [];
+            if (response.data.data != undefined) {
+              this.setState({myVanidayHomeData: response.data.data});
+            }
+          })
+          .catch((error) => {
+            // this.state.myVanidayHomeData[day.dateString] = [];
+            console.log('appointment error');
+            console.log(error);
+          });
+      }
+    });
+  }
 
   _dayChange = (day) => {
     const {year, month, dateString} = day;
@@ -56,20 +74,37 @@ class Home extends Component<{}> {
     const {navigation} = this.props;
     navigation.navigate(route, {bookingData: data});
   }
-
+  componentWillReceiveProps(nextProps, oldProps) {
+    console.log(
+      'oldProps' + oldProps.getEvents,
+      'nextProps' + nextProps.getEvents,
+    );
+    console.log('this.selectedDay' + this.state.currentDate);
+    if (
+      nextProps.getEvents &&
+      this._day &&
+      nextProps.getEvents !== oldProps.getEvents
+    ) {
+      this.loadItemsForMonth(this.state.currentDate);
+    }
+  }
   loadItems(day) {
-    const {month} = this.state;
+    // const {month} = this.state;
+    console.log('-------------start---------------');
+    console.log('old month: ' + this.state.month);
+    console.log('request date: ' + day.dateString);
+    console.log('request month: ' + this.getMonthName(day.month - 1));
     if (day !== undefined) {
-      console.log('initialmonth', month);
-      if (month == this.getMonthName(day.month - 1)) {
+      if (this.state.month === this.getMonthName(day.month - 1)) {
         console.log('loading month', this.getMonthName(day.month - 1));
-        console.log('loaditems day', day);
         const {auth} = this.props;
+        this.setState({currentDate: day.dateString});
+        this.setState({month: this.getMonthName(day.month - 1)});
         myAppointmentsSvc
           .fetchOrderByDate(auth.user.data, -1, day.dateString)
           .then((response) => {
-            // console.log('appointmentsdata');
-            // console.log(response.data.data);
+            console.log(response.data.data);
+            console.log('-------------end---------------');
             this.state.myVanidayHomeData[day.dateString] = [];
             if (response.data.data != undefined) {
               this.setState({myVanidayHomeData: response.data.data});
@@ -80,22 +115,24 @@ class Home extends Component<{}> {
             console.log('appointment error');
             console.log(error);
           });
-        if (!this.state.myVanidayHomeData.hasOwnProperty(day.dateString)) {
-          this.state.myVanidayHomeData[day.dateString] = [];
-          // The purpose of this is to remove empty array without affecting the ui
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              delete this.state.myVanidayHomeData[day.dateString];
-              resolve();
-            }, 1000);
-          }).catch((error) => {
-            // log if needed.
-            console.log(error);
-          });
-        }
+        // if (!this.state.myVanidayHomeData.hasOwnProperty(day.dateString)) {
+        //   this.state.myVanidayHomeData[day.dateString] = [];
+        //   // The purpose of this is to remove empty array without affecting the ui
+        //   new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //       delete this.state.myVanidayHomeData[day.dateString];
+        //       resolve();
+        //     }, 1000);
+        //   }).catch((error) => {
+        //     // log if needed.
+        //     console.log(error);
+        //   });
+        // }
       } else {
+        console.log('Exception date:' + day.dateString);
+        console.log('Exception Month:' + this.getMonthName(day.month - 1));
         // this.setState({month: this.getMonthName(day.month - 1)});
-        // this.setState({day: day.day});
+        // this.setState({currentDate: day.dateString});
         if (this.props.isFocused) {
           Utils.longNotifyMessage(
             'To view appointments for another month, please click “Select Month” at the top and choose a date in that month.',
@@ -114,7 +151,7 @@ class Home extends Component<{}> {
     return (
       <AppointmentListItem
         refId={item.id}
-        acceptedState={item.status}
+        acceptedState={item.amastyStatus}
         customerName={item.customerName}
         name={item.serviceName}
         staffName={item.staffName}
@@ -122,8 +159,8 @@ class Home extends Component<{}> {
         startTime={Utils.formatDate(item.bookingFrom)}
         endTime={Utils.formatDate(item.bookingTo)}
         duration={item.service_duration}
-        total={item.price}
-        day={this.state.day}
+        total={Utils.to2DigitDeciaml(item.price)}
+        // day={this.state.day}
         onPress={() => this.goToScreen('ManageAppointment', item)}
       />
     );
@@ -307,8 +344,7 @@ class Home extends Component<{}> {
 
   getCurrentMonth() {
     var today = new Date();
-    console.log('today.getmonth', today.getMonth());
-    return this.getMonthName(parseInt(today.getMonth()));
+    return this.getMonthName(today.getMonth());
   }
 
   getCurrentDate() {

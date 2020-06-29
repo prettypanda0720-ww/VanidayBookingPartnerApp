@@ -25,6 +25,17 @@ class SignIn extends Component {
     };
   }
 
+  storeAuthInfo = async () => {
+    // this.props.actions.resetStore();
+
+    const {email, password} = this.state;
+
+    if (email != null && password != null) {
+      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('password', password);
+    }
+  };
+
   onLogin = () => {
     if (!this.checkInput()) {
       return;
@@ -32,15 +43,17 @@ class SignIn extends Component {
 
     const {email, password} = this.state;
     const {navigation, actions} = this.props;
-
+    actions.resetStore();
     const credential = {
       email: email,
       password: password,
     };
+
     actions.login(credential, (response) => {
       console.log('------- login response', response);
       if (response.data.code == 0) {
         console.log('success');
+        this.storeAuthInfo();
         navigation.navigate('Home');
       } else {
         console.log('response.message', response.data.message);

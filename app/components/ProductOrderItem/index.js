@@ -7,22 +7,21 @@ import styles from './styles';
 import {FlatList} from 'react-native-gesture-handler';
 import * as Utils from '@utils';
 
-export default class BookingHistory extends Component {
+export default class ProductOrderItem extends Component {
   render() {
     const {
       style,
-      refId,
+      // refId,
       clientName,
-      appointmentDate,
+      // appointmentDate,
       total,
-      status,
+      // status,
       detail,
       count,
-      startTime,
-      endTime,
+      // startTime,
+      // endTime,
       onPress,
     } = this.props;
-    console.log('status', status);
     return (
       <TouchableOpacity
         style={[styles.contain, style]}
@@ -32,9 +31,9 @@ export default class BookingHistory extends Component {
           <Text subhead whiteColor bold>
             {clientName}
           </Text>
-          <Text subhead whiteColor bold>
-            {Utils.capitalize(status)}
-          </Text>
+          {/* <Text subhead whiteColor bold>
+            {status}
+          </Text> */}
         </View>
         <FlatList
           listKey={moment().valueOf().toString()}
@@ -50,16 +49,37 @@ export default class BookingHistory extends Component {
                     style={{
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
-                    }}
-                    numberOfLines={2}>
-                    {item.name}
+                    }}>
+                    OrderID:
+                  </Text>
+                  <Text
+                    caption1
+                    semibold
+                    style={{
+                      flex: 1,
+                      textAlign: 'right',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    &nbsp;#{item.incrementId}
                   </Text>
                 </View>
                 <View style={styles.serviceItemWrapper}>
                   <Text
                     caption1
+                    semibold
                     style={{
-                      flex: 1,
+                      textAlign: 'left',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}
+                    numberOfLines={2}>
+                    {item.productName}
+                  </Text>
+                </View>
+                <View style={styles.serviceItemWrapper}>
+                  <Text
+                    caption1
+                    semibold
+                    style={{
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
@@ -74,27 +94,6 @@ export default class BookingHistory extends Component {
                       color: 'rgba(0,0,0,0.65)',
                     }}>
                     SGD&nbsp;{Utils.to2DigitDeciaml(item.price)}
-                  </Text>
-                </View>
-                <View style={styles.serviceItemWrapper}>
-                  <Text
-                    caption1
-                    style={{
-                      flex: 1,
-                      textAlign: 'left',
-                      color: 'rgba(0,0,0,0.65)',
-                    }}>
-                    Staff:{' '}
-                    {item.staffName == null ? 'Not Assigned' : item.staffName}
-                  </Text>
-                  <Text
-                    caption1
-                    style={{
-                      flex: 1,
-                      textAlign: 'right',
-                      color: 'rgba(0,0,0,0.65)',
-                    }}>
-                    {item.service_duration}&nbsp;Min
                   </Text>
                 </View>
                 <View style={styles.serviceItemWrapper}>
@@ -115,14 +114,7 @@ export default class BookingHistory extends Component {
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    {Utils.capitalize(status)}
-                  </Text>
-                </View>
-                <View style={styles.validContent}>
-                  <Text footnote semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-                    {Utils.getFormattedLongDate(item.bookingDate)},&nbsp;
-                    {Utils.formatDate(item.bookingFrom)}&nbsp;to&nbsp;
-                    {Utils.formatDate(item.bookingTo)}
+                    {Utils.capitalize(item.amastyStatus)}
                   </Text>
                 </View>
                 <View style={styles.totalContent}>
@@ -158,32 +150,32 @@ export default class BookingHistory extends Component {
   }
 }
 
-BookingHistory.propTypes = {
+ProductOrderItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  refId: PropTypes.string,
+  // refId: PropTypes.string,
   clientName: PropTypes.string,
-  staffName: PropTypes.string,
+  // staffName: PropTypes.string,
   detail: PropTypes.array,
-  appointmentDate: PropTypes.string,
+  // appointmentDate: PropTypes.string,
   total: PropTypes.string,
   price: PropTypes.string,
   count: '',
-  startTime: PropTypes.string,
-  endTime: PropTypes.string,
+  // startTime: PropTypes.string,
+  // endTime: PropTypes.string,
   onPress: PropTypes.func,
 };
 
-BookingHistory.defaultProps = {
+ProductOrderItem.defaultProps = {
   style: {},
-  refId: '',
+  // refId: '',
   clientName: '',
-  staffName: '',
+  // staffName: '',
   detail: [],
-  appointmentDate: '',
+  // appointmentDate: '',
   total: '',
   price: '',
   count: '',
-  startTime: '',
-  endTime: '',
+  // startTime: '',
+  // endTime: '',
   onPress: () => {},
 };

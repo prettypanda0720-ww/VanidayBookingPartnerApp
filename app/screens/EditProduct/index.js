@@ -43,6 +43,8 @@ class EditProduct extends Component {
       type_id: '',
       price: '',
       special_price: '',
+      qty: '',
+      is_in_stock: '',
       description: '',
       short_description: '',
       status: false,
@@ -83,6 +85,10 @@ class EditProduct extends Component {
 
   toggleFeaturedSwitch = (value) => {
     this.setState({is_featured: value});
+  };
+
+  toggleStockSwitch = (value) => {
+    this.setState({is_in_stock: value});
   };
 
   selectPhotoTapped() {
@@ -292,6 +298,8 @@ class EditProduct extends Component {
               short_description: res_profile.data.short_description,
               is_featured: res_profile.data.is_featured == 1 ? true : false,
               status: res_profile.data.status == 1 ? true : false,
+              qty: res_profile.data.qty,
+              is_in_stock: res_profile.data.is_in_stock,
               selectedItems: res_profile.data.category_ids.map(
                 (item, index) => {
                   console.log(item, index);
@@ -406,6 +414,8 @@ class EditProduct extends Component {
       short_description,
       status,
       is_featured,
+      is_in_stock,
+      qty,
     } = this.state;
     const {navigation} = this.props;
     let selItemsStr = '';
@@ -429,6 +439,8 @@ class EditProduct extends Component {
         special_price: special_price,
         status: status ? 1 : 2,
         is_featured: is_featured ? 1 : 0,
+        is_in_stock: is_in_stock ? 1 : 0,
+        qty: qty,
         sku: sku,
       },
     };
@@ -515,6 +527,8 @@ class EditProduct extends Component {
       description,
       short_description,
       is_featured,
+      qty,
+      is_in_stock,
       thumbnail,
     } = this.state;
     console.log('selectedItems', this.state.selectedItems);
@@ -623,7 +637,7 @@ class EditProduct extends Component {
                 placeholder="$0.00"
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
-                value={this.state.price.toString()}
+                value={Utils.to2DigitDeciaml(this.state.price)}
                 keyboardType={'numeric'}
               />
             </View>
@@ -636,7 +650,7 @@ class EditProduct extends Component {
                 placeholder="$0.00"
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
-                value={this.state.special_price}
+                value={Utils.to2DigitDeciaml(this.state.special_price)}
                 keyboardType={'numeric'}
               />
             </View>
@@ -644,13 +658,24 @@ class EditProduct extends Component {
               <Text style={BaseStyle.label}>SKU</Text>
               <TextInput
                 style={BaseStyle.textInput}
-                // onChangeText={(text) => this.setState({special_price: text})}
                 autoCorrect={false}
-                placeholder="$0.00"
+                placeholder=""
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 editable={false}>
                 {sku}
+              </TextInput>
+            </View>
+            <View style={styles.inputGroup}>
+              <Text style={BaseStyle.label}>Quantity</Text>
+              <TextInput
+                style={BaseStyle.textInput}
+                onChangeText={(text) => this.setState({qty: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}>
+                {qty}
               </TextInput>
             </View>
             <View style={styles.inputGroup}>
@@ -685,6 +710,14 @@ class EditProduct extends Component {
                 Enable Service
               </Text>
               <Switch
+                trackColor={{
+                  false: BaseColor.grayColor,
+                  true: BaseColor.MainColor,
+                }}
+                thumbColor={
+                  this.state.status ? BaseColor.SecondColor : '#f4f3f4'
+                }
+                ios_backgroundColor="#3e3e3e"
                 name="angle-right"
                 size={18}
                 onValueChange={this.toggleProductSwitch}
@@ -693,13 +726,40 @@ class EditProduct extends Component {
             </View>
             <View style={styles.profileItem}>
               <Text body1 style={styles.sectionStyle}>
-                Is Featured
+                Featured
               </Text>
               <Switch
+                trackColor={{
+                  false: BaseColor.grayColor,
+                  true: BaseColor.MainColor,
+                }}
+                thumbColor={
+                  this.state.is_featured ? BaseColor.SecondColor : '#f4f3f4'
+                }
+                ios_backgroundColor="#3e3e3e"
                 name="angle-right"
                 size={18}
                 onValueChange={this.toggleFeaturedSwitch}
                 value={is_featured == 1 ? true : false}
+              />
+            </View>
+            <View style={styles.profileItem}>
+              <Text body1 style={styles.sectionStyle}>
+                In Stock
+              </Text>
+              <Switch
+                trackColor={{
+                  false: BaseColor.grayColor,
+                  true: BaseColor.MainColor,
+                }}
+                thumbColor={
+                  this.state.is_in_stock ? BaseColor.SecondColor : '#f4f3f4'
+                }
+                ios_backgroundColor="#3e3e3e"
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleStockSwitch}
+                value={is_in_stock}
               />
             </View>
             <SectionedMultiSelect

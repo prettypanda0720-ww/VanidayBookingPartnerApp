@@ -40,6 +40,7 @@ class OpeningHours extends Component {
                 openingHours: res_profile.data,
                 dataLoading: false,
               });
+              console.log(res_profile.data);
             }
           })
           .catch((error) => {
@@ -103,7 +104,7 @@ class OpeningHours extends Component {
                         headline2
                         semibold
                         style={{color: BaseColor.grayColor}}>
-                        {item.hours}
+                        {item.hours === '' ? 'Closed' : item.hours}
                       </Text>
                     </View>
                   </View>

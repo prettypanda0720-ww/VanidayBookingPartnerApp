@@ -108,7 +108,7 @@ export default class EcardList extends Component {
               image={item.image}
               title={item.title}
               comment={item.comment}
-              price={item.price}
+              price={Utils.to2DigitDeciaml(item.price)}
               orgPrice={item.orgPrice}
               rate={item.rate}
               numReviews={item.numReviews}

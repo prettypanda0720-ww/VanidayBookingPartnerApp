@@ -14,7 +14,7 @@ import {
   Icon,
   Text,
   Button,
-  SectionedMultiSelect,
+  DatePicker,
 } from '@components';
 import {Dropdown} from 'react-native-material-dropdown';
 import MultiSelect from 'react-native-multiple-select';
@@ -31,15 +31,10 @@ class CreateStaff extends Component {
       staff_title: '',
       staff_full_name: '',
       staff_gender: '',
-      staff_joined_date: this.getCurrentDate(),
+      staff_joined_date: '',
       staff_status: 0,
       productTypes: [],
       selectedItems: [],
-      modalCalendarVisible: false,
-      markedDates: {
-        [this.getCurrentDate()]: {selected: true, marked: false},
-      },
-      modalTimeVisible: false,
     };
   }
 
@@ -292,90 +287,26 @@ class CreateStaff extends Component {
                 });
               }}
             />
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 10,
-              }}>
-              <Modal
-                isVisible={modalCalendarVisible}
-                backdropColor="rgba(0, 0, 0, 0.5)"
-                backdropOpacity={1}
-                animationIn="fadeIn"
-                animationInTiming={600}
-                animationOutTiming={600}
-                backdropTransitionInTiming={600}
-                backdropTransitionOutTiming={600}>
-                <View style={styles.contentModal}>
-                  <View style={styles.contentCalendar}>
-                    <Calendar
-                      style={{
-                        borderRadius: 8,
-                      }}
-                      markedDates={markedDates}
-                      current={this.state.staff_joined_date}
-                      minDate={'1900-12-31'}
-                      maxDate={'2099-12-31'}
-                      onDayPress={(day) => this.setBookingDate(day)}
-                      monthFormat={'yyyy MMMM'}
-                      onMonthChange={(month) => {
-                        console.log('month changed', month);
-                      }}
-                      theme={{
-                        textSectionTitleColor: BaseColor.textPrimaryColor,
-                        selectedDayBackgroundColor: BaseColor.primaryColor,
-                        selectedDayTextColor: '#ffffff',
-                        todayTextColor: BaseColor.primaryColor,
-                        dayTextColor: BaseColor.textPrimaryColor,
-                        textDisabledColor: BaseColor.grayColor,
-                        dotColor: BaseColor.primaryColor,
-                        selectedDotColor: '#ffffff',
-                        arrowColor: BaseColor.primaryColor,
-                        monthTextColor: BaseColor.textPrimaryColor,
-                        textDayFontFamily: FontFamily.default,
-                        textMonthFontFamily: FontFamily.default,
-                        textDayHeaderFontFamily: FontFamily.default,
-                        textMonthFontWeight: 'bold',
-                        textDayFontSize: 14,
-                        textMonthFontSize: 16,
-                        textDayHeaderFontSize: 14,
-                      }}
-                    />
-                    <View style={styles.contentActionCalendar}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.setState({modalCalendarVisible: false});
-                        }}>
-                        <Text body1>Cancel</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.setState({modalCalendarVisible: false});
-                          this.onDateApply();
-                        }}>
-                        <Text body1 primaryColor>
-                          Done
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </Modal>
-              <TouchableOpacity
-                style={styles.dateInfo}
-                onPress={() => this.openCalendarModal()}>
-                {/* <Text headline light style={{color: BaseColor.sectionColor}}>
-                  Joined Date
-                </Text> */}
-                <Text headline semibold>
-                  {Utils.getFormattedLongDate(
-                    Utils.getDateFromDate(staff_joined_date),
-                  )}
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <DatePicker
+              style={{width: '100%', marginTop: 10, marginBottom: 10}}
+              date={this.state.staff_joined_date}
+              mode="date"
+              placeholder="Select Joined Date"
+              androidMode="spinner"
+              format="YYYY-MM-DD"
+              minDate="1900-01-01"
+              maxDate="2099-01-01"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={
+                {
+                  // ... You can check the source to find the other keys.
+                }
+              }
+              onDateChange={(date) => {
+                this.setState({staff_joined_date: date});
+              }}
+            />
             <Dropdown
               label="Status"
               labelFontSize={15}
@@ -412,11 +343,15 @@ class CreateStaff extends Component {
                 tagTextColor={BaseColor.titleColor}
                 selectedItemTextColor={BaseColor.titleColor}
                 selectedItemIconColor={BaseColor.titleColor}
-                itemTextColor="#000"
                 displayKey="product_name"
                 searchInputStyle={{color: BaseColor.titleColor}}
                 submitButtonColor={BaseColor.titleColor}
                 submitButtonText="Submit"
+                fontFamily={FontFamily.default}
+                fontSize={15}
+                itemFontFamily={FontFamily.default}
+                itemFontSize={13}
+                itemTextColor={BaseColor.secondBlackColor}
               />
               <View>
                 {/* {this.multiselect

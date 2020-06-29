@@ -14,7 +14,14 @@ import {BaseStyle, BaseColor, FontFamily} from '@config';
 import {withNavigation} from 'react-navigation';
 import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
-import {Header, SafeAreaView, Icon, Text, Button} from '@components';
+import {
+  Header,
+  SafeAreaView,
+  Icon,
+  Text,
+  Button,
+  DatePicker,
+} from '@components';
 import MultiSelect from 'react-native-multiple-select';
 import {Dropdown} from 'react-native-material-dropdown';
 import * as Utils from '@utils';
@@ -34,11 +41,6 @@ class StaffProfileDetail extends Component {
       staff_status: '',
       productTypes: [],
       selectedItems: [],
-      modalCalendarVisible: false,
-      markedDates: {
-        [this.getCurrentDate()]: {selected: true, marked: false},
-      },
-      modalTimeVisible: false,
     };
   }
 
@@ -51,12 +53,6 @@ class StaffProfileDetail extends Component {
     date = date < 10 ? '0' + date : date;
 
     return year + '-' + month + '-' + date;
-  }
-
-  openCalendarModal() {
-    this.setState({
-      modalCalendarVisible: true,
-    });
   }
 
   checkInput() {
@@ -118,7 +114,7 @@ class StaffProfileDetail extends Component {
       const {auth} = this.props;
       let customSelectedItems = [];
       customSelectedItems = selectedItems.map((element) => {
-        return element;
+        return {entity_id: element};
       });
       console.log('customSelectedItems', customSelectedItems);
       const data = {
@@ -260,27 +256,6 @@ class StaffProfileDetail extends Component {
     return key;
   }
 
-  setBookingDate(day) {
-    this.setState({
-      markedDates: {
-        [day.dateString]: {selected: true, marked: false},
-      },
-      staff_joined_date: day.dateString,
-    });
-    this.markedDates = day.dateString;
-    console.log('marketDates', this.markedDates);
-  }
-
-  onDateApply() {
-    console.log('marketDates-onDateApply()', this.markedDates);
-    if (this.markedDates !== undefined) {
-      let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
-      this.setState({staff_joined_date: shortDate});
-    } else {
-      this.setState({staff_joined_date: this.getCurrentDate()});
-    }
-  }
-
   render() {
     const {navigation} = this.props;
     const {
@@ -379,96 +354,26 @@ class StaffProfileDetail extends Component {
                 });
               }}
             /> */}
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 10,
-              }}>
-              {/* <View style={{flex: 1}}>
-                <Text headline style={{color: BaseColor.secondBlackColor}}>
-                  Joined Date
-                </Text>
-              </View> */}
-              <Modal
-                isVisible={modalCalendarVisible}
-                backdropColor="rgba(0, 0, 0, 0.5)"
-                backdropOpacity={1}
-                animationIn="fadeIn"
-                animationInTiming={600}
-                animationOutTiming={600}
-                backdropTransitionInTiming={600}
-                backdropTransitionOutTiming={600}>
-                <View style={styles.contentModal}>
-                  <View style={styles.contentCalendar}>
-                    <Calendar
-                      style={{
-                        borderRadius: 8,
-                      }}
-                      markedDates={markedDates}
-                      current={this.state.staff_joined_date}
-                      minDate={'1900-12-31'}
-                      maxDate={'2099-12-31'}
-                      onDayPress={(day) => this.setBookingDate(day)}
-                      monthFormat={'MMMM yyyy '}
-                      onMonthChange={(month) => {
-                        console.log('month changed', month);
-                      }}
-                      theme={{
-                        textSectionTitleColor: BaseColor.textPrimaryColor,
-                        selectedDayBackgroundColor: BaseColor.primaryColor,
-                        selectedDayTextColor: '#ffffff',
-                        todayTextColor: BaseColor.primaryColor,
-                        dayTextColor: BaseColor.textPrimaryColor,
-                        textDisabledColor: BaseColor.grayColor,
-                        dotColor: BaseColor.primaryColor,
-                        selectedDotColor: '#ffffff',
-                        arrowColor: BaseColor.primaryColor,
-                        monthTextColor: BaseColor.textPrimaryColor,
-                        textDayFontFamily: FontFamily.default,
-                        textMonthFontFamily: FontFamily.default,
-                        textDayHeaderFontFamily: FontFamily.default,
-                        textMonthFontWeight: 'bold',
-                        textDayFontSize: 14,
-                        textMonthFontSize: 16,
-                        textDayHeaderFontSize: 14,
-                      }}
-                    />
-                    <View style={styles.contentActionCalendar}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.setState({modalCalendarVisible: false});
-                        }}>
-                        <Text body1>Cancel</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.setState({modalCalendarVisible: false});
-                          this.onDateApply();
-                        }}>
-                        <Text body1 primaryColor>
-                          Done
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </Modal>
-              <TouchableOpacity
-                style={styles.dateInfo}
-                onPress={() => this.openCalendarModal()}>
-                {/* <Text headline light style={{color: BaseColor.sectionColor}}>
-                  Joined Date
-                </Text> */}
-                <Text headline semibold>
-                  {Utils.getFormattedLongDate(
-                    Utils.getDateFromDate(staff_joined_date),
-                  )}
-                  {/* {Utils.getDateFromDate(staff_joined_date)} */}
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <DatePicker
+              style={{width: '100%', marginTop: 10, marginBottom: 10}}
+              date={this.state.staff_joined_date}
+              mode="date"
+              placeholder="Select Joined Date"
+              androidMode="spinner"
+              format="YYYY-MM-DD"
+              minDate="1900-01-01"
+              maxDate="2099-01-01"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={
+                {
+                  // ... You can check the source to find the other keys.
+                }
+              }
+              onDateChange={(date) => {
+                this.setState({staff_joined_date: date});
+              }}
+            />
             <Dropdown
               label="Status"
               labelFontSize={15}
@@ -531,13 +436,13 @@ class StaffProfileDetail extends Component {
             style={{flex: 1, marginLeft: 10}}
             loading={deleteLoading}
             onPress={() => this.onDelete()}>
-            DELETE
+            Delete
           </Button>
           <Button
             style={{flex: 1, marginLeft: 10}}
             loading={saveLoading}
             onPress={() => this.onSave()}>
-            UPDATE
+            Update
           </Button>
         </View>
       </SafeAreaView>

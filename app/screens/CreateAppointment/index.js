@@ -442,7 +442,7 @@ class CreateAppointment extends Component {
             style={{flex: 1, marginLeft: 10}}
             loading={loading}
             onPress={() => navigation.goBack()}>
-            SAVE
+            Save
           </Button>
         </View>
       </SafeAreaView>

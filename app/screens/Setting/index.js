@@ -74,7 +74,9 @@ class Setting extends Component {
           })
           .catch((error) => {
             this.setState({dataLoading: false});
-            Utils.longNotifyMessage('Server Errors!');
+            Utils.longNotifyMessage(
+              'Your session is expired. please log in again!',
+            );
             console.log(error);
           });
       }
@@ -88,6 +90,7 @@ class Setting extends Component {
   logoutApply() {
     const {actions, navigation} = this.props;
     this.setState({logoutLoading: true});
+    actions.resetStore();
     actions.logout((response) => {
       if (response.code == 0) {
         this.setState({logoutLoading: false});

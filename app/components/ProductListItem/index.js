@@ -5,6 +5,8 @@ import {Image, Text, Icon, StarRating, Button} from '@components';
 import {BaseColor} from '@config';
 import PropTypes from 'prop-types';
 import styles from './styles';
+import * as Utils from '@utils';
+
 export default class ProductListItem extends Component {
   constructor(props) {
     super(props);
@@ -43,29 +45,58 @@ export default class ProductListItem extends Component {
               justifyContent: 'space-between',
               width: '100%',
             }}>
-            <View style={[{flex: 1}]}>
+            <View>
               <Text
                 subhead
                 bold
                 numberOfLines={1}
                 style={{marginTop: 5, color: BaseColor.sectionColor}}>
+                Name :
+              </Text>
+            </View>
+            <View>
+              <Text
+                subhead
+                bold
+                numberOfLines={2}
+                style={{marginTop: 5, color: BaseColor.sectionColor}}>
                 {title}
               </Text>
             </View>
-            <View style={[styles.contentCartPromotion, styles.contentCenter]}>
-              <Button style={styles.btnPromotion}>
-                {/* <Text
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
+            }}>
+            <View>
+              <Text
+                subhead
+                bold
+                numberOfLines={1}
+                style={{marginTop: 5, color: BaseColor.sectionColor}}>
+                Price :
+              </Text>
+            </View>
+            <View>
+              <Text subhead primaryColor bold>
+                &nbsp;&nbsp;SGD&nbsp;{Utils.to2DigitDeciaml(specialprice)}
+              </Text>
+            </View>
+          </View>
+          {/* <View style={[styles.contentCartPromotion, styles.contentCenter]}>
+              <Button style={styles.btnPromotion}> */}
+          {/* <Text
                   body2
                   style={{textDecorationLine: 'line-through', color: BaseColor.titleColor}}>
                   &nbsp;SGD&nbsp;{retailprice}&nbsp;
                 </Text> */}
-                <Text subhead primaryColor bold>
-                  &nbsp;&nbsp;SGD&nbsp;{specialprice}
-                </Text>
-              </Button>
+
+          {/* </Button>
             </View>
-          </View>
-          <View style={styles.blockContentAddress}></View>
+          <View style={styles.blockContentAddress}></View> */}
         </View>
       </View>
     );

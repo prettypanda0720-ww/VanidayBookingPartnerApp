@@ -13,12 +13,19 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {BaseStyle, BaseColor, BaseSetting} from '@config';
-import {SafeAreaView, Icon, Text, Button, InvoiceListItem} from '@components';
+import {
+  SafeAreaView,
+  Icon,
+  Text,
+  Button,
+  ProductInvoiceListItem,
+} from '@components';
 import {appointments} from '@data';
 import styles from './styles';
 import {Dropdown} from 'react-native-material-dropdown';
+import * as Utils from '@utils';
 
-class Invoices extends Component {
+class ProductInvoice extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,10 +43,10 @@ class Invoices extends Component {
     };
     this.focusListener = navigation.addListener('didFocus', () => {
       myAppointmentsSvc
-        .fetchInvoiceList(data)
+        .fetchProductInvoiceList(data)
         .then((response) => {
           const res_profile = response.data;
-          console.log('fetchInvoiceList', res_profile.data);
+          console.log('fetchProductInvoiceList', res_profile.data);
           if (res_profile.code == 0) {
             this.setState({
               dataLoading: false,
@@ -77,7 +84,7 @@ class Invoices extends Component {
               />
             </TouchableOpacity>
             <View style={styles.contentCenter}>
-              <Text headline>Invoices</Text>
+              <Text headline>Product Invoices</Text>
               {/* <TouchableOpacity
                 style={styles.dateRange}
                 onPress={() => this.goBybtn('SelectPeriod')}>
@@ -108,7 +115,7 @@ class Invoices extends Component {
               keyExtractor={(item, index) => item.id}
               style={{marginTop: 10}}
               renderItem={({item, index}) => (
-                <InvoiceListItem
+                <ProductInvoiceListItem
                   // refId={item.invoiceId}
                   clientName={item.customerName}
                   // appointmentDate={item.slotDate}
@@ -129,7 +136,7 @@ class Invoices extends Component {
           <View style={styles.total}>
             <View style={styles.alignCenter}>
               <Text body1 bold style={{color: 'rgba(0,0,0,0.65)'}}>
-                Total (Count : {this.state.invoiceData.totalCount})
+                Total (count : {this.state.invoiceData.totalCount})
               </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
@@ -140,7 +147,9 @@ class Invoices extends Component {
                 </Text>
                 <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
                   &nbsp;&nbsp;SGD&nbsp;
-                  {this.state.invoiceData.totalVendorPrice}
+                  {Utils.to2DigitDeciaml(
+                    this.state.invoiceData.totalVendorPrice,
+                  )}
                 </Text>
               </View>
               <View
@@ -150,7 +159,7 @@ class Invoices extends Component {
                 </Text>
                 <Text body1 semibold style={{color: 'rgba(0,0,0,0.65)'}}>
                   &nbsp;&nbsp;SGD&nbsp;
-                  {this.state.invoiceData.totalAdminComm}
+                  {Utils.to2DigitDeciaml(this.state.invoiceData.totalAdminComm)}
                 </Text>
               </View>
             </View>
@@ -178,7 +187,7 @@ class Invoices extends Component {
               />
             </TouchableOpacity>
             <View style={styles.contentCenter}>
-              <Text headline>Invoices</Text>
+              <Text headline>Product Invoices</Text>
               {/* <TouchableOpacity
                 style={styles.dateRange}
                 onPress={() => this.goBybtn('SelectPeriod')}>
@@ -243,5 +252,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default withNavigation(
-  connect(mapStateToProps, mapDispatchToProps)(Invoices),
+  connect(mapStateToProps, mapDispatchToProps)(ProductInvoice),
 );

@@ -15,7 +15,7 @@ import {
   Icon,
   Text,
   Button,
-  AppointmentItem,
+  ProductOrderItem,
 } from '@components';
 import styles from './styles';
 import {connect} from 'react-redux';
@@ -23,10 +23,10 @@ import {myAppointmentsSvc} from '@services';
 import {AuthActions} from '@actions';
 import {bindActionCreators} from 'redux';
 import {withNavigation} from 'react-navigation';
-import * as Utils from '@utils';
 import {Dropdown} from 'react-native-material-dropdown';
+import * as Utils from '@utils';
 
-class Appointments extends Component {
+class ProductAppointment extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,7 +52,7 @@ class Appointments extends Component {
     };
     this.focusListener = navigation.addListener('didFocus', () => {
       myAppointmentsSvc
-        .fetchAppointmentList(data)
+        .fetchProductOrderList(data)
         .then((response) => {
           const res_profile = response.data;
           console.log('fetchAppointmentList', res_profile.data);
@@ -72,7 +72,7 @@ class Appointments extends Component {
 
   renderItem(item) {
     return (
-      <AppointmentItem
+      <ProductOrderItem
         // refId={item.refId}
         clientName={item.customerName}
         // appointmentDate={item.appointmentDate}
@@ -116,7 +116,7 @@ class Appointments extends Component {
               </TouchableOpacity>
               <View style={styles.contentCenter}>
                 <Text headline2 style={{margin: 0, padding: 0}}>
-                  Appointments
+                  Product Orders
                 </Text>
                 {/* <TouchableOpacity
                   style={styles.dateRange}
@@ -158,7 +158,7 @@ class Appointments extends Component {
             style={[BaseStyle.safeAreaView, {flexDirection: 'column'}]}
             forceInset={{top: 'always'}}>
             <Header
-              title="Appointments"
+              title="Product Orders"
               renderLeft={() => {
                 return (
                   <Icon
@@ -204,7 +204,7 @@ class Appointments extends Component {
             </TouchableOpacity>
             <View style={styles.contentCenter}>
               <Text headline2 style={{margin: 0, padding: 0}}>
-                Appointments
+                Product Orders
               </Text>
               {/* <TouchableOpacity
                 style={styles.dateRange}
@@ -271,5 +271,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default withNavigation(
-  connect(mapStateToProps, mapDispatchToProps)(Appointments),
+  connect(mapStateToProps, mapDispatchToProps)(ProductAppointment),
 );

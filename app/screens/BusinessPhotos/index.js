@@ -54,7 +54,7 @@ class BusinessPhotos extends Component {
         .then((response) => {
           const res_profile = response.data;
           if (res_profile.code == 0) {
-            this.setState({upLoading: false});
+            this.setState({upLoading: false, carousel: {}});
             Utils.shortNotifyMessage('Business photos are successfully added!');
           }
         })

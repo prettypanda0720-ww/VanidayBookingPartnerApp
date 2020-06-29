@@ -85,6 +85,8 @@ import Help from '@screens/Help';
 import EditAboutusAlbum from '@screens/EditAboutusAlbum';
 import DeleteAboutusAlbum from '@screens/DeleteAboutusAlbum';
 import BusinessPhotos from '@screens/BusinessPhotos';
+import ProductInvoice from '@screens/ProductInvoice';
+import ProductAppointment from '@screens/ProductAppointment';
 // Transition for navigation by screen name
 const handleCustomTransition = ({scenes}) => {
   const nextScene = scenes[scenes.length - 1].route.routeName;
@@ -415,6 +417,12 @@ const StackNavigator = createStackNavigator(
     },
     BusinessPhotos: {
       screen: BusinessPhotos,
+    },
+    ProductInvoice: {
+      screen: ProductInvoice,
+    },
+    ProductAppointment: {
+      screen: ProductAppointment,
     },
   },
   {

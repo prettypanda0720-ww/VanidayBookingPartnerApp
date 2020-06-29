@@ -3,7 +3,7 @@
  */
 export const Api = {
   actionMode: {
-    isReal: true,
+    isReal: false,
   },
   myVaniday: {
     API_BASE: 'http://mapi2.vaniday.com/api',
@@ -66,7 +66,9 @@ export const Api = {
     UPDATE_CAROUSEL_POSITION_DATA_URL:
       '/rest/V1/vaniday-vendor/update-carousel-position',
     FORGOTPASSWORD_DATA_URL: '/passwordReset',
-    CHANGEPASSWORD_DATA_URL: '/passwordUpdate',
+    CHANGEPASSWORD_DATA_URL: '/myvaniday/passwordUpdate',
     VENDORSECTIONS_DATA_URL: '/getSections',
+    PRODUCTINVOICE_DATA_URL: '/myvaniday/fetchProductInvoiceList',
+    PRODUCTORDER_DATA_URL: '/myvaniday/fetchProductOrderList',
   },
 };

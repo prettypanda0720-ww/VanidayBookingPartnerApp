@@ -74,6 +74,14 @@ const onUpdateName = (payload) => {
   };
 };
 
+export const resetStore = () => ({
+  type: actionTypes.RESET_STORE,
+});
+
+export const clearPassword = () => ({
+  type: actionTypes.CHANGE_PASSWORD,
+});
+
 export const login = (loginCredential, callback) => (dispatch) => {
   dispatch(onLoginStart());
   UserServices.login(loginCredential)

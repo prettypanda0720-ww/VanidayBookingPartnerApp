@@ -51,9 +51,6 @@ class RescheduleAppointment extends Component {
       contactNo: '',
       service_duration: 0,
       detail: [],
-      markedDates: {
-        [this.getCurrentDate()]: {selected: true, marked: false},
-      },
     };
   }
 
@@ -121,15 +118,15 @@ class RescheduleAppointment extends Component {
             console.log('getOrderItemInfo', res_profile.data.status);
             this.setState({
               dataLoading: false,
-              status: res_profile.data.status,
+              status: res_profile.data.amastyStatus,
               customerName: res_profile.data.customerName,
               totalPrice: res_profile.data.totalPrice,
               detail: res_profile.data.orderInfo,
               staffId: res_profile.data.orderInfo[0].staffId,
-              startTime: Utils.getTimeFromDate(
+              startTime: Utils.get24TimeFromDate(
                 res_profile.data.orderInfo[0].bookingFrom,
               ),
-              endTime: Utils.getTimeFromDate(
+              endTime: Utils.get24TimeFromDate(
                 res_profile.data.orderInfo[0].bookingTo,
               ),
               appointmentDate: res_profile.data.orderInfo[0].bookingDate,

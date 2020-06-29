@@ -14,13 +14,13 @@ export default StyleSheet.create({
     height: 60,
     marginBottom: 20,
   },
-  
+
   profileItem: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingVertical: 20,
+    // paddingVertical: 20,
   },
   inputGroup: {
     width: '100%',

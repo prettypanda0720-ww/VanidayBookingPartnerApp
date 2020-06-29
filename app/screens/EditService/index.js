@@ -146,14 +146,23 @@ class EditService extends Component {
 
     const subMenuList = this.props.navigation.state.params.subMenuList;
     let duration = [
+      {value: '15'},
       {value: '30'},
+      {value: '45'},
       {value: '60'},
+      {value: '75'},
       {value: '90'},
+      {value: '105'},
       {value: '120'},
+      {value: '135'},
       {value: '150'},
+      {value: '165'},
       {value: '180'},
+      {value: '195'},
       {value: '210'},
+      {value: '225'},
       {value: '240'},
+      {value: '255'},
       {value: '270'},
     ];
     console.log('submenulist', subMenuList);
@@ -238,25 +247,27 @@ class EditService extends Component {
               <Text style={BaseStyle.label}>Normal price</Text>
               <TextInput
                 style={[BaseStyle.textInput, {marginTop: 5}]}
-                onChangeText={(text) => this.onChangedPrice(text)}
+                // onChangeText={(text) => this.onChangedPrice(text)}
+                onChangeText={(text) => this.setState({price: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
                 placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
                 keyboardType={'numeric'}
-                value={price}
+                value={Utils.to2DigitDeciaml(price)}
               />
             </View>
             <View style={styles.inputGroup}>
               <Text style={BaseStyle.label}>Special price</Text>
               <TextInput
                 style={[BaseStyle.textInput, {marginTop: 5}]}
-                onChangeText={(text) => this.onChangedSpecialPrice(text)}
+                // onChangeText={(text) => this.onChangedSpecialPrice(text)}
+                onChangeText={(text) => this.setState({special_price: text})}
                 autoCorrect={false}
                 placeholder="$ 0.00"
                 placeholderTextColor={BaseColor.titleColor}
                 selectionColor={BaseColor.primaryColor}
-                value={this.state.special_price}
+                value={Utils.to2DigitDeciaml(this.state.special_price)}
               />
             </View>
             <Dropdown
@@ -277,25 +288,48 @@ class EditService extends Component {
               value={service_duration}
             />
             <View style={[styles.profileItem, {marginTop: 5}]}>
-              <Text style={BaseStyle.label}>Enable Service</Text>
+              <Text style={BaseStyle.label}>Publish Service</Text>
               <Switch
                 name="angle-right"
                 size={18}
+                trackColor={{
+                  false: BaseColor.grayColor,
+                  true: BaseColor.MainColor,
+                }}
+                thumbColor={
+                  this.state.isEnalbeProduct ? BaseColor.SecondColor : '#f4f3f4'
+                }
+                ios_backgroundColor="#3e3e3e"
                 onValueChange={this.toggleProductSwitch}
                 value={this.state.isEnalbeProduct}
               />
             </View>
+            <Text caption1 style={{marginTop: 10, color: BaseColor.grayColor}}>
+              Select "Featured" to display this service under "Recommended for
+              You" category.
+            </Text>
             <View style={[styles.profileItem, {marginTop: 5}]}>
               <Text style={BaseStyle.label}>Featured</Text>
               <Switch
                 name="angle-right"
                 size={18}
+                trackColor={{
+                  false: BaseColor.grayColor,
+                  true: BaseColor.MainColor,
+                }}
+                thumbColor={
+                  this.state.isFeatured ? BaseColor.SecondColor : '#f4f3f4'
+                }
+                ios_backgroundColor="#3e3e3e"
                 onValueChange={this.toggleFeaturedSwitch}
                 value={this.state.isFeatured}
               />
             </View>
+            <Text caption1 style={{marginTop: 10, color: BaseColor.grayColor}}>
+              Select 2 main categories to feature your business
+            </Text>
             <Dropdown
-              label="Vendor Sections"
+              label="Business Category"
               labelFontSize={15}
               fontSize={13}
               labelTextStyle={{marginBottom: 10}}
@@ -346,13 +380,13 @@ class EditService extends Component {
               style={{flex: 1, marginLeft: 10}}
               loading={this.state.deleteLoading}
               onPress={() => this.onDelete()}>
-              DELETE
+              Delete
             </Button>
             <Button
               style={{flex: 1, marginLeft: 10}}
               loading={this.state.saveLoading}
               onPress={() => this.onSave()}>
-              SAVE
+              Save
             </Button>
           </View>
         </SafeAreaView>
@@ -436,10 +470,10 @@ class EditService extends Component {
       Utils.shortNotifyMessage('Service Name is required!');
       return false;
     }
-    if (selectedItems.length === 0) {
-      Utils.shortNotifyMessage('Categories is required!');
-      return false;
-    }
+    // if (selectedItems.length === 0) {
+    //   Utils.shortNotifyMessage('Categories is required!');
+    //   return false;
+    // }
     if (price.length === 0) {
       Utils.shortNotifyMessage('Price is required!');
       return false;

@@ -10,8 +10,8 @@ export default StyleSheet.create({
   blockImage: {
     height: Utils.scaleWithPixel(200),
     width: '100%',
-    borderWidth: 1,
-    borderColor: BaseColor.grayColor,
+    // borderWidth: 1,
+    // borderColor: BaseColor.grayColor,
   },
   paymentImage: {
     height: Utils.scaleWithPixel(35),

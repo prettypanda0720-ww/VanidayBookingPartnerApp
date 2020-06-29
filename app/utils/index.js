@@ -398,6 +398,13 @@ export function formatDate(date) {
   return getTimeFromDate(date.replace(pattern, replacement)) + ' ' + dd;
 }
 
+export function get24TimeFromDate(date) {
+  // console.log('startDate', date);
+  let xdate = new XDate(date, false);
+  // console.log('xdate.toLocaleTimeString()', xdate.toLocaleTimeString());
+  return xdate.toString('HH:mm');
+}
+
 export function getTimeFromDate(date) {
   // console.log('startDate', date);
   let xdate = new XDate(date, false);
@@ -406,7 +413,7 @@ export function getTimeFromDate(date) {
 }
 
 export function autoTrackEndTime(startDate, minutes) {
-  // console.log('startDate', startDate);
+  console.log('startDate', startDate);
   let xdate = new XDate(startDate, false).addMinutes(minutes);
   // console.log('xdate.toLocaleTimeString()', xdate.toLocaleTimeString());
   return xdate.toString('HH:mm');
@@ -483,4 +490,9 @@ export function shortNotifyMessage(msg) {
 export function timeToAsianString(time) {
   Moment.locale('en');
   return Moment(time).format('d MMM Y');
+}
+
+export function to2DigitDeciaml(value){
+  var num = parseFloat(value);
+  return parseFloat(Math.round(num * 100) / 100).toFixed(2);
 }

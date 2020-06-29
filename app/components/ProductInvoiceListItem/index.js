@@ -7,22 +7,24 @@ import styles from './styles';
 import {FlatList} from 'react-native-gesture-handler';
 import * as Utils from '@utils';
 
-export default class BookingHistory extends Component {
+export default class ProductInvoiceListItem extends Component {
   render() {
     const {
       style,
-      refId,
+      // refId,
       clientName,
-      appointmentDate,
-      total,
-      status,
-      detail,
       count,
-      startTime,
-      endTime,
+      // appointmentDate,
+      total,
+      vendor,
+      vaniday,
+      // status,
+      detail,
+      // startTime,
+      // endTime,
       onPress,
     } = this.props;
-    console.log('status', status);
+    console.log('count', count);
     return (
       <TouchableOpacity
         style={[styles.contain, style]}
@@ -32,9 +34,9 @@ export default class BookingHistory extends Component {
           <Text subhead whiteColor bold>
             {clientName}
           </Text>
-          <Text subhead whiteColor bold>
-            {Utils.capitalize(status)}
-          </Text>
+          {/* <Text subhead whiteColor bold>
+            {status}
+          </Text> */}
         </View>
         <FlatList
           listKey={moment().valueOf().toString()}
@@ -43,21 +45,45 @@ export default class BookingHistory extends Component {
           renderItem={({item}) => {
             return (
               <View style={styles.mainContent}>
-                <View style={styles.serviceItemWrapper}>
+                <View style={{flexDirection: 'row'}}>
                   <Text
                     caption1
                     semibold
                     style={{
+                      flex: 1,
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}
                     numberOfLines={2}>
-                    {item.name}
+                    {item.productName}
                   </Text>
                 </View>
-                <View style={styles.serviceItemWrapper}>
+                <View style={{flexDirection: 'row'}}>
                   <Text
                     caption1
+                    semibold
+                    style={{
+                      flex: 1,
+                      textAlign: 'left',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    InvoiceID:
+                  </Text>
+                  <Text
+                    caption1
+                    semibold
+                    style={{
+                      flex: 1,
+                      textAlign: 'right',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    #{item.invoiceId}
+                  </Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text
+                    caption1
+                    semibold
                     style={{
                       flex: 1,
                       textAlign: 'left',
@@ -76,32 +102,11 @@ export default class BookingHistory extends Component {
                     SGD&nbsp;{Utils.to2DigitDeciaml(item.price)}
                   </Text>
                 </View>
-                <View style={styles.serviceItemWrapper}>
+                <View style={{flexDirection: 'row'}}>
                   <Text
                     caption1
                     style={{
                       flex: 1,
-                      textAlign: 'left',
-                      color: 'rgba(0,0,0,0.65)',
-                    }}>
-                    Staff:{' '}
-                    {item.staffName == null ? 'Not Assigned' : item.staffName}
-                  </Text>
-                  <Text
-                    caption1
-                    style={{
-                      flex: 1,
-                      textAlign: 'right',
-                      color: 'rgba(0,0,0,0.65)',
-                    }}>
-                    {item.service_duration}&nbsp;Min
-                  </Text>
-                </View>
-                <View style={styles.serviceItemWrapper}>
-                  <Text
-                    caption1
-                    semibold
-                    style={{
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
@@ -109,81 +114,109 @@ export default class BookingHistory extends Component {
                   </Text>
                   <Text
                     caption1
-                    semibold
                     style={{
                       flex: 1,
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    {Utils.capitalize(status)}
+                    {Utils.capitalize(item.amastyStatus)}
                   </Text>
                 </View>
-                <View style={styles.validContent}>
+                {/* <View style={styles.validContent}>
                   <Text footnote semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-                    {Utils.getFormattedLongDate(item.bookingDate)},&nbsp;
+                    {Utils.getFormattedLongDate(item.slotDate)},&nbsp;
                     {Utils.formatDate(item.bookingFrom)}&nbsp;to&nbsp;
                     {Utils.formatDate(item.bookingTo)}
                   </Text>
-                </View>
-                <View style={styles.totalContent}>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text
-                      subhead
-                      bold
-                      style={{
-                        flex: 1,
-                        textAlign: 'left',
-                        color: 'rgba(0,0,0,0.65)',
-                      }}>
-                      Total
-                    </Text>
-                    <Text
-                      subhead
-                      bold
-                      style={{
-                        flex: 1,
-                        textAlign: 'right',
-                        color: 'rgba(0,0,0,0.65)',
-                      }}>
-                      SGD{Utils.to2DigitDeciaml(item.price)}
-                    </Text>
-                  </View>
-                </View>
+                </View> */}
               </View>
             );
           }}
         />
+        <View style={[styles.totalCountContent, {paddingHorizontal: 10}]}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text subhead bold style={{color: 'rgba(0,0,0,0.65)'}}>
+              Sub Total Count :
+            </Text>
+            <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
+              &nbsp;{count}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={[
+            styles.totalContent,
+            {flexDirection: 'row', paddingHorizontal: 10},
+          ]}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+            }}>
+            <Text subhead bold style={{color: 'rgba(0,0,0,0.65)'}}>
+              Business:
+            </Text>
+            <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
+              &nbsp;&nbsp;SGD&nbsp;{Utils.to2DigitDeciaml(vendor)}
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+            }}>
+            <Text subhead bold style={{color: 'rgba(0,0,0,0.65)'}}>
+              Vaniday:
+            </Text>
+            <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
+              &nbsp;&nbsp;SGD&nbsp;{Utils.to2DigitDeciaml(vaniday)}
+            </Text>
+          </View>
+        </View>
       </TouchableOpacity>
     );
   }
 }
 
-BookingHistory.propTypes = {
+ProductInvoiceListItem.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  refId: PropTypes.string,
+  // refId: PropTypes.string,
   clientName: PropTypes.string,
-  staffName: PropTypes.string,
-  detail: PropTypes.array,
-  appointmentDate: PropTypes.string,
+  // serviceName: PropTypes.string,
+  // staffName: PropTypes.string,
+  // appointmentDate: PropTypes.string,
   total: PropTypes.string,
-  price: PropTypes.string,
-  count: '',
-  startTime: PropTypes.string,
-  endTime: PropTypes.string,
+  vendor: PropTypes.string,
+  vaniday: PropTypes.string,
+  count: PropTypes.string,
+  // price: PropTypes.string,
+  // startTime: PropTypes.string,
+  // endTime: PropTypes.string,
   onPress: PropTypes.func,
 };
 
-BookingHistory.defaultProps = {
+ProductInvoiceListItem.defaultProps = {
   style: {},
-  refId: '',
+  // refId: '',
   clientName: '',
-  staffName: '',
-  detail: [],
-  appointmentDate: '',
+  // serviceName: '',
+  // staffName: '',
+  // appointmentDate: '',
   total: '',
-  price: '',
-  count: '',
-  startTime: '',
-  endTime: '',
+  vendor: '',
+  vaniday: '',
+  count: PropTypes.string,
+  // price: '',
+  // startTime: '',
+  // endTime: '',
   onPress: () => {},
 };

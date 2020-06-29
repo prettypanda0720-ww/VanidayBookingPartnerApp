@@ -17,6 +17,7 @@ import {
 import {BaseStyle, BaseColor} from '@config';
 import * as Utils from '@utils';
 import styles from './styles';
+import {bool} from 'prop-types';
 
 class ManageAppointment extends Component {
   constructor(props) {
@@ -112,7 +113,7 @@ class ManageAppointment extends Component {
   componentDidMount() {
     const item = this.props.navigation.state.params.bookingData;
     console.log(item);
-    this.setState({orderState: item.state});
+    this.setState({orderState: item.status});
     const {auth, navigation} = this.props;
     const token = auth.user.data;
     const data = {
@@ -130,7 +131,7 @@ class ManageAppointment extends Component {
           if (res_profile.code == 0) {
             console.log('getOrderItemInfo', res_profile.data);
             this.setState({
-              status: res_profile.data.status,
+              status: res_profile.data.amastyStatus,
               customerName: res_profile.data.customerName,
               totalPrice: res_profile.data.totalPrice,
               detail: res_profile.data.orderInfo,
@@ -210,7 +211,7 @@ class ManageAppointment extends Component {
                     paddingHorizontal: 20,
                     textAlign: 'center',
                   }}>
-                  Please contact customer at &nbsp;
+                  Please contact customer at&nbsp;
                   {contactNo}&nbsp;if you need to reschedule or cancel
                   appointment.
                 </Text>
@@ -258,19 +259,49 @@ class ManageAppointment extends Component {
     const {navigation} = this.props;
     const {loading} = this.state;
     const {orderId, quoteItemId} = this.state;
-    if (this.state.orderState == 'new') {
-      return (
-        <View
-          style={[
-            styles.inputGroup,
-            {
-              justifyContent: 'flex-end',
-              flexDirection: 'column',
-              paddingHorizontal: 20,
-              paddingVertical: 20,
-              backgroundColor: '#e5e5e5',
-            },
-          ]}>
+
+    let reschedule = false;
+    let confirm = false;
+    let cancel = false;
+    if (
+      this.state.orderState == 'new_pendingcashpaymen' ||
+      this.state.orderState == 'complete_pendingstripepaym' ||
+      this.state.orderState == 'complete_bookingapproved' ||
+      this.state.orderState == 'new_bookingapproved' ||
+      this.state.orderState == 'complete_bookingapproved' ||
+      this.state.orderState == 'new_bookingapproved'
+    ) {
+      reschedule = true;
+    }
+
+    if (
+      this.state.orderState == 'complete_pendingstripepaym' ||
+      this.state.orderState == 'new_pendingcashpaymen'
+    ) {
+      confirm = true;
+    }
+
+    if (
+      this.state.orderState == 'new_pendingcashpaymen' ||
+      this.state.orderState == 'complete_pendingstripepaym' ||
+      this.state.orderState == 'complete_bookingapproved' ||
+      this.state.orderState == 'new_bookingapproved'
+    ) {
+      cancel = true;
+    }
+    return (
+      <View
+        style={[
+          styles.inputGroup,
+          {
+            justifyContent: 'flex-end',
+            flexDirection: 'column',
+            paddingHorizontal: 20,
+            paddingVertical: 20,
+            backgroundColor: '#e5e5e5',
+          },
+        ]}>
+        {reschedule ? (
           <Button
             full
             style={[styles.customBtn, {backgroundColor: '#e5ccc2'}]}
@@ -284,19 +315,29 @@ class ManageAppointment extends Component {
             }>
             Reschedule
           </Button>
-          <Button
-            style={[
-              styles.customBtn,
-              {
-                paddingVertical: 10,
-                marginTop: 15,
-              },
-            ]}
-            styleText={{fontSize: 15}}
-            loading={this.state.confirmLoading}
-            onPress={() => this.onConfirmAppointment()}>
-            Confirm
-          </Button>
+        ) : (
+          <View />
+        )}
+        {confirm ? (
+          <View>
+            <Button
+              style={[
+                styles.customBtn,
+                {
+                  paddingVertical: 10,
+                  marginTop: 15,
+                },
+              ]}
+              styleText={{fontSize: 15}}
+              loading={this.state.confirmLoading}
+              onPress={() => this.onConfirmAppointment()}>
+              Confirm
+            </Button>
+          </View>
+        ) : (
+          <View />
+        )}
+        {cancel ? (
           <Button
             style={[
               styles.customBtn,
@@ -310,9 +351,11 @@ class ManageAppointment extends Component {
             onPress={() => this.showCancelAlertDlg()}>
             Cancel
           </Button>
-        </View>
-      );
-    }
+        ) : (
+          <View />
+        )}
+      </View>
+    );
   }
 }
 

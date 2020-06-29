@@ -377,7 +377,7 @@ class AppointmentsTab extends Component {
                     flex: 1,
                     textAlign: 'right',
                   }}>
-                  {Utils.capitalize(item.status)}
+                  {Utils.capitalize(item.amastyStatus)}
                 </Text>
               </View>
               <View
@@ -389,7 +389,7 @@ class AppointmentsTab extends Component {
                   Min
                 </Text>
                 <Text footnote semibold style={{flex: 1, textAlign: 'right'}}>
-                  SGD {item.price}
+                  SGD {Utils.to2DigitDeciaml(item.price)}
                 </Text>
               </View>
               <View
@@ -471,7 +471,7 @@ class InvoicesTab extends Component {
             // refId={item.invoiceId}
             clientName={item.customerName}
             // appointmentDate={item.slotDate}
-            total={item.price}
+            total={Utils.to2DigitDeciaml(item.price)}
             count={item.count}
             // status={item.status}
             detail={[item]}

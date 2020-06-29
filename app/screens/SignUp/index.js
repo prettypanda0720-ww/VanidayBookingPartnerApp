@@ -6,15 +6,16 @@ import {
   Switch,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
-import {BaseStyle, BaseColor, FontFamily, Strings} from '@config';
-import DatePicker from 'react-native-datepicker';
+import {BaseStyle, BaseColor, FontFamily, Strings, Images} from '@config';
 import * as Utils from '@utils';
 import ImagePicker from 'react-native-image-picker';
 import {Dropdown} from 'react-native-material-dropdown';
-import {Checkbox} from 'react-native-material-ui';
+import {CheckBox} from 'react-native-elements';
+// import {Checkbox} from 'react-native-material-ui';
 
 import {
   Header,
@@ -24,6 +25,7 @@ import {
   Text,
   Image,
   BirthdayPicker,
+  DatePicker,
 } from '@components';
 import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
@@ -45,6 +47,7 @@ class SignUp extends Component {
       address: '',
       phone_number: '',
       birthday: '',
+      owner_type: 1,
       vendor_type: 1,
       // Below fields are added in case of salow owner
       profile_url: '',
@@ -52,14 +55,7 @@ class SignUp extends Component {
       vendor_tel: '',
       unique_entity_number: '',
       vendor_address: '',
-      image_name: '',
-      image_base64_content: null,
-      avatarSource: null,
       loading: false,
-      modalCalendarVisible: false,
-      markedDates: {
-        [this.getCurrentDate()]: {selected: true, marked: false},
-      },
       dataLoading: true,
       neighbourhoodLst: [],
       neighbourhoodDropdownLst: [],
@@ -67,7 +63,6 @@ class SignUp extends Component {
       appointmentDate: this.getCurrentDate(),
       is_subscribed: 0,
     };
-    this.selectPhotoTapped = this.selectPhotoTapped.bind(this);
   }
 
   getCurrentDate() {
@@ -79,33 +74,6 @@ class SignUp extends Component {
     date = date < 10 ? '0' + date : date;
 
     return year + '-' + month + '-' + date;
-  }
-
-  openCalendarModal() {
-    this.setState({
-      modalCalendarVisible: true,
-    });
-  }
-
-  setBookingDate(day) {
-    this.setState({
-      markedDates: {
-        [day.dateString]: {selected: true, marked: false},
-      },
-    });
-    this.markedDates = day.dateString;
-    this.setState({birthday: day.dateString});
-    console.log('marketDates', this.markedDates);
-  }
-
-  onDateApply() {
-    console.log('marketDates-onDateApply()', this.markedDates);
-    if (this.markedDates !== undefined) {
-      let shortDate = Utils.getFormattedShortDate(new Date(this.markedDates));
-      this.setState({appointmentDate: shortDate});
-    } else {
-      this.setState({appointmentDate: this.getCurrentDate()});
-    }
   }
 
   componentDidMount() {
@@ -235,98 +203,26 @@ class SignUp extends Component {
                   selectionColor={BaseColor.primaryColor}
                 />
               </View>
-              <View
-                style={[styles.inputGroup, {flex: 1, flexDirection: 'column'}]}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginTop: 10,
-                  }}>
-                  {/* <View style={{flex: 1}}>
-                  <Text headline style={{color: BaseColor.secondBlackColor}}>
-                    Joined Date
-                  </Text>
-                </View> */}
-                  <Modal
-                    isVisible={this.state.modalCalendarVisible}
-                    backdropColor="rgba(0, 0, 0, 0.5)"
-                    backdropOpacity={1}
-                    animationIn="fadeIn"
-                    animationInTiming={600}
-                    animationOutTiming={600}
-                    backdropTransitionInTiming={600}
-                    backdropTransitionOutTiming={600}>
-                    <View style={styles.contentModal}>
-                      <View style={styles.contentCalendar}>
-                        <Calendar
-                          style={{
-                            borderRadius: 8,
-                          }}
-                          markedDates={this.state.markedDates}
-                          current={this.state.birthday}
-                          minDate={'1900-12-31'}
-                          maxDate={'2099-12-31'}
-                          onDayPress={(day) => this.setBookingDate(day)}
-                          monthFormat={'MMMM yyyy '}
-                          onMonthChange={(month) => {
-                            console.log('month changed', month);
-                          }}
-                          theme={{
-                            textSectionTitleColor: BaseColor.textPrimaryColor,
-                            selectedDayBackgroundColor: BaseColor.primaryColor,
-                            selectedDayTextColor: '#ffffff',
-                            todayTextColor: BaseColor.primaryColor,
-                            dayTextColor: BaseColor.textPrimaryColor,
-                            textDisabledColor: BaseColor.grayColor,
-                            dotColor: BaseColor.primaryColor,
-                            selectedDotColor: '#ffffff',
-                            arrowColor: BaseColor.primaryColor,
-                            monthTextColor: BaseColor.textPrimaryColor,
-                            textDayFontFamily: FontFamily.default,
-                            textMonthFontFamily: FontFamily.default,
-                            textDayHeaderFontFamily: FontFamily.default,
-                            textMonthFontWeight: 'bold',
-                            textDayFontSize: 14,
-                            textMonthFontSize: 16,
-                            textDayHeaderFontSize: 14,
-                          }}
-                        />
-                        <View style={styles.contentActionCalendar}>
-                          <TouchableOpacity
-                            onPress={() => {
-                              this.setState({modalCalendarVisible: false});
-                            }}>
-                            <Text body1>Cancel</Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            onPress={() => {
-                              this.setState({modalCalendarVisible: false});
-                              this.onDateApply();
-                            }}>
-                            <Text body1 primaryColor>
-                              Done
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    </View>
-                  </Modal>
-                  <TouchableOpacity
-                    style={styles.dateInfo}
-                    onPress={() => this.openCalendarModal()}>
-                    <Text style={BaseStyle.label}>Birthday</Text>
-                    <Text style={BaseStyle.label}>
-                      {this.state.birthday == ''
-                        ? this.state.birthday
-                        : Utils.getFormattedLongDate(
-                            Utils.getDateFromDate(this.state.birthday),
-                          )}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+              <DatePicker
+                style={{width: '100%', marginTop: 10, marginBottom: 10}}
+                date={this.state.birthday}
+                mode="date"
+                placeholder="Select Birthday"
+                androidMode="spinner"
+                format="YYYY-MM-DD"
+                minDate="1900-01-01"
+                maxDate="2099-01-01"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={
+                  {
+                    // ... You can check the source to find the other keys.
+                  }
+                }
+                onDateChange={(date) => {
+                  this.setState({birthday: date});
+                }}
+              />
               <View style={styles.inputGroup}>
                 <Dropdown
                   label="Select a Gender"
@@ -350,37 +246,68 @@ class SignUp extends Component {
                   }}
                 />
               </View>
-              {/* <RadioGroup /> */}
-              <View style={[styles.profileItem, {paddingVertical: 15}]}>
-                <Checkbox
-                  label="Product Seller"
-                  value="agree"
-                  checked={false}
-                  style={{color: BaseColor.SecondColor}}
-                  onCheck={() => {}}
+              <View style={[styles.profileItem, {paddingVertical: 0}]}>
+                <CheckBox
+                  center
+                  title="Salon Owner"
+                  iconLeft
+                  containerStyle={{
+                    backgroundColor: BaseColor.whiteColor,
+                    borderColor: BaseColor.whiteColor,
+                  }}
+                  checkedColor={BaseColor.SecondColor}
+                  uncheckedColor={BaseColor.grayColor}
+                  checked={this.state.owner_type == 1 ? true : false}
+                  fontFamily={FontFamily.default}
+                  textStyle={{fontWeight: 'normal', fontSize: 15}}
+                  onPress={() => {
+                    this.state.owner_type == 1
+                      ? this.setState({owner_type: 0})
+                      : this.setState({owner_type: 1});
+                  }}
                 />
-                <Checkbox
-                  label="Salon Owner"
-                  value="agree"
-                  checked={true}
-                  style={{color: BaseColor.SecondColor}}
-                  onCheck={() => {}}
+                <CheckBox
+                  center
+                  title="Product Seller"
+                  iconLeft
+                  containerStyle={{
+                    backgroundColor: BaseColor.whiteColor,
+                    borderColor: BaseColor.whiteColor,
+                  }}
+                  checkedColor={BaseColor.SecondColor}
+                  uncheckedColor={BaseColor.grayColor}
+                  checked={this.state.owner_type == 1 ? false : true}
+                  fontFamily={FontFamily.default}
+                  textStyle={{fontWeight: 'normal', fontSize: 15}}
+                  onPress={() => {
+                    this.state.owner_type == 0
+                      ? this.setState({owner_type: 1})
+                      : this.setState({owner_type: 0});
+                  }}
                 />
               </View>
               <View style={{flexDirection: 'column', width: '100%'}}>
                 {this.displayOwnerView()}
               </View>
               <View style={styles.inputGroup}>
-                <Checkbox
-                  label="I would like to receive promotions, tips and announcements via email and sms."
-                  value="agree"
+                <CheckBox
+                  center
+                  title="I would like to receive promotions, tips and announcements via email and sms."
+                  iconLeft
+                  containerStyle={{
+                    backgroundColor: BaseColor.whiteColor,
+                    borderColor: BaseColor.whiteColor,
+                  }}
+                  checkedColor={BaseColor.SecondColor}
+                  uncheckedColor={BaseColor.grayColor}
                   checked={this.state.is_subscribed == 1 ? true : false}
-                  style={{color: BaseColor.SecondColor}}
-                  onCheck={() =>
+                  fontFamily={FontFamily.default}
+                  textStyle={{fontWeight: 'normal', fontSize: 13}}
+                  onPress={() => {
                     this.setState({
                       is_subscribed: this.state.is_subscribed == 1 ? 0 : 1,
-                    })
-                  }
+                    });
+                  }}
                 />
               </View>
             </View>
@@ -389,7 +316,8 @@ class SignUp extends Component {
             <Button
               loading={this.state.loading}
               full
-              onPress={() => this.onSave()}>
+              onPress={() => this.onSave()}
+              style={{backgroundColor: BaseColor.darkcoralColor}}>
               Sign Up
             </Button>
           </View>
@@ -431,74 +359,69 @@ class SignUp extends Component {
   }
 
   displayOwnerView() {
-    if (this.state.vendor_type == 1) {
-      return (
-        <View>
-          <Text style={BaseStyle.label}>Featured Image</Text>
-          <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-            <View
-              style={[
-                styles.avatar,
-                styles.avatarContainer,
-                {marginBottom: 20},
-              ]}>
-              {this.state.avatarSource === null ? (
-                <Text
-                  style={{
-                    flex: 1,
-                    marginTop: 10,
-                    backgroundColor: BaseColor.SecondColor,
-                    borderRadius: 8,
-                    paddingVertical: 15,
-                    color: BaseColor.whiteColor,
-                    textAlign: 'center',
-                  }}>
-                  Upload Business Photo
-                </Text>
-              ) : (
-                <Image
-                  source={this.state.avatarSource}
-                  style={styles.blockImage}
-                />
-              )}
-            </View>
-          </TouchableOpacity>
+    // if (this.state.owner_type === 1) {
+    return (
+      <View>
+        <View style={styles.inputGroup}>
+          <Dropdown
+            label="Business Type"
+            labelFontSize={15}
+            fontSize={13}
+            labelTextStyle={{marginBottom: 10}}
+            style={{fontFamily: FontFamily.default}}
+            data={[{value: 'Company'}, {value: 'Freelancer'}]}
+            rippleOpacity={0.7}
+            baseColor={BaseColor.secondBlackColor}
+            tintColor={BaseColor.blackColor}
+            value={this.state.vendor_type === 1 ? 'Company' : 'Freelancer'}
+            onChangeText={(value) => {
+              this.setState({
+                vendor_type: value === 'Company' ? 1 : 0,
+              });
+            }}
+          />
+        </View>
+        <View style={styles.inputGroup}>
+          <TextInput
+            style={BaseStyle.textInput}
+            onChangeText={(text) => this.setState({profile_url: text})}
+            autoCorrect={false}
+            placeholder="Business Url"
+            placeholderTextColor={BaseColor.grayColor}
+            selectionColor={BaseColor.primaryColor}
+          />
+        </View>
+        <View style={styles.inputGroup}>
+          <TextInput
+            style={BaseStyle.textInput}
+            onChangeText={(text) => this.setState({vendor_title: text})}
+            autoCorrect={false}
+            placeholder="Business Name"
+            placeholderTextColor={BaseColor.grayColor}
+            selectionColor={BaseColor.primaryColor}
+          />
+        </View>
+        <View style={styles.inputGroup}>
+          <TextInput
+            style={BaseStyle.textInput}
+            onChangeText={(text) => this.onChangedTel(text)}
+            autoCorrect={false}
+            placeholder="Business Tel"
+            placeholderTextColor={BaseColor.grayColor}
+            selectionColor={BaseColor.primaryColor}
+            keyboardType={'numeric'}
+            value={this.state.vendor_tel}
+          />
+        </View>
+
+        {this.state.vendor_type == 1 ? (
           <View style={styles.inputGroup}>
             <TextInput
               style={BaseStyle.textInput}
-              onChangeText={(text) => this.setState({profile_url: text})}
-              autoCorrect={false}
-              placeholder="Business Url"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-          </View>
-          <View style={styles.inputGroup}>
-            <TextInput
-              style={BaseStyle.textInput}
-              onChangeText={(text) => this.setState({vendor_title: text})}
-              autoCorrect={false}
-              placeholder="Business Name"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-          </View>
-          <View style={styles.inputGroup}>
-            <TextInput
-              style={BaseStyle.textInput}
-              onChangeText={(text) => this.onChangedTel(text)}
-              autoCorrect={false}
-              placeholder="Business Tel"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-              keyboardType={'numeric'}
-              value={this.state.vendor_tel}
-            />
-          </View>
-          <View style={styles.inputGroup}>
-            <TextInput
-              style={BaseStyle.textInput}
-              onChangeText={(text) => this.onChangedEntityNumber(text)}
+              // onChangeText={(text) => this.onChangedEntityNumber(text)}
+              onChangeText={(text) =>
+                this.setState({unique_entity_number: text})
+              }
               autoCorrect={false}
               placeholder="Unique Entity Number"
               placeholderTextColor={BaseColor.grayColor}
@@ -507,36 +430,40 @@ class SignUp extends Component {
               value={this.state.unique_entity_number}
             />
           </View>
-          <View style={styles.inputGroup}>
-            <TextInput
-              style={BaseStyle.textInput}
-              onChangeText={(text) => this.setState({vendor_address: text})}
-              autoCorrect={false}
-              placeholder="Business Address"
-              placeholderTextColor={BaseColor.grayColor}
-              selectionColor={BaseColor.primaryColor}
-            />
-          </View>
-          <Dropdown
-            label="Select your neighbourhood"
-            labelFontSize={15}
-            fontSize={13}
-            labelTextStyle={{marginBottom: 10}}
-            style={{fontFamily: FontFamily.default}}
-            data={this.state.neighbourhoodDropdownLst}
-            rippleOpacity={0.7}
-            baseColor={BaseColor.secondBlackColor}
-            tintColor={BaseColor.blackColor}
-            value={this.getNeighbourhoodName(this.state.vendor_area)}
-            onChangeText={(value) => {
-              this.setState({
-                vendor_area: this.getNeighbourhoodKey(value),
-              });
-            }}
+        ) : (
+          <View />
+        )}
+
+        <View style={styles.inputGroup}>
+          <TextInput
+            style={BaseStyle.textInput}
+            onChangeText={(text) => this.setState({vendor_address: text})}
+            autoCorrect={false}
+            placeholder="Business Address"
+            placeholderTextColor={BaseColor.grayColor}
+            selectionColor={BaseColor.primaryColor}
           />
         </View>
-      );
-    }
+        <Dropdown
+          label="Select your neighbourhood"
+          labelFontSize={15}
+          fontSize={13}
+          labelTextStyle={{marginBottom: 10}}
+          style={{fontFamily: FontFamily.default}}
+          data={this.state.neighbourhoodDropdownLst}
+          rippleOpacity={0.7}
+          baseColor={BaseColor.secondBlackColor}
+          tintColor={BaseColor.blackColor}
+          value={this.getNeighbourhoodName(this.state.vendor_area)}
+          onChangeText={(value) => {
+            this.setState({
+              vendor_area: this.getNeighbourhoodKey(value),
+            });
+          }}
+        />
+      </View>
+    );
+    // }
   }
 
   checkInput() {
@@ -629,39 +556,6 @@ class SignUp extends Component {
     });
   }
 
-  selectPhotoTapped() {
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        skipBackup: true,
-      },
-    };
-
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled photo picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        let filepath = {uri: response.uri};
-        // You can also display the image using data:
-        let source = {uri: 'data:image/jpeg;base64,' + response.data};
-
-        this.setState({
-          image_name: response.fileName,
-          avatarSource: source,
-          image_base64_content: response.data,
-        });
-      }
-    });
-  }
-
   onSave = () => {
     if (!this.checkInput()) {
       return;
@@ -682,94 +576,91 @@ class SignUp extends Component {
       vendor_area,
       unique_entity_number,
       vendor_address,
-      image_name,
-      image_base64_content,
       is_subscribed,
     } = this.state;
     const {navigation} = this.props;
     const {auth, actions} = this.props;
     let data = {};
-    if (vendor_type == 1) {
-      data = {
-        vendorInfo: {
-          first_name: first_name,
-          last_name: last_name,
+    // if (vendor_type == 1) {
+    data = {
+      vendorInfo: {
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        password: password,
+        phone_number: phone_number,
+        birthday: birthday,
+        gender: gender,
+        vendor_type: vendor_type,
+        profile_url: profile_url,
+        vendor_title: vendor_title,
+        vendor_tel: vendor_tel,
+        unique_entity_number: unique_entity_number,
+        vendor_address: vendor_address,
+        vendor_area: vendor_area,
+        is_subscribed: is_subscribed,
+        customer_become_seller: false,
+      },
+    };
+    console.log('vendor signup info', data);
+    actions.register(data, (response) => {
+      if (response.code == 0) {
+        const credential = {
           email: email,
           password: password,
-          phone_number: phone_number,
-          birthday: birthday,
-          gender: gender,
-          vendor_type: vendor_type,
-          profile_url: profile_url,
-          vendor_title: vendor_title,
-          vendor_tel: vendor_tel,
-          unique_entity_number: unique_entity_number,
-          vendor_address: vendor_address,
-          vendor_area: vendor_area,
-          is_subscribed: is_subscribed,
-          image_name: image_name,
-          customer_become_seller: false,
-          image_base64_content: image_base64_content,
-        },
-      };
-      console.log('vendor signup info', data);
-      actions.register(data, (response) => {
-        if (response.code == 0) {
-          const credential = {
-            email: email,
-            password: password,
-          };
-          actions.login(credential, (response) => {
-            if (response.data.code == 0) {
-              this.setState({loading: false});
-              navigation.navigate('Home');
-            } else {
-              Utils.longNotifyMessage('Register failed!');
-            }
-          });
-        } else {
-          Utils.longNotifyMessage('Register failed!');
-          this.setState({loading: false});
-        }
-      });
-    } else {
-      data = {
-        customer: {
-          first_name: first_name,
-          last_name: last_name,
-          email: email,
-          phone_number: phone_number,
-          birthday: birthday,
-          gender: gender,
-          is_subscribed: is_subscribed,
-          // vendor_type: vendor_type,
-        },
-        password: password,
-      };
-      console.log('customer signup info', data);
-      actions.registerCustomer(data, (response) => {
-        console.log('------- signup response', response);
-        if (response.code == 0) {
-          Utils.longNotifyMessage(Strings.customer_register_success);
-          // const credential = {
-          //   email: email,
-          //   password: password,
-          // };
-          // actions.login(credential, (response) => {
-          //   console.log('------- login response', response);
-          //   if (response.code == 0) {
-          //     this.setState({loading: false});
-          //     navigation.navigate('Home');
-          //   } else {
-          //     Utils.longNotifyMessage(response.message);
-          //   }
-          // });
-        } else if (response.code == -1) {
-          Utils.longNotifyMessage(response.message);
-          this.setState({loading: false});
-        }
-      });
-    }
+        };
+        actions.login(credential, (response) => {
+          if (response.data.code == 0) {
+            this.setState({loading: false});
+            navigation.navigate('Home');
+          } else {
+            Alert.alert(response.data.message);
+          }
+        });
+      } else {
+        Alert.alert(response.message);
+        this.setState({loading: false});
+      }
+    });
+    // }
+    // else {
+    //   data = {
+    //     customer: {
+    //       first_name: first_name,
+    //       last_name: last_name,
+    //       email: email,
+    //       phone_number: phone_number,
+    //       birthday: birthday,
+    //       gender: gender,
+    //       is_subscribed: is_subscribed,
+    //       // vendor_type: vendor_type,
+    //     },
+    //     password: password,
+    //   };
+    //   console.log('customer signup info', data);
+    //   actions.registerCustomer(data, (response) => {
+    //     console.log('------- signup response', response);
+    //     if (response.code == 0) {
+    //       Utils.longNotifyMessage(Strings.customer_register_success);
+    //       // const credential = {
+    //       //   email: email,
+    //       //   password: password,
+    //       // };
+    //       // actions.login(credential, (response) => {
+    //       //   console.log('------- login response', response);
+    //       //   if (response.code == 0) {
+    //       //     this.setState({loading: false});
+    //       //     navigation.navigate('Home');
+    //       //   } else {
+    //       //     Utils.longNotifyMessage(response.message);
+    //       //   }
+    //       // });
+    //     } else if (response.code == -1) {
+    //       Utils.longNotifyMessage(response.message);
+    //       this.setState({loading: false});
+    //     }
+    //   });
+    // }
   };
 
   getGenderName(key) {

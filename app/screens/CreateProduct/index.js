@@ -48,6 +48,8 @@ class CreateProduct extends Component {
       short_description: '',
       status: false,
       is_featured: '',
+      qty: '',
+      is_in_stock: '',
       subMenuList: [],
       selectedItems: [],
       image_type: '',
@@ -82,6 +84,10 @@ class CreateProduct extends Component {
 
   toggleFeaturedSwitch = (value) => {
     this.setState({is_featured: value});
+  };
+
+  toggleStockSwitch = (value) => {
+    this.setState({is_in_stock: value});
   };
 
   selectPhotoTapped() {
@@ -206,6 +212,8 @@ class CreateProduct extends Component {
       short_description,
       status,
       is_featured,
+      qty,
+      is_in_stock,
     } = this.state;
     const {navigation} = this.props;
     let selItemsStr = '';
@@ -219,7 +227,6 @@ class CreateProduct extends Component {
     const {auth} = this.props;
     const data = {
       token: auth.user.data,
-      sku: sku,
       productInfo: {
         product_name: name,
         price: price,
@@ -229,6 +236,8 @@ class CreateProduct extends Component {
         special_price: special_price,
         status: status ? 1 : 2,
         is_featured: is_featured ? 1 : 0,
+        qty: qty,
+        is_in_stock: is_in_stock ? 1 : 0,
         sku: sku,
       },
     };
@@ -365,26 +374,28 @@ class CreateProduct extends Component {
               <Text style={BaseStyle.label}>Price</Text>
               <TextInput
                 style={BaseStyle.textInput}
-                onChangeText={(text) => this.onChangedPrice(text)}
+                // onChangeText={(text) => this.onChangedPrice(text)}
+                onChangeText={(text) => this.setState({price: text})}
                 autoCorrect={false}
                 placeholder="$0.00"
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 value={this.state.price}
-                keyboardType={'numeric'}
+                // keyboardType={'numeric'}
               />
             </View>
             <View style={styles.inputGroup}>
               <Text style={BaseStyle.label}>Special Price</Text>
               <TextInput
                 style={BaseStyle.textInput}
-                onChangeText={(text) => this.onChangedSpecialPrice(text)}
+                // onChangeText={(text) => this.onChangedSpecialPrice(text)}
+                onChangeText={(text) => this.setState({special_price: text})}
                 autoCorrect={false}
                 placeholder="$0.00"
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
                 value={this.state.special_price}
-                keyboardType={'numeric'}
+                // keyboardType={'numeric'}
               />
             </View>
             <View style={styles.inputGroup}>
@@ -393,12 +404,22 @@ class CreateProduct extends Component {
                 style={BaseStyle.textInput}
                 onChangeText={(text) => this.setState({sku: text})}
                 autoCorrect={false}
-                placeholder="$0.00"
+                placeholder=""
                 placeholderTextColor={BaseColor.grayColor}
                 selectionColor={BaseColor.primaryColor}
               />
             </View>
-
+            <View style={styles.inputGroup}>
+              <Text style={BaseStyle.label}>Quantity</Text>
+              <TextInput
+                style={BaseStyle.textInput}
+                onChangeText={(text) => this.setState({qty: text})}
+                autoCorrect={false}
+                placeholder=""
+                placeholderTextColor={BaseColor.grayColor}
+                selectionColor={BaseColor.primaryColor}
+              />
+            </View>
             <View style={styles.inputGroup}>
               <Text style={BaseStyle.label}>Short Description</Text>
               <TextInput
@@ -427,6 +448,14 @@ class CreateProduct extends Component {
             <View style={styles.profileItem}>
               <Text style={BaseStyle.label}>Enable Service</Text>
               <Switch
+                trackColor={{
+                  false: BaseColor.grayColor,
+                  true: BaseColor.MainColor,
+                }}
+                thumbColor={
+                  this.state.status ? BaseColor.SecondColor : '#f4f3f4'
+                }
+                ios_backgroundColor="#3e3e3e"
                 name="angle-right"
                 size={18}
                 onValueChange={this.toggleProductSwitch}
@@ -434,12 +463,37 @@ class CreateProduct extends Component {
               />
             </View>
             <View style={styles.profileItem}>
-              <Text style={BaseStyle.label}>Is Featured</Text>
+              <Text style={BaseStyle.label}>Featured</Text>
               <Switch
+                trackColor={{
+                  false: BaseColor.grayColor,
+                  true: BaseColor.MainColor,
+                }}
+                thumbColor={
+                  this.state.is_featured ? BaseColor.SecondColor : '#f4f3f4'
+                }
+                ios_backgroundColor="#3e3e3e"
                 name="angle-right"
                 size={18}
                 onValueChange={this.toggleFeaturedSwitch}
                 value={this.state.is_featured == 1 ? true : false}
+              />
+            </View>
+            <View style={styles.profileItem}>
+              <Text style={BaseStyle.label}>In Stock</Text>
+              <Switch
+                trackColor={{
+                  false: BaseColor.grayColor,
+                  true: BaseColor.MainColor,
+                }}
+                thumbColor={
+                  this.state.is_in_stock ? BaseColor.SecondColor : '#f4f3f4'
+                }
+                ios_backgroundColor="#3e3e3e"
+                name="angle-right"
+                size={18}
+                onValueChange={this.toggleStockSwitch}
+                value={this.state.is_in_stock}
               />
             </View>
             <SectionedMultiSelect

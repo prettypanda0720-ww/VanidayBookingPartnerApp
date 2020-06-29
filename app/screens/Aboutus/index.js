@@ -436,21 +436,6 @@ class Aboutus extends Component {
                 />
               </View>
               <View style={styles.inputGroup}>
-                <Text style={BaseStyle.label}>Connected Stripe ID</Text>
-                <TextInput
-                  style={BaseStyle.textInput}
-                  onChangeText={(text) =>
-                    this.setState({vendor_stripe_id: text})
-                  }
-                  autoCorrect={false}
-                  placeholder=""
-                  placeholderTextColor={BaseColor.titleColor}
-                  selectionColor={BaseColor.titleColor}
-                  editable={false}>
-                  {vendor_stripe_id}
-                </TextInput>
-              </View>
-              <View style={styles.inputGroup}>
                 <Text style={BaseStyle.label}>Postal Code</Text>
                 <TextInput
                   style={BaseStyle.textInput}
@@ -528,13 +513,13 @@ class Aboutus extends Component {
             <Button
               style={{flex: 1, marginLeft: 10}}
               onPress={() => navigation.goBack()}>
-              CANCEL
+              Cancel
             </Button>
             <Button
               style={{flex: 1, marginLeft: 10}}
               loading={loading}
               onPress={() => this.onSave()}>
-              SAVE
+              Save
             </Button>
           </View>
         </SafeAreaView>

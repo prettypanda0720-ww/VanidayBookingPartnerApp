@@ -1,35 +1,84 @@
-import { StyleSheet } from "react-native";
-import { BaseColor } from "@config";
+import {StyleSheet} from 'react-native';
+import {BaseStyle, BaseColor, FontFamily, Strings} from '@config';
 
-export default StyleSheet.create({
-  contentPickDate: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    borderRadius: 8,
-    backgroundColor: BaseColor.whiteColor,
-    padding: 10,
-    borderColor: BaseColor.grayColor,
-    borderWidth: 1,
+let style = StyleSheet.create({
+  dateTouch: {
+    width: '100%',
   },
-  itemPick: {
-    flex: 1,
+  dateTouchBody: {
     flexDirection: 'row',
-    justifyContent: "space-between",
+    height: 40,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  contentModal: {
+  dateIcon: {
+    width: 32,
+    height: 32,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  dateText: {
+    color: '#333',
+  },
+  placeholderText: {
+    color: BaseColor.grayColor,
+  },
+  datePickerMask: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    backgroundColor: '#00000077',
   },
-  contentCalendar: {
-    borderRadius: 8,
-    width: "100%",
-    backgroundColor: "white"
+  datePickerCon: {
+    backgroundColor: '#fff',
+    height: 0,
+    overflow: 'hidden',
   },
-  contentActionCalendar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 15
-  }
+  btnText: {
+    position: 'absolute',
+    top: 0,
+    height: 42,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnTextText: {
+    fontSize: 16,
+    color: '#46cf98',
+  },
+  btnTextCancel: {
+    color: '#666',
+  },
+  btnCancel: {
+    left: 0,
+  },
+  btnConfirm: {
+    right: 0,
+  },
+  datePicker: {
+    marginTop: 42,
+    borderTopColor: '#ccc',
+    borderTopWidth: 1,
+  },
+  disabled: {
+    backgroundColor: '#eee',
+  },
+  dateInput: {
+    height: 46,
+    backgroundColor: BaseColor.fieldColor,
+    borderRadius: 5,
+    // padding: 10,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    textAlign: 'left',
+    width: '100%',
+    marginTop: 5,
+    paddingHorizontal: 10,
+    fontSize: 15,
+    color: BaseColor.titleColor,
+    fontFamily: FontFamily.default,
+  },
 });
+
+export default style;

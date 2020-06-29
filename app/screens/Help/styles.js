@@ -20,9 +20,11 @@ export default StyleSheet.create({
     // height: Utils.scaleWithPixel(250),
   },
   thumb: {
-    width: '100%',
-    height: Utils.getHeightDevice() / 3.5,
-    resizeMode: 'stretch',
+    width: Utils.getWidthDevice(),
+    height: (Utils.getWidthDevice() * 520) / 1920,
+    resizeMode: 'cover',
+    borderWidth: 1,
+    borderColor: BaseColor.grayColor,
   },
   profileItem: {
     flexDirection: 'row',

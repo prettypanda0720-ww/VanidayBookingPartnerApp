@@ -1,23 +1,13 @@
 import React, {Component} from 'react';
-import {
-  View,
-  ScrollView,
-  TextInput,
-  Switch,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
-import Modal from 'react-native-modal';
+import {View, ScrollView, TextInput, ActivityIndicator} from 'react-native';
 import {BaseStyle, BaseColor, FontFamily, Strings} from '@config';
-import {Calendar} from 'react-native-calendars';
 import * as Utils from '@utils';
 import {connect} from 'react-redux';
 import {myAppointmentsSvc} from '@services';
 import {AuthActions} from '@actions';
 import {bindActionCreators} from 'redux';
-import {withNavigation} from 'react-navigation';
-import {Header, SafeAreaView, Icon, Button, Text} from '@components';
-import {Checkbox} from 'react-native-material-ui';
+import {Header, SafeAreaView, Icon, Button, DatePicker} from '@components';
+import {CheckBox} from 'react-native-elements';
 import {Dropdown} from 'react-native-material-dropdown';
 import styles from './styles';
 
@@ -40,10 +30,6 @@ class ProfileEdit extends Component {
       loading: false,
       isOwner: false,
       checked: false,
-      modalCalendarVisible: false,
-      markedDates: {
-        [this.getCurrentDate()]: {selected: true, marked: false},
-      },
     };
   }
 
@@ -277,84 +263,26 @@ class ProfileEdit extends Component {
                   selectionColor={BaseColor.primaryColor}
                 />
               </View> */}
-              <View style={styles.inputGroup}>
-                <Modal
-                  isVisible={this.state.modalCalendarVisible}
-                  backdropColor="rgba(0, 0, 0, 0.5)"
-                  backdropOpacity={1}
-                  animationIn="fadeIn"
-                  animationInTiming={600}
-                  animationOutTiming={600}
-                  backdropTransitionInTiming={600}
-                  backdropTransitionOutTiming={600}>
-                  <View style={styles.contentModal}>
-                    <View style={styles.contentCalendar}>
-                      <Calendar
-                        style={{
-                          borderRadius: 8,
-                        }}
-                        markedDates={this.state.markedDates}
-                        current={this.state.birthday}
-                        minDate={'1900-12-31'}
-                        maxDate={'2099-12-31'}
-                        onDayPress={(day) => this.setBookingDate(day)}
-                        monthFormat={'MMMM yyyy '}
-                        onMonthChange={(month) => {
-                          console.log('month changed', month);
-                        }}
-                        theme={{
-                          textSectionTitleColor: BaseColor.textPrimaryColor,
-                          selectedDayBackgroundColor: BaseColor.primaryColor,
-                          selectedDayTextColor: '#ffffff',
-                          todayTextColor: BaseColor.primaryColor,
-                          dayTextColor: BaseColor.textPrimaryColor,
-                          textDisabledColor: BaseColor.grayColor,
-                          dotColor: BaseColor.primaryColor,
-                          selectedDotColor: '#ffffff',
-                          arrowColor: BaseColor.primaryColor,
-                          monthTextColor: BaseColor.textPrimaryColor,
-                          textDayFontFamily: FontFamily.default,
-                          textMonthFontFamily: FontFamily.default,
-                          textDayHeaderFontFamily: FontFamily.default,
-                          textMonthFontWeight: 'bold',
-                          textDayFontSize: 14,
-                          textMonthFontSize: 16,
-                          textDayHeaderFontSize: 14,
-                        }}
-                      />
-                      <View style={styles.contentActionCalendar}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.setState({modalCalendarVisible: false});
-                          }}>
-                          <Text body1>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.setState({modalCalendarVisible: false});
-                            this.onDateApply();
-                          }}>
-                          <Text body1 primaryColor>
-                            Done
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </View>
-                </Modal>
-                <TouchableOpacity
-                  style={styles.dateInfo}
-                  onPress={() => this.openCalendarModal()}>
-                  <Text style={BaseStyle.label}>Birthday</Text>
-                  <Text style={BaseStyle.label}>
-                    {this.state.birthday == ''
-                      ? this.state.birthday
-                      : Utils.getFormattedLongDate(
-                          Utils.getDateFromDate(this.state.birthday),
-                        )}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <DatePicker
+                style={{width: '100%', marginTop: 10, marginBottom: 10}}
+                date={this.state.birthday}
+                mode="date"
+                placeholder="Select Birthday"
+                androidMode="spinner"
+                format="YYYY-MM-DD"
+                minDate="1900-01-01"
+                maxDate="2099-01-01"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={
+                  {
+                    // ... You can check the source to find the other keys.
+                  }
+                }
+                onDateChange={(date) => {
+                  this.setState({birthday: date});
+                }}
+              />
               <View style={styles.inputGroup}>
                 <Dropdown
                   label="Select a Gender"
@@ -383,37 +311,64 @@ class ProfileEdit extends Component {
                   styles.inputGroup,
                   {flexDirection: 'row', justifyContent: 'space-between'},
                 ]}>
-                <Checkbox
-                  label="Product Seller"
-                  value="agree"
+                <CheckBox
+                  center
+                  title="Product Seller"
+                  iconLeft
+                  containerStyle={{
+                    backgroundColor: BaseColor.whiteColor,
+                    borderColor: BaseColor.whiteColor,
+                  }}
+                  checkedColor={BaseColor.SecondColor}
+                  uncheckedColor={BaseColor.grayColor}
                   checked={!this.state.isOwner}
-                  onCheck={() =>
+                  fontFamily={FontFamily.default}
+                  textStyle={{fontWeight: 'normal', fontSize: 15}}
+                  onPress={() => {
                     this.setState({
                       isOwner: !this.state.isOwner,
-                    })
-                  }
+                    });
+                  }}
                 />
-                <Checkbox
-                  label="Salon Owner"
-                  value="agree"
+                <CheckBox
+                  center
+                  title="Salon Owner"
+                  iconLeft
+                  containerStyle={{
+                    backgroundColor: BaseColor.whiteColor,
+                    borderColor: BaseColor.whiteColor,
+                  }}
+                  checkedColor={BaseColor.SecondColor}
+                  uncheckedColor={BaseColor.grayColor}
                   checked={this.state.isOwner}
-                  onCheck={() =>
+                  fontFamily={FontFamily.default}
+                  textStyle={{fontWeight: 'normal', fontSize: 15}}
+                  onPress={() => {
                     this.setState({
                       isOwner: !this.state.isOwner,
-                    })
-                  }
+                    });
+                  }}
                 />
               </View>
               <View style={styles.inputGroup}>
-                <Checkbox
-                  label="Subscribed to promotions, tips and announcement on email and sms."
-                  value="agree"
+                <CheckBox
+                  center
+                  title="Subscribed to promotions, tips and announcement on email and sms."
+                  iconLeft
+                  containerStyle={{
+                    backgroundColor: BaseColor.whiteColor,
+                    borderColor: BaseColor.whiteColor,
+                  }}
+                  checkedColor={BaseColor.SecondColor}
+                  uncheckedColor={BaseColor.grayColor}
                   checked={this.state.is_subscribed == 1 ? true : false}
-                  onCheck={() =>
+                  fontFamily={FontFamily.default}
+                  textStyle={{fontWeight: 'normal', fontSize: 15}}
+                  onPress={() => {
                     this.setState({
                       is_subscribed: this.state.is_subscribed == 1 ? 0 : 1,
-                    })
-                  }
+                    });
+                  }}
                 />
               </View>
             </View>

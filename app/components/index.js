@@ -35,6 +35,8 @@ import SectionedMultiSelect from './SectionedMultiSelect';
 import CustomerListItem from './CustomerListItem';
 import AppointmentItem from './AppointmentItem';
 import BirthdayPicker from './BirthdayPicker';
+import ProductInvoiceListItem from './ProductInvoiceListItem';
+import ProductOrderItem from './ProductOrderItem';
 
 export {
   Header,
@@ -74,4 +76,6 @@ export {
   CustomerListItem,
   AppointmentItem,
   BirthdayPicker,
+  ProductInvoiceListItem,
+  ProductOrderItem,
 };

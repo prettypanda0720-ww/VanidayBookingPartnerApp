@@ -349,6 +349,17 @@ function getVendorSections(postData) {
   return apiClient.post(url, postData);
 }
 
+function fetchProductInvoiceList(postData) {
+  var url = Api.myVaniContent.PRODUCTINVOICE_DATA_URL;
+  console.log(baseUrl + url);
+  return apiClient.post(url, postData);
+}
+
+function fetchProductOrderList(postData) {
+  var url = Api.myVaniContent.PRODUCTORDER_DATA_URL;
+  return apiClient.post(url, postData);
+}
+
 export const myAppointmentsSvc = {
   fetchOrderByDate,
   fetchProfileData,
@@ -394,4 +405,6 @@ export const myAppointmentsSvc = {
   getVendorSections,
   fetchPersonalProfile,
   updatePersonalProfile,
+  fetchProductInvoiceList,
+  fetchProductOrderList,
 };

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TextInput} from 'react-native';
+import {View, ScrollView, TextInput, Alert} from 'react-native';
 import {BaseStyle, BaseColor, Images} from '@config';
 import {Header, SafeAreaView, Icon, Text, Button, Image} from '@components';
 import {connect} from 'react-redux';
@@ -13,14 +13,15 @@ class ChangePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      password: '',
-      repassword: '',
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
       loading: false,
     };
   }
 
   checkInput() {
-    const {currentPassword, newPassword} = this.state;
+    const {currentPassword, newPassword, confirmPassword} = this.state;
 
     if (currentPassword.length === 0) {
       Utils.shortNotifyMessage('First Name is required!');
@@ -28,6 +29,14 @@ class ChangePassword extends Component {
     }
     if (newPassword.length === 0) {
       Utils.shortNotifyMessage('Last Name is required!');
+      return false;
+    }
+    if (
+      newPassword.length != 0 &&
+      currentPassword.length != 0 &&
+      confirmPassword != newPassword
+    ) {
+      Utils.shortNotifyMessage('Confirm password is wrong!');
       return false;
     }
     return true;
@@ -39,32 +48,36 @@ class ChangePassword extends Component {
     }
     this.setState({loading: true});
     const {currentPassword, newPassword} = this.state;
-    const {auth} = this.props;
-    let data = {};
+    const {auth, actions} = this.props;
+    let data;
 
     data = {
       token: auth.user.data,
       currentPassword: currentPassword,
       newPassword: newPassword,
     };
+    console.log('passwordUpdate');
+    console.log(data);
     myAppointmentsSvc
       .changePassword(data)
       .then((response) => {
         const res_profile = response.data;
+        console.log('changepassword', res_profile);
         if (res_profile.code == 0) {
-          Utils.longNotifyMessage('Password is successfully changed!');
+          actions.clearPassword();
+          Alert.alert('Password is successfully changed!');
           this.setState({
             loading: false,
           });
         } else {
-          Utils.longNotifyMessage(response.message);
+          Alert.alert(res_profile.message);
           this.setState({
             loading: false,
           });
         }
       })
       .catch((error) => {
-        Utils.longNotifyMessage(error);
+        // Utils.longNotifyMessage(error);
         console.log('changePassword error!', error);
       });
   }
@@ -124,6 +137,21 @@ class ChangePassword extends Component {
               placeholder="New Password"
               placeholderTextColor={BaseColor.grayColor}
               value={this.state.newPassword}
+              selectionColor={BaseColor.primaryColor}
+            />
+            <View style={styles.contentTitle}>
+              <Text headline semibold>
+                Reenter new Password
+              </Text>
+            </View>
+            <TextInput
+              style={BaseStyle.textInput}
+              onChangeText={(text) => this.setState({confirmPassword: text})}
+              autoCorrect={false}
+              secureTextEntry={true}
+              placeholder="Confirm New Password"
+              placeholderTextColor={BaseColor.grayColor}
+              value={this.state.confirmPassword}
               selectionColor={BaseColor.primaryColor}
             />
           </View>

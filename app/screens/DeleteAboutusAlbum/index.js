@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Header, SafeAreaView, Icon, Text, Button} from '@components';
-import {Checkbox} from 'react-native-material-ui';
+import {CheckBox} from 'react-native-elements';
 import {View, TouchableOpacity, Image, FlatList} from 'react-native';
 import {BaseStyle, BaseColor} from '@config';
 import {connect} from 'react-redux';
@@ -137,11 +137,18 @@ class DeleteAboutusAlbum extends Component {
           style={styles.blockImage}
           source={{uri: item.label}}
         />
-        <Checkbox
-          label=""
-          value="agree"
+        <CheckBox
+          center
+          containerStyle={{
+            backgroundColor: BaseColor.whiteColor,
+            borderColor: BaseColor.whiteColor,
+          }}
+          checkedColor={BaseColor.SecondColor}
+          uncheckedColor={BaseColor.grayColor}
           checked={item.checked}
-          onCheck={() => this.applyCheckedStatus(item.key)}
+          onPress={() => {
+            this.applyCheckedStatus(item.key);
+          }}
         />
       </View>
     );
@@ -185,12 +192,19 @@ class DeleteAboutusAlbum extends Component {
           <Text body1 style={{flex: 10}}>
             Check all
           </Text>
-          <Checkbox
-            label=""
-            value="agree"
-            style={{width: 20, flex: 1}}
+          <CheckBox
+            center
+            iconRight
+            containerStyle={{
+              backgroundColor: BaseColor.whiteColor,
+              borderColor: BaseColor.whiteColor,
+            }}
+            checkedColor={BaseColor.SecondColor}
+            uncheckedColor={BaseColor.grayColor}
             checked={this.state.isAllChecked}
-            onCheck={() => this.applyCheckedAllStatus()}
+            onPress={() => {
+              this.applyCheckedAllStatus();
+            }}
           />
         </View>
 

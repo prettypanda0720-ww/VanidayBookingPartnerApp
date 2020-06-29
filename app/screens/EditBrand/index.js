@@ -70,7 +70,7 @@ class EditBrand extends Component {
             style={{flex: 1, marginLeft: 10}}
             loading={loading}
             onPress={() => navigation.goBack()}>
-            DELETE
+            Delete
           </Button>
           <Button
             style={{flex: 1, marginLeft: 10}}

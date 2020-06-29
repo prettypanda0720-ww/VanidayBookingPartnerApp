@@ -16,12 +16,15 @@ export default class InvoiceListItem extends Component {
       count,
       // appointmentDate,
       total,
+      vendor,
+      vaniday,
       // status,
       detail,
       // startTime,
       // endTime,
       onPress,
     } = this.props;
+    console.log('count', count);
     return (
       <TouchableOpacity
         style={[styles.contain, style]}
@@ -64,6 +67,28 @@ export default class InvoiceListItem extends Component {
                       textAlign: 'left',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
+                    InvoiceID:
+                  </Text>
+                  <Text
+                    caption1
+                    semibold
+                    style={{
+                      flex: 1,
+                      textAlign: 'right',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
+                    #{item.incrementId}
+                  </Text>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Text
+                    caption1
+                    semibold
+                    style={{
+                      flex: 1,
+                      textAlign: 'left',
+                      color: 'rgba(0,0,0,0.65)',
+                    }}>
                     Price:
                   </Text>
                   <Text
@@ -74,7 +99,7 @@ export default class InvoiceListItem extends Component {
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    SGD&nbsp;{item.price}
+                    SGD&nbsp;{Utils.to2DigitDeciaml(item.price)}
                   </Text>
                 </View>
                 <View style={{flexDirection: 'row'}}>
@@ -115,20 +140,36 @@ export default class InvoiceListItem extends Component {
                       textAlign: 'right',
                       color: 'rgba(0,0,0,0.65)',
                     }}>
-                    {Utils.capitalize(item.status)}
+                    {Utils.capitalize(item.amastyStatus)}
                   </Text>
                 </View>
                 <View style={styles.validContent}>
                   <Text footnote semibold style={{color: 'rgba(0,0,0,0.65)'}}>
                     {Utils.getFormattedLongDate(item.slotDate)},&nbsp;
-                    {Utils.getTimeFromDate(item.bookingFrom)}&nbsp;to&nbsp;
-                    {Utils.getTimeFromDate(item.bookingTo)}
+                    {Utils.formatDate(item.bookingFrom)}&nbsp;to&nbsp;
+                    {Utils.formatDate(item.bookingTo)}
                   </Text>
                 </View>
               </View>
             );
           }}
         />
+        <View style={[styles.totalCountContent, {paddingHorizontal: 10}]}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text subhead bold style={{color: 'rgba(0,0,0,0.65)'}}>
+              Sub Total Count :
+            </Text>
+            <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
+              &nbsp;{count}
+            </Text>
+          </View>
+        </View>
         <View
           style={[
             styles.totalContent,
@@ -144,7 +185,7 @@ export default class InvoiceListItem extends Component {
               Business:
             </Text>
             <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-              &nbsp;&nbsp;SGD{parseFloat(total) / 10}
+              &nbsp;&nbsp;SGD{Utils.to2DigitDeciaml(vendor)}
             </Text>
           </View>
           <View
@@ -158,7 +199,7 @@ export default class InvoiceListItem extends Component {
               Vaniday:
             </Text>
             <Text subhead semibold style={{color: 'rgba(0,0,0,0.65)'}}>
-              &nbsp;&nbsp;SGD{(parseFloat(total) * 9) / 10}
+              &nbsp;&nbsp;SGD{Utils.to2DigitDeciaml(vaniday)}
             </Text>
           </View>
         </View>
@@ -175,6 +216,8 @@ InvoiceListItem.propTypes = {
   // staffName: PropTypes.string,
   // appointmentDate: PropTypes.string,
   total: PropTypes.string,
+  vendor: PropTypes.string,
+  vaniday: PropTypes.string,
   count: PropTypes.string,
   // price: PropTypes.string,
   // startTime: PropTypes.string,
@@ -190,6 +233,8 @@ InvoiceListItem.defaultProps = {
   // staffName: '',
   // appointmentDate: '',
   total: '',
+  vendor: '',
+  vaniday: '',
   count: PropTypes.string,
   // price: '',
   // startTime: '',

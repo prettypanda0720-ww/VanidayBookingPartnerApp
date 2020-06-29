@@ -65,8 +65,7 @@ export default class Sales extends Component {
                     caption1
                     numberOfLines={2}
                     style={[styles.sectionStyle, {marginTop: 4}]}>
-                    List of all appointments booked, with filter and export
-                    options
+                    List of all appointments booked
                   </Text>
                 </View>
                 <Icon
@@ -84,12 +83,62 @@ export default class Sales extends Component {
               }}>
               <View style={styles.saleItemWrapper}>
                 <View style={styles.summary}>
-                  <Text body1>Invoices</Text>
+                  <Text body1>Service Invoice</Text>
                   <Text
                     caption1
                     numberOfLines={2}
                     style={[styles.sectionStyle, {marginTop: 4}]}>
-                    List of all sales made, with filter and export options
+                    Invoice for appointments completed
+                  </Text>
+                </View>
+                <Icon
+                  name="angle-right"
+                  size={18}
+                  color={'rgba(0,0,0,0.65)'}
+                  style={{marginLeft: 5, flex: 1}}
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.profileItem}
+              onPress={() => {
+                navigation.navigate('ProductAppointment');
+              }}>
+              <View style={styles.saleItemWrapper}>
+                <View style={styles.summary}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Products Orders
+                  </Text>
+                  <Text
+                    caption1
+                    numberOfLines={2}
+                    style={[styles.sectionStyle, {marginTop: 4}]}>
+                    List of all products ordered
+                  </Text>
+                </View>
+                <Icon
+                  name="angle-right"
+                  size={18}
+                  color={'rgba(0,0,0,0.65)'}
+                  style={{marginLeft: 5, flex: 1}}
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.profileItem}
+              onPress={() => {
+                navigation.navigate('ProductInvoice');
+              }}>
+              <View style={styles.saleItemWrapper}>
+                <View style={styles.summary}>
+                  <Text body1 style={styles.sectionStyle}>
+                    Product Invoice
+                  </Text>
+                  <Text
+                    caption1
+                    numberOfLines={2}
+                    style={[styles.sectionStyle, {marginTop: 4}]}>
+                    Invoice for products sold
                   </Text>
                 </View>
                 <Icon
