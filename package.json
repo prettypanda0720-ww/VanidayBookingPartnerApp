@@ -50,7 +50,7 @@
     "react-native-draggable-dynamic-flatlist": "^1.0.4",
     "react-native-drawer": "^2.5.1",
     "react-native-elements": "^2.0.2",
-    "react-native-fast-image": "^8.1.5",
+    "react-native-fast-image": "^8.3.0",
     "react-native-flash-message": "^0.1.15",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-base64": "^0.1.4",
